@@ -1,7 +1,12 @@
 import './App.css'
+import MuiButton from './components/UI/MuiButton'
 
 function App() {
-   return <div>health-check-js11</div>
+   return (
+      <div>
+         <MuiButton />
+      </div>
+   )
 }
 
 export default App
