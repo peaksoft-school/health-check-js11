@@ -1,0 +1,13 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="#9B9690"/>
+<g id="Icons">
+<rect width="792" height="557" transform="translate(-562 -275)" fill="#030303"/>
+<g id="Component 48">
+<rect x="-506.5" y="-25.5" width="626" height="115" rx="4.5" stroke="#9747FF" stroke-dasharray="10 5"/>
+<g id="Property 1=all icons, Property 2=checkbox-fill">
+<circle id="Ellipse 1" cx="11.5" cy="11.5" r="8.5" stroke="#C4C4C4" stroke-width="2"/>
+<circle id="Ellipse 2" cx="11.5" cy="11.5" r="5.5" fill="#C4C4C4"/>
+</g>
+</g>
+</g>
+</svg>
