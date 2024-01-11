@@ -3,7 +3,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 
-const UIRadio = forwardRef(({ onChange, checked, label, ...rest }, ref) => (
+const Radio = forwardRef(({ onChange, checked, label, ...rest }, ref) => (
    <FormControlLabel
       control={
          <IOSSwitch onChange={onChange} checked={checked} ref={ref} {...rest} />
@@ -11,7 +11,7 @@ const UIRadio = forwardRef(({ onChange, checked, label, ...rest }, ref) => (
       label={label}
    />
 ))
-export default UIRadio
+export default Radio
 
 const IOSSwitch = styled(Switch)(({ theme }) => ({
    width: 42,
