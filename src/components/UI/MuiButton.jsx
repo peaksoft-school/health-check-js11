@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material'
 
-const MuiButton = ({ disabled, ...rest }) => {
-   return (
-      <DemoButton disabled={disabled} {...rest}>
-         click
-      </DemoButton>
-   )
-}
+const MuiButton = forwardRef(
+   ({ disabled, onClick, children, ...rest }, ref) => {
+      return (
+         <DemoButton disabled={disabled} {...rest} ref={ref}>
+            {children}
+         </DemoButton>
+      )
+   }
+)
 
 export default MuiButton
 
