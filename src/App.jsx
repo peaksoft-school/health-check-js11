@@ -1,11 +1,10 @@
 import './App.css'
-import ReusableInput from './components/UI/Input'
+import Button from './components/UI/Button'
 
 function App() {
    return (
       <div>
-         {/* health-check-js11 */}
-         <ReusableInput placeholder="asdfghjkl" />
+         health-check-js11 <Button />
       </div>
    )
 }
