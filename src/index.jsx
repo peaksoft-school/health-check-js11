@@ -1,14 +1,14 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Theme from './utils/theme/Theme'
+import Themes from './components/UI/Themes'
 import App from './App'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <StrictMode>
-      <Theme>
+      <Themes>
          <App />
-      </Theme>
+      </Themes>
    </StrictMode>
 )
