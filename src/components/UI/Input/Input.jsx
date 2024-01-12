@@ -1,21 +1,10 @@
-import React from 'react'
 import { TextField } from '@mui/material'
-import styled from '@emotion/styled'
+import { styled } from '@mui/material/styles'
+import { forwardRef } from 'react'
 
-export const ReInput = React.forwardRef(
+const Input = forwardRef(
    (
-      {
-         value,
-         onChange,
-         placeholder,
-         invalid,
-         error,
-         type,
-         min,
-         max,
-         // InputStyled,
-         ...rest
-      },
+      { value, onChange, placeholder, invalid, error, type = 'text', ...rest },
       ref
    ) => {
       return (
@@ -24,15 +13,14 @@ export const ReInput = React.forwardRef(
             ref={ref}
             onChange={onChange}
             placeholder={placeholder}
-            error={Boolean(error)}
-            invalid={invalid}
+            error={error}
             type={type}
-            inputProps={{ min, max }}
             {...rest}
          />
       )
    }
 )
+export default Input
 
 const InputStyled = styled(TextField)(() => ({
    '.MuiOutlinedInput-root': {

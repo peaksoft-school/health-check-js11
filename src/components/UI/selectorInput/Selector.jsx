@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import Select from 'react-select'
 
 const customStyles = {
@@ -17,7 +17,7 @@ const customStyles = {
    }),
 }
 
-const SelectInput = forwardRef(
+const Selector = forwardRef(
    ({ defaultValue, options, onChange, ...rest }, ref) => {
       return (
          <StyledSelect
@@ -33,7 +33,7 @@ const SelectInput = forwardRef(
    }
 )
 
-export default SelectInput
+export default Selector
 
 const StyledSelect = styled(Select)({
    border: 'none',
@@ -42,9 +42,5 @@ const StyledSelect = styled(Select)({
    '&.inputBase': {
       fontFamily: 'Manrope',
       borderRadius: '8px',
-
-      // '&.Mui-focused': {
-      //    borderColor: 'rgba(4, 135, 65, 0.80)',
-      // },
    },
 })
