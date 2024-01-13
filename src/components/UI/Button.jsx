@@ -16,7 +16,6 @@ const Button = ({
          variant={variant}
       >
          {children}
-         hello
       </DemoButton>
    )
 }
