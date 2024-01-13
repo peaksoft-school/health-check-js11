@@ -26,8 +26,8 @@ export default WhyWe
 const StyledMainContainer = styled('div')(() => ({
    marginLeft: '5%',
    marginRight: '5%',
-   width: '90%', // Изменил на 90% для уменьшения ширины и обеспечения стабильности
-   margin: 'auto', // Центрируем компонент на странице
+   width: '90%',
+   margin: 'auto',
 }))
 
 const StyledContainerGrid = styled(Grid)({
@@ -39,10 +39,10 @@ const StyledContainerGrid = styled(Grid)({
 const StyledGrid = styled(Grid)(({ theme }) => ({
    backgroundColor: theme.palette.tertiary.main,
    width: '30%',
-   height: '20%',
+   height: '270px',
    padding: '2.5%',
    borderRadius: '0.25%',
-   boxSizing: 'border-box', // Используйте box-sizing для учета отступов и рамок в размерах
+   boxSizing: 'border-box',
 }))
 
 const StyledMainText = styled(Typography)(({ theme }) => ({
