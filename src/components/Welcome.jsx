@@ -45,9 +45,9 @@ const StyledWelcome = styled('h1')(() => ({
    color: 'transparent',
    width: '36.563rem',
    marginBottom: '1.625rem',
-   backgroundImage: 'linear-gradient(90deg, #30CFD0 0%, #330867 )',
+   backgroundImage: 'linear-gradient(90deg, #330867 0%,#1deeee  )',
    backgroundSize: '300% 300%',
-   animation: 'moveGradient 5s linear infinite',
+   animation: 'moveGradient 3.5s linear infinite',
    '@keyframes moveGradient': {
       '0%': {
          backgroundPosition: '0% 50%',
