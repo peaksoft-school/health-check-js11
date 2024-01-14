@@ -1,12 +1,7 @@
 import './App.css'
-import Header from './layout/header/Header'
 
-const App = () => {
-   return (
-      <div style={{ height: '1000vh' }}>
-         <Header />
-      </div>
-   )
+function App() {
+   return <div>health-check-js11\</div>
 }
 
 export default App
