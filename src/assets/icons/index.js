@@ -1,5 +1,3 @@
-// Default icons
-
 export { ReactComponent as UsersIcon } from './svgs/users.svg'
 export { ReactComponent as ActivePhoneIcon } from './svgs/activePhone.svg'
 export { ReactComponent as ActiveRadioIcon } from './svgs/activeRadio.svg'
@@ -7,6 +5,7 @@ export { ReactComponent as AddPhotoIcon } from './svgs/addPhoto.svg'
 export { ReactComponent as CalendarIcon } from './svgs/calendar.svg'
 export { ReactComponent as CalendarWithDotsIcon } from './svgs/calendarWithDots.svg'
 export { ReactComponent as CanceledRedgisterIcon } from './svgs/canceledRegister.svg'
+export { ReactComponent as CursorIcon } from './svgs/cursor.svg'
 export { ReactComponent as CloseIcon } from './svgs/close.svg'
 export { ReactComponent as CloseEyesIcon } from './svgs/closeEyes.svg'
 export { ReactComponent as DefaultPhoneIcon } from './svgs/defaultPhone.svg'
