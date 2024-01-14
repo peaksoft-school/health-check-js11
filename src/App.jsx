@@ -1,12 +1,7 @@
 import './App.css'
-import Welcome from './components/Welcome'
 
 function App() {
-   return (
-      <div>
-         <Welcome />
-      </div>
-   )
+   return <div>Health-Check</div>
 }
 
 export default App

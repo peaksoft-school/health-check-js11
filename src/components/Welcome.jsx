@@ -5,22 +5,25 @@ import Button from './UI/Button'
 
 const Welcome = () => {
    return (
-      <MainPagePart2>
-         <TextContainer>
-            <StyledWelcome>
-               Добро пожаловать в клинику HealthCheck
-            </StyledWelcome>
-            <StyledDesc>
-               Международный Медицинская клиника «HealthCheck — это клиника, в
-               которой применяются новейшие диагностические и лечебные
-               технологии и ведут прием лучшие специалисты.
-            </StyledDesc>
-            <StyledButton variant="shortBtn">оставьте заявку</StyledButton>
-         </TextContainer>
-         <div>
-            <img src={doctorImage} alt="doctore-img" />
-         </div>
-      </MainPagePart2>
+      <Container>
+         <MainPagePart2>
+            <TextContainer>
+               <StyledWelcome>
+                  Добро пожаловать в клинику HealthCheck
+               </StyledWelcome>
+               <StyledDesc>
+                  Международный Медицинская клиника «HealthCheck — это клиника,
+                  в которой применяются новейшие диагностические и лечебные
+                  технологии и ведут прием лучшие специалисты.
+               </StyledDesc>
+
+               <StyledButton variant="shortBtn">оставьте заявку</StyledButton>
+            </TextContainer>
+            <div>
+               <StyledImage src={doctorImage} alt="doctor-img" />
+            </div>
+         </MainPagePart2>
+      </Container>
    )
 }
 
@@ -31,9 +34,13 @@ const MainPagePart2 = styled('div')(() => ({
    height: '38.452rem',
    margin: '1.25rem 7.5rem 1.923rem',
    gap: '3.438rem',
-   justifyContent: 'center',
-   flexWrap: 'wrap',
+   justifyContent: 'space-between',
    alignItems: 'center',
+}))
+
+const Container = styled('div')(() => ({
+   display: 'flex',
+   justifyContent: 'center',
 }))
 
 const StyledWelcome = styled('h1')(() => ({
@@ -45,9 +52,9 @@ const StyledWelcome = styled('h1')(() => ({
    color: 'transparent',
    width: '36.563rem',
    marginBottom: '1.625rem',
-   backgroundImage: 'linear-gradient(90deg, #330867 0%,#1deeee  )',
+   backgroundImage: 'linear-gradient(90deg, #330867 0%, #30CFD0)',
    backgroundSize: '300% 300%',
-   animation: 'moveGradient 3.5s linear infinite',
+   animation: 'moveGradient 3.2s infinite',
    '@keyframes moveGradient': {
       '0%': {
          backgroundPosition: '0% 50%',
@@ -81,4 +88,7 @@ const StyledButton = styled(Button)(() => ({
       borderRadius: '1.5rem',
       marginTop: '1.75rem',
    },
+}))
+const StyledImage = styled('img')(() => ({
+   width: '580.35px',
 }))
