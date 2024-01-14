@@ -1,7 +1,12 @@
 import './App.css'
+import AboutHealthCheck from './components/AboutHealthCheck'
 
 function App() {
-   return <div>health-check-js11\</div>
+   return (
+      <div>
+         <AboutHealthCheck />
+      </div>
+   )
 }
 
 export default App
