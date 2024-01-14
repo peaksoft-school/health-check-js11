@@ -1,9 +1,9 @@
 import './App.css'
 import Header from './layout/header/Header'
 
-function App() {
+const App = () => {
    return (
-      <div>
+      <div style={{ height: '1000vh' }}>
          <Header />
       </div>
    )

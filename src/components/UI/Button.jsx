@@ -1,28 +1,50 @@
 import { Button as MuiButton, styled } from '@mui/material'
 
-const Button = ({
-   disabled,
-   onClick,
-   children,
-   variant = 'longBtn',
-   theme,
-   ...rest
-}) => {
+const Button = ({ disabled, onClick, children, variant, theme, ...rest }) => {
    return (
-      <DemoButton
+      <StyledButton
          disabled={disabled}
-         {...rest}
          onClick={onClick}
          variant={variant}
+         {...rest}
       >
          {children}
-      </DemoButton>
+      </StyledButton>
    )
 }
 
 export default Button
 
-const DemoButton = styled(MuiButton)(({ theme, variant }) => {
+const StyledButton = styled(MuiButton)(({ theme, variant }) => {
+   const defaultStyle = {
+      '&.MuiButtonBase-root': {
+         width: '191px',
+         padding: '14px 32px',
+         borderRadius: '10px',
+         backgroundColor: theme.palette.primary.darkGreen,
+         color: theme.palette.primary.main,
+
+         '&:hover': {
+            padding: '14px 32px',
+            backgroundColor: theme.palette.primary.linearGradient,
+            border: 'none',
+            color: theme.palette.primary.main,
+         },
+
+         '&:active': {
+            padding: '14px 32px',
+            borderRadius: '1.5rem',
+            backgroundColor: theme.palette.primary.linearGradient,
+            color: theme.palette.primary.main,
+         },
+
+         '&:disabled': {
+            border: 'none',
+            backgroundColor: theme.palette.secondary.lightGrey,
+            color: theme.palette.primary.main,
+         },
+      },
+   }
    if (variant === 'shortBtn') {
       return {
          '&.MuiButtonBase-root': {
@@ -39,11 +61,13 @@ const DemoButton = styled(MuiButton)(({ theme, variant }) => {
                padding: '10.5px 27px',
                color: 'white',
             },
+
             '&:active': {
                border: 'none',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             },
+
             '&:disabled': {
                border: 'none',
                backgroundColor: '#F5F5F5',
@@ -52,6 +76,7 @@ const DemoButton = styled(MuiButton)(({ theme, variant }) => {
          },
       }
    }
+
    if (variant === 'greyBtn') {
       return {
          '&.MuiButtonBase-root': {
@@ -66,10 +91,12 @@ const DemoButton = styled(MuiButton)(({ theme, variant }) => {
                padding: '10.5px 27px',
                color: 'white',
             },
+
             '&:active': {
                border: 'none',
                background: theme.palette.secondary.lightGrey,
             },
+
             '&:disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.main,
@@ -78,34 +105,5 @@ const DemoButton = styled(MuiButton)(({ theme, variant }) => {
          },
       }
    }
-   if (variant === 'longBtn') {
-      return {
-         '&.MuiButtonBase-root': {
-            width: '191px',
-            padding: '14px 32px',
-            borderRadius: '10px',
-            backgroundColor: theme.palette.primary.darkGreen,
-            color: theme.palette.primary.main,
-            '&:hover': {
-               padding: '14px 32px',
-               backgroundColor: theme.palette.primary.linearGradient,
-               border: 'none',
-               color: theme.palette.primary.main,
-            },
-            '&:active': {
-               width: '191px',
-               padding: '14px 32px',
-               borderRadius: '10px',
-               backgroundColor: theme.palette.primary.linearGradient,
-               color: theme.palette.primary.main,
-            },
-            '&:disabled': {
-               border: 'none',
-               backgroundColor: theme.palette.secondary.lightGrey,
-               color: theme.palette.primary.main,
-            },
-         },
-      }
-   }
-   return {}
+   return defaultStyle
 })
