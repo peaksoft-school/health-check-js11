@@ -1,5 +1,3 @@
-// Default icons
-
 export { ReactComponent as UsersIcon } from './svgs/users.svg'
 export { ReactComponent as ActivePhoneIcon } from './svgs/activePhone.svg'
 export { ReactComponent as ActiveRadioIcon } from './svgs/activeRadio.svg'
