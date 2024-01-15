@@ -21,10 +21,12 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          borderRadius: '10px',
          backgroundColor: theme.palette.primary.darkGreen,
          color: theme.palette.primary.main,
+         transition: 'all 5s',
 
          '&:hover': {
             padding: '14px 32px',
-            backgroundColor: theme.palette.primary.linearGradient,
+            background:
+               'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             border: 'none',
             color: theme.palette.primary.main,
          },
@@ -51,11 +53,11 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             border: '1px solid #959595',
             color: theme.palette.primary.darkGreen,
             borderColor: '#048741',
-            transition: '1s',
+            transition: 'all 0.4s',
 
             '&:hover': {
                background:
-                  'var(--Primary-button-gradient, linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%))',
+                  'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
                border: 'none',
                padding: '10.5px 27px',
                color: theme.palette.primary.main,
@@ -79,6 +81,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
    if (variant === 'greyBtn') {
       return {
          '&.MuiButtonBase-root': {
+            transition: '13s linear',
             borderRadius: '10px',
             padding: '10px 26px',
             border: '1px solid #959595',
@@ -89,6 +92,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                background: theme.palette.secondary.linearGradient,
                padding: '10.5px 27px',
                color: 'white',
+               transition: 'all 1s',
             },
 
             '&:active': {

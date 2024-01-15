@@ -177,7 +177,7 @@ const StyledNumBlock = styled('div')(() => ({
 const StyledInputContainer = styled(Paper)(() => ({
    display: 'flex',
    alignItems: 'center',
-   padding: '0.125rem 0.125rem',
+   padding: '0.125rem 0.9rem',
    width: '22.938rem',
    borderRadius: '25px',
    backgroundColor: '#F3F1F1',
@@ -189,8 +189,8 @@ const StyledSearchIcon = styled(SearchIcon)(() => ({
 }))
 
 const StyledInputBase = styled(InputBase)(() => ({
-   marginLeft: '11px',
    flex: 1,
+   fontSize: '14px',
 }))
 
 const StyledHeaderProfile = styled(HeaderProfile)(() => ({
