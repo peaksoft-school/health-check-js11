@@ -3,7 +3,7 @@ import Building from '../assets/images/3blockImage.png'
 import Conference from '../assets/images/3blockImage2.png'
 import Photos from '../assets/images/3blockImage3.png'
 import Doctors from '../assets/images/3blockImage4.png'
-import { Vector } from '../assets/icons/serviceIcons '
+import { Vector } from '../assets/icons/servicesIcons'
 
 const AboutHealthCheck = () => {
    return (
@@ -46,7 +46,7 @@ const AboutHealthCheck = () => {
                   <StyledBuildingImg src={Building} alt="Здание" />
                   <StyledSlidingImG>
                      <StyledBuildingImG src={Conference} alt="доктора" />
-                     <StyledCenterBuildingImG src={Photos} alt="доктора" />
+                     <StyledBuildingImG src={Photos} alt="доктора" />
                      <StyledBuildingImG src={Doctors} alt="доктора" />
                   </StyledSlidingImG>
                </StyledImagesContainer>
@@ -61,10 +61,6 @@ export default AboutHealthCheck
 const StyledThirdBlock = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'center',
-   // [theme.breakpoints.down('lg')]: {
-   // flexDirection: 'column',
-   // alignItems: 'center',
-   // },
 }))
 
 const StyledMainContainer = styled('div')(({ theme }) => ({
@@ -82,8 +78,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
    alignItems: 'stretch',
    height: '34.125rem',
    [theme.breakpoints.down('lg')]: {
-      // flexDirection: 'column',
-      gap: '2rem',
+      gap: '5rem',
    },
 }))
 
@@ -107,7 +102,6 @@ const StyledTextContainer = styled('div')(({ theme }) => ({
    flexDirection: 'column',
    maxHeight: '30.875rem',
    maxWidth: '32.063rem',
-   minWidth: '32rem',
    width: 'auto',
 
    '& .MuiTypography-root': {
@@ -122,18 +116,20 @@ const StyledTextContainer = styled('div')(({ theme }) => ({
       '& .MuiTypography-root': {
          fontSize: '0.8rem',
       },
-      maxWidth: '28rem',
+      width: '370px',
    },
 }))
 
-const StyledImagesContainer = styled('div')(() => ({
+const StyledImagesContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
    gap: '1.625rem',
    maxWidth: '36.625rem',
-   minWidth: '36rem',
-   width: 'auto',
+
+   [theme.breakpoints.down('lg')]: {
+      width: '33rem',
+   },
 
    '& > div': {
       display: 'flex',
@@ -147,17 +143,13 @@ const StyledBuildingImG = styled('img')(() => ({
    marginTop: '1.25rem',
 }))
 
-const StyledBuildingImg = styled('img')(() => ({
-   width: '100%',
-   height: 'auto',
+const StyledBuildingImg = styled('img')(({ theme }) => ({
+   // width: '100%',
    maxWidth: '36.625em',
-}))
-
-const StyledCenterBuildingImG = styled('img')(() => ({
-   marginLeft: '1.25rem',
-   marginRight: '1.25rem',
-   width: '29%',
-   height: 'auto',
+   [theme.breakpoints.down('lg')]: {
+      // height: 'auto',
+      width: '30rem',
+   },
 }))
 
 const StyledSlidingImG = styled('div')(({ theme }) => ({
@@ -165,16 +157,17 @@ const StyledSlidingImG = styled('div')(({ theme }) => ({
    gap: '1.625rem',
    marginTop: '1.25rem',
    img: {
-      width: '29%',
+      width: '169px',
       height: 'auto',
       borderRadius: '0.5rem',
       [theme.breakpoints.down('lg')]: {
-         width: '20%',
+         alignItems: 'center',
+         width: '140px',
       },
    },
 }))
 
-const StyledNavlink = styled('p')(() => ({
+const StyledNavlink = styled('p')(({ theme }) => ({
    width: '15.5rem',
    color: '#009344',
    fontSize: '1rem',
@@ -183,4 +176,8 @@ const StyledNavlink = styled('p')(() => ({
    cursor: 'pointer',
    paddingTop: '1rem',
    marginTop: '2.875rem',
+   [theme.breakpoints.down('lg')]: {
+      marginTop: '2.7rem',
+      fontSize: '0.8rem',
+   },
 }))

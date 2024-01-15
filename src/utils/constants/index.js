@@ -4,7 +4,7 @@ import {
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
 
-const NAV = [
+const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
    { id: 2, text: 'Услуги' },
    { id: 3, text: 'Врачи' },
@@ -33,4 +33,6 @@ const HEADER_SOCIALS = [
    },
 ]
 
-export { HEADER_SOCIALS, NAV }
+const LOCATION =
+   'https://2gis.kg/bishkek/search/%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20119/firm/70000001038316599?m=74.628453%2C42.875862%2F17.42'
+export { HEADER_SOCIALS, HEADER_NAV, LOCATION }
