@@ -18,3 +18,4 @@ export { ReactComponent as RevmatologiyaIcon } from './servicesIcons/revmatologi
 export { ReactComponent as TerapiyaIcon } from './servicesIcons/terapiya.svg'
 export { ReactComponent as UrologiyaIcon } from './servicesIcons/urologiya.svg'
 export { ReactComponent as VaccinationIcon } from './servicesIcons/vaccination.svg'
+export { ReactComponent as Vector } from './svgs/vector.svg'
