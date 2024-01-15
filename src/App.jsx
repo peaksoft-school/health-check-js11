@@ -1,9 +1,10 @@
 import './App.css'
 import AboutHealthCheck from './components/AboutHealthCheck'
 
-function App() {
+const App = () => {
    return (
       <div>
+         health-check-js11
          <AboutHealthCheck />
       </div>
    )
