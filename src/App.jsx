@@ -1,12 +1,7 @@
 import './App.css'
-import OurServices from './components/OurServices'
 
-function App() {
-   return (
-      <div>
-         <OurServices />
-      </div>
-   )
+const App = () => {
+   return <div>Health_Check</div>
 }
 
 export default App
