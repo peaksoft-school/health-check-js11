@@ -83,6 +83,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
    fontStyle: 'normal',
    fontWeight: '600',
    lineHeight: 'normal',
+
    '& .MuiTypography-root': {
       color: theme.palette.primary.darkGreen,
    },
