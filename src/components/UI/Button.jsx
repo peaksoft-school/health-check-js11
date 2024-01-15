@@ -4,7 +4,7 @@ const Button = ({
    disabled,
    onClick,
    children,
-   variant = 'longBtn',
+   variant = '',
    theme,
    ...rest
 }) => {
@@ -16,7 +16,6 @@ const Button = ({
          variant={variant}
       >
          {children}
-         hello
       </DemoButton>
    )
 }
