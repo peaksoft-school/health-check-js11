@@ -7,16 +7,16 @@ import {
    Menu,
    MenuItem,
 } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
-import Button from '../../components/UI/Button'
+import Button from '../components/UI/Button'
 import {
    DefaultPhoneIcon,
    HeaderProfile,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
-} from '../../assets/icons'
-import { nav, socials } from '../../utils/constants/index'
+   SearchIcon,
+} from '../assets/icons'
+import { NAV, HEADER_SOCIALS } from '../utils/constants/index'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -65,10 +65,10 @@ const Header = () => {
                </StyledFirstBlock>
                <StyledInputContainer>
                   <StyledInputBase placeholder="Поиск по фото" />
-                  <SearchIcon />
+                  <StyledSearchIcon />
                </StyledInputContainer>
                <StyledIconsContainer>
-                  {socials.map(({ id, icon, ariaLabel, href }) => (
+                  {HEADER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
                      <div key={id}>
                         <a aria-label={ariaLabel} href={href}>
                            {icon}
@@ -80,10 +80,10 @@ const Header = () => {
                   <a aria-label="phone number" href="tel:+996 800 000">
                      <DefaultPhoneIcon />
                   </a>
-                  <StyledNumbersContainer>
+                  <div>
                      <Typography variant="p">+996(800) 000 000</Typography>
                      <Typography variant="p">+996(505) 000 000</Typography>
-                  </StyledNumbersContainer>
+                  </div>
                </StyledNumBlock>
                <div>
                   <StyledHeaderProfile
@@ -114,15 +114,17 @@ const Header = () => {
                   </Typography>
                </StyledIconContainer>
                <StyledNaviList>
-                  {nav.map(({ text, id }) => (
+                  {NAV.map(({ text, id }) => (
                      <div key={id}>
                         <p>{text}</p>
                      </div>
                   ))}
                </StyledNaviList>
                <StyledButtonContainer>
-                  <StyledBtn variant="shortBtn">получить результаты</StyledBtn>
-                  <StyledBtn>запись онлайн </StyledBtn>
+                  <StyledBtn className="button" variant="shortBtn">
+                     получить результаты
+                  </StyledBtn>
+                  <StyledBtn className="button">запись онлайн </StyledBtn>
                </StyledButtonContainer>
             </StyledSecondMainContainer>
          </StyledHeaderContainer>
@@ -164,13 +166,12 @@ const StyledSecondMainContainer = styled('div')(() => ({
    marginTop: '12px',
 }))
 
-const StyledNumbersContainer = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
-}))
-
 const StyledNumBlock = styled('div')(() => ({
    display: 'flex',
+   '& > div': {
+      display: 'flex',
+      flexDirection: 'column',
+   },
 }))
 
 const StyledInputContainer = styled(Paper)(() => ({
@@ -181,6 +182,10 @@ const StyledInputContainer = styled(Paper)(() => ({
    borderRadius: '25px',
    backgroundColor: '#F3F1F1',
    boxShadow: 'none',
+}))
+
+const StyledSearchIcon = styled(SearchIcon)(() => ({
+   cursor: 'pointer',
 }))
 
 const StyledInputBase = styled(InputBase)(() => ({
@@ -248,7 +253,6 @@ const StyledMenu = styled(Menu)(() => ({
    marginLeft: '10px',
    marginTop: '10px',
 }))
-
 const StyedMenuItem = styled(MenuItem)(({ theme }) => ({
    '&:hover': { color: theme.palette.primary.darkGreen },
 }))

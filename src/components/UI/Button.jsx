@@ -1,17 +1,15 @@
 import { Button as MuiButton, styled } from '@mui/material'
 
-const Button = ({ disabled, onClick, children, variant, theme, ...rest }) => {
-   return (
-      <StyledButton
-         disabled={disabled}
-         onClick={onClick}
-         variant={variant}
-         {...rest}
-      >
-         {children}
-      </StyledButton>
-   )
-}
+const Button = ({ disabled, onClick, children, variant, theme, ...rest }) => (
+   <StyledButton
+      disabled={disabled}
+      onClick={onClick}
+      variant={variant}
+      {...rest}
+   >
+      {children}
+   </StyledButton>
+)
 
 export default Button
 
@@ -53,13 +51,14 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             border: '1px solid #959595',
             color: theme.palette.primary.darkGreen,
             borderColor: '#048741',
+            transition: '1s',
 
             '&:hover': {
                background:
                   'var(--Primary-button-gradient, linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%))',
                border: 'none',
                padding: '10.5px 27px',
-               color: 'white',
+               color: theme.palette.primary.main,
             },
 
             '&:active': {

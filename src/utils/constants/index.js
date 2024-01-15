@@ -4,7 +4,7 @@ import {
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
 
-export const nav = [
+const NAV = [
    { id: 1, text: 'О клинике' },
    { id: 2, text: 'Услуги' },
    { id: 3, text: 'Врачи' },
@@ -12,7 +12,7 @@ export const nav = [
    { id: 5, text: 'Контакты' },
 ]
 
-export const socials = [
+const HEADER_SOCIALS = [
    {
       id: 1,
       ariaLabel: 'Instagram',
@@ -32,3 +32,5 @@ export const socials = [
       icon: <HeaderTelegramIcon />,
    },
 ]
+
+export { HEADER_SOCIALS, NAV }
