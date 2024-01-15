@@ -36,7 +36,6 @@ const DemoButton = styled(MuiButton)(({ theme, variant }) => {
                background:
                   'var(--Primary-button-gradient, linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%))',
                border: 'none',
-               padding: '10.5px 27px',
                color: 'white',
             },
             '&:active': {

@@ -29,13 +29,17 @@ const Welcome = () => {
 
 export default Welcome
 
-const MainPagePart2 = styled('div')(() => ({
+const MainPagePart2 = styled('div')(({ theme }) => ({
    display: 'flex',
    height: '38.452rem',
    margin: '1.25rem 7.5rem 1.923rem',
    gap: '3.438rem',
    justifyContent: 'space-between',
    alignItems: 'center',
+   [theme.breakpoints.down('lg')]: {
+      height: 'auto',
+      margin: '1.25rem',
+   },
 }))
 
 const Container = styled('div')(() => ({
@@ -43,7 +47,7 @@ const Container = styled('div')(() => ({
    justifyContent: 'center',
 }))
 
-const StyledWelcome = styled('h1')(() => ({
+const StyledWelcome = styled('h1')(({ theme }) => ({
    fontSize: '3rem',
    fontStyle: 'normal',
    fontWeight: '900',
@@ -66,9 +70,13 @@ const StyledWelcome = styled('h1')(() => ({
          backgroundPosition: '0% 50%',
       },
    },
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '2rem',
+      width: '100%',
+   },
 }))
 
-const StyledDesc = styled('h1')(() => ({
+const StyledDesc = styled('h1')(({ theme }) => ({
    color: '#222',
    fontFamily: 'Manrope',
    fontSize: '1.125rem',
@@ -76,19 +84,39 @@ const StyledDesc = styled('h1')(() => ({
    fontWeight: '400',
    lineHeight: '130%',
    width: '33rem',
+   [theme.breakpoints.down('lg')]: {
+      width: '100%',
+   },
 }))
 
-const TextContainer = styled('div')(() => ({
+const TextContainer = styled('div')(({ theme }) => ({
    width: '36.563rem',
    height: '14.313rem',
+   [theme.breakpoints.down('lg')]: {
+      width: '100%',
+   },
 }))
 
-const StyledButton = styled(Button)(() => ({
+const StyledButton = styled(Button)(({ theme }) => ({
    '&.MuiButtonBase-root': {
       borderRadius: '1.5rem',
       marginTop: '1.75rem',
+      padding: '10px 23px',
+   },
+   '&:hover': {
+      padding: '10px 23px',
+   },
+   [theme.breakpoints.down('lg')]: {
+      width: '150px',
+      height: '38px',
+      padding: '0rem',
+      fontSize: '10px',
    },
 }))
-const StyledImage = styled('img')(() => ({
+
+const StyledImage = styled('img')(({ theme }) => ({
    width: '580.35px',
+   [theme.breakpoints.down('lg')]: {
+      width: '100%',
+   },
 }))
