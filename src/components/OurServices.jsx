@@ -1,17 +1,5 @@
-import React from 'react'
 import { styled } from '@mui/material/styles'
-import {
-   VaccinationIcon,
-   KardiologiyaIcon,
-   NevrologiyaIcon,
-   DermatologiyaIcon,
-   OftalmologiyaIcon,
-   TerapiyaIcon,
-   FizioterapiyaIcon,
-   OnkologiyaIcon,
-   UrologiyaIcon,
-} from '../assets/icons/serviceIcons '
-import { CursorIcon } from '../assets/icons/index'
+import { services } from '../utils/constants/our-services'
 import Button from './UI/Button'
 
 const OurServices = () => {
@@ -20,77 +8,24 @@ const OurServices = () => {
          <Container>
             <div>
                <StyledTitle>
-                  Наши <StyledTitleSerices>услуги</StyledTitleSerices>
+                  Наши <StyledTitleServices>услуги</StyledTitleServices>
                </StyledTitle>
                <StyledDescription>
                   За все время работы клиника приняла более 1 млн. пациентов.
                </StyledDescription>
             </div>
             <ServicesContainer>
-               <StyledService>
-                  <StyledServiceBlock>
-                     <StyledVaccinationIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Вакцинация</StyledName>
-               </StyledService>
-               <StyledService>
-                  <StyledServiceBlock>
-                     <KardiologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Кардиология</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <NevrologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Неврология</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <DermatologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Дерматология</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <OftalmologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Офтальмология</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <TerapiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Терапия</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <FizioterapiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Физиотерапия</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <OnkologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Онкология</StyledName>
-               </StyledService>
-
-               <StyledService>
-                  <StyledServiceBlock>
-                     <UrologiyaIcon />
-                  </StyledServiceBlock>
-                  <StyledName>Урология</StyledName>
-               </StyledService>
+               {services.map(({ id, name, icon }) => (
+                  <StyledService key={id}>
+                     <StyledServiceBlock>
+                        <StyledIcon>{icon}</StyledIcon>
+                     </StyledServiceBlock>
+                     <StyledName>{name}</StyledName>
+                  </StyledService>
+               ))}
             </ServicesContainer>
             <StyledBtnContainer>
-               <Button variant="shortBtn">Смотреть все</Button>
+               <StyledButton variant="shortBtn">Смотреть все</StyledButton>
             </StyledBtnContainer>
          </Container>
       </StyledOurServices>
@@ -100,15 +35,22 @@ const OurServices = () => {
 export default OurServices
 
 const Container = styled('div')(() => ({
-   marginTop: '50px',
-   width: '1191px',
-   height: '148px',
-   flexShrink: '0',
+   marginTop: '3.125rem',
+   width: '100%',
+   maxWidth: '74.625rem',
+   height: '9.25rem',
+   flexShrink: 0,
+}))
+
+const StyledButton = styled(Button)(({ theme }) => ({
+   transform: 'scale(0.8)',
+   [theme.breakpoints.up('lg')]: {
+      transform: 'scale(1)',
+   },
 }))
 
 const StyledOurServices = styled('div')(() => ({
    display: 'flex',
-   alignItems: 'center',
    justifyContent: 'center',
 }))
 
@@ -116,71 +58,94 @@ const StyledBtnContainer = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
-   marginTop: '48px',
+   marginTop: '3rem',
 }))
 
 const StyledService = styled('span')(() => ({
    display: 'flex',
-   width: '102px',
-   height: '148px',
-   flexShrink: '0',
+   width: '100%',
+   maxWidth: '6.375rem',
+   height: '9.25rem',
+   flexShrink: 0,
    flexWrap: 'wrap',
    justifyContent: 'center',
 }))
 
-const StyledTitle = styled('h2')(() => ({
-   fontSize: '36px',
+const StyledTitle = styled('h2')(({ theme }) => ({
+   fontSize: '2rem',
    fontStyle: 'normal',
-   fontWeight: '600',
+   fontWeight: 600,
    lineHeight: 'normal',
-   marginBottom: '34px',
-}))
-const StyledTitleSerices = styled('span')(({ theme }) => ({
-   color: theme.palette.primary.darkGreen,
+   marginBottom: '2.125rem',
+   [theme.breakpoints.up('lg')]: {
+      fontSize: '3rem',
+   },
 }))
 
-const StyledDescription = styled('p')(() => ({
-   fontSize: '18px',
+const StyledTitleServices = styled('span')(({ theme }) => ({
+   color: theme.palette.primary.linearGradient,
+}))
+
+const StyledDescription = styled('p')(({ theme }) => ({
+   fontSize: '1rem',
    fontStyle: 'normal',
-   fontWeight: '400',
+   fontWeight: 400,
    lineHeight: 'normal',
+   [theme.breakpoints.up('lg')]: {
+      fontSize: '1.5rem',
+   },
 }))
 
 const ServicesContainer = styled('div')(() => ({
-   marginTop: '60px',
+   marginTop: '3.75rem',
    display: 'flex',
    justifyContent: 'space-between',
+   flexWrap: 'wrap',
 }))
 
 const StyledServiceBlock = styled('div')(({ theme }) => ({
    display: 'flex',
    justifyContent: 'center',
    alignItems: 'center',
-   flexShrink: '0',
-   borderRadius: '18px',
+   flexShrink: 0,
+   borderRadius: '1.125rem',
    border: '1px solid #DEDEDE',
-   width: '102px',
-   height: '106px',
+   width: '5.6rem',
+   height: '5.6rem',
    transition: '0.3s',
    '&:hover': {
-      border: '2px solid #DEDEDE',
       transform: 'scale(1.1)',
-      boxShadow: '0 0 13px 3px #065c28',
-      cursor: `url(${CursorIcon}), auto`,
+      boxShadow: '0 0 0.625rem 0.156rem #5d5d5d',
+      cursor: 'pointer',
       backgroundColor: theme.palette.primary.linearGradient,
+      '& svg path': {
+         fill: 'white',
+      },
+   },
+   [theme.breakpoints.up('lg')]: {
+      width: '6.375rem',
+      height: '6.625rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexShrink: 0,
    },
 }))
 
-const StyledVaccinationIcon = styled(VaccinationIcon)(() => ({
-   fill: 'white',
-   width: '60px',
-   height: '60px',
-   flexShrink: '0',
+const StyledIcon = styled('span')(() => ({
+   width: '3.75rem',
+   height: '3.75rem',
+   flexShrink: 0,
 }))
 
-const StyledName = styled('p')(() => ({
-   fontSize: '16px',
+const StyledName = styled('p')(({ theme }) => ({
+   fontSize: '0.8rem',
    fontStyle: 'normal',
-   fontWeight: '300',
+   fontWeight: 300,
    lineHeight: 'normal',
+   marginTop: '1.25rem',
+   [theme.breakpoints.up('lg')]: {
+      fontSize: '1.125rem',
+      marginTop: '1.5rem',
+   },
 }))
