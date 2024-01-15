@@ -1,10 +1,11 @@
 import './App.css'
-import Welcome from './components/Welcome'
 
-function App() {
+
+const App = () => {
    return (
       <div>
-         <Welcome />
+         health-check-js11
+
       </div>
    )
 }
