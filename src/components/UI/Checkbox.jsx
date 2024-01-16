@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react'
-import Checkbox from '@mui/material/Checkbox'
+import { forwardRef } from 'react'
+import { Checkbox as MuiCheckbox } from '@mui/material'
 
-const CheckBox = forwardRef(
+const Checkbox = forwardRef(
    ({ color = 'success', checked, onChange, ...rest }, ref) => (
-      <Checkbox
+      <MuiCheckbox
          color={color}
          checked={checked}
          onChange={onChange}
@@ -13,4 +13,4 @@ const CheckBox = forwardRef(
    )
 )
 
-export default CheckBox
+export default Checkbox
