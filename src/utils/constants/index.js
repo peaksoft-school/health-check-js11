@@ -1,10 +1,10 @@
-import first from '../../assets/images/image 15.png'
-import second from '../../assets/images/image 16.png'
-import third from '../../assets/images/image 24.png'
-import fourth from '../../assets/images/image 26.png'
-import fifth from '../../assets/images/Exclude.png'
+import first from '../../assets/images/therapist.png'
+import second from '../../assets/images/pediatrician.png'
+import third from '../../assets/images/urologist.png'
+import fourth from '../../assets/images/neurologist.png'
+import fifth from '../../assets/images/endocrinologist.png'
 
-export const infoDoctors = [
+export const INFO_DOCTORS = [
    {
       image: fourth,
       name: 'Войнич Дарья',

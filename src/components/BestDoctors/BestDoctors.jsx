@@ -1,4 +1,3 @@
-import React from 'react'
 import { Grid, Typography, styled } from '@mui/material'
 import { infoDoctors } from '../../utils/constants/index'
 import Button from '../UI/Button'
@@ -17,11 +16,9 @@ const BestDoctors = () => {
          <StyledContainer container spacing={2}>
             {infoDoctors.map(({ id, name, doctor, image }) => (
                <Grid item xs={6} sm={3} md={2} key={id}>
-                  {/* <DoctorCard> */}
                   <StyledImg src={image} alt="hdhal" />
                   <StyledName variant="h5">{name}</StyledName>
                   <StyledDoctor variant="h6">{doctor}</StyledDoctor>
-                  {/* </DoctorCard> */}
                </Grid>
             ))}
          </StyledContainer>
@@ -39,7 +36,6 @@ const StyledBlock = styled('div')(() => ({
 }))
 
 const StyledMainText = styled(Typography)(({ theme }) => ({
-   fontFamily: 'Manrope',
    fontSize: '2.25rem',
    fontWeight: '600',
    lineHeight: 'normal',
@@ -60,7 +56,6 @@ const StyledImg = styled('img')(() => ({
 const StyledDoctor = styled(Typography)(({ theme }) => ({
    color: theme.palette.secondary.lightGrey,
    textAlign: 'center',
-   fontFamily: 'Manrope',
    fontSize: '0.875em',
    fontWeight: '500',
    lineHeight: '1.25em',
@@ -86,6 +81,5 @@ const StyledButton = styled(Button)(() => ({
 }))
 
 const StyledSmallText = styled(Typography)(() => ({
-   fontFamily: 'Manrope',
    fontSize: '1.125em',
 }))

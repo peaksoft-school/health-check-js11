@@ -1,13 +1,6 @@
 import { Button as MuiButton, styled } from '@mui/material'
 
-const Button = ({
-   disabled,
-   onClick,
-   children,
-   variant = '',
-   theme,
-   ...rest
-}) => {
+const Button = ({ disabled, onClick, children, variant, theme, ...rest }) => {
    return (
       <DemoButton
          disabled={disabled}
