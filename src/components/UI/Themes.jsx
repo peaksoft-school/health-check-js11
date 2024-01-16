@@ -8,7 +8,8 @@ const theme = createTheme({
          backgroundAdmin: '#F5F5F5',
          lightBlack: '#222222',
          darkGrey: '#212529',
-         linearGradient: '#0CBB6B',
+         linearGradient:
+            'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
          darkGreen: '#027B44',
       },
       secondary: {

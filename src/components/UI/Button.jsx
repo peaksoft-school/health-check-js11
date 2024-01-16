@@ -19,14 +19,13 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          width: '191px',
          padding: '14px 32px',
          borderRadius: '10px',
-         backgroundColor: theme.palette.primary.darkGreen,
+         background: 'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
          color: theme.palette.primary.main,
-         transition: 'all 5s',
+         transition: 'all 0.3s',
 
          '&:hover': {
             padding: '14px 32px',
-            background:
-               'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
+            backgroundColor: theme.palette.primary.darkGreen,
             border: 'none',
             color: theme.palette.primary.main,
          },
