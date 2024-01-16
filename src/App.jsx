@@ -1,6 +1,6 @@
 import './App.css'
 
-function App() {
+const App = () => {
    return <div>health-check-js11</div>
 }
 
