@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Grid, styled } from '@mui/material'
-import { data } from '../../utils/constants/index'
+import { BEST_QUALITIES } from '../../utils/constants/index'
 
 const WhyWe = () => {
    return (
@@ -9,7 +9,7 @@ const WhyWe = () => {
             Почему <Typography variant="p">нас выбирают? </Typography>
          </StyledMainText>
          <StyledContainerGrid container spacing={2} direction="row">
-            {data.map((item) => (
+            {BEST_QUALITIES.map((item) => (
                <StyledGrid key={item.key}>
                   <StyledNumber variant="h1">{item.number}</StyledNumber>
                   <StyledWhy variant="h5">{item.title}</StyledWhy>
