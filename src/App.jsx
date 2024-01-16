@@ -1,7 +1,7 @@
-import './App.css'
+import React from 'react'
 
-function App() {
-   return <div>health-check-js11</div>
+const App = () => {
+   return <div className="App">health-check-js11</div>
 }
 
 export default App
