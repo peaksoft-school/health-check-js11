@@ -3,9 +3,9 @@ import Building from '../assets/images/building-image.png'
 import Conference from '../assets/images/conference-image.png'
 import Photos from '../assets/images/doctors-image.png'
 import Doctors from '../assets/images/stady-image.png'
-import { Vector } from '../assets/icons/servicesIcons'
+import { Arrow } from '../assets/icons/index'
 
-const AboutHealthCheck = () => {
+const AboutUs = () => {
    return (
       <StyledThirdBlock>
          <StyledMainContainer>
@@ -38,16 +38,16 @@ const AboutHealthCheck = () => {
                      внедряя и развивая передовые методы лечения для сохранения
                      здоровья наших пациентов.
                   </Typography>
-                  <StyledNavlink variant="p">
-                     Читать подробнее о клинике <Vector />
+                  <StyledNavlink variant="a">
+                     Читать подробнее о клинике <Arrow />
                   </StyledNavlink>
                </StyledTextContainer>
                <StyledImagesContainer>
-                  <StyledBuildingImg src={Building} alt="Здание" />
+                  <StyledBuildingImg src={Building} alt="здание" />
                   <StyledSlidingImG>
-                     <StyledBuildingImG src={Conference} alt="доктора" />
-                     <StyledBuildingImG src={Photos} alt="доктора" />
                      <StyledBuildingImG src={Doctors} alt="доктора" />
+                     <StyledBuildingImG src={Photos} alt="доктора" />
+                     <StyledBuildingImG src={Conference} alt="доктора" />
                   </StyledSlidingImG>
                </StyledImagesContainer>
             </StyledContainer>
@@ -56,7 +56,7 @@ const AboutHealthCheck = () => {
    )
 }
 
-export default AboutHealthCheck
+export default AboutUs
 
 const StyledThirdBlock = styled('div')(() => ({
    display: 'flex',
@@ -85,7 +85,6 @@ const StyledContainer = styled('div')(({ theme }) => ({
 const StyledTitle = styled(Typography)(({ theme }) => ({
    fontFamily: 'Manrope',
    fontSize: '2.25rem',
-   fontStyle: 'normal',
    fontWeight: '600',
    lineHeight: 'normal',
 
@@ -124,7 +123,7 @@ const StyledImagesContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
-   gap: '1.625rem',
+   gap: '0.5rem',
    maxWidth: '36.625rem',
 
    [theme.breakpoints.down('lg')]: {
@@ -153,9 +152,8 @@ const StyledBuildingImg = styled('img')(({ theme }) => ({
 const StyledSlidingImG = styled('div')(({ theme }) => ({
    display: 'flex',
    gap: '1.625rem',
-   marginTop: '1.25rem',
    img: {
-      width: '169px',
+      width: '173px',
       height: 'auto',
       borderRadius: '0.5rem',
       [theme.breakpoints.down('lg')]: {
@@ -165,17 +163,16 @@ const StyledSlidingImG = styled('div')(({ theme }) => ({
    },
 }))
 
-const StyledNavlink = styled('p')(({ theme }) => ({
+const StyledNavlink = styled('a')(({ theme }) => ({
    width: '15.5rem',
    color: '#009344',
-   fontSize: '1rem',
    fontWeight: 500,
    textDecoration: 'none',
    cursor: 'pointer',
    paddingTop: '1rem',
-   marginTop: '2.875rem',
+   marginTop: '1.4rem',
    [theme.breakpoints.down('lg')]: {
-      marginTop: '2.7rem',
+      marginTop: '0.5rem',
       fontSize: '0.8rem',
    },
 }))

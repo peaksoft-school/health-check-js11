@@ -1,13 +1,12 @@
-import { styled } from '@mui/material/styles'
-import React from 'react'
-import doctorImage from '../assets/images/doctorForWelcome.png'
+import { styled, Box } from '@mui/material/styles'
+import DoctorImage from '../assets/images/doctorForWelcome.png'
 import Button from './UI/Button'
 
 const Welcome = () => {
    return (
       <Container>
-         <div className="main-page-part2">
-            <div className="text-container">
+         <Box className="main-page-part2">
+            <Box className="text-container">
                <StyledWelcome>
                   Добро пожаловать в клинику HealthCheck
                </StyledWelcome>
@@ -19,12 +18,12 @@ const Welcome = () => {
                </StyledDesc>
 
                <StyledButton variant="shortBtn">оставьте заявку</StyledButton>
-            </div>
+            </Box>
 
-            <div>
-               <StyledImage src={doctorImage} alt="doctor-img" />
-            </div>
-         </div>
+            <Box>
+               <StyledImage src={DoctorImage} alt="doctor-img" />
+            </Box>
+         </Box>
       </Container>
    )
 }
