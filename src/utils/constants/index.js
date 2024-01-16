@@ -2,6 +2,7 @@ import {
    HeaderInstagramIcon,
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
+   // ReviewStars,
 } from '../../assets/icons'
 
 const NAV = [
@@ -33,4 +34,6 @@ const HEADER_SOCIALS = [
    },
 ]
 
-export { HEADER_SOCIALS, NAV }
+const REVIEWS = [{}, {}, {}]
+
+export { HEADER_SOCIALS, NAV, REVIEWS }
