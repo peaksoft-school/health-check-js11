@@ -1,8 +1,8 @@
 import { Typography, styled } from '@mui/material'
-import Building from '../assets/images/building.png'
-import Conference from '../assets/images/conference.png'
-import Photos from '../assets/images/doctors.png'
-import Doctors from '../assets/images/stady.png'
+import Building from '../assets/images/building-image.png'
+import Conference from '../assets/images/conference-image.png'
+import Photos from '../assets/images/doctors-image.png'
+import Doctors from '../assets/images/stady-image.png'
 import { Vector } from '../assets/icons/servicesIcons'
 
 const AboutHealthCheck = () => {
