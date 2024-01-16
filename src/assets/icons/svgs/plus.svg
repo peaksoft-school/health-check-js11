@@ -1,0 +1,12 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="36" height="36" fill="#9B9690"/>
+<g id="Icons">
+<rect width="792" height="557" transform="translate(-242 -269)" fill="#030303"/>
+<g id="Component 48">
+<rect x="-186.5" y="-19.5" width="626" height="115" rx="4.5" stroke="#9747FF" stroke-dasharray="10 5"/>
+<g id="Property 1=plus">
+<path id="Vector" d="M18 9C18.6213 9 19.125 9.50368 19.125 10.125V16.875H25.875C26.4963 16.875 27 17.3787 27 18C27 18.6213 26.4963 19.125 25.875 19.125H19.125V25.875C19.125 26.4963 18.6213 27 18 27C17.3787 27 16.875 26.4963 16.875 25.875V19.125H10.125C9.50368 19.125 9 18.6213 9 18C9 17.3787 9.50368 16.875 10.125 16.875H16.875V10.125C16.875 9.50368 17.3787 9 18 9Z" fill="#A2A2A2"/>
+</g>
+</g>
+</g>
+</svg>

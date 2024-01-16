@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@emotion/react'
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
@@ -28,4 +29,8 @@ const theme = createTheme({
    },
 })
 
-export default theme
+const Themes = ({ children }) => (
+   <ThemeProvider theme={theme}>{children}</ThemeProvider>
+)
+
+export default Themes
