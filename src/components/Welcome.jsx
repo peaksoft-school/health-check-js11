@@ -6,11 +6,12 @@ import Button from './UI/Button'
 const Welcome = () => {
    return (
       <Container>
-         <MainPagePart2>
-            <TextContainer>
+         <div className="main-page-part2">
+            <div className="text-container">
                <StyledWelcome>
                   Добро пожаловать в клинику HealthCheck
                </StyledWelcome>
+
                <StyledDesc>
                   Международный Медицинская клиника «HealthCheck — это клиника,
                   в которой применяются новейшие диагностические и лечебные
@@ -18,33 +19,40 @@ const Welcome = () => {
                </StyledDesc>
 
                <StyledButton variant="shortBtn">оставьте заявку</StyledButton>
-            </TextContainer>
+            </div>
+
             <div>
                <StyledImage src={doctorImage} alt="doctor-img" />
             </div>
-         </MainPagePart2>
+         </div>
       </Container>
    )
 }
 
 export default Welcome
 
-const MainPagePart2 = styled('div')(({ theme }) => ({
-   display: 'flex',
-   height: '38.452rem',
-   margin: '1.25rem 7.5rem 1.923rem',
-   gap: '3.438rem',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   [theme.breakpoints.down('lg')]: {
-      height: 'auto',
-      margin: '1.25rem',
-   },
-}))
-
-const Container = styled('div')(() => ({
+const Container = styled('div')(({ theme }) => ({
    display: 'flex',
    justifyContent: 'center',
+   '& .main-page-part2': {
+      display: 'flex',
+      height: '38.452rem',
+      margin: '1.25rem 7.5rem 1.923rem',
+      gap: '3.438rem',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      [theme.breakpoints.down('lg')]: {
+         height: 'auto',
+         margin: '1.25rem',
+      },
+      '& .text-container': {
+         width: '36.563rem',
+         height: '14.313rem',
+         [theme.breakpoints.down('lg')]: {
+            width: '100%',
+         },
+      },
+   },
 }))
 
 const StyledWelcome = styled('h1')(({ theme }) => ({
@@ -84,14 +92,6 @@ const StyledDesc = styled('h1')(({ theme }) => ({
    fontWeight: '400',
    lineHeight: '130%',
    width: '33rem',
-   [theme.breakpoints.down('lg')]: {
-      width: '100%',
-   },
-}))
-
-const TextContainer = styled('div')(({ theme }) => ({
-   width: '36.563rem',
-   height: '14.313rem',
    [theme.breakpoints.down('lg')]: {
       width: '100%',
    },
