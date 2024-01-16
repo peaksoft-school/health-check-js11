@@ -1,8 +1,8 @@
 import { Typography, styled } from '@mui/material'
-import Building from '../assets/images/3blockImage.png'
-import Conference from '../assets/images/3blockImage2.png'
-import Photos from '../assets/images/3blockImage3.png'
-import Doctors from '../assets/images/3blockImage4.png'
+import Building from '../assets/images/Building.png'
+import Conference from '../assets/images/Conference.png'
+import Photos from '../assets/images/Doctors.png'
+import Doctors from '../assets/images/Stady.png'
 import { Vector } from '../assets/icons/servicesIcons'
 
 const AboutHealthCheck = () => {
@@ -144,10 +144,8 @@ const StyledBuildingImG = styled('img')(() => ({
 }))
 
 const StyledBuildingImg = styled('img')(({ theme }) => ({
-   // width: '100%',
    maxWidth: '36.625em',
    [theme.breakpoints.down('lg')]: {
-      // height: 'auto',
       width: '30rem',
    },
 }))
