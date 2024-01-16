@@ -1,5 +1,5 @@
 import { Grid, Typography, styled } from '@mui/material'
-import { infoDoctors } from '../../utils/constants/index'
+import { INFO_DOCTORS } from '../../utils/constants/index'
 import Button from '../UI/Button'
 
 const BestDoctors = () => {
@@ -14,7 +14,7 @@ const BestDoctors = () => {
             опытом.
          </StyledSmallText>
          <StyledContainer container spacing={2}>
-            {infoDoctors.map(({ id, name, doctor, image }) => (
+            {INFO_DOCTORS.map(({ id, name, doctor, image }) => (
                <Grid item xs={6} sm={3} md={2} key={id}>
                   <StyledImg src={image} alt="hdhal" />
                   <StyledName variant="h5">{name}</StyledName>
