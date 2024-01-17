@@ -1,19 +1,18 @@
-import React from 'react'
 import { Typography, Grid, styled } from '@mui/material'
 import { BEST_QUALITIES } from '../../utils/constants/index'
 
 const WhyWe = () => {
    return (
       <StyledMainContainer>
-         <StyledMainText>
+         <StyledtTitle>
             Почему <Typography variant="p">нас выбирают? </Typography>
-         </StyledMainText>
+         </StyledtTitle>
          <StyledContainerGrid container spacing={2} direction="row">
-            {BEST_QUALITIES.map((item) => (
-               <StyledGrid key={item.key}>
-                  <StyledNumber variant="h1">{item.number}</StyledNumber>
-                  <StyledWhy variant="h5">{item.title}</StyledWhy>
-                  <StyledText variant="body2">{item.text}</StyledText>
+            {BEST_QUALITIES.map((specialists) => (
+               <StyledGrid key={specialists.key}>
+                  <StyledNumber variant="h1">{specialists.number}</StyledNumber>
+                  <StyledWhy variant="h5">{specialists.title}</StyledWhy>
+                  <StyledText variant="body2">{specialists.text}</StyledText>
                </StyledGrid>
             ))}
          </StyledContainerGrid>
@@ -45,12 +44,12 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
    boxSizing: 'border-box',
 }))
 
-const StyledMainText = styled(Typography)(({ theme }) => ({
-   fontFamily: 'Manrope',
+const StyledtTitle = styled(Typography)(({ theme }) => ({
    fontSize: '2.25rem',
    fontStyle: 'normal',
    fontWeight: '600',
    lineHeight: 'normal',
+   margin: '30px 15px',
    '.MuiTypography-root': {
       color: theme.palette.primary.darkGreen,
    },
