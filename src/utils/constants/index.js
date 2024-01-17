@@ -4,6 +4,27 @@ import {
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
 
+const BEST_QUALITIES = [
+   {
+      id: 1,
+      number: '1',
+      title: 'Высокий профессионализм сотрудников',
+      text: 'Медицинская лицензия, большой опыт врачей и постоянное повышение квалификации.',
+   },
+   {
+      id: 2,
+      number: '2',
+      title: 'Наши пациенты - наши лучшие друзья',
+      text: 'Все аппараты и медицинские препараты сертифицированы и лицензированы.',
+   },
+   {
+      id: 3,
+      number: '3',
+      title: 'Комфортные условия',
+      text: 'Уютная обстановка и отзывчивый персонал сделают поход в клинику максимально приятным.',
+   },
+]
+
 const NAV = [
    { id: 1, text: 'О клинике' },
    { id: 2, text: 'Услуги' },
@@ -33,4 +54,4 @@ const HEADER_SOCIALS = [
    },
 ]
 
-export { HEADER_SOCIALS, NAV }
+export { HEADER_SOCIALS, NAV, BEST_QUALITIES }
