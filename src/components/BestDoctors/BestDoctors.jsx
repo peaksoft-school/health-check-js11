@@ -63,25 +63,29 @@ const StyledContainer = styled(Grid)(({ theme }) => ({
       flexBasis: '48%',
       marginBottom: '2em',
    },
+
    '& .imgWrapper': {
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
    },
+
    '& .img': {
       width: '203px',
       height: '203px',
       borderRadius: '50%',
       backgroundColor: '#E4E7EE',
       display: 'block',
-      imageRendering: 'crisp-edges',
+      imageRendering: 'pixelated',
    },
+
    '& .name': {
       textAlign: 'center',
       fontSize: '1em',
       fontWeight: '500',
       lineHeight: '1.25em',
    },
+
    '& .doctor': {
       color: theme.palette.secondary.lightGrey,
       textAlign: 'center',
@@ -94,7 +98,7 @@ const StyledContainer = styled(Grid)(({ theme }) => ({
 const StyledButton = styled(Button)(() => ({
    marginTop: '4.875em',
    width: 'fit-content',
-   marginLeft: '35%',
+   marginLeft: '42%',
    marginRight: 'auto',
 }))
 
