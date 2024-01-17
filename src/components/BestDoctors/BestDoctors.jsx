@@ -15,10 +15,16 @@ const BestDoctors = () => {
          </StyledSmallText>
          <StyledContainer container spacing={2}>
             {INFO_DOCTORS.map(({ id, name, doctor, image }) => (
-               <Grid item xs={6} sm={3} md={2} key={id}>
-                  <StyledImg src={image} alt="hdhal" />
-                  <StyledName variant="h5">{name}</StyledName>
-                  <StyledDoctor variant="h6">{doctor}</StyledDoctor>
+               <Grid item xs={6} sm={3} md={2} key={id} className="doctorCard">
+                  <div className="imgWrapper">
+                     <img className="img" src={image} alt="hdhal" />
+                  </div>
+                  <Grid className="name" variant="h5">
+                     {name}
+                  </Grid>
+                  <Grid className="doctor" variant="h6">
+                     {doctor}
+                  </Grid>
                </Grid>
             ))}
          </StyledContainer>
@@ -26,6 +32,7 @@ const BestDoctors = () => {
       </StyledBlock>
    )
 }
+
 export default BestDoctors
 
 const StyledBlock = styled('div')(() => ({
@@ -45,31 +52,43 @@ const StyledMainText = styled(Typography)(({ theme }) => ({
    marginBottom: '1.7em',
 }))
 
-const StyledImg = styled('img')(() => ({
-   width: '12.6875em',
-   height: '12.6875em',
-   marginBottom: '1.5em',
-   borderRadius: '50%',
-   backgroundColor: '#E4E7EE',
-}))
-
-const StyledDoctor = styled(Typography)(({ theme }) => ({
-   color: theme.palette.secondary.lightGrey,
-   textAlign: 'center',
-   fontSize: '0.875em',
-   fontWeight: '500',
-   lineHeight: '1.25em',
-}))
-
-const StyledName = styled(Typography)(() => ({
-   textAlign: 'center',
-   fontSize: '1em',
-   fontWeight: '500',
-   lineHeight: '1.25em',
-}))
-
-const StyledContainer = styled(Grid)(() => ({
+const StyledContainer = styled(Grid)(({ theme }) => ({
    paddingTop: '4.6875em',
+   display: 'flex',
+   justifyContent: 'space-between',
+   flexWrap: 'wrap',
+   width: '100%',
+
+   '& .doctorCard': {
+      flexBasis: '48%',
+      marginBottom: '2em',
+   },
+   '& .imgWrapper': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+   },
+   '& .img': {
+      width: '203px',
+      height: '203px',
+      borderRadius: '50%',
+      backgroundColor: '#E4E7EE',
+      display: 'block',
+      imageRendering: 'crisp-edges',
+   },
+   '& .name': {
+      textAlign: 'center',
+      fontSize: '1em',
+      fontWeight: '500',
+      lineHeight: '1.25em',
+   },
+   '& .doctor': {
+      color: theme.palette.secondary.lightGrey,
+      textAlign: 'center',
+      fontSize: '0.875em',
+      fontWeight: '500',
+      lineHeight: '1.25em',
+   },
 }))
 
 const StyledButton = styled(Button)(() => ({
