@@ -1,4 +1,5 @@
 import './App.css'
+import AboutUs from './components/AboutUs'
 import Header from './layout/Header'
 
 const App = () => {
@@ -6,6 +7,7 @@ const App = () => {
       <div>
          health-check-js11
          <Header />
+         <AboutUs />
       </div>
    )
 }

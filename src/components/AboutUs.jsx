@@ -1,52 +1,72 @@
-import { Typography, styled } from '@mui/material'
-import Building from '../assets/images/building.png'
-import Conference from '../assets/images/conference.png'
-import Stady from '../assets/images/doctors.png'
-import Doctors from '../assets/images/stady.png'
+import { Typography, styled, Box } from '@mui/material'
+import {
+   StudyImage,
+   DoctorsImage,
+   BuildingImage,
+   ConferenceImage,
+} from '../assets/images/index'
 import { Arrow } from '../assets/icons/index'
+import { ABOUT_US } from '../utils/constants'
 
 const AboutUs = () => (
-   <StyledMain>
-      <StyledContainer>
+   <StyledContainer>
+      <Box className="content">
          <StyledTitle variant="h2">
             О нашей клинике
             <Typography variant="p"> “HealthCheck”</Typography>
          </StyledTitle>
 
          <StyledContent>
-            <StyledTextContainer>
+            <Box className="text-container">
+               {ABOUT_US}
+
                <StyledReadMore variant="p">
                   Читать подробнее о клинике <Arrow />
                </StyledReadMore>
-            </StyledTextContainer>
+            </Box>
 
             <StyledImagesContainer>
-               <StyledBuildingImg src={Building} alt="здание" />
-               <StyledSlidingImG>
-                  <StyledImg src={Stady} alt="доктора учатся" />
-                  <StyledImg src={Doctors} alt="доктора" />
-                  <StyledImg src={Conference} alt="доктора в конфернеции" />
-               </StyledSlidingImG>
+               <img className="building" src={BuildingImage} alt="здание" />
+
+               <Box className="images-box">
+                  <img
+                     className="small-image"
+                     src={StudyImage}
+                     alt="доктора учатся"
+                  />
+
+                  <img
+                     className="small-image"
+                     src={DoctorsImage}
+                     alt="доктора"
+                  />
+
+                  <img
+                     className="small-image"
+                     src={ConferenceImage}
+                     alt="доктора в конферeнции"
+                  />
+               </Box>
             </StyledImagesContainer>
          </StyledContent>
-      </StyledContainer>
-   </StyledMain>
+      </Box>
+   </StyledContainer>
 )
 
 export default AboutUs
 
-const StyledMain = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-}))
-
 const StyledContainer = styled('div')(({ theme }) => ({
    display: 'flex',
-   flexDirection: 'column',
-   gap: '3.75rem',
+   justifyContent: 'center',
 
-   [theme.breakpoints.down('lg')]: {
-      gap: '2rem',
+   '& .content': {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3.75rem',
+
+      [theme.breakpoints.down('lg')]: {
+         gap: '2rem',
+      },
    },
 }))
 
@@ -74,29 +94,30 @@ const StyledContent = styled('div')(({ theme }) => ({
    [theme.breakpoints.down('lg')]: {
       gap: '5rem',
    },
-}))
 
-const StyledTextContainer = styled('div')(({ theme }) => ({
-   display: 'flex',
-   flexDirection: 'column',
-   maxHeight: '30.875rem',
-   maxWidth: '32.063rem',
-   width: 'auto',
+   '& .text-container': {
+      display: 'flex',
+      flexDirection: 'column',
+      maxHeight: '30.875rem',
+      maxWidth: '32.063rem',
+      width: 'auto',
 
-   '& .MuiTypography-root': {
-      fontSize: '1rem',
-      fontFamily: 'Manrope',
-      fontStyle: 'normal',
-      fontWeight: '400',
-      lineHeight: '160%',
-      color: '#4D4E51',
-   },
-
-   [theme.breakpoints.down('lg')]: {
       '& .MuiTypography-root': {
-         fontSize: '0.8rem',
+         fontSize: '1rem',
+         fontFamily: 'Manrope',
+         fontStyle: 'normal',
+         fontWeight: '400',
+         lineHeight: '160%',
+         color: '#4D4E51',
       },
-      width: '370px',
+
+      [theme.breakpoints.down('lg')]: {
+         '& .MuiTypography-root': {
+            fontSize: '0.8rem',
+         },
+
+         width: '370px',
+      },
    },
 }))
 
@@ -115,31 +136,31 @@ const StyledImagesContainer = styled('div')(({ theme }) => ({
       display: 'flex',
       gap: '1.625rem',
    },
-}))
 
-const StyledImg = styled('img')(() => ({
-   width: '100%',
-   height: 'auto',
-   marginTop: '1.25rem',
-}))
-
-const StyledBuildingImg = styled('img')(({ theme }) => ({
-   maxWidth: '36.625em',
-   [theme.breakpoints.down('lg')]: {
-      width: '30rem',
-   },
-}))
-
-const StyledSlidingImG = styled('div')(({ theme }) => ({
-   display: 'flex',
-   gap: '1.625rem',
-   img: {
-      width: '173px',
+   '& .building': {
+      maxWidth: '36.625em',
+      width: '100%',
       height: 'auto',
       borderRadius: '0.5rem',
+
       [theme.breakpoints.down('lg')]: {
-         alignItems: 'center',
-         width: '140px',
+         width: '30rem',
+      },
+   },
+
+   '& .images-box': {
+      display: 'flex',
+      gap: '1.625rem',
+
+      '& .small-image': {
+         width: '173px',
+         height: 'auto',
+         marginTop: '1.25rem',
+
+         [theme.breakpoints.down('lg')]: {
+            alignItems: 'center',
+            width: '140px',
+         },
       },
    },
 }))
@@ -152,6 +173,7 @@ const StyledReadMore = styled('a')(({ theme }) => ({
    cursor: 'pointer',
    paddingTop: '1rem',
    marginTop: '1.4rem',
+
    [theme.breakpoints.down('lg')]: {
       marginTop: '0.5rem',
       fontSize: '0.8rem',
