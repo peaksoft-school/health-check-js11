@@ -1,6 +1,6 @@
 import { styled, Box } from '@mui/material'
-import Button from './UI/Button'
-import { DoctorImage } from '../assets/images'
+import { DoctorImage } from '../../assets/images'
+import Button from '../UI/Button'
 
 const Welcome = () => (
    <Container>
