@@ -1,4 +1,3 @@
-// import styled from '@emotion/styled'
 import { forwardRef } from 'react'
 import Select from 'react-select'
 
@@ -14,6 +13,10 @@ const customStyles = {
       '&:hover': {
          borderColor: state.isFocused ? 'none' : '#c1b5b5',
       },
+   }),
+   menu: (provided) => ({
+      ...provided,
+      width: '490px', // Установка ширины options под Select
    }),
 }
 
