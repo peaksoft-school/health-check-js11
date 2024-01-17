@@ -59,4 +59,25 @@ const ABOUT_US = (
    </Typography>
 )
 
-export { HEADER_SOCIALS, HEADER_NAV, LOCATION, ABOUT_US }
+const BEST_QUALITIES = [
+   {
+      id: 1,
+      number: '1',
+      title: 'Высокий профессионализм сотрудников',
+      text: 'Медицинская лицензия, большой опыт врачей и постоянное повышение квалификации.',
+   },
+   {
+      id: 2,
+      number: '2',
+      title: 'Наши пациенты - наши лучшие друзья',
+      text: 'Все аппараты и медицинские препараты сертифицированы и лицензированы.',
+   },
+   {
+      id: 3,
+      number: '3',
+      title: 'Комфортные условия',
+      text: 'Уютная обстановка и отзывчивый персонал сделают поход в клинику максимально приятным.',
+   },
+]
+
+export { HEADER_SOCIALS, HEADER_NAV, BEST_QUALITIES, LOCATION, ABOUT_US }
