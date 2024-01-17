@@ -13,9 +13,11 @@ const WhyWe = () => (
                <Grid className="number" variant="h1">
                   {number}
                </Grid>
+
                <Grid className="title" variant="h3">
                   {title}
                </Grid>
+
                <Grid className="text" variant="p">
                   {text}
                </Grid>
