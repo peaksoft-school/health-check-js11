@@ -12,6 +12,7 @@ const theme = createTheme({
             'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
          darkGreen: '#027B44',
       },
+
       secondary: {
          main: '#D9D9D9',
          linearGradient: ('#FDFDFD', '#E4E7EE'),
@@ -20,6 +21,7 @@ const theme = createTheme({
          orange: '#E4772F',
          white: '#DBF0E5',
       },
+
       tertiary: {
          main: '#DBEBFF',
          daisy: '#DBF0E5',
