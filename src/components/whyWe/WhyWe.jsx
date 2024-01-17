@@ -51,14 +51,11 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
    '& .number': {
       fontFamily: 'Manrope',
       fontSize: '3rem',
-      fontStyle: 'normal',
       fontWeight: '600',
-      lineHeight: 'normal',
       color: theme.palette.primary.darkGreen,
    },
 
    '& .text': {
-      fontSize: '1rem',
       fontWeight: '400',
       lineHeight: '130%',
       paddingTop: '18px',
@@ -66,19 +63,16 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 
    '& .title': {
       color: theme.palette.primary.lightBlack,
-      fontFamily: 'Montserrat',
+      fontFamily: 'Manrope',
       fontSize: '20px',
-      fontStyle: 'normal',
       fontWeight: 'bold',
    },
 }))
 
 const StyledtTitle = styled(Typography)(({ theme }) => ({
    fontSize: '2.25rem',
-   fontStyle: 'normal',
    fontWeight: '600',
    fontFamily: ' Manrope',
-
    lineHeight: 'normal',
    margin: '30px 15px',
 
