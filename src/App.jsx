@@ -1,13 +1,7 @@
 import './App.css'
-import WhyWe from './components/whyWe/WhyWe'
 
 const App = () => {
-   return (
-      <div>
-         health-check-js11
-         <WhyWe />
-      </div>
-   )
+   return <div>health-check-js11</div>
 }
 
 export default App
