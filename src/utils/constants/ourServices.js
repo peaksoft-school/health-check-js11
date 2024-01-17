@@ -8,7 +8,7 @@ import {
    FizioterapiyaIcon,
    OnkologiyaIcon,
    UrologiyaIcon,
-} from '../../assets/icons/serviceIcons '
+} from '../../assets/icons/servicesIcons'
 
 export const services = [
    { id: 1, name: 'Вакцинация', icon: <VaccinationIcon /> },
