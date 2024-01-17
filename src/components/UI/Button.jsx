@@ -59,7 +59,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
                border: 'none',
-               padding: '10.5px 27px',
+               // padding: '10.5px 27px',
                color: theme.palette.primary.main,
             },
 

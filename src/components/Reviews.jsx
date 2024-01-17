@@ -8,61 +8,55 @@ const customPaging = () => <Pagination />
 
 const Reviews = () => {
    const settings = {
-      autoplay: true,
+      // autoplay: true,
       dots: true,
-      infinite: true,
-      speed: 500,
+      infinite: false,
       slidesToShow: 1,
       slidesToScroll: 1,
       appendDots: customDots,
       customPaging,
       nextArrow: <NextReview />,
       prevArrow: <PreviousReview />,
-      currentSlide: 0,
+      currentSlide: 1,
    }
 
    return (
-      <StyledReviewsContainer>
-         <Box>
-            <StyledTitle variant="h2">
-               Отзывы наших <Typography variant="span"> пациентов</Typography>
-            </StyledTitle>
-            <StyledSliderContainer>
-               <StyledSlider {...settings}>
-                  {REVIEWS.map(({ img, id, name, rating, review }) => (
-                     <StyledReviewCard key={id}>
-                        <Box className="container">
-                           <img src={img} alt="" />
-                           <Box className="wrapper">
-                              <Typography variant="p" className="user-name">
-                                 {name}
-                              </Typography>
-                              <Rating value={rating} readOnly />
-                           </Box>
+      <Box>
+         <StyledTitle variant="h2">
+            Отзывы наших <Typography variant="span"> пациентов</Typography>
+         </StyledTitle>
+
+         <StyledSliderContainer>
+            <StyledSlider {...settings}>
+               {REVIEWS.map(({ img, id, name, rating, review }) => (
+                  <StyledReviewCard key={id}>
+                     <Box className="container">
+                        <img src={img} alt="icon" />
+
+                        <Box className="wrapper">
+                           <Typography variant="p">{name}</Typography>
+
+                           <Rating value={rating} readOnly />
                         </Box>
-                        <Review>{review}</Review>
-                     </StyledReviewCard>
-                  ))}
-               </StyledSlider>
-            </StyledSliderContainer>
-         </Box>
-      </StyledReviewsContainer>
+                     </Box>
+
+                     <Review>{review}</Review>
+                  </StyledReviewCard>
+               ))}
+            </StyledSlider>
+         </StyledSliderContainer>
+      </Box>
    )
 }
 
 export default Reviews
 
-const StyledReviewsContainer = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-}))
-
 const StyledSliderContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    justifyContent: 'center',
    overflow: 'hidden',
-   width: '85rem',
+   clipPath: '',
+
    [theme.breakpoints.down('lg')]: {
       width: '70rem',
    },
@@ -75,6 +69,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
    lineHeight: '3.063rem',
    color: theme.palette.primary.lightBlack,
    paddingLeft: '7rem',
+
    span: {
       color: '#048741',
    },
@@ -83,15 +78,18 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
 const StyledReviewCard = styled('div')(({ theme }) => ({
    padding: '2.5rem',
    width: '48.875rem',
+
    '& .container': {
       display: 'flex',
       gap: '0.875rem',
       paddingBottom: '20px',
+
       '& .wrapper': {
          display: 'flex',
          flexDirection: 'column',
       },
    },
+
    [theme.breakpoints.down('lg')]: {
       padding: '1.5rem',
       paddingBottom: '2rem',
@@ -102,6 +100,7 @@ const Review = styled('p')(({ theme }) => ({
    fontWeight: 300,
    fontSize: '1rem',
    lineHeight: '1.366rem',
+
    [theme.breakpoints.down('lg')]: {
       fontSize: '0.8rem',
       lineHeight: '1.1rem',
@@ -110,21 +109,25 @@ const Review = styled('p')(({ theme }) => ({
 
 const StyledSlider = styled(Slider)(({ theme }) => ({
    position: 'relative',
+
    '& .slick-track': {
       display: 'flex',
       gap: '2.25rem',
       marginTop: '3.75rem',
    },
+
    '& .slick-list': {
       width: '48.875rem',
       [theme.breakpoints.down('lg')]: {
          width: '40.875rem',
       },
    },
+
    '& .slick-slide': {
       backgroundColor: '#F3F1F1',
       borderRadius: '1.25rem',
    },
+
    '& .slick-dots': {
       listStyle: 'none',
       display: 'flex',
@@ -132,44 +135,55 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
       gap: '0.875rem',
       paddingTop: '3.375rem',
       paddingBottom: '0.75rem',
+
       '& .slick-active': {
          background: 'none',
+
          ellipse: {
             fill: '#048741',
          },
       },
    },
+
    '& .slick-active': {
       backgroundColor: theme.palette.tertiary.daisy,
    },
+
    '& .slick-arrow': {
       cursor: 'pointer',
    },
+
    '& .slick-next, .slick-prev': {
       position: 'absolute',
       top: '24.25rem',
       zIndex: '10',
    },
+
    '& .slick-next': {
       left: '29.375rem',
+
       [theme.breakpoints.down('lg')]: {
          left: '25.375rem',
          top: '21rem',
          width: '35px',
       },
    },
+
    '& .slick-prev': {
       left: '17.063rem',
+
       [theme.breakpoints.down('lg')]: {
          left: '13.375rem',
          top: '21rem',
          width: '35px',
       },
    },
+
    '& .slick-next:hover, .slick-prev:hover': {
       circle: {
          fill: '#048741',
       },
+
       path: {
          fill: theme.palette.primary.main,
       },

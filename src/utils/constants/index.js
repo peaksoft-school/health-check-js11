@@ -3,7 +3,7 @@ import {
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
-import UserIcon from '../../assets/images/user-icon.png'
+import UserIcon from '../../assets/images/User-icon.png'
 
 const NAV = [
    { id: 1, text: 'О клинике' },

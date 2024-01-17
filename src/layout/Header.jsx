@@ -36,6 +36,7 @@ const Header = () => {
             width: '100%',
             position: 'fixed',
             top: '0px',
+            zIndex: '1000',
             height: '1000vh',
          }}
       >
@@ -141,6 +142,7 @@ const StyledHeaderContainer = styled('header')(() => ({
    display: 'flex',
    flexDirection: 'column',
    padding: '0 2%',
+   backgroundColor: 'white',
 }))
 
 const StyledFirstBlock = styled('div')(() => ({
