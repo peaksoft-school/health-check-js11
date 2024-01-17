@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
-import { services } from '../utils/constants/our-services'
-import Button from './UI/Button'
+import { services } from '../../utils/constants/ourServices'
+import Button from '../UI/Button'
 
 const OurServices = () => {
    return (

@@ -1,7 +1,12 @@
 import './App.css'
+import OurServices from './components/mainPage/OurServices'
 
 const App = () => {
-   return <div>Health_Check</div>
+   return (
+      <div>
+         <OurServices />
+      </div>
+   )
 }
 
 export default App
