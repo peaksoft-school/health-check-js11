@@ -1,7 +1,7 @@
 import { Typography, styled } from '@mui/material'
 import Building from '../assets/images/building.png'
 import Conference from '../assets/images/conference.png'
-import Photos from '../assets/images/doctors.png'
+import Stady from '../assets/images/doctors.png'
 import Doctors from '../assets/images/stady.png'
 import { Arrow } from '../assets/icons/index'
 
@@ -15,29 +15,6 @@ const AboutUs = () => (
 
          <StyledContent>
             <StyledTextContainer>
-               <Typography variant="p">
-                  Вся наша команда готова обеспечить вам медицинский уход и
-                  заботу на самом высоком уровне. Наша главная задача — оказать
-                  Вам теплый прием и обеспечить самый лучший медицинский уход. У
-                  нас Вы в хороших руках! B нашей клинике используются только
-                  качественные материалы и проверенные технологии. Для каждого
-                  клиента специалисты нашей клиники разработают индивидуальный
-                  план лечения, подробно рассказывая о каждом этапе.
-                  <br />
-                  <br />
-                  Доброжелательность и уважительное отношение к пациентам, не
-                  только материальная, но и моральная ответственность за
-                  результаты лечения — все это взято за основу политики Medical
-                  Clinic. Профессионализм и высокое качество оказываемых услуг
-                  помогают нам привлечь пациентов которые рекомендуют нас своим
-                  родным и близким.
-                  <br />
-                  <br />
-                  Уже 20 лет мы работаем на уровне лучших мировых стандартов,
-                  внедряя и развивая передовые методы лечения для сохранения
-                  здоровья наших пациентов.
-               </Typography>
-
                <StyledReadMore variant="p">
                   Читать подробнее о клинике <Arrow />
                </StyledReadMore>
@@ -46,8 +23,8 @@ const AboutUs = () => (
             <StyledImagesContainer>
                <StyledBuildingImg src={Building} alt="здание" />
                <StyledSlidingImG>
-                  <StyledImg src={Doctors} alt="доктора учатся" />
-                  <StyledImg src={Photos} alt="доктора" />
+                  <StyledImg src={Stady} alt="доктора учатся" />
+                  <StyledImg src={Doctors} alt="доктора" />
                   <StyledImg src={Conference} alt="доктора в конфернеции" />
                </StyledSlidingImG>
             </StyledImagesContainer>
@@ -93,6 +70,7 @@ const StyledContent = styled('div')(({ theme }) => ({
    gap: '6.313rem',
    alignItems: 'stretch',
    height: '34.125rem',
+
    [theme.breakpoints.down('lg')]: {
       gap: '5rem',
    },
@@ -113,6 +91,7 @@ const StyledTextContainer = styled('div')(({ theme }) => ({
       lineHeight: '160%',
       color: '#4D4E51',
    },
+
    [theme.breakpoints.down('lg')]: {
       '& .MuiTypography-root': {
          fontSize: '0.8rem',
