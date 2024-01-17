@@ -35,7 +35,6 @@ const Container = styled('div')(({ theme }) => ({
       gap: '3.438rem',
       justifyContent: 'space-between',
       alignItems: 'center',
-
       [theme.breakpoints.down('lg')]: {
          height: 'auto',
          margin: '1.25rem',
