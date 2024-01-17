@@ -1,15 +1,7 @@
 import './App.css'
-import AboutUs from './components/AboutUs'
-import Header from './layout/Header'
 
 const App = () => {
-   return (
-      <div>
-         health-check-js11
-         <Header />
-         <AboutUs />
-      </div>
-   )
+   return <div>health-check-js11</div>
 }
 
 export default App
