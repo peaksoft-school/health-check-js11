@@ -11,31 +11,31 @@ import {
 
 const INFO_DOCTORS = [
    {
-      image: fourth,
+      image: first,
       name: 'Войнич Дарья',
       doctor: 'Врач-терапевт',
       id: 1,
    },
    {
-      image: third,
+      image: second,
       name: 'Мисько Екатерина',
       doctor: 'Врач-Педиатр',
       id: 2,
    },
    {
-      image: fifth,
+      image: third,
       name: 'Дмитроченко Дмитрий',
       doctor: 'Врач-уролог-андролог',
       id: 3,
    },
    {
-      image: second,
+      image: fourth,
       name: 'Антух Евгений',
       doctor: 'Врач-невролог',
       id: 4,
    },
    {
-      image: first,
+      image: fifth,
       name: 'Мисник Елена',
       doctor: 'Врач эндокринолог',
       id: 4,

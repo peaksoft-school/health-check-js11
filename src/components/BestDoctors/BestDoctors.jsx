@@ -63,7 +63,6 @@ const StyledDoctor = styled(Typography)(({ theme }) => ({
 
 const StyledName = styled(Typography)(() => ({
    textAlign: 'center',
-   fontFamily: 'Manrope',
    fontSize: '1em',
    fontWeight: '500',
    lineHeight: '1.25em',
