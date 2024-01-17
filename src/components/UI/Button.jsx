@@ -1,15 +1,17 @@
 import { Button as MuiButton, styled } from '@mui/material'
 
-const Button = ({ disabled, onClick, children, variant, theme, ...rest }) => (
-   <StyledButton
-      disabled={disabled}
-      onClick={onClick}
-      variant={variant}
-      {...rest}
-   >
-      {children}
-   </StyledButton>
-)
+const Button = ({ disabled, onClick, children, variant, ...rest }) => {
+   return (
+      <StyledButton
+         disabled={disabled}
+         onClick={onClick}
+         variant={variant}
+         {...rest}
+      >
+         {children}
+      </StyledButton>
+   )
+}
 
 export default Button
 
@@ -21,10 +23,9 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          borderRadius: '10px',
          backgroundColor: theme.palette.primary.darkGreen,
          color: theme.palette.primary.main,
-         transition: 'all 5s',
+         transition: 'all 0.5s',
 
          '&:hover': {
-            padding: '14px 32px',
             background:
                'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             border: 'none',
@@ -32,7 +33,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          },
 
          '&:active': {
-            padding: '14px 32px',
             borderRadius: '1.5rem',
             backgroundColor: theme.palette.primary.linearGradient,
             color: theme.palette.primary.main,
@@ -45,7 +45,8 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          },
       },
    }
-   if (variant === 'shortBtn') {
+
+   if (variant === 'secondary') {
       return {
          '&.MuiButtonBase-root': {
             borderRadius: '10px',
@@ -59,7 +60,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
                border: 'none',
-               padding: '10.5px 27px',
                color: theme.palette.primary.main,
             },
 
@@ -78,7 +78,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
       }
    }
 
-   if (variant === 'greyBtn') {
+   if (variant === 'grey') {
       return {
          '&.MuiButtonBase-root': {
             transition: '13s linear',
@@ -90,7 +90,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
 
             '&:hover': {
                background: theme.palette.secondary.linearGradient,
-               padding: '10.5px 27px',
                color: 'white',
                transition: 'all 1s',
             },
