@@ -1,13 +1,7 @@
 import './App.css'
-import Reviews from './components/Reviews'
 
 const App = () => {
-   return (
-      <div>
-         health-check-js11
-         <Reviews />
-      </div>
-   )
+   return <div>health-check-js11</div>
 }
 
 export default App

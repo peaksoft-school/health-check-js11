@@ -1,8 +1,10 @@
-import { styled, Typography } from '@mui/material'
+import { styled, Rating, Typography, Box } from '@mui/material'
 import Slider from 'react-slick'
 import { REVIEWS } from '../utils/constants'
+import { Pagination, NextReview, PreviousReview } from '../assets/icons'
 
 const customDots = (dots) => <div>{dots}</div>
+const customPaging = () => <Pagination />
 
 const Reviews = () => {
    const settings = {
@@ -12,99 +14,124 @@ const Reviews = () => {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      appendDots: (dots) => customDots(dots),
-      // customPaging: () => customPaging(),
-      // nextArrow: <NextImg />,
-      // prevArrow: <PreviousImg />,
+      appendDots: customDots,
+      customPaging,
+      nextArrow: <NextReview />,
+      prevArrow: <PreviousReview />,
+      currentSlide: 0,
    }
+
    return (
-      <StyledMainContainer>
-         <Typography className="title" variant="h2">
-            Отзывы наших
-            <StyledTitle variant="p" className="mark">
-               пациентов
+      <StyledReviewsContainer>
+         <Box>
+            <StyledTitle variant="h2">
+               Отзывы наших <Typography variant="span"> пациентов</Typography>
             </StyledTitle>
-         </Typography>
-         <StyledSlider {...settings}>
-            {REVIEWS.map((item) => {
-               return (
-                  <Container key={item.id}>
-                     <Div>
-                        <img src={item.img} alt="" />
-                        <Wrapper>
-                           <Username>{item.name}</Username>
-                           {/* <Rating value={item.rating} readOnly /> */}
-                        </Wrapper>
-                     </Div>
-                     <TitleStyled>{item.review}</TitleStyled>
-                  </Container>
-               )
-            })}
-         </StyledSlider>
-      </StyledMainContainer>
+            <StyledSliderContainer>
+               <StyledSlider {...settings}>
+                  {REVIEWS.map(({ img, id, name, rating, review }) => (
+                     <StyledReviewCard key={id}>
+                        <Box className="container">
+                           <img src={img} alt="" />
+                           <Box className="wrapper">
+                              <Typography variant="p" className="user-name">
+                                 {name}
+                              </Typography>
+                              <Rating value={rating} readOnly />
+                           </Box>
+                        </Box>
+                        <Review>{review}</Review>
+                     </StyledReviewCard>
+                  ))}
+               </StyledSlider>
+            </StyledSliderContainer>
+         </Box>
+      </StyledReviewsContainer>
    )
 }
 
 export default Reviews
 
-const StyledMainContainer = styled('div')(() => ({}))
-
-const StyledTitle = styled(Typography)(({ theme }) => ({
-   color: theme.palette.primary.darkGreen,
-}))
-
-const Container = styled('div')({
-   boxSizing: 'border-box',
-   textAlign: 'left',
-   padding: '40px',
-   width: '782px',
-})
-
-const Wrapper = styled('div')({
+const StyledReviewsContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   padding: 0,
-})
+   alignItems: 'center',
+}))
 
-const Username = styled('h3')({
-   margin: 0,
-})
-
-const Div = styled('div')({
+const StyledSliderContainer = styled('div')(({ theme }) => ({
    display: 'flex',
-   gap: '14px',
-   paddingBottom: '20px',
-})
+   justifyContent: 'center',
+   overflow: 'hidden',
+   width: '85rem',
+   [theme.breakpoints.down('lg')]: {
+      width: '70rem',
+   },
+}))
 
-const TitleStyled = styled('p')({
-   weight: 300,
-   size: '16px',
-   lineHeight: '21.86px',
-})
+const StyledTitle = styled(Typography)(({ theme }) => ({
+   fontFamily: 'Manrope',
+   fontSize: '2.25rem',
+   fontWeight: 600,
+   lineHeight: '3.063rem',
+   color: theme.palette.primary.lightBlack,
+   paddingLeft: '7rem',
+   span: {
+      color: '#048741',
+   },
+}))
 
-const StyledSlider = styled(Slider)({
+const StyledReviewCard = styled('div')(({ theme }) => ({
+   padding: '2.5rem',
+   width: '48.875rem',
+   '& .container': {
+      display: 'flex',
+      gap: '0.875rem',
+      paddingBottom: '20px',
+      '& .wrapper': {
+         display: 'flex',
+         flexDirection: 'column',
+      },
+   },
+   [theme.breakpoints.down('lg')]: {
+      padding: '1.5rem',
+      paddingBottom: '2rem',
+   },
+}))
+
+const Review = styled('p')(({ theme }) => ({
+   fontWeight: 300,
+   fontSize: '1rem',
+   lineHeight: '1.366rem',
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '0.8rem',
+      lineHeight: '1.1rem',
+   },
+}))
+
+const StyledSlider = styled(Slider)(({ theme }) => ({
    position: 'relative',
-
    '& .slick-track': {
       display: 'flex',
-      gap: '36px',
-      marginTop: '60px',
+      gap: '2.25rem',
+      marginTop: '3.75rem',
    },
    '& .slick-list': {
-      width: '782px',
+      width: '48.875rem',
+      [theme.breakpoints.down('lg')]: {
+         width: '40.875rem',
+      },
    },
    '& .slick-slide': {
       backgroundColor: '#F3F1F1',
-      borderRadius: '20px',
+      borderRadius: '1.25rem',
    },
-
    '& .slick-dots': {
       listStyle: 'none',
       display: 'flex',
       justifyContent: 'center',
-      gap: '14px',
-      paddingTop: '54px',
-      paddingBottom: '12px',
+      gap: '0.875rem',
+      paddingTop: '3.375rem',
+      paddingBottom: '0.75rem',
       '& .slick-active': {
          background: 'none',
          ellipse: {
@@ -113,33 +140,38 @@ const StyledSlider = styled(Slider)({
       },
    },
    '& .slick-active': {
-      backgroundColor: '#DBF0E5',
-
-      ellipse: {
-         fill: '#048741',
-      },
+      backgroundColor: theme.palette.tertiary.daisy,
    },
    '& .slick-arrow': {
       cursor: 'pointer',
    },
-   '& .slick-next': {
+   '& .slick-next, .slick-prev': {
       position: 'absolute',
-      top: '388px',
-      zIndex: '8',
-      left: '470px',
+      top: '24.25rem',
+      zIndex: '10',
+   },
+   '& .slick-next': {
+      left: '29.375rem',
+      [theme.breakpoints.down('lg')]: {
+         left: '25.375rem',
+         top: '21rem',
+         width: '35px',
+      },
    },
    '& .slick-prev': {
-      position: 'absolute',
-      top: '388px',
-      zIndex: '8',
-      left: '273px',
+      left: '17.063rem',
+      [theme.breakpoints.down('lg')]: {
+         left: '13.375rem',
+         top: '21rem',
+         width: '35px',
+      },
    },
    '& .slick-next:hover, .slick-prev:hover': {
       circle: {
-         fill: 'url(#paint0_linear_92_5157)',
+         fill: '#048741',
       },
       path: {
-         fill: '#fff',
+         fill: theme.palette.primary.main,
       },
    },
-})
+}))
