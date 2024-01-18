@@ -1,6 +1,6 @@
 import { InputBase, Paper, styled } from '@mui/material'
 import Button from './UI/Button'
-import { ActivePhoneIcon, RightArrow, UserIcon } from '../assets/icons'
+import { ActivePhoneIcon, CircleArrow, UserIcon } from '../assets/icons'
 import RequairDoctorImage from '../assets/images/requairDoctor.png'
 
 const LeaveRequest = () => {
@@ -147,7 +147,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
    },
 }))
 
-const StyledRightArrow = styled(RightArrow)(() => ({
+const StyledRightArrow = styled(CircleArrow)(() => ({
    width: '1.625rem',
    height: '1.625rem',
 }))
