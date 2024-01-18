@@ -1,6 +1,5 @@
 import './App.css'
 import Reviews from './components/Reviews'
-import Welcome from './components/Welcome'
 // import Header from './layout/Header'
 
 const App = () => {
@@ -8,8 +7,7 @@ const App = () => {
       <div>
          {/* health-check-js11 */}
          {/* <Header /> */}
-         <Welcome />
-         <Reviews />
+         {/* <Reviews /> */}
       </div>
    )
 }

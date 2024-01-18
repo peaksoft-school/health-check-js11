@@ -8,7 +8,7 @@ const customPaging = () => <Pagination />
 
 const Reviews = () => {
    const settings = {
-      // autoplay: true,
+      autoplay: true,
       dots: true,
       infinite: false,
       slidesToShow: 1,

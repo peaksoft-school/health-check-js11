@@ -1,6 +1,6 @@
 import { styled, Box } from '@mui/material'
-import Button from './UI/Button'
-import { DoctorImage } from '../assets/images/doctorForWelcome.png'
+import { DoctorImage } from '../../assets/images'
+import Button from '../UI/Button'
 
 const Welcome = () => (
    <Container>
@@ -35,6 +35,7 @@ const Container = styled('div')(({ theme }) => ({
       gap: '3.438rem',
       justifyContent: 'space-between',
       alignItems: 'center',
+
       [theme.breakpoints.down('lg')]: {
          height: 'auto',
          margin: '1.25rem',

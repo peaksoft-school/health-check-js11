@@ -6,6 +6,7 @@ import {
    InputBase,
    Menu,
    MenuItem,
+   Box,
 } from '@mui/material'
 import Button from '../components/UI/Button'
 import {
@@ -16,77 +17,63 @@ import {
    LocationIcon,
    SearchIcon,
 } from '../assets/icons'
-import { NAV, HEADER_SOCIALS } from '../utils/constants/index'
+import { HEADER_NAV, HEADER_SOCIALS, LOCATION } from '../utils/constants/index'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
 
-   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget)
-   }
-
-   const handleClose = () => {
-      setAnchorEl(null)
-   }
+   const handleClick = (event) => setAnchorEl(event.currentTarget)
+   const handleClose = () => setAnchorEl(null)
 
    return (
-      <div
-         style={{
-            width: '100%',
-            position: 'fixed',
-            top: '0px',
-            zIndex: '1000',
-            height: '1000vh',
-         }}
-      >
-         <StyledHeaderContainer>
-            <StyledMainContainer>
-               <StyledFirstBlock>
-                  <div>
-                     <a
-                        aria-label="location"
-                        href="https://2gis.kg/bishkek/search/%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20119/firm/70000001038316599?m=74.628453%2C42.875862%2F17.42"
-                     >
+      <StyledHeaderMainContaier>
+         <Box className="header-content">
+            <Box className="header-top">
+               <Box className="location-container">
+                  <Box>
+                     <a aria-label="location" href={LOCATION}>
                         <LocationIcon />
                      </a>
                      <Typography variant="p">
                         106452, г. Бишкек, Гражданская 119
                      </Typography>
-                  </div>
-                  <div>
+                  </Box>
+                  <Box>
                      <HourIcon />
-                     <Typography variant="p">
-                        <Typography variant="p" sx={{ color: 'green' }}>
-                           пн-сб
-                        </Typography>
-                        <Typography variant="p"> 08:00 до 18:00 </Typography>
+                     <Typography variant="p" sx={{ color: 'green' }}>
+                        пн-сб
                      </Typography>
-                  </div>
-               </StyledFirstBlock>
+                     <Typography variant="p"> 08:00 до 18:00 </Typography>
+                  </Box>
+               </Box>
+
                <StyledInputContainer>
-                  <StyledInputBase placeholder="Поиск по фото" />
-                  <StyledSearchIcon />
+                  <InputBase className="input" placeholder="Поиск по фото" />
+                  <SearchIcon className="search-icon" />
                </StyledInputContainer>
+
                <StyledIconsContainer>
                   {HEADER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
-                     <div key={id}>
+                     <Box key={id}>
                         <a aria-label={ariaLabel} href={href}>
                            {icon}
                         </a>
-                     </div>
+                     </Box>
                   ))}
                </StyledIconsContainer>
+
                <StyledNumBlock>
                   <a aria-label="phone number" href="tel:+996 800 000">
                      <DefaultPhoneIcon />
                   </a>
-                  <div>
+                  <Box>
                      <Typography variant="p">+996(800) 000 000</Typography>
                      <Typography variant="p">+996(505) 000 000</Typography>
-                  </div>
+                  </Box>
                </StyledNumBlock>
-               <div>
+
+               <Box>
                   <StyledHeaderProfile
                      aria-controls={open ? 'basic-menu' : null}
                      onClick={handleClick}
@@ -99,11 +86,11 @@ const Header = () => {
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <StyedMenuItem>Войти</StyedMenuItem>
-                     <StyedMenuItem>Регистрация</StyedMenuItem>
+                     <MenuItem className="menu-item">Войти</MenuItem>
+                     <MenuItem>Регистрация</MenuItem>
                   </StyledMenu>
-               </div>
-            </StyledMainContainer>
+               </Box>
+            </Box>
 
             <hr />
 
@@ -114,53 +101,64 @@ const Header = () => {
                      <Typography variant="p">HEALTH</Typography> CHECK
                   </Typography>
                </StyledIconContainer>
+
                <StyledNaviList>
-                  {NAV.map(({ text, id }) => (
-                     <div key={id}>
+                  {HEADER_NAV.map(({ text, id }) => (
+                     <Box key={id}>
                         <p>{text}</p>
-                     </div>
+                     </Box>
                   ))}
                </StyledNaviList>
+
                <StyledButtonContainer>
-                  <StyledBtn className="button" variant="shortBtn">
+                  <StyledBtn className="button" variant="secondary">
                      получить результаты
                   </StyledBtn>
                   <StyledBtn className="button">запись онлайн </StyledBtn>
                </StyledButtonContainer>
             </StyledSecondMainContainer>
-         </StyledHeaderContainer>
-      </div>
+         </Box>
+      </StyledHeaderMainContaier>
    )
 }
 
 export default Header
 
-const StyledHeaderContainer = styled('header')(() => ({
-   maxWidth: '1440px',
-   width: '96%',
-   margin: 'auto',
-   display: 'flex',
-   flexDirection: 'column',
-   padding: '0 2%',
+const StyledHeaderMainContaier = styled('header')(() => ({
+   width: '100%',
+   position: 'sticky',
+   top: '0px',
+   zIndex: '1000',
    backgroundColor: 'white',
-}))
 
-const StyledFirstBlock = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
-
-   '& > div': {
+   '& .header-content': {
+      maxWidth: '1440px',
+      width: '96%',
+      margin: 'auto',
       display: 'flex',
+      flexDirection: 'column',
+      padding: '0 2%',
+   },
+
+   '& .header-top': {
+      display: 'flex',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      gap: '6px',
+      padding: '21px 0',
+
+      '& .location-container': {
+         display: 'flex',
+         flexDirection: 'column',
+
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+         },
+      },
    },
 }))
-const StyledMainContainer = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   padding: '21px 0',
-}))
+
 const StyledSecondMainContainer = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
@@ -170,6 +168,7 @@ const StyledSecondMainContainer = styled('div')(() => ({
 
 const StyledNumBlock = styled('div')(() => ({
    display: 'flex',
+
    '& > div': {
       display: 'flex',
       flexDirection: 'column',
@@ -184,15 +183,15 @@ const StyledInputContainer = styled(Paper)(() => ({
    borderRadius: '25px',
    backgroundColor: '#F3F1F1',
    boxShadow: 'none',
-}))
 
-const StyledSearchIcon = styled(SearchIcon)(() => ({
-   cursor: 'pointer',
-}))
+   '& .input': {
+      flex: 1,
+      fontSize: '14px',
+   },
 
-const StyledInputBase = styled(InputBase)(() => ({
-   flex: 1,
-   fontSize: '14px',
+   '& .search-icon': {
+      cursor: 'pointer',
+   },
 }))
 
 const StyledHeaderProfile = styled(HeaderProfile)(() => ({
@@ -208,20 +207,24 @@ const StyledIconContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    alignItems: 'center',
    gap: '0.803rem',
+
    '& .MuiTypography-root': {
       fontSize: '1.375rem',
       fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 'normal',
       letterPacing: '0.044rem',
+
       '& .MuiTypography-root': {
          color: theme.palette.primary.darkGreen,
       },
    },
 }))
+
 const StyledNaviList = styled('nav')(() => ({
    display: 'flex',
    gap: '36px',
+
    '& > div': {
       fontSize: '14px',
       cursor: 'pointer',
@@ -235,26 +238,29 @@ const StyledButtonContainer = styled('div')(() => ({
 
 const StyledBtn = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      padding: '5px',
+      padding: '5px 0',
       width: '191px',
       borderRadius: '1.5rem',
       height: '33px',
       fontSize: '10px',
    },
+
    '&:active': {
       borderRadius: '1.5rem',
    },
+
    '&:hover': {
       borderRadius: '1.5rem',
    },
 }))
 
-const StyledMenu = styled(Menu)(() => ({
+const StyledMenu = styled(Menu)(({ theme }) => ({
    position: 'absolute',
    zIndex: 1000,
    marginLeft: '10px',
    marginTop: '10px',
-}))
-const StyedMenuItem = styled(MenuItem)(({ theme }) => ({
-   '&:hover': { color: theme.palette.primary.darkGreen },
+
+   '& .menu-item': {
+      '&:hover': { color: theme.palette.primary.darkGreen },
+   },
 }))
