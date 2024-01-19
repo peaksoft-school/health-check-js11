@@ -1,23 +1,25 @@
 import { styled, Rating, Typography, Box } from '@mui/material'
 import Slider from 'react-slick'
-import { REVIEWS } from '../utils/constants'
-import { Pagination, NextReview, PreviousReview } from '../assets/icons'
+import { REVIEWS } from '../../utils/constants'
+import { Pagination, NextReview, PreviousReview } from '../../assets/icons'
 
 const customDots = (dots) => <div>{dots}</div>
 const customPaging = () => <Pagination />
+
+const NextArrow = () => <NextReview className="slick-next" />
+const PrevArrow = () => <PreviousReview className="slick-prev" />
 
 const Reviews = () => {
    const settings = {
       autoplay: true,
       dots: true,
-      infinite: false,
+      infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
       appendDots: customDots,
       customPaging,
-      nextArrow: <NextReview />,
-      prevArrow: <PreviousReview />,
-      currentSlide: 1,
+      nextArrow: <NextArrow />,
+      prevArrow: <PrevArrow />,
    }
 
    return (
@@ -55,7 +57,6 @@ const StyledSliderContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    justifyContent: 'center',
    overflow: 'hidden',
-   clipPath: '',
 
    [theme.breakpoints.down('lg')]: {
       width: '70rem',
@@ -149,13 +150,10 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
       backgroundColor: theme.palette.tertiary.daisy,
    },
 
-   '& .slick-arrow': {
-      cursor: 'pointer',
-   },
-
    '& .slick-next, .slick-prev': {
       position: 'absolute',
       top: '24.25rem',
+      cursor: 'pointer',
       zIndex: '10',
    },
 
@@ -174,7 +172,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
 
       [theme.breakpoints.down('lg')]: {
          left: '13.375rem',
-         top: '21rem',
+         top: '210rem',
          width: '35px',
       },
    },

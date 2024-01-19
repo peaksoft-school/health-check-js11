@@ -1,13 +1,10 @@
 import './App.css'
-import Reviews from './components/Reviews'
-// import Header from './layout/Header'
+import OurServices from './components/mainPage/OurServices'
 
 const App = () => {
    return (
       <div>
-         {/* health-check-js11 */}
-         {/* <Header /> */}
-         {/* <Reviews /> */}
+         <OurServices />
       </div>
    )
 }
