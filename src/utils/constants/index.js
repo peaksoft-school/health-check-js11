@@ -38,7 +38,7 @@ const INFO_DOCTORS = [
       image: fifth,
       name: 'Мисник Елена',
       doctor: 'Врач эндокринолог',
-      id: 4,
+      id: 5,
    },
 ]
 
