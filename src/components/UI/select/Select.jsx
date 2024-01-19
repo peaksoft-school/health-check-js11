@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Select from 'react-select'
+import { Select as Selector } from 'react-select'
 
 const customStyles = {
    control: (provided, state) => ({
@@ -16,21 +16,19 @@ const customStyles = {
    }),
    menu: (provided) => ({
       ...provided,
-      width: '490px', // Установка ширины options под Select
+      width: '490px',
    }),
 }
 
-const Selector = forwardRef(({ options, onChange, ...rest }, ref) => {
-   return (
-      <Select
-         options={options}
-         onChange={onChange}
-         styles={customStyles}
-         ref={ref}
-         isSearchable={false}
-         {...rest}
-      />
-   )
-})
+const Select = forwardRef(({ options, onChange, ...rest }, ref) => (
+   <Selector
+      options={options}
+      onChange={onChange}
+      styles={customStyles}
+      ref={ref}
+      isSearchable={false}
+      {...rest}
+   />
+))
 
-export default Selector
+export default Select
