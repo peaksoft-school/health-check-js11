@@ -6,7 +6,9 @@ const BestDoctors = () => (
    <StyledBlock>
       <StyledMainText>
          Лучшие
-         <Typography variant="p">врачи </Typography>
+         <Typography className="title" variant="span">
+            врачи{' '}
+         </Typography>
       </StyledMainText>
 
       <StyledSmallText variant="p">
@@ -18,7 +20,7 @@ const BestDoctors = () => (
          {INFO_DOCTORS.map(({ id, name, doctor, image }) => (
             <Grid item xs={6} sm={3} md={2} key={id}>
                <StyledImgWrapper>
-                  <StyledImg src={image} alt="doctor" />
+                  <StyledImg objectFit="contain" src={image} alt="doctor" />
                </StyledImgWrapper>
 
                <StyledName>{name}</StyledName>
@@ -27,8 +29,7 @@ const BestDoctors = () => (
             </Grid>
          ))}
       </StyledContainer>
-
-      <StyledButton variant="shortBtn">Все врачи клиники</StyledButton>
+      <StyledButton variant="secondary">Все врачи клиники</StyledButton>
    </StyledBlock>
 )
 
@@ -39,25 +40,33 @@ const StyledBlock = styled('div')(() => ({
    margin: 'auto',
    padding: '2em',
    boxSizing: 'border-box',
+   maxWidth: '1440px',
 }))
 
 const StyledMainText = styled(Typography)(({ theme }) => ({
    fontSize: '2.25rem',
    fontWeight: '600',
    lineHeight: 'normal',
+   marginBottom: '1.7em',
+
+   '& .title': {
+      marginLeft: '10px',
+   },
 
    '.MuiTypography-root': {
       color: theme.palette.primary.darkGreen,
    },
 
-   marginBottom: '1.7em',
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '1.85rem',
+      marginBottom: '1em',
+   },
 }))
 
-const StyledContainer = styled(Grid)(() => ({
+const StyledContainer = styled(Grid)(({ theme }) => ({
    paddingTop: '4.6875em',
    display: 'flex',
    justifyContent: 'space-between',
-   flexWrap: 'wrap',
    width: '100%',
    cursor: 'pointer',
 
@@ -65,28 +74,44 @@ const StyledContainer = styled(Grid)(() => ({
       flexBasis: '48%',
       marginBottom: '2em',
    },
+
+   [theme.breakpoints.down('lg')]: {
+      paddingTop: '3rem',
+   },
 }))
 
 const StyledImgWrapper = styled('div')(() => ({
    width: '100%',
+   height: '15.1rem',
    display: 'flex',
    justifyContent: 'center',
 }))
 
 const StyledImg = styled('img')(({ theme }) => ({
-   width: '203px',
-   height: '203px',
    borderRadius: '50%',
    backgroundColor: theme.palette.secondary.linearGradient,
+   width: '12.5rem',
+   height: '15rem',
    display: 'block',
    imageRendering: 'pixelated',
+
+   [theme.breakpoints.down('lg')]: {
+      width: '9rem',
+      height: '11rem',
+   },
 }))
 
-const StyledName = styled(Grid)(() => ({
+const StyledName = styled(Grid)(({ theme }) => ({
+   paddingTop: '10px',
    textAlign: 'center',
    fontSize: '1em',
    fontWeight: '500',
    lineHeight: '1.25em',
+
+   [theme.breakpoints.down('lg')]: {
+      marginTop: '-4rem',
+      fontSize: '0.8rem',
+   },
 }))
 
 const StyledDoctor = styled(Grid)(({ theme }) => ({
@@ -95,15 +120,28 @@ const StyledDoctor = styled(Grid)(({ theme }) => ({
    fontSize: '0.875em',
    fontWeight: '500',
    lineHeight: '1.25em',
+   paddingTop: '2px',
+
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '0.7rem',
+   },
 }))
 
-const StyledButton = styled(Button)(() => ({
-   marginTop: '4.875em',
-   width: 'fit-content',
-   marginLeft: '42%',
+const StyledButton = styled(Button)(({ theme }) => ({
+   marginTop: '3em',
+   marginLeft: 'auto',
    marginRight: 'auto',
+   display: 'block',
+   [theme.breakpoints.down('lg')]: {
+      marginTop: '0.3rem',
+   },
 }))
 
-const StyledSmallText = styled(Typography)(() => ({
+const StyledSmallText = styled(Typography)(({ theme }) => ({
    fontSize: '1.125em',
+   alignContent: 'center',
+
+   [theme.breakpoints.down('lg')]: {
+      fontSize: '1em',
+   },
 }))

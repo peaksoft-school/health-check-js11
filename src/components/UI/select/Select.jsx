@@ -27,7 +27,7 @@ const Selec = forwardRef(
             onChange={onChange}
             styles={customStyles}
             ref={ref}
-            className="inputBase"
+            className="selctBase"
             {...rest}
          />
       )
@@ -40,7 +40,7 @@ const StyledSelect = styled(Select)({
    border: 'none',
    width: '400px',
 
-   '&.inputBase': {
+   '&.selectBase': {
       fontFamily: 'Manrope',
       borderRadius: '8px',
    },
