@@ -1,5 +1,5 @@
 import { styled, Box } from '@mui/material'
-import { DoctorImage } from '../../assets/images'
+import { DoctorWelcomeImage } from '../../assets/images'
 import Button from '../UI/Button'
 
 const Welcome = () => (
@@ -14,10 +14,10 @@ const Welcome = () => (
                технологии и ведут прием лучшие специалисты.
             </StyledDescription>
 
-            <StyledButton variant="shortBtn">оставьте заявку</StyledButton>
+            <StyledButton variant="secondary">оставьте заявку</StyledButton>
          </Box>
 
-         <img className="doctor-img" src={DoctorImage} alt="doctor-img" />
+         <img className="doctor" src={DoctorWelcomeImage} alt="doctor" />
       </Box>
    </Container>
 )
@@ -50,7 +50,7 @@ const Container = styled('div')(({ theme }) => ({
          },
       },
 
-      '& > .doctor-img': {
+      '& > .doctor': {
          width: '580.35px',
 
          [theme.breakpoints.down('lg')]: {
