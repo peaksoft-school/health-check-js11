@@ -83,15 +83,14 @@ const StyledContainer = styled(Grid)(({ theme }) => ({
 const StyledImgWrapper = styled('div')(() => ({
    width: '100%',
    height: '15.1rem',
-   display: 'flex',
    justifyContent: 'center',
 }))
 
 const StyledImg = styled('img')(({ theme }) => ({
    borderRadius: '50%',
    backgroundColor: theme.palette.secondary.linearGradient,
-   width: '12.5rem',
-   height: '15rem',
+   width: '14.25rem',
+   height: '15.5rem',
    display: 'block',
    imageRendering: 'pixelated',
 
