@@ -1,16 +1,46 @@
 import { Typography } from '@mui/material'
+import first from '../../assets/images/therapist.png'
+import second from '../../assets/images/pediatrician.png'
+import third from '../../assets/images/urologist.png'
+import fourth from '../../assets/images/neurologist.png'
+import fifth from '../../assets/images/endocrinologist.png'
 import {
    HeaderInstagramIcon,
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
 
-const HEADER_NAV = [
-   { id: 1, text: 'О клинике' },
-   { id: 2, text: 'Услуги' },
-   { id: 3, text: 'Врачи' },
-   { id: 4, text: 'Прайс' },
-   { id: 5, text: 'Контакты' },
+const INFO_DOCTORS = [
+   {
+      image: first,
+      name: 'Войнич Дарья',
+      doctor: 'Врач-терапевт',
+      id: 1,
+   },
+   {
+      image: second,
+      name: 'Мисько Екатерина',
+      doctor: 'Врач-Педиатр',
+      id: 2,
+   },
+   {
+      image: third,
+      name: 'Дмитроченко Дмитрий',
+      doctor: 'Врач-уролог-андролог',
+      id: 3,
+   },
+   {
+      image: fourth,
+      name: 'Антух Евгений',
+      doctor: 'Врач-невролог',
+      id: 4,
+   },
+   {
+      image: fifth,
+      name: 'Мисник Елена',
+      doctor: 'Врач эндокринолог',
+      id: 5,
+   },
 ]
 
 const HEADER_SOCIALS = [
@@ -32,6 +62,14 @@ const HEADER_SOCIALS = [
       href: 'https://web.telegram.org/k/#-4032240673',
       icon: <HeaderTelegramIcon />,
    },
+]
+
+const HEADER_NAV = [
+   { id: 1, text: 'О клинике' },
+   { id: 2, text: 'Услуги' },
+   { id: 3, text: 'Врачи' },
+   { id: 4, text: 'Прайс' },
+   { id: 5, text: 'Контакты' },
 ]
 
 const LOCATION =
@@ -80,4 +118,11 @@ const BEST_QUALITIES = [
    },
 ]
 
-export { HEADER_SOCIALS, HEADER_NAV, BEST_QUALITIES, LOCATION, ABOUT_US }
+export {
+   HEADER_SOCIALS,
+   INFO_DOCTORS,
+   HEADER_NAV,
+   BEST_QUALITIES,
+   LOCATION,
+   ABOUT_US,
+}
