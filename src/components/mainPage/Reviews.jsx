@@ -6,8 +6,12 @@ import { Pagination, NextReview, PreviousReview } from '../../assets/icons'
 const customDots = (dots) => <div>{dots}</div>
 const customPaging = () => <Pagination />
 
-const NextArrow = () => <NextReview className="slick-next" />
-const PrevArrow = () => <PreviousReview className="slick-prev" />
+const NextArrow = ({ onClick }) => (
+   <NextReview onClick={onClick} className="slick-next" />
+)
+const PrevArrow = ({ onClick }) => (
+   <PreviousReview onClick={onClick} className="slick-prev" />
+)
 
 const Reviews = () => {
    const settings = {
