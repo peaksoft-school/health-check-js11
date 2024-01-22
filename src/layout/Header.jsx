@@ -1,13 +1,5 @@
 import { useState } from 'react'
-import {
-   Typography,
-   styled,
-   Paper,
-   InputBase,
-   Menu,
-   MenuItem,
-   Box,
-} from '@mui/material'
+import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import Button from '../components/UI/Button'
 import {
    DefaultPhoneIcon,
@@ -15,15 +7,17 @@ import {
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
-   SearchIcon,
 } from '../assets/icons'
 import { HEADER_NAV, HEADER_SOCIALS, LOCATION } from '../utils/constants/index'
+import SearchInput from '../components/UI/inputs/SearchInput'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
+
    const open = Boolean(anchorEl)
 
    const handleClick = (event) => setAnchorEl(event.currentTarget)
+
    const handleClose = () => setAnchorEl(null)
 
    return (
@@ -35,23 +29,24 @@ const Header = () => {
                      <a aria-label="location" href={LOCATION}>
                         <LocationIcon />
                      </a>
+
                      <Typography variant="p">
                         106452, г. Бишкек, Гражданская 119
                      </Typography>
                   </Box>
+
                   <Box>
                      <HourIcon />
+
                      <Typography variant="p" sx={{ color: 'green' }}>
                         пн-сб
                      </Typography>
+
                      <Typography variant="p"> 08:00 до 18:00 </Typography>
                   </Box>
                </Box>
 
-               <StyledInputContainer>
-                  <InputBase className="input" placeholder="Поиск по фото" />
-                  <SearchIcon className="search-icon" />
-               </StyledInputContainer>
+               <SearchInput placeholder="Поиск по фото" />
 
                <StyledIconsContainer>
                   {HEADER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
@@ -69,6 +64,7 @@ const Header = () => {
                   </a>
                   <Box>
                      <Typography variant="p">+996(800) 000 000</Typography>
+
                      <Typography variant="p">+996(505) 000 000</Typography>
                   </Box>
                </StyledNumBlock>
@@ -78,6 +74,7 @@ const Header = () => {
                      aria-controls={open ? 'basic-menu' : null}
                      onClick={handleClick}
                   />
+
                   <StyledMenu
                      anchorEl={anchorEl}
                      open={open}
@@ -87,6 +84,7 @@ const Header = () => {
                      }}
                   >
                      <MenuItem className="menu-item">Войти</MenuItem>
+
                      <MenuItem>Регистрация</MenuItem>
                   </StyledMenu>
                </Box>
@@ -97,6 +95,7 @@ const Header = () => {
             <StyledSecondMainContainer>
                <StyledIconContainer>
                   <HealthCheckIcon />
+
                   <Typography variant="h1">
                      <Typography variant="p">HEALTH</Typography> CHECK
                   </Typography>
@@ -114,6 +113,7 @@ const Header = () => {
                   <StyledBtn className="button" variant="secondary">
                      получить результаты
                   </StyledBtn>
+
                   <StyledBtn className="button">запись онлайн </StyledBtn>
                </StyledButtonContainer>
             </StyledSecondMainContainer>
@@ -172,25 +172,6 @@ const StyledNumBlock = styled('div')(() => ({
    '& > div': {
       display: 'flex',
       flexDirection: 'column',
-   },
-}))
-
-const StyledInputContainer = styled(Paper)(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   padding: '0.125rem 0.9rem',
-   width: '22.938rem',
-   borderRadius: '25px',
-   backgroundColor: '#F3F1F1',
-   boxShadow: 'none',
-
-   '& .input': {
-      flex: 1,
-      fontSize: '14px',
-   },
-
-   '& .search-icon': {
-      cursor: 'pointer',
    },
 }))
 
