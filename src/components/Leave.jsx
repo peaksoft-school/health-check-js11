@@ -1,5 +1,4 @@
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
-import { PatternFormat } from 'react-number-format'
 import Button from './UI/Button'
 import {
    ActivePhoneIcon,
@@ -7,6 +6,7 @@ import {
    UserIcon,
 } from '../assets/icons'
 import { DoctorLeaveImage } from '../assets/images/index'
+import NumberInput from './UI/inputs/NumberInput'
 
 const Leave = () => (
    <StyledContainer>
@@ -28,6 +28,7 @@ const Leave = () => (
                   <UserIcon className="input-icons" />
 
                   <InputBase
+                     className="name-input"
                      id="name"
                      type="text"
                      placeholder="
@@ -42,17 +43,12 @@ const Leave = () => (
                   Номер мобильного телефона
                </label>
 
-               <StyledInputBox>
+               <NumberInput
+                  format="+996 (###) ##-##-##"
+                  placeholder="+996 (___) __-__-__"
+               >
                   <ActivePhoneIcon className="input-icons" />
-
-                  <StyledInput
-                     id="number"
-                     format="+996 (###) ##-##-##"
-                     mask="_"
-                     allowEmptyFormatting
-                     placeholder="+996 (___) __-__-__"
-                  />
-               </StyledInputBox>
+               </NumberInput>
             </StyledInputContainer>
          </Box>
 
@@ -61,7 +57,7 @@ const Leave = () => (
          </StyledButton>
       </StyledBox>
 
-      <StyledImage src={DoctorLeaveImage} alt="doctor" />
+      <img src={DoctorLeaveImage} alt="doctor" className="doctor-image" />
    </StyledContainer>
 )
 
@@ -76,15 +72,15 @@ const StyledContainer = styled('div')(({ theme }) => ({
    [theme.breakpoints.down('lg')]: {
       margin: '0.625rem',
    },
-}))
 
-const StyledImage = styled('img')(({ theme }) => ({
-   width: '36.375rem',
-   height: '33.125rem',
+   '& .doctor-image': {
+      width: '36.375rem',
+      height: '33.125rem',
 
-   [theme.breakpoints.down('lg')]: {
-      width: '25rem',
-      height: '23rem',
+      [theme.breakpoints.down('lg')]: {
+         width: '25rem',
+         height: '23rem',
+      },
    },
 }))
 
@@ -178,24 +174,11 @@ const StyledInputContainer = styled('div')(({ theme }) => ({
          fontSize: '0.813rem',
       },
    },
-}))
 
-const StyledInput = styled(PatternFormat)(({ theme }) => ({
-   borderRadius: '0.3125rem',
-   background: ' #FFF',
-   padding: '0rem 0.625rem px',
-   border: 'none',
-   fontSize: '1rem',
-   color: '#9d9d9d',
-
-   [theme.breakpoints.down('lg')]: {
-      width: '10rem',
-      fontSize: '0.85rem',
-   },
-
-   '&:focus': {
-      outline: 'none',
-      color: 'rgba(0, 0, 0, 0.87)',
+   '& .input-icons': {
+      margin: '0.75rem 0rem 0.875rem 0.75rem',
+      width: '1.125rem',
+      height: '1rem',
    },
 }))
 
@@ -212,10 +195,8 @@ const StyledInputBox = styled(Paper)(({ theme }) => ({
       height: ' 2.3rem',
    },
 
-   '& .input-icons': {
-      margin: '0.75rem 0.5rem 0.875rem 0.75rem',
-      width: '1.125rem',
-      height: '1rem',
+   '& .name-input': {
+      marginLeft: '0.5rem',
    },
 
    '& #name': {
