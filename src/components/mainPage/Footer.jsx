@@ -1,30 +1,27 @@
 import { styled, Box, Typography } from '@mui/material'
 import {
    DefaultPhoneIcon,
-   FooterInstagramIcon,
-   FooterTelegramIcon,
-   FooterWhatsAppIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
    SmsIcon,
 } from '../../assets/icons'
-import { HEADER_NAV } from '../../utils/constants'
+import { FOOTER_SOCIALS, HEADER_NAV } from '../../utils/constants'
 
 const Footer = () => {
    return (
       <StyledFooterContainer className="footer-container">
-         <StyledContainer className="footer-columns-container">
-            <div className="health-check">
-               <div className="clinic-info">
+         <StyledContainer>
+            <Box className="health-check">
+               <Box className="clinic-info">
                   <HealthCheckIcon />
 
                   <Typography variant="h1">
                      <Typography variant="span">HEALTH</Typography> CHECK
                   </Typography>
-               </div>
+               </Box>
 
-               <div className="clinic-details">
+               <Box className="clinic-details">
                   <Typography className="highlight-text">
                      Медицинская клиника «HealthCheck»
                   </Typography>
@@ -34,66 +31,70 @@ const Footer = () => {
                      клиника, в которой применяются новейшие диагностические и
                      лечебные технологии и ведут прием лучшие специалисты.
                   </Typography>
-               </div>
-            </div>
+               </Box>
+            </Box>
 
-            <div className="contact-info">
+            <Box className="contact-info">
                <Typography className="highlight-text">
                   Контактная информация
                </Typography>
 
-               <div className="contact-details">
-                  <div className="location-hours">
-                     <div>
+               <Box className="contact-details">
+                  <Box className="location-hours">
+                     <Box>
                         <LocationIcon />
 
                         <Typography>
                            106452, г. Бишкек, Гражданская 119
                         </Typography>
-                     </div>
-                     <div>
+                     </Box>
+                     <Box>
                         <HourIcon />
 
                         <Typography>пн-сб 08:00 до 18:00</Typography>
-                     </div>
-                  </div>
+                     </Box>
+                  </Box>
 
-                  <div className="phone-numbers-box">
+                  <Box className="phone-numbers-box">
                      <DefaultPhoneIcon />
 
-                     <div>
-                        <Typography>+996(800) 000 000</Typography>
+                     <Box>
                         <Typography> +996(800) 000 000</Typography>
-                     </div>
-                  </div>
+                        <Typography> +996(800) 000 000</Typography>
+                     </Box>
+                  </Box>
 
                   <Typography>
                      <SmsIcon /> healthchek.kg
                   </Typography>
-               </div>
-            </div>
+               </Box>
+            </Box>
 
-            <div className="social-media-box">
+            <Box className="social-media-box">
                <Typography className="highlight-text">
                   Мы в социальных сетях:
                </Typography>
 
-               <div className="social-icons-box">
-                  <FooterInstagramIcon />
-                  <FooterTelegramIcon />
-                  <FooterWhatsAppIcon />
-               </div>
-            </div>
+               <Box className="social-icons-box">
+                  {FOOTER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
+                     <Box key={id}>
+                        <a aria-label={ariaLabel} href={href}>
+                           {icon}
+                        </a>
+                     </Box>
+                  ))}
+               </Box>
+            </Box>
          </StyledContainer>
 
          <StyledSecondContainer className="footer-second-container">
-            <div className="navigation-section">
+            <Box className="navigation-section">
                {HEADER_NAV.map(({ text, id }) => (
                   <Box key={id}>
                      <p>{text}</p>
                   </Box>
                ))}
-            </div>
+            </Box>
          </StyledSecondContainer>
 
          <hr />
@@ -109,8 +110,6 @@ const Footer = () => {
 
 export default Footer
 
-// LateX
-
 const StyledFooterContainer = styled('div')(({ theme }) => ({
    backgroundColor: theme.palette.primary.darkGrey,
    display: 'flex',
@@ -120,10 +119,18 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
    fontFamily: 'Manrope',
    paddingTop: '4.25rem',
 
+   [theme.breakpoints.down('lg')]: {
+      paddingLeft: '60px',
+      paddingRight: '60px',
+   },
+
    '& hr': {
       width: '90%',
-      height: '0.5px',
       backgroundColor: '#ccc',
+
+      [theme.breakpoints.down('lg')]: {
+         width: '100%',
+      },
    },
 
    '& .footer-second-container': {
@@ -135,7 +142,7 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '28.813rem',
-      padding: '0 40px 0 0',
+      padding: '0 2.5rem 0 0',
       gap: '1.75rem',
 
       '& .clinic-info': {
@@ -146,7 +153,7 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
 
          '& .MuiTypography-root': {
             fontSize: '1.375rem',
-            fontWeight: 600,
+            fontWeight: '600',
             color: theme.palette.primary.main,
 
             '& .MuiTypography-root': {
@@ -158,32 +165,46 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       '& .clinic-details': {
          display: 'flex',
          flexDirection: 'column',
-         gap: '16px',
-         marginBottom: '48px',
+         gap: '1rem',
+         marginBottom: '3rem',
+
+         '& > p': {
+            [theme.breakpoints.down('lg')]: {
+               fontSize: '0.875rem',
+               maxWidth: '24.375rem',
+            },
+         },
       },
    },
 
    '& .highlight-text': {
       color: theme.palette.primary.main,
       fontFamily: 'Manrope',
+      [theme.breakpoints.down('lg')]: {
+         fontSize: '0.875rem',
+      },
    },
 
    '& .contact-info': {
       display: 'flex',
-      gap: '22px',
+      gap: '1.357rem',
       flexDirection: 'column',
    },
 
    '& .social-media-box': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px',
+      gap: '1.25rem',
    },
 
    '& .navigation-section': {
       display: 'flex',
-      gap: '24px',
-      marginBottom: '48px',
+      gap: '2.5rem',
+      marginBottom: '3rem',
+
+      [theme.breakpoints.down('lg')]: {
+         fontSize: '0.875rem',
+      },
    },
 
    '& .contact-details': {
@@ -217,12 +238,22 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
 
    ' & .copyright-notice': {
       margin: '1.75rem 0 1.75rem 0',
+      fontSize: '0.875rem',
+      fontFamily: 'Manrope',
+
+      [theme.breakpoints.down('lg')]: {
+         fontSize: '0.720rem',
+      },
    },
 }))
 
-const StyledContainer = styled('div')(() => ({
+const StyledContainer = styled('div')(({ theme }) => ({
    display: 'flex',
-   gap: '130px',
+   gap: '8.125rem',
+
+   [theme.breakpoints.down('lg')]: {
+      gap: '2rem',
+   },
 }))
 
 const StyledSecondContainer = styled('div')(() => ({

@@ -3,6 +3,9 @@ import {
    HeaderInstagramIcon,
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
+   FooterInstagramIcon,
+   FooterTelegramIcon,
+   FooterWhatsAppIcon,
 } from '../../assets/icons'
 
 const HEADER_NAV = [
@@ -31,6 +34,26 @@ const HEADER_SOCIALS = [
       ariaLabel: 'Telegram',
       href: 'https://web.telegram.org/k/#-4032240673',
       icon: <HeaderTelegramIcon />,
+   },
+]
+const FOOTER_SOCIALS = [
+   {
+      id: 1,
+      ariaLabel: 'Instagram',
+      href: 'https://www.instagram.com/peaksoft.house/',
+      icon: <FooterInstagramIcon />,
+   },
+   {
+      id: 2,
+      ariaLabel: 'Telegram',
+      href: 'https://web.telegram.org/k/#-4032240673',
+      icon: <FooterTelegramIcon />,
+   },
+   {
+      id: 3,
+      ariaLabel: 'WhatsApp',
+      href: 'https://www.whatsapp.com',
+      icon: <FooterWhatsAppIcon />,
    },
 ]
 
@@ -80,4 +103,11 @@ const BEST_QUALITIES = [
    },
 ]
 
-export { HEADER_SOCIALS, HEADER_NAV, BEST_QUALITIES, LOCATION, ABOUT_US }
+export {
+   HEADER_SOCIALS,
+   HEADER_NAV,
+   BEST_QUALITIES,
+   LOCATION,
+   ABOUT_US,
+   FOOTER_SOCIALS,
+}
