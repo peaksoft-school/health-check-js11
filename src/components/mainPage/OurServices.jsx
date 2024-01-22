@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { services } from '../../utils/constants/ourServices'
+import { SERVISES } from '../../utils/constants/index'
 import Button from '../UI/Button'
 
 const OurServices = () => {
@@ -15,7 +15,7 @@ const OurServices = () => {
                </StyledDescription>
             </div>
             <ServicesContainer>
-               {services.map(({ id, name, icon }) => (
+               {SERVISES.map(({ id, name, icon }) => (
                   <StyledService key={id}>
                      <StyledServiceBlock>
                         <StyledIcon>{icon}</StyledIcon>

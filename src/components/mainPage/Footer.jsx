@@ -8,105 +8,102 @@ import {
 } from '../../assets/icons'
 import { FOOTER_SOCIALS, HEADER_NAV } from '../../utils/constants'
 
-const Footer = () => {
-   return (
-      <StyledFooterContainer className="footer-container">
-         <StyledContainer>
-            <Box className="health-check">
-               <Box className="clinic-info">
-                  <HealthCheckIcon />
+const Footer = () => (
+   <StyledFooterContainer className="footer-container">
+      <StyledContainer>
+         <Box className="health-check">
+            <Box className="clinic-info">
+               <HealthCheckIcon />
 
-                  <Typography variant="h1">
-                     <Typography variant="span">HEALTH</Typography> CHECK
-                  </Typography>
-               </Box>
-
-               <Box className="clinic-details">
-                  <Typography className="highlight-text">
-                     Медицинская клиника «HealthCheck»
-                  </Typography>
-
-                  <Typography>
-                     Международная Медицинская клиника «HealthCheck» — это
-                     клиника, в которой применяются новейшие диагностические и
-                     лечебные технологии и ведут прием лучшие специалисты.
-                  </Typography>
-               </Box>
+               <Typography variant="h1">
+                  <Typography variant="span">HEALTH</Typography> CHECK
+               </Typography>
             </Box>
 
-            <Box className="contact-info">
+            <Box className="clinic-details">
                <Typography className="highlight-text">
-                  Контактная информация
+                  Медицинская клиника «HealthCheck»
                </Typography>
 
-               <Box className="contact-details">
-                  <Box className="location-hours">
-                     <Box>
-                        <LocationIcon />
-
-                        <Typography>
-                           106452, г. Бишкек, Гражданская 119
-                        </Typography>
-                     </Box>
-                     <Box>
-                        <HourIcon />
-
-                        <Typography>пн-сб 08:00 до 18:00</Typography>
-                     </Box>
-                  </Box>
-
-                  <Box className="phone-numbers-box">
-                     <DefaultPhoneIcon />
-
-                     <Box>
-                        <Typography> +996(800) 000 000</Typography>
-                        <Typography> +996(800) 000 000</Typography>
-                     </Box>
-                  </Box>
-
-                  <Typography>
-                     <SmsIcon /> healthchek.kg
-                  </Typography>
-               </Box>
-            </Box>
-
-            <Box className="social-media-box">
-               <Typography className="highlight-text">
-                  Мы в социальных сетях:
+               <Typography>
+                  Международная Медицинская клиника «HealthCheck» — это клиника,
+                  в которой применяются новейшие диагностические и лечебные
+                  технологии и ведут прием лучшие специалисты.
                </Typography>
-
-               <Box className="social-icons-box">
-                  {FOOTER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
-                     <Box key={id}>
-                        <a aria-label={ariaLabel} href={href}>
-                           {icon}
-                        </a>
-                     </Box>
-                  ))}
-               </Box>
             </Box>
-         </StyledContainer>
+         </Box>
 
-         <StyledSecondContainer className="footer-second-container">
-            <Box className="navigation-section">
-               {HEADER_NAV.map(({ text, id }) => (
+         <Box className="contact-info">
+            <Typography className="highlight-text">
+               Контактная информация
+            </Typography>
+
+            <Box className="contact-details">
+               <Box className="location-hours">
+                  <Box>
+                     <LocationIcon />
+
+                     <Typography>106452, г. Бишкек, Гражданская 119</Typography>
+                  </Box>
+                  <Box>
+                     <HourIcon />
+
+                     <Typography>пн-сб 08:00 до 18:00</Typography>
+                  </Box>
+               </Box>
+
+               <Box className="phone-numbers-box">
+                  <DefaultPhoneIcon />
+
+                  <Box>
+                     <Typography> +996(800) 000 000</Typography>
+
+                     <Typography> +996(800) 000 000</Typography>
+                  </Box>
+               </Box>
+
+               <Typography>
+                  <SmsIcon /> healthchek.kg
+               </Typography>
+            </Box>
+         </Box>
+
+         <Box className="social-media-box">
+            <Typography className="highlight-text">
+               Мы в социальных сетях:
+            </Typography>
+
+            <Box className="social-icons-box">
+               {FOOTER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
                   <Box key={id}>
-                     <p>{text}</p>
+                     <a aria-label={ariaLabel} href={href}>
+                        {icon}
+                     </a>
                   </Box>
                ))}
             </Box>
-         </StyledSecondContainer>
+         </Box>
+      </StyledContainer>
 
-         <hr />
+      <StyledSecondContainer className="footer-second-container">
+         <Box className="navigation-section">
+            {HEADER_NAV.map(({ text, id }) => (
+               <Box key={id}>
+                  <p>{text}</p>
+               </Box>
+            ))}
+         </Box>
+      </StyledSecondContainer>
 
-         <StyledSecondContainer className="footer-second-container">
-            <Typography className="copyright-notice">
-               © Peaksoft House 2023 | MedCheck | Все права защищены
-            </Typography>
-         </StyledSecondContainer>
-      </StyledFooterContainer>
-   )
-}
+      <hr />
+
+      <StyledSecondContainer className="footer-second-container">
+         <Typography className="copyright-notice">
+            © Peaksoft House 2023 | MedCheck | Все права защищены
+         </Typography>
+      </StyledSecondContainer>
+   </StyledFooterContainer>
+)
 
 export default Footer
 
@@ -120,8 +117,7 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
    paddingTop: '4.25rem',
 
    [theme.breakpoints.down('lg')]: {
-      paddingLeft: '60px',
-      paddingRight: '60px',
+      padding: '2.5rem  3.75rem 0 3.75rem',
    },
 
    '& hr': {
@@ -170,8 +166,8 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
 
          '& > p': {
             [theme.breakpoints.down('lg')]: {
-               fontSize: '0.875rem',
-               maxWidth: '24.375rem',
+               fontSize: '0.813rem',
+               maxWidth: '23rem',
             },
          },
       },
@@ -203,7 +199,7 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       marginBottom: '3rem',
 
       [theme.breakpoints.down('lg')]: {
-         fontSize: '0.875rem',
+         fontSize: '0.780rem',
       },
    },
 
@@ -211,6 +207,12 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       display: 'flex',
       flexDirection: 'column',
       gap: '0.75rem',
+
+      '& > p': {
+         [theme.breakpoints.down('lg')]: {
+            fontSize: '0.813rem',
+         },
+      },
    },
 
    '& .social-icons-box': {
@@ -221,6 +223,14 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
    '& .phone-numbers-box': {
       display: 'flex',
       gap: '0.375rem',
+
+      '& > div': {
+         '& > p': {
+            [theme.breakpoints.down('lg')]: {
+               fontSize: '0.813rem',
+            },
+         },
+      },
    },
 
    '& .location-hours': {
@@ -233,10 +243,16 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
          display: 'flex',
          alignItems: 'center',
          gap: '0.5rem',
+
+         '& > p': {
+            [theme.breakpoints.down('lg')]: {
+               fontSize: '0.813rem',
+            },
+         },
       },
    },
 
-   ' & .copyright-notice': {
+   '& .copyright-notice': {
       margin: '1.75rem 0 1.75rem 0',
       fontSize: '0.875rem',
       fontFamily: 'Manrope',
@@ -252,7 +268,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
    gap: '8.125rem',
 
    [theme.breakpoints.down('lg')]: {
-      gap: '2rem',
+      gap: '4.6rem',
    },
 }))
 
