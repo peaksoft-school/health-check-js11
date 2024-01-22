@@ -1,67 +1,73 @@
-import { InputBase, Paper, styled } from '@mui/material'
+import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
+import { PatternFormat } from 'react-number-format'
 import Button from './UI/Button'
-import { ActivePhoneIcon, CircleArrow, UserIcon } from '../assets/icons'
-import { DoctorRequestImage } from '../assets/images/index'
+import {
+   ActivePhoneIcon,
+   CircleArrowRightIcon,
+   UserIcon,
+} from '../assets/icons'
+import { DoctorLeaveImage } from '../assets/images/index'
 
-const LeaveRequest = () => (
-   <StyledLeaveRequest>
-      <Container>
-         <h2 className="title">Оставьте заявку</h2>
+const Leave = () => (
+   <StyledContainer>
+      <StyledBox>
+         <Typography className="title">Оставьте заявку</Typography>
 
-         <h2 className="description">
+         <Typography className="description">
             Оставьте свой номер и наши специалисты свяжутся с Вами в ближайшее
             время
-         </h2>
+         </Typography>
 
-         <AllInputsContainer>
-            <InputContainer>
+         <Box className="inputs-container">
+            <StyledInputContainer>
                <label htmlFor="name" className="input-label">
                   Как к Вам обратиться?
                </label>
 
-               <StyledPaper>
+               <StyledInputBox>
                   <UserIcon className="input-icons" />
 
-                  <StyledInput
+                  <InputBase
                      id="name"
                      type="text"
                      placeholder="
                      Введите
                      имя"
                   />
-               </StyledPaper>
-            </InputContainer>
+               </StyledInputBox>
+            </StyledInputContainer>
 
-            <InputContainer>
+            <StyledInputContainer>
                <label htmlFor="number" className="input-label">
                   Номер мобильного телефона
                </label>
 
-               <StyledPaper>
+               <StyledInputBox>
                   <ActivePhoneIcon className="input-icons" />
 
                   <StyledInput
                      id="number"
-                     type="number"
-                     placeholder="
-                     +996 (___) __-__-__"
+                     format="+996 (###) ##-##-##"
+                     mask="_"
+                     allowEmptyFormatting
+                     placeholder="+996 (___) __-__-__"
                   />
-               </StyledPaper>
-            </InputContainer>
-         </AllInputsContainer>
+               </StyledInputBox>
+            </StyledInputContainer>
+         </Box>
 
          <StyledButton>
-            ОТПРАВИТЬ ЗАЯВКУ <CircleArrow className="circle-arrow" />
+            ОТПРАВИТЬ ЗАЯВКУ <CircleArrowRightIcon className="circle-arrow" />
          </StyledButton>
-      </Container>
+      </StyledBox>
 
-      <StyledImage src={DoctorRequestImage} alt="doctor img" />
-   </StyledLeaveRequest>
+      <StyledImage src={DoctorLeaveImage} alt="doctor" />
+   </StyledContainer>
 )
 
-export default LeaveRequest
+export default Leave
 
-const StyledLeaveRequest = styled('div')(({ theme }) => ({
+const StyledContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    margin: '3.125rem',
    justifyContent: 'center',
@@ -82,7 +88,7 @@ const StyledImage = styled('img')(({ theme }) => ({
    },
 }))
 
-const Container = styled('form')(({ theme }) => ({
+const StyledBox = styled('form')(({ theme }) => ({
    display: 'flex',
    width: '41.1875rem',
    height: '28.75rem',
@@ -119,6 +125,13 @@ const Container = styled('form')(({ theme }) => ({
          fontSize: '0.9rem',
       },
    },
+
+   '& .inputs-container': {
+      display: 'flex',
+      gap: '0.8125rem',
+      marginTop: '3.13rem',
+      marginBottom: '2.5rem',
+   },
 }))
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -142,6 +155,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
          height: '2.5rem',
          fontSize: '0.70rem',
          padding: '0.5rem 0.50rem 0.5rem 1.4rem',
+
+         '&:hover': {
+            padding: '0.5rem 0.50rem 0.5rem 1.4rem',
+         },
       },
    },
 
@@ -151,14 +168,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
    },
 }))
 
-const AllInputsContainer = styled('div')(() => ({
-   display: 'flex',
-   gap: '0.8125rem',
-   marginTop: '3.13rem',
-   marginBottom: '2.5rem',
-}))
-
-const InputContainer = styled('div')(({ theme }) => ({
+const StyledInputContainer = styled('div')(({ theme }) => ({
    display: 'flex',
    alignItems: 'flex-start',
    flexDirection: 'column',
@@ -170,18 +180,26 @@ const InputContainer = styled('div')(({ theme }) => ({
    },
 }))
 
-const StyledInput = styled(InputBase)(({ theme }) => ({
+const StyledInput = styled(PatternFormat)(({ theme }) => ({
    borderRadius: '0.3125rem',
    background: ' #FFF',
-   padding: '0px 0.625rem px',
+   padding: '0rem 0.625rem px',
+   border: 'none',
+   fontSize: '1rem',
+   color: '#9d9d9d',
 
    [theme.breakpoints.down('lg')]: {
       width: '10rem',
       fontSize: '0.85rem',
    },
+
+   '&:focus': {
+      outline: 'none',
+      color: 'rgba(0, 0, 0, 0.87)',
+   },
 }))
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
+const StyledInputBox = styled(Paper)(({ theme }) => ({
    width: '16.4375rem',
    height: ' 2.625rem',
    display: 'flex',
@@ -198,5 +216,21 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
       margin: '0.75rem 0.5rem 0.875rem 0.75rem',
       width: '1.125rem',
       height: '1rem',
+   },
+
+   '& #name': {
+      borderRadius: '0.3125rem',
+      background: ' #FFF',
+      padding: '0px 0.625rem px',
+      border: 'none',
+
+      '&:active': {
+         border: 'none',
+      },
+
+      [theme.breakpoints.down('lg')]: {
+         width: '10rem',
+         fontSize: '0.85rem',
+      },
    },
 }))

@@ -5,7 +5,7 @@ import {
    BuildingImage,
    ConferenceImage,
 } from '../assets/images/index'
-import { Arrow } from '../assets/icons/index'
+import { ArrowRightIcon } from '../assets/icons/index'
 import { ABOUT_US } from '../utils/constants'
 
 const AboutUs = () => (
@@ -21,7 +21,7 @@ const AboutUs = () => (
                {ABOUT_US}
 
                <StyledReadMore variant="p">
-                  Читать подробнее о клинике <Arrow />
+                  Читать подробнее о клинике <ArrowRightIcon />
                </StyledReadMore>
             </Box>
 
