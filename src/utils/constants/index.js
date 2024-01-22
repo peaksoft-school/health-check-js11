@@ -16,6 +16,9 @@ import {
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 import {
+   FooterInstagramIcon,
+   FooterTelegramIcon,
+   FooterWhatsAppIcon,
    HeaderInstagramIcon,
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
@@ -177,10 +180,32 @@ const INFO_DOCTORS = [
    },
 ]
 
+const FOOTER_SOCIALS = [
+   {
+      id: 1,
+      ariaLabel: 'Instagram',
+      href: 'https://www.instagram.com/peaksoft.house/',
+      icon: <FooterInstagramIcon />,
+   },
+   {
+      id: 2,
+      ariaLabel: 'Telegram',
+      href: 'https://web.telegram.org/k/#-4032240673',
+      icon: <FooterTelegramIcon />,
+   },
+   {
+      id: 3,
+      ariaLabel: 'WhatsApp',
+      href: 'https://www.whatsapp.com',
+      icon: <FooterWhatsAppIcon />,
+   },
+]
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
    HEADER_NAV,
+   FOOTER_SOCIALS,
    BEST_QUALITIES,
    LOCATION,
    ABOUT_US,
