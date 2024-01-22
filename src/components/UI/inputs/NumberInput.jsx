@@ -3,17 +3,21 @@ import { forwardRef } from 'react'
 import { PatternFormat } from 'react-number-format'
 
 const NumberInput = forwardRef(
-   ({ value, children, onChange, rest, placeholder, format }) => (
+   (
+      { value, children, onChange, rest, placeholder, format, id, mask },
+      ref
+   ) => (
       <StyledInputBox>
          {children}
 
          <StyledInput
-            id="number"
+            id={id}
             format={format}
-            mask="_"
+            mask={mask}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            ref={ref}
             {...rest}
          />
       </StyledInputBox>

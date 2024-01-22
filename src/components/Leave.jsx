@@ -44,6 +44,8 @@ const Leave = () => (
                </label>
 
                <NumberInput
+                  id="number"
+                  mask="_"
                   format="+996 (###) ##-##-##"
                   placeholder="+996 (___) __-__-__"
                >
