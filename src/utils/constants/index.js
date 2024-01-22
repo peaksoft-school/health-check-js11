@@ -5,12 +5,6 @@ import third from '../../assets/images/urologist.png'
 import fourth from '../../assets/images/neurologist.png'
 import fifth from '../../assets/images/endocrinologist.png'
 import {
-   HeaderInstagramIcon,
-   HeaderTelegramIcon,
-   HeaderWhatsAppIcon,
-} from '../../assets/icons'
-
-import {
    VaccinationIcon,
    KardiologiyaIcon,
    NevrologiyaIcon,
@@ -21,50 +15,19 @@ import {
    OnkologiyaIcon,
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
+import {
+   HeaderInstagramIcon,
+   HeaderTelegramIcon,
+   HeaderWhatsAppIcon,
+} from '../../assets/icons'
+import UserIcon from '../../assets/images/User-icon.png'
 
-const SERVICES = [
-   { id: 1, name: 'Вакцинация', icon: <VaccinationIcon /> },
-   { id: 2, name: 'Кардиология', icon: <KardiologiyaIcon /> },
-   { id: 3, name: 'Неврология', icon: <NevrologiyaIcon /> },
-   { id: 4, name: 'Дерматология', icon: <DermatologiyaIcon /> },
-   { id: 5, name: 'Офтальмология', icon: <OftalmologiyaIcon /> },
-   { id: 6, name: 'Терапия', icon: <TerapiyaIcon /> },
-   { id: 7, name: 'Физиотерапия', icon: <FizioterapiyaIcon /> },
-   { id: 8, name: 'Онкология', icon: <OnkologiyaIcon /> },
-   { id: 9, name: 'Урология', icon: <UrologiyaIcon /> },
-]
-
-const INFO_DOCTORS = [
-   {
-      image: first,
-      name: 'Войнич Дарья',
-      doctor: 'Врач-терапевт',
-      id: 1,
-   },
-   {
-      image: second,
-      name: 'Мисько Екатерина',
-      doctor: 'Врач-Педиатр',
-      id: 2,
-   },
-   {
-      image: third,
-      name: 'Дмитроченко Дмитрий',
-      doctor: 'Врач-уролог-андролог',
-      id: 3,
-   },
-   {
-      image: fourth,
-      name: 'Антух Евгений',
-      doctor: 'Врач-невролог',
-      id: 4,
-   },
-   {
-      image: fifth,
-      name: 'Мисник Елена',
-      doctor: 'Врач эндокринолог',
-      id: 5,
-   },
+const HEADER_NAV = [
+   { id: 1, text: 'О клинике' },
+   { id: 2, text: 'Услуги' },
+   { id: 3, text: 'Врачи' },
+   { id: 4, text: 'Прайс' },
+   { id: 5, text: 'Контакты' },
 ]
 
 const HEADER_SOCIALS = [
@@ -88,12 +51,39 @@ const HEADER_SOCIALS = [
    },
 ]
 
-const HEADER_NAV = [
-   { id: 1, text: 'О клинике' },
-   { id: 2, text: 'Услуги' },
-   { id: 3, text: 'Врачи' },
-   { id: 4, text: 'Прайс' },
-   { id: 5, text: 'Контакты' },
+const REVIEWS = [
+   {
+      id: 1,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 2,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 3,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 4,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
 ]
 
 const LOCATION =
@@ -142,12 +132,58 @@ const BEST_QUALITIES = [
    },
 ]
 
+const SERVICES = [
+   { id: 1, name: 'Вакцинация', icon: <VaccinationIcon /> },
+   { id: 2, name: 'Кардиология', icon: <KardiologiyaIcon /> },
+   { id: 3, name: 'Неврология', icon: <NevrologiyaIcon /> },
+   { id: 4, name: 'Дерматология', icon: <DermatologiyaIcon /> },
+   { id: 5, name: 'Офтальмология', icon: <OftalmologiyaIcon /> },
+   { id: 6, name: 'Терапия', icon: <TerapiyaIcon /> },
+   { id: 7, name: 'Физиотерапия', icon: <FizioterapiyaIcon /> },
+   { id: 8, name: 'Онкология', icon: <OnkologiyaIcon /> },
+   { id: 9, name: 'Урология', icon: <UrologiyaIcon /> },
+]
+
+const INFO_DOCTORS = [
+   {
+      image: first,
+      name: 'Войнич Дарья',
+      doctor: 'Врач-терапевт',
+      id: 1,
+   },
+   {
+      image: second,
+      name: 'Мисько Екатерина',
+      doctor: 'Врач-Педиатр',
+      id: 2,
+   },
+   {
+      image: third,
+      name: 'Дмитроченко Дмитрий',
+      doctor: 'Врач-уролог-андролог',
+      id: 3,
+   },
+   {
+      image: fourth,
+      name: 'Антух Евгений',
+      doctor: 'Врач-невролог',
+      id: 4,
+   },
+   {
+      image: fifth,
+      name: 'Мисник Елена',
+      doctor: 'Врач эндокринолог',
+      id: 5,
+   },
+]
+
 export {
    HEADER_SOCIALS,
-   INFO_DOCTORS,
+   REVIEWS,
    HEADER_NAV,
    BEST_QUALITIES,
    LOCATION,
    ABOUT_US,
    SERVICES,
+   INFO_DOCTORS,
 }
