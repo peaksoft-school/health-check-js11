@@ -23,6 +23,7 @@ import {
    FooterTelegramIcon,
    FooterWhatsAppIcon,
 } from '../../assets/icons'
+import { UserIcon } from '../../assets/images/index'
 
 const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
@@ -78,18 +79,6 @@ const ABOUT_US = (
    </Typography>
 )
 
-const SERVISES = [
-   { id: 1, name: 'Вакцинация', icon: <VaccinationIcon /> },
-   { id: 2, name: 'Кардиология', icon: <KardiologiyaIcon /> },
-   { id: 3, name: 'Неврология', icon: <NevrologiyaIcon /> },
-   { id: 4, name: 'Дерматология', icon: <DermatologiyaIcon /> },
-   { id: 5, name: 'Офтальмология', icon: <OftalmologiyaIcon /> },
-   { id: 6, name: 'Терапия', icon: <TerapiyaIcon /> },
-   { id: 7, name: 'Физиотерапия', icon: <FizioterapiyaIcon /> },
-   { id: 8, name: 'Онкология', icon: <OnkologiyaIcon /> },
-   { id: 9, name: 'Урология', icon: <UrologiyaIcon /> },
-]
-
 const INFO_DOCTORS = [
    {
       image: first,
@@ -123,6 +112,62 @@ const INFO_DOCTORS = [
    },
 ]
 
+const FOOTER_SOCIALS = [
+   {
+      id: 1,
+      ariaLabel: 'Instagram',
+      href: 'https://www.instagram.com/peaksoft.house/',
+      icon: <FooterInstagramIcon />,
+   },
+   {
+      id: 2,
+      ariaLabel: 'Telegram',
+      href: 'https://web.telegram.org/k/#-4032240673',
+      icon: <FooterTelegramIcon />,
+   },
+   {
+      id: 3,
+      ariaLabel: 'WhatsApp',
+      href: 'https://www.whatsapp.com',
+      icon: <FooterWhatsAppIcon />,
+   },
+]
+
+const REVIEWS = [
+   {
+      id: 1,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 2,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 3,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+   {
+      id: 4,
+      name: 'Александр',
+      img: UserIcon,
+      rating: 5,
+      review:
+         'Хочу выразить признательность и благодарность отличному врачу - Попову Алексею Дмитриевичу за профессиональное удаление зуба мудрости! Отмечу, что зуб был очень сложным: расположен за челюстной костью, росший вниз (под семерку), с кривыми корнями. Не ожидал, что удаление такого зуба сможет пройти столь спокойно и безболезненно (пишу, кстати, по факту заживления - лунка затянулась прекрасно). В общем, огромное спасибо Алексею Дмитриевичу , персоналу и самой клинике!',
+   },
+]
+
 const BEST_QUALITIES = [
    {
       id: 1,
@@ -144,33 +189,26 @@ const BEST_QUALITIES = [
    },
 ]
 
-const FOOTER_SOCIALS = [
-   {
-      id: 1,
-      ariaLabel: 'Instagram',
-      href: 'https://www.instagram.com/peaksoft.house/',
-      icon: <FooterInstagramIcon />,
-   },
-   {
-      id: 2,
-      ariaLabel: 'Telegram',
-      href: 'https://web.telegram.org/k/#-4032240673',
-      icon: <FooterTelegramIcon />,
-   },
-   {
-      id: 3,
-      ariaLabel: 'WhatsApp',
-      href: 'https://www.whatsapp.com',
-      icon: <FooterWhatsAppIcon />,
-   },
+const SERVICES = [
+   { id: 1, name: 'Вакцинация', icon: <VaccinationIcon /> },
+   { id: 2, name: 'Кардиология', icon: <KardiologiyaIcon /> },
+   { id: 3, name: 'Неврология', icon: <NevrologiyaIcon /> },
+   { id: 4, name: 'Дерматология', icon: <DermatologiyaIcon /> },
+   { id: 5, name: 'Офтальмология', icon: <OftalmologiyaIcon /> },
+   { id: 6, name: 'Терапия', icon: <TerapiyaIcon /> },
+   { id: 7, name: 'Физиотерапия', icon: <FizioterapiyaIcon /> },
+   { id: 8, name: 'Онкология', icon: <OnkologiyaIcon /> },
+   { id: 9, name: 'Урология', icon: <UrologiyaIcon /> },
 ]
+
 export {
    HEADER_SOCIALS,
-   INFO_DOCTORS,
+   REVIEWS,
    HEADER_NAV,
    BEST_QUALITIES,
    LOCATION,
    ABOUT_US,
-   SERVISES,
+   SERVICES,
+   INFO_DOCTORS,
    FOOTER_SOCIALS,
 }

@@ -1,17 +1,19 @@
 import { Button as MuiButton, styled } from '@mui/material'
+import { forwardRef } from 'react'
 
-const Button = ({ disabled, onClick, children, variant, ...rest }) => {
-   return (
+const Button = forwardRef(
+   ({ disabled, onClick, children, variant, ...rest }, ref) => (
       <StyledButton
          disabled={disabled}
          onClick={onClick}
          variant={variant}
+         ref={ref}
          {...rest}
       >
          {children}
       </StyledButton>
    )
-}
+)
 
 export default Button
 
@@ -107,5 +109,6 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          },
       }
    }
+
    return defaultStyle
 })

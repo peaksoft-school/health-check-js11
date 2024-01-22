@@ -4,9 +4,9 @@ import {
    DoctorsImage,
    BuildingImage,
    ConferenceImage,
-} from '../assets/images/index'
-import { Arrow } from '../assets/icons/index'
-import { ABOUT_US } from '../utils/constants'
+} from '../../assets/images/index'
+import { Arrow } from '../../assets/icons/index'
+import { ABOUT_US } from '../../utils/constants'
 
 const AboutUs = () => (
    <StyledContainer>
