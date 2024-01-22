@@ -1,13 +1,11 @@
-import styled from '@emotion/styled'
 import { forwardRef } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Select from 'react-select'
+import { Select as Selector } from 'react-select'
 
 const customStyles = {
    control: (provided, state) => ({
       ...provided,
-      height: 52,
-      width: '100%',
+      height: '38px',
+      width: '490px',
       border: state.isFocused
          ? '1px solid rgba(4, 135, 65, 0.80)'
          : '1px solid #cccccc',
@@ -16,32 +14,21 @@ const customStyles = {
          borderColor: state.isFocused ? 'none' : '#c1b5b5',
       },
    }),
+   menu: (provided) => ({
+      ...provided,
+      width: '490px',
+   }),
 }
 
-const Selec = forwardRef(
-   ({ defaultValue, options, onChange, ...rest }, ref) => {
-      return (
-         <StyledSelect
-            defaultInputValue={defaultValue}
-            options={options}
-            onChange={onChange}
-            styles={customStyles}
-            ref={ref}
-            className="selctBase"
-            {...rest}
-         />
-      )
-   }
-)
+const Select = forwardRef(({ options, onChange, ...rest }, ref) => (
+   <Selector
+      options={options}
+      onChange={onChange}
+      styles={customStyles}
+      ref={ref}
+      isSearchable={false}
+      {...rest}
+   />
+))
 
-export default Selec
-
-const StyledSelect = styled(Select)({
-   border: 'none',
-   width: '400px',
-
-   '&.selectBase': {
-      fontFamily: 'Manrope',
-      borderRadius: '8px',
-   },
-})
+export default Select
