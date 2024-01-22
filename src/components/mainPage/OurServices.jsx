@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { services } from '../../utils/constants/ourServices'
+import { SERVICES } from '../../utils/constants/index'
 import Button from '../UI/Button'
 
 const OurServices = () => {
@@ -10,20 +10,23 @@ const OurServices = () => {
                <StyledTitle>
                   Наши <StyledTitleServices>услуги</StyledTitleServices>
                </StyledTitle>
+
                <StyledDescription>
                   За все время работы клиника приняла более 1 млн. пациентов.
                </StyledDescription>
             </div>
             <ServicesContainer>
-               {services.map(({ id, name, icon }) => (
+               {SERVICES.map(({ id, name, icon }) => (
                   <StyledService key={id}>
                      <StyledServiceBlock>
                         <StyledIcon>{icon}</StyledIcon>
                      </StyledServiceBlock>
+
                      <StyledName>{name}</StyledName>
                   </StyledService>
                ))}
             </ServicesContainer>
+
             <StyledBtnContainer>
                <StyledButton variant="shortBtn">Смотреть все</StyledButton>
             </StyledBtnContainer>

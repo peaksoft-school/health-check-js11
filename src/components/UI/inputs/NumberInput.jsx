@@ -1,26 +1,23 @@
 import { Paper, styled } from '@mui/material'
+import { forwardRef } from 'react'
 import { PatternFormat } from 'react-number-format'
 
-const NumberInput = ({
-   value,
-   children,
-   onChange,
-   rest,
-   placeholder,
-   format,
-}) => (
-   <StyledInputBox>
-      {children}
-      <StyledInput
-         id="number"
-         format={format}
-         mask="_"
-         placeholder={placeholder}
-         value={value}
-         onChange={onChange}
-         {...rest}
-      />
-   </StyledInputBox>
+const NumberInput = forwardRef(
+   ({ value, children, onChange, rest, placeholder, format }) => (
+      <StyledInputBox>
+         {children}
+
+         <StyledInput
+            id="number"
+            format={format}
+            mask="_"
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            {...rest}
+         />
+      </StyledInputBox>
+   )
 )
 
 export default NumberInput

@@ -1,12 +1,7 @@
 import './App.css'
-import Leave from './components/Leave'
 
 const App = () => {
-   return (
-      <div>
-         <Leave />
-      </div>
-   )
+   return <div>health-check-js11</div>
 }
 
 export default App
