@@ -5,12 +5,12 @@ import {
    HourIcon,
    LocationIcon,
    SmsIcon,
-} from '../../assets/icons'
-import { FOOTER_SOCIALS, HEADER_NAV } from '../../utils/constants'
+} from '../assets/icons/index'
+import { FOOTER_SOCIALS, HEADER_NAV, LOCATION } from '../utils/constants/index'
 
 const Footer = () => (
-   <StyledFooterContainer className="footer-container">
-      <StyledContainer>
+   <StyledFooterContainer>
+      <Box className="first-container">
          <Box className="health-check">
             <Box className="clinic-info">
                <HealthCheckIcon />
@@ -34,17 +34,15 @@ const Footer = () => (
          </Box>
 
          <Box className="contact-info">
-            <Typography className="highlight-text">
-               Контактная информация
-            </Typography>
+            <Typography className="title">Контактная информация</Typography>
 
             <Box className="contact-details">
                <Box className="location-hours">
-                  <Box>
+                  <a aria-label="address" className="address" href={LOCATION}>
                      <LocationIcon />
-
                      <Typography>106452, г. Бишкек, Гражданская 119</Typography>
-                  </Box>
+                  </a>
+
                   <Box>
                      <HourIcon />
 
@@ -56,22 +54,28 @@ const Footer = () => (
                   <DefaultPhoneIcon />
 
                   <Box>
-                     <Typography> +996(800) 000 000</Typography>
+                     <a aria-label="phone number" href="tel:+996 223 238 750">
+                        <Typography> +996(800) 000 000</Typography>
+                     </a>
 
-                     <Typography> +996(800) 000 000</Typography>
+                     <a aria-label="phone-number" href="tel:+996 551 130 187">
+                        <Typography> +996(800) 000 000</Typography>
+                     </a>
                   </Box>
                </Box>
 
-               <Typography>
+               <a
+                  aria-label="gmail"
+                  className="gmail"
+                  href="mailto:school@peaksoft.us"
+               >
                   <SmsIcon /> healthchek.kg
-               </Typography>
+               </a>
             </Box>
          </Box>
 
          <Box className="social-media-box">
-            <Typography className="highlight-text">
-               Мы в социальных сетях:
-            </Typography>
+            <Typography className="title">Мы в социальных сетях:</Typography>
 
             <Box className="social-icons-box">
                {FOOTER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
@@ -83,9 +87,9 @@ const Footer = () => (
                ))}
             </Box>
          </Box>
-      </StyledContainer>
+      </Box>
 
-      <StyledSecondContainer className="footer-second-container">
+      <Box className="second-container">
          <Box className="navigation-section">
             {HEADER_NAV.map(({ text, id }) => (
                <Box key={id}>
@@ -93,15 +97,15 @@ const Footer = () => (
                </Box>
             ))}
          </Box>
-      </StyledSecondContainer>
+      </Box>
 
       <hr />
 
-      <StyledSecondContainer className="footer-second-container">
+      <Box className="second-container">
          <Typography className="copyright-notice">
             © Peaksoft House 2023 | MedCheck | Все права защищены
          </Typography>
-      </StyledSecondContainer>
+      </Box>
    </StyledFooterContainer>
 )
 
@@ -120,6 +124,27 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       padding: '2.5rem  3.75rem 0 3.75rem',
    },
 
+   '& .address': {
+      color: '#CCC',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+
+      '& > p': {
+         [theme.breakpoints.down('lg')]: {
+            fontSize: '0.813rem',
+         },
+      },
+   },
+
+   '& .gmail': {
+      color: '#CCC',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+   },
+
    '& hr': {
       width: '90%',
       backgroundColor: '#ccc',
@@ -129,7 +154,7 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       },
    },
 
-   '& .footer-second-container': {
+   '& .second-container': {
       display: 'flex',
       alignItems: 'center',
    },
@@ -173,9 +198,10 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       },
    },
 
-   '& .highlight-text': {
+   '& .title': {
       color: theme.palette.primary.main,
       fontFamily: 'Manrope',
+
       [theme.breakpoints.down('lg')]: {
          fontSize: '0.875rem',
       },
@@ -225,9 +251,15 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
       gap: '0.375rem',
 
       '& > div': {
-         '& > p': {
-            [theme.breakpoints.down('lg')]: {
-               fontSize: '0.813rem',
+         '& > a': {
+            textDecoration: 'none',
+
+            '& > p': {
+               color: '#CCC',
+
+               [theme.breakpoints.down('lg')]: {
+                  fontSize: '0.813rem',
+               },
             },
          },
       },
@@ -261,18 +293,13 @@ const StyledFooterContainer = styled('div')(({ theme }) => ({
          fontSize: '0.720rem',
       },
    },
-}))
 
-const StyledContainer = styled('div')(({ theme }) => ({
-   display: 'flex',
-   gap: '8.125rem',
+   '& .first-container': {
+      display: 'flex',
+      gap: '8.125rem',
 
-   [theme.breakpoints.down('lg')]: {
-      gap: '4.6rem',
+      [theme.breakpoints.down('lg')]: {
+         gap: '4.6rem',
+      },
    },
-}))
-
-const StyledSecondContainer = styled('div')(() => ({
-   display: 'flex',
-   flexDirection: 'column',
 }))

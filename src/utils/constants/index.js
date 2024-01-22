@@ -16,6 +16,9 @@ import {
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 import {
+   FooterInstagramIcon,
+   FooterTelegramIcon,
+   FooterWhatsAppIcon,
    HeaderInstagramIcon,
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
