@@ -1,4 +1,9 @@
 import { Typography } from '@mui/material'
+import first from '../../assets/images/therapist.png'
+import second from '../../assets/images/pediatrician.png'
+import third from '../../assets/images/urologist.png'
+import fourth from '../../assets/images/neurologist.png'
+import fifth from '../../assets/images/endocrinologist.png'
 import {
    VaccinationIcon,
    KardiologiyaIcon,
@@ -139,6 +144,39 @@ const SERVICES = [
    { id: 9, name: 'Урология', icon: <UrologiyaIcon /> },
 ]
 
+const INFO_DOCTORS = [
+   {
+      image: first,
+      name: 'Войнич Дарья',
+      doctor: 'Врач-терапевт',
+      id: 1,
+   },
+   {
+      image: second,
+      name: 'Мисько Екатерина',
+      doctor: 'Врач-Педиатр',
+      id: 2,
+   },
+   {
+      image: third,
+      name: 'Дмитроченко Дмитрий',
+      doctor: 'Врач-уролог-андролог',
+      id: 3,
+   },
+   {
+      image: fourth,
+      name: 'Антух Евгений',
+      doctor: 'Врач-невролог',
+      id: 4,
+   },
+   {
+      image: fifth,
+      name: 'Мисник Елена',
+      doctor: 'Врач эндокринолог',
+      id: 5,
+   },
+]
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -147,4 +185,5 @@ export {
    LOCATION,
    ABOUT_US,
    SERVICES,
+   INFO_DOCTORS,
 }
