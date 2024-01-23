@@ -1,33 +1,42 @@
-import React from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const Toast = () => {
+const Toast = ({ options: { status, message } }) => {
+   const showError = status === 'error' ? 'error' : 'success'
    const tostify = () => {
-      toast.success('Success', {
+      toast[showError](message, {
+         draggable: true,
          position: 'top-left',
          autoClose: 5000,
-         hideProgressBar: false,
+         hideProgressBar: true,
          closeOnButton: false,
          pauseOnHover: true,
-         draggable: true,
          progress: undefined,
-         theme: 'light',
+         icon: false,
+         style: {
+            borderLeft: '10px',
+            borderLeftColor: status === 'error' ? 'red' : 'green',
+            borderLeftStyle: 'solid',
+            borderRadius: 0,
+         },
       })
    }
+
    return (
       <div>
-         <ToastContainer
-            position="top-left"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnButton
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-         />
+         <div>
+            <ToastContainer
+               position="top-left"
+               autoClose={5000}
+               hideProgressBar={false}
+               newestOnTop={false}
+               closeOnButton
+               rtl={false}
+               pauseOnFocusLoss
+               draggable
+               pauseOnHover
+            />
+         </div>
 
          <button type="submit" onClick={tostify}>
             hello world
