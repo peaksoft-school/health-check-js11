@@ -33,7 +33,7 @@ const OurServices = () => (
          </ServicesContainer>
 
          <Box className="button-container">
-            <Button className="button" variant="shortBtn">
+            <Button className="button" variant="secondary">
                Смотреть все
             </Button>
          </Box>
@@ -51,7 +51,6 @@ const StyledOurServices = styled('div')(({ theme }) => ({
       marginTop: '3.125rem',
       width: '100%',
       maxWidth: '74.625rem',
-      height: '9.25rem',
 
       '& .title': {
          fontSize: '2rem',
@@ -64,7 +63,7 @@ const StyledOurServices = styled('div')(({ theme }) => ({
 
          '& .service': {
             marginLeft: '0.5rem',
-            color: theme.palette.primary.linearGradient,
+            color: theme.palette.primary.darkGreen,
          },
       },
 
@@ -86,6 +85,13 @@ const StyledOurServices = styled('div')(({ theme }) => ({
 
          '& .button': {
             transform: 'scale(0.8)',
+            width: '10.506rem',
+            height: '2.881rem',
+
+            '&:hover': {
+               width: '10.506rem',
+               height: '2.881rem',
+            },
 
             [theme.breakpoints.up('lg')]: {
                transform: 'scale(1)',
@@ -137,7 +143,7 @@ const StyledServiceBlock = styled('div')(({ theme }) => ({
       transform: 'scale(1.1)',
       boxShadow: '0 0 0.625rem 0.156rem #5d5d5d',
       cursor: 'pointer',
-      backgroundColor: theme.palette.primary.linearGradient,
+      background: 'linear-gradient(181deg, #0CBB6B 0.45%, #027B44 99.39%)',
 
       '& svg path': {
          fill: 'white',

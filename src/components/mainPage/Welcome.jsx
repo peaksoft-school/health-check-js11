@@ -28,7 +28,7 @@ const Container = styled('div')(({ theme }) => ({
    display: 'flex',
    justifyContent: 'center',
 
-   '& > .welcome': {
+   '& .welcome': {
       display: 'flex',
       height: '38.452rem',
       margin: '1.25rem 7.5rem 1.923rem',
@@ -112,6 +112,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
       padding: '10px 23px',
 
       '&:hover': {
+         width: '11.557rem',
+         height: '2.881rem',
          padding: '10px 23px',
       },
    },

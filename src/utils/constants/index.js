@@ -23,7 +23,7 @@ import {
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
-import UserIcon from '../../assets/images/User-icon.png'
+import UserIcon from '../../assets/images/user-icon.png'
 
 const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
