@@ -18,13 +18,13 @@ const Switcher = forwardRef(({ onChange, checked, label, ...rest }, ref) => (
 export default Switcher
 
 const StyledSwitch = styled(Switch)(({ theme }) => ({
-   width: '42',
-   height: '26',
+   width: '42px',
+   height: '26px',
    padding: '0',
 
    '.MuiSwitch-switchBase': {
       padding: '0',
-      margin: '2',
+      margin: '2px',
       transitionDuration: '300ms',
 
       '&.Mui-checked': {
@@ -58,12 +58,12 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 
    '.MuiSwitch-thumb': {
       boxSizing: 'border-box',
-      width: '22',
-      height: '22',
+      width: '22px',
+      height: '22px',
    },
 
    '.MuiSwitch-track': {
-      borderRadius: `${26 / 2}`,
+      borderRadius: `${26 / 2}px`,
       backgroundColor: theme.palette.secondary.main,
       opacity: '1',
    },
