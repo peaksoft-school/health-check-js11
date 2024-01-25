@@ -1,8 +1,5 @@
 import { forwardRef } from 'react'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import Slide from '@mui/material/Slide'
-import { styled } from '@mui/material'
+import { Dialog, DialogContent, Slide, styled } from '@mui/material'
 import { CloseIcon } from '../../assets/icons'
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -10,6 +7,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 const Modal = ({ children, isCloseIcon = true, handleClose, open }) => {
+   // open - is state
    return (
       <StyledContainer
          open={open}
