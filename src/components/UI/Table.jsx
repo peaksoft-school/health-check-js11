@@ -8,7 +8,6 @@ import {
    Table as MuiTable,
    styled,
 } from '@mui/material'
-import { Height } from '@mui/icons-material'
 
 const Table = ({ columns, data }) => {
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -39,7 +38,6 @@ const Table = ({ columns, data }) => {
                   </TableRow>
                ))}
             </TableHead>
-
             <TableBody {...getTableBodyProps()}>
                {rows.map((row) => {
                   prepareRow(row)
@@ -76,14 +74,7 @@ const StyledTableContainer = styled(TableContainer)({
    borderRadius: '6px',
    display: 'flex',
    justifyContent: 'center',
-   border: '1px solid',
-   // width: '1300px',
    '& .table-header': {
-      Height: '60px',
+      height: '3.688rem',
    },
 })
-
-// const StyledCell = styled(TableCell)({
-//    borderBottom: '1px solid #ddd',
-//    textAlign: 'left',
-// })
