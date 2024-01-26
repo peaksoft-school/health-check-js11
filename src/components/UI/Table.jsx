@@ -8,8 +8,11 @@ import {
    Table as MuiTable,
    styled,
 } from '@mui/material'
+import { memo, useMemo } from 'react'
 
-const Table = ({ columns, data }) => {
+const Table = ({ tableHeader, data }) => {
+   const columns = useMemo(() => tableHeader, [])
+
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
       useTable({
          columns,
@@ -19,7 +22,7 @@ const Table = ({ columns, data }) => {
    return (
       <StyledTableContainer>
          <MuiTable {...getTableProps()}>
-            <TableHead className="table-header">
+            <TableHead className="table-head">
                {headerGroups.map((headerGroup, i) => (
                   <TableRow
                      {...headerGroup.getHeaderGroupProps()}
@@ -38,6 +41,7 @@ const Table = ({ columns, data }) => {
                   </TableRow>
                ))}
             </TableHead>
+
             <TableBody {...getTableBodyProps()}>
                {rows.map((row) => {
                   prepareRow(row)
@@ -63,18 +67,19 @@ const Table = ({ columns, data }) => {
                   )
                })}
             </TableBody>
-         </MuiTable>
+           </MuiTable>
       </StyledTableContainer>
    )
 }
 
-export default Table
+export default memo(Table)
 
 const StyledTableContainer = styled(TableContainer)({
    borderRadius: '6px',
    display: 'flex',
    justifyContent: 'center',
-   '& .table-header': {
+
+   '& > .table-head': {
       height: '3.688rem',
    },
 })
