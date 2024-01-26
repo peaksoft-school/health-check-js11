@@ -7,7 +7,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 const Modal = ({ children, isCloseIcon = true, handleClose, open }) => {
-   // open - is state
    return (
       <StyledContainer
          open={open}
@@ -30,13 +29,13 @@ const Modal = ({ children, isCloseIcon = true, handleClose, open }) => {
 export default Modal
 
 const StyledContainer = styled(Dialog)(() => ({
-   '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+   '& .MuiPaper-root': {
       borderRadius: '0.625rem',
       padding: '0.87rem 1.62rem 3.13rem 2.5rem',
    },
 
    '& .close-button-container': {
-      width: '100$',
+      width: '100%',
       display: 'flex',
       justifyContent: 'flex-end',
    },
