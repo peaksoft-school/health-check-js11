@@ -54,8 +54,5 @@ const StyledCloseButton = styled('button')(() => ({
    justifyContent: 'center',
    border: 'none',
    backgroundColor: 'transparent',
-
-   '&:hover': {
-      cursor: 'pointer',
-   },
+   cursor: 'pointer',
 }))
