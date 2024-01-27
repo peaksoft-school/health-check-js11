@@ -1,10 +1,18 @@
-import { styled } from '@mui/material'
+import { Typography, styled } from '@mui/material'
 import { toast } from 'react-toastify'
 
-export const showToast = ({ message, status }) => {
+export const showToast = ({
+   message = 'default',
+   status = 'default',
+   position,
+   duration,
+   autoClose,
+}) => {
    toast[status](<StyledMessage>{message}</StyledMessage>, {
-      autoClose: 3000,
+      autoClose,
       icon: false,
+      position,
+      duration,
       style: {
          borderLeft: '10px',
          borderLeftColor: status === 'error' ? 'red' : 'green',
@@ -14,7 +22,7 @@ export const showToast = ({ message, status }) => {
    })
 }
 
-const StyledMessage = styled('p')(({ theme }) => ({
+const StyledMessage = styled(Typography)(({ theme }) => ({
    color: theme.palette.primary.darkGrey,
    fontSize: '16px',
    fontWeight: 400,
