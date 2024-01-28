@@ -1,72 +1,85 @@
-import { useTable, useRowSelect } from 'react-table'
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
-import Switcher from './Switcher'
+import { useTable } from 'react-table'
+import {
+   TableContainer,
+   TableHead,
+   TableRow,
+   TableCell,
+   TableBody,
+   Table as MuiTable,
+   styled,
+} from '@mui/material'
+import { memo, useMemo } from 'react'
 
-const UITable = ({ columns, data }) => {
-   const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
-      // selectedFlatRows,
-   } = useTable(
-      {
+const Table = ({ tableHeader, data }) => {
+   const columns = useMemo(() => tableHeader, [])
+
+   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+      useTable({
          columns,
          data,
-      },
-      useRowSelect
-   )
+      })
 
    return (
-      <Table {...getTableProps()} style={{ width: '100%' }}>
-         <TableHead>
-            {headerGroups.map((headerGroup) => (
-               <TableRow {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                     <TableCell
-                        {...column.getHeaderProps()}
-                        style={{
-                           borderBottom: '1px solid black',
-                           background: 'aliceblue',
-                           padding: '8px',
-                        }}
-                     >
-                        {column.render('Header')}
-                     </TableCell>
-                  ))}
-               </TableRow>
-            ))}
-         </TableHead>
-         <TableBody {...getTableBodyProps()}>
-            {rows.map((row) => {
-               prepareRow(row)
-               return (
-                  <TableRow {...row.getRowProps()}>
-                     {row.cells.map((cell) => (
+      <StyledTableContainer>
+         <MuiTable {...getTableProps()}>
+            <TableHead className="table-head">
+               {headerGroups.map((headerGroup, i) => (
+                  <TableRow
+                     {...headerGroup.getHeaderGroupProps()}
+                     key={headerGroup.headers[i].Header}
+                  >
+                     {headerGroup.headers.map((column) => (
                         <TableCell
-                           {...cell.getCellProps()}
-                           style={{
-                              borderBottom: '1px solid black',
-                              padding: '8px',
-                           }}
+                           {...column.getHeaderProps({
+                              style: { ...column.style },
+                           })}
+                           key={column.id}
                         >
-                           {cell.column.id === 'checkbox' ? (
-                              <Switcher
-                                 checked={row.isSelected}
-                                 onChange={() => row.toggleRowSelected()}
-                              />
-                           ) : (
-                              cell.render('Cell')
-                           )}
+                           {column.render('Header')}
                         </TableCell>
                      ))}
                   </TableRow>
-               )
-            })}
-         </TableBody>
-      </Table>
+               ))}
+            </TableHead>
+
+            <TableBody {...getTableBodyProps()}>
+               {rows.map((row) => {
+                  prepareRow(row)
+                  return (
+                     <TableRow
+                        {...row.getRowProps()}
+                        key={row.id}
+                        index={row.index}
+                     >
+                        {row.cells.map((cell) => (
+                           <TableCell
+                              {...cell.getCellProps({
+                                 style: {
+                                    ...cell.column.style,
+                                 },
+                              })}
+                              key={cell.column.id}
+                           >
+                              {cell.render('Cell')}
+                           </TableCell>
+                        ))}
+                     </TableRow>
+                  )
+               })}
+            </TableBody>
+           </MuiTable>
+      </StyledTableContainer>
    )
 }
 
-export default UITable
+export default memo(Table)
+
+const StyledTableContainer = styled(TableContainer)({
+   borderRadius: '6px',
+   display: 'flex',
+   justifyContent: 'center',
+
+   '& > .table-head': {
+      height: '3.688rem',
+   },
+})

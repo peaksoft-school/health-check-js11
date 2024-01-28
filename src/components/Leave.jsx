@@ -1,10 +1,6 @@
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import Button from './UI/Button'
-import {
-   ActivePhoneIcon,
-   CircleArrowRightIcon,
-   UserIcon,
-} from '../assets/icons'
+import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../assets/icons'
 import { DoctorLeaveImage } from '../assets/images/index'
 import NumberInput from './UI/inputs/NumberInput'
 
@@ -55,7 +51,7 @@ const Leave = () => (
          </Box>
 
          <StyledButton>
-            ОТПРАВИТЬ ЗАЯВКУ <CircleArrowRightIcon className="circle-arrow" />
+            ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
          </StyledButton>
       </StyledBox>
 
