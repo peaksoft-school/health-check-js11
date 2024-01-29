@@ -1,12 +1,12 @@
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import Button from '../UI/Button'
-import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
-import { DoctorLeaveImage } from '../../assets/images/pngs/index'
 import NumberInput from '../UI/inputs/NumberInput'
+import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
+import { DoctorLeaveImage } from '../../assets/images'
 
 const Leave = () => (
    <StyledContainer>
-      <StyledBox>
+      <Box className="box">
          <Typography className="title">Оставьте заявку</Typography>
 
          <Typography className="description">
@@ -14,7 +14,7 @@ const Leave = () => (
             время
          </Typography>
 
-         <Box className="inputs-container">
+         <Box className="inputs-box">
             <StyledInputContainer>
                <label htmlFor="name" className="input-label">
                   Как к Вам обратиться?
@@ -53,9 +53,9 @@ const Leave = () => (
          <StyledButton>
             ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
          </StyledButton>
-      </StyledBox>
+      </Box>
 
-      <img src={DoctorLeaveImage} alt="doctor" className="doctor-image" />
+      <img src={DoctorLeaveImage} alt="доктор" className="doctor" />
    </StyledContainer>
 )
 
@@ -63,7 +63,7 @@ export default Leave
 
 const StyledContainer = styled('div')(({ theme }) => ({
    display: 'flex',
-   margin: '3.125rem',
+   margin: '120px 0',
    justifyContent: 'center',
    alignItems: 'flex-end',
 
@@ -71,7 +71,53 @@ const StyledContainer = styled('div')(({ theme }) => ({
       margin: '0.625rem',
    },
 
-   '& .doctor-image': {
+   '& > .box': {
+      display: 'flex',
+      width: '41.1875rem',
+      height: '28.75rem',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      backgroundColor: '#DBEBFF',
+      borderRadius: '1.25rem',
+
+      [theme.breakpoints.down('lg')]: {
+         height: '21rem',
+         width: '33rem',
+      },
+
+      '& > .title': {
+         fontSize: '2.25rem',
+         fontWeight: '500',
+         marginBottom: '1.25rem',
+
+         [theme.breakpoints.down('lg')]: {
+            fontSize: '1.25rem',
+            marginBottom: '0.375rem',
+         },
+      },
+
+      '& > .description': {
+         fontSize: '1.125rem',
+         fontWeight: '400',
+         width: '32.375rem',
+
+         [theme.breakpoints.down('lg')]: {
+            width: '26rem',
+            fontSize: '0.9rem',
+         },
+      },
+
+      '& .inputs-box': {
+         display: 'flex',
+         gap: '0.8125rem',
+         marginTop: '3.13rem',
+         marginBottom: '2.5rem',
+      },
+   },
+
+   '& > .doctor': {
       width: '36.375rem',
       height: '33.125rem',
 
@@ -79,52 +125,6 @@ const StyledContainer = styled('div')(({ theme }) => ({
          width: '25rem',
          height: '23rem',
       },
-   },
-}))
-
-const StyledBox = styled('form')(({ theme }) => ({
-   display: 'flex',
-   width: '41.1875rem',
-   height: '28.75rem',
-   flexDirection: 'column',
-   alignItems: 'center',
-   justifyContent: 'center',
-   textAlign: 'center',
-   backgroundColor: '#DBEBFF',
-   borderRadius: '1.25rem',
-
-   [theme.breakpoints.down('lg')]: {
-      height: '21rem',
-      width: '33rem',
-   },
-
-   '& .title': {
-      fontSize: '2.25rem',
-      fontWeight: '500',
-      marginBottom: '1.25rem',
-
-      [theme.breakpoints.down('lg')]: {
-         fontSize: '1.25rem',
-         marginBottom: '0.375rem',
-      },
-   },
-
-   '& .description': {
-      fontSize: '1.125rem',
-      fontWeight: '400',
-      width: '32.375rem',
-
-      [theme.breakpoints.down('lg')]: {
-         width: '26rem',
-         fontSize: '0.9rem',
-      },
-   },
-
-   '& .inputs-container': {
-      display: 'flex',
-      gap: '0.8125rem',
-      marginTop: '3.13rem',
-      marginBottom: '2.5rem',
    },
 }))
 
@@ -156,24 +156,24 @@ const StyledButton = styled(Button)(({ theme }) => ({
       },
    },
 
-   '& .circle-arrow': {
+   '& > .circle-arrow': {
       width: '1.625rem',
       height: '1.625rem',
    },
 }))
 
-const StyledInputContainer = styled('div')(({ theme }) => ({
+const StyledInputContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    alignItems: 'flex-start',
    flexDirection: 'column',
 
-   '& .input-label': {
+   '& > .input-label': {
       [theme.breakpoints.down('lg')]: {
          fontSize: '0.813rem',
       },
    },
 
-   '& .input-icons': {
+   '&  .input-icons': {
       margin: '0.75rem 0rem 0.875rem 0.75rem',
       width: '1.125rem',
       height: '1rem',

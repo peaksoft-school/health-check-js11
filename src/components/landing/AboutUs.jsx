@@ -17,7 +17,7 @@ const AboutUs = () => (
          </Typography>
 
          <Box className="about-us">
-            <Box className="text-container">
+            <Box className="texts">
                {ABOUT_US}
 
                <Typography className="read-more">
@@ -25,29 +25,17 @@ const AboutUs = () => (
                </Typography>
             </Box>
 
-            <StyledImagesContainer>
+            <Box className="images">
                <img className="building" src={BuildingImage} alt="здание" />
 
-               <Box className="images-box">
-                  <img
-                     className="small-image"
-                     src={StudyImage}
-                     alt="доктора учатся"
-                  />
+               <Box>
+                  <img src={StudyImage} alt="доктора учатся" />
 
-                  <img
-                     className="small-image"
-                     src={DoctorsImage}
-                     alt="доктора"
-                  />
+                  <img src={DoctorsImage} alt="доктора" />
 
-                  <img
-                     className="small-image"
-                     src={ConferenceImage}
-                     alt="доктора в конферeнции"
-                  />
+                  <img src={ConferenceImage} alt="доктора в конферeнции" />
                </Box>
-            </StyledImagesContainer>
+            </Box>
          </Box>
       </Box>
    </StyledContainer>
@@ -81,7 +69,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          justifyContent: 'space-between',
          gap: '50px',
 
-         '& .text-container': {
+         '& .texts': {
+            maxWidth: '32.063rem',
+
             '& p': {
                fontSize: '1rem',
                fontFamily: 'Manrope',
@@ -104,49 +94,44 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                marginTop: '30px',
             },
          },
-      },
-   },
-}))
 
-const StyledImagesContainer = styled('div')(({ theme }) => ({
-   display: 'flex',
-   flexDirection: 'column',
-   alignItems: 'center',
-   gap: '0.5rem',
-   maxWidth: '36.625rem',
-
-   [theme.breakpoints.down('lg')]: {
-      width: '33rem',
-   },
-
-   '& > div': {
-      display: 'flex',
-      gap: '1.625rem',
-   },
-
-   '& .building': {
-      maxWidth: '36.625em',
-      width: '100%',
-      height: 'auto',
-      borderRadius: '0.5rem',
-
-      [theme.breakpoints.down('lg')]: {
-         width: '30rem',
-      },
-   },
-
-   '& .images-box': {
-      display: 'flex',
-      gap: '1.625rem',
-
-      '& .small-image': {
-         width: '173px',
-         height: 'auto',
-         marginTop: '1.25rem',
-
-         [theme.breakpoints.down('lg')]: {
+         '& > .images': {
+            display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            width: '140px',
+            gap: '0.5rem',
+            maxWidth: '36.625rem',
+
+            [theme.breakpoints.down('lg')]: {
+               width: '33rem',
+            },
+
+            '& > .building': {
+               maxWidth: '36.625em',
+               width: '100%',
+               height: 'auto',
+               borderRadius: '0.5rem',
+
+               [theme.breakpoints.down('lg')]: {
+                  width: '30rem',
+               },
+            },
+
+            '& > div': {
+               display: 'flex',
+               gap: '1.625rem',
+
+               '& > img': {
+                  width: '173px',
+                  height: 'auto',
+                  marginTop: '1.25rem',
+
+                  [theme.breakpoints.down('lg')]: {
+                     alignItems: 'center',
+                     width: '140px',
+                  },
+               },
+            },
          },
       },
    },

@@ -224,6 +224,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
          '& > .buttons': {
             display: 'flex',
             gap: '1rem',
+            marginLeft: '20px',
          },
       },
    },

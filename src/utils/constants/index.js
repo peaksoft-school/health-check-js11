@@ -154,31 +154,31 @@ const BEST_DOCTORS = [
       id: 1,
       image: FirstBestDoctorImage,
       name: 'Войнич Дарья',
-      doctor: 'Врач - терапевт',
+      specialisation: 'Врач - терапевт',
    },
    {
       id: 2,
       image: SecondBestDoctorImage,
       name: 'Мисько Екатерина',
-      doctor: 'Врач - Педиатр',
+      specialisation: 'Врач - Педиатр',
    },
    {
       id: 3,
       image: ThirdBestDoctorImage,
       name: 'Дмитроченко Дмитрий',
-      doctor: 'Врач - уролог - андролог',
+      specialisation: 'Врач - уролог - андролог',
    },
    {
       id: 4,
       image: FourthBestDoctorImage,
       name: 'Антух Евгений',
-      doctor: 'Врач - невролог',
+      specialisation: 'Врач - невролог',
    },
    {
       id: 5,
       image: FifthBestDoctorImage,
       name: 'Мисник Елена',
-      doctor: 'Врач - эндокринолог',
+      specialisation: 'Врач - эндокринолог',
    },
 ]
 

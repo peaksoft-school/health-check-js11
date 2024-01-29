@@ -76,6 +76,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             height: '9.25rem',
             flexWrap: 'wrap',
             justifyContent: 'center',
+            cursor: 'pointer',
 
             '& .name': {
                fontSize: '0.8rem',

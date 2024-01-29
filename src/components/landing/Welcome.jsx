@@ -17,7 +17,7 @@ const Welcome = () => (
             <StyledButton variant="secondary">оставьте заявку</StyledButton>
          </Box>
 
-         <img className="doctor" src={DoctorWelcomeImage} alt="doctor" />
+         <img className="doctor" src={DoctorWelcomeImage} alt="доктор" />
       </Box>
    </StyledContainer>
 )

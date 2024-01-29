@@ -3,12 +3,13 @@ import Slider from 'react-slick'
 import { REVIEWS } from '../../utils/constants'
 import { Pagination, NextReview, PreviousReview } from '../../assets/icons'
 
-const customDots = (dots) => <div>{dots}</div>
+const customDots = (dots) => <Box>{dots}</Box>
 const customPaging = () => <Pagination />
 
 const NextArrow = ({ onClick }) => (
    <NextReview onClick={onClick} className="slick-next" />
 )
+
 const PrevArrow = ({ onClick }) => (
    <PreviousReview onClick={onClick} className="slick-prev" />
 )
@@ -27,17 +28,17 @@ const Reviews = () => {
    }
 
    return (
-      <Box>
-         <StyledTitle variant="h2">
+      <StyledContainer>
+         <Typography className="title" variant="h2">
             Отзывы наших <Typography variant="span"> пациентов</Typography>
-         </StyledTitle>
+         </Typography>
 
-         <StyledSliderContainer>
+         <Box className="slider-box">
             <StyledSlider {...settings}>
                {REVIEWS.map(({ img, id, name, rating, review }) => (
-                  <StyledReviewCard key={id}>
-                     <Box className="container">
-                        <img src={img} alt="icon" />
+                  <StyledSlide key={id}>
+                     <Box className="info">
+                        <img src={img} alt="пользователь" />
 
                         <Box className="wrapper">
                            <Typography variant="p">{name}</Typography>
@@ -46,69 +47,41 @@ const Reviews = () => {
                         </Box>
                      </Box>
 
-                     <Review>{review}</Review>
-                  </StyledReviewCard>
+                     <Typography className="review">{review}</Typography>
+                  </StyledSlide>
                ))}
             </StyledSlider>
-         </StyledSliderContainer>
-      </Box>
+         </Box>
+      </StyledContainer>
    )
 }
 
 export default Reviews
 
-const StyledSliderContainer = styled('div')(({ theme }) => ({
-   display: 'flex',
-   justifyContent: 'center',
-   overflow: 'hidden',
+const StyledContainer = styled(Box)(({ theme }) => ({
+   margin: '0 auto',
+   maxWidth: '1600px',
 
-   [theme.breakpoints.down('lg')]: {
-      width: '70rem',
-   },
-}))
+   '& > .title': {
+      fontFamily: 'Manrope',
+      fontSize: '2.25rem',
+      fontWeight: '600',
+      lineHeight: 'normal',
+      margin: '0 0 60px',
 
-const StyledTitle = styled(Typography)(({ theme }) => ({
-   fontFamily: 'Manrope',
-   fontSize: '2.25rem',
-   fontWeight: 600,
-   lineHeight: '3.063rem',
-   color: theme.palette.primary.lightBlack,
-   paddingLeft: '7rem',
+      '& > span': {
+         color: theme.palette.primary.darkGreen,
+      },
 
-   span: {
-      color: '#048741',
-   },
-}))
-
-const StyledReviewCard = styled('div')(({ theme }) => ({
-   padding: '2.5rem',
-   width: '48.875rem',
-
-   '& .container': {
-      display: 'flex',
-      gap: '0.875rem',
-      paddingBottom: '20px',
-
-      '& .wrapper': {
-         display: 'flex',
-         flexDirection: 'column',
+      '@media (max-width: 1800px)': {
+         marginLeft: '120px',
       },
    },
 
-   [theme.breakpoints.down('lg')]: {
-      padding: '1.5rem',
-      paddingBottom: '2rem',
-   },
-}))
-
-const Review = styled('p')(({ theme }) => ({
-   fontWeight: 300,
-   fontSize: '1rem',
-   lineHeight: '1.366rem',
-
-   [theme.breakpoints.down('lg')]: {
-      fontSize: '0.8rem',
-      lineHeight: '1.1rem',
+   '& > .slider-box': {
+      display: 'flex',
+      justifyContent: 'center',
+      overflow: 'hidden',
    },
 }))
 
@@ -144,7 +117,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
       '& .slick-active': {
          background: 'none',
 
-         ellipse: {
+         '& ellipse': {
             fill: '#048741',
          },
       },
@@ -182,12 +155,49 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
    },
 
    '& .slick-next:hover, .slick-prev:hover': {
-      circle: {
+      '& circle': {
          fill: '#048741',
       },
 
-      path: {
+      '& path': {
          fill: theme.palette.primary.main,
+      },
+   },
+}))
+
+const StyledSlide = styled(Box)(({ theme }) => ({
+   padding: '2.5rem',
+   width: '48.875rem',
+
+   [theme.breakpoints.down('lg')]: {
+      padding: '1.5rem',
+      paddingBottom: '2rem',
+   },
+
+   '& > .info': {
+      display: 'flex',
+      gap: '0.875rem',
+      paddingBottom: '20px',
+
+      '& > img': {
+         width: '50px',
+         height: '50px',
+      },
+
+      '& > .wrapper': {
+         display: 'flex',
+         flexDirection: 'column',
+      },
+   },
+
+   '& > .review': {
+      fontWeight: '300',
+      fontSize: '1rem',
+      lineHeight: '1.366rem',
+
+      [theme.breakpoints.down('lg')]: {
+         fontSize: '0.8rem',
+         lineHeight: '1.1rem',
       },
    },
 }))
