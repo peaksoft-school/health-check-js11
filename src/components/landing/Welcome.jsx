@@ -3,7 +3,7 @@ import { DoctorWelcomeImage } from '../../assets/images'
 import Button from '../UI/Button'
 
 const Welcome = () => (
-   <Container>
+   <StyledContainer>
       <Box className="welcome">
          <Box className="texts">
             <StyledTitle>Добро пожаловать в клинику HealthCheck</StyledTitle>
@@ -17,23 +17,22 @@ const Welcome = () => (
             <StyledButton variant="secondary">оставьте заявку</StyledButton>
          </Box>
 
-         <img className="doctor" src={DoctorWelcomeImage} alt="doctor" />
+         <img className="doctor" src={DoctorWelcomeImage} alt="доктор" />
       </Box>
-   </Container>
+   </StyledContainer>
 )
 
 export default Welcome
 
-const Container = styled('div')(({ theme }) => ({
-   display: 'flex',
-   justifyContent: 'center',
+const StyledContainer = styled(Box)(({ theme }) => ({
+   padding: '30px 120px',
 
    '& > .welcome': {
+      margin: '0 auto',
+      maxWidth: '1600px',
       display: 'flex',
-      height: '38.452rem',
-      margin: '1.25rem 7.5rem 1.923rem',
-      gap: '3.438rem',
       justifyContent: 'space-between',
+      gap: '3.438rem',
       alignItems: 'center',
 
       [theme.breakpoints.down('lg')]: {
