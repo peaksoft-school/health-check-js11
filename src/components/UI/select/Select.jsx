@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
-import { Select as Selector } from 'react-select'
+// import { Select as ReactSelector } from 'react-select'
+import Selector from 'react-select'
 
 const customStyles = {
    control: (provided, state) => ({

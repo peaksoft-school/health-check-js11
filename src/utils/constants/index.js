@@ -307,3 +307,10 @@ export {
    COLUMNS,
    FAKE_DATA,
 }
+
+export const HEADER_ADMIN = [
+   { id: 1, text: 'Онлайн-запись' },
+   { id: 2, text: 'Заявки' },
+   { id: 3, text: 'Специалисты' },
+   { id: 4, text: 'Пациенты' },
+]
