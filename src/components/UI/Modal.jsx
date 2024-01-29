@@ -2,30 +2,30 @@ import { forwardRef } from 'react'
 import { Dialog, DialogContent, Slide, styled } from '@mui/material'
 import { CloseIcon } from '../../assets/icons'
 
-const Transition = forwardRef(function Transition(props, ref) {
-   return <Slide direction="up" ref={ref} {...props} />
-})
+const Transition = forwardRef((props, ref) => (
+   <Slide direction="up" ref={ref} {...props} />
+))
 
-const Modal = ({ children, isCloseIcon = true, handleClose, open }) => {
-   return (
-      <StyledContainer
-         open={open}
-         TransitionComponent={Transition}
-         keepMounted
-         onClose={handleClose}
-         aria-describedby="alert-dialog-slide-description"
-      >
-         {isCloseIcon ? (
-            <div className="close-button-container">
-               <StyledCloseButton onClick={handleClose}>
-                  <CloseIcon />
-               </StyledCloseButton>
-            </div>
-         ) : null}
-         <DialogContent className="dialog-content">{children}</DialogContent>
-      </StyledContainer>
-   )
-}
+const Modal = ({ children, isCloseIcon = true, handleClose, open }) => (
+   <StyledContainer
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+   >
+      {isCloseIcon ? (
+         <div className="close-button-container">
+            <StyledCloseButton onClick={handleClose}>
+               <CloseIcon />
+            </StyledCloseButton>
+         </div>
+      ) : null}
+
+      <DialogContent className="dialog-content">{children}</DialogContent>
+   </StyledContainer>
+)
+
 export default Modal
 
 const StyledContainer = styled(Dialog)(() => ({

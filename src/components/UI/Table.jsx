@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import { memo, useMemo } from 'react'
 
-const Table = ({ tableHeader, data }) => {
-   const columns = useMemo(() => tableHeader, [])
+const Table = ({ columns: headers, data }) => {
+   const columns = useMemo(() => headers, [])
 
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
       useTable({
@@ -45,6 +45,7 @@ const Table = ({ tableHeader, data }) => {
             <TableBody {...getTableBodyProps()}>
                {rows.map((row) => {
                   prepareRow(row)
+
                   return (
                      <TableRow
                         {...row.getRowProps()}
@@ -67,7 +68,7 @@ const Table = ({ tableHeader, data }) => {
                   )
                })}
             </TableBody>
-           </MuiTable>
+         </MuiTable>
       </StyledTableContainer>
    )
 }
