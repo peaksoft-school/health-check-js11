@@ -1,76 +1,80 @@
 import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import Button from '../components/UI/Button'
+import SearchInput from '../components/UI/inputs/SearchInput'
 import {
    DefaultPhoneIcon,
-   HeaderProfile,
+   HeaderProfileIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
 } from '../assets/icons'
 import { HEADER_NAV, HEADER_SOCIALS, LOCATION } from '../utils/constants/index'
-import SearchInput from '../components/UI/inputs/SearchInput'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
 
    const open = Boolean(anchorEl)
 
-   const handleClick = (event) => setAnchorEl(event.currentTarget)
+   const handleClick = (e) => setAnchorEl(e.currentTarget)
 
    const handleClose = () => setAnchorEl(null)
 
    return (
-      <StyledHeaderMainContaier>
-         <Box className="header-content">
+      <StyledContainer>
+         <Box className="box">
             <Box className="header-top">
                <Box className="location-container">
                   <Box>
-                     <a aria-label="location" href={LOCATION}>
+                     <a
+                        aria-label="address"
+                        className="address"
+                        href={LOCATION}
+                     >
                         <LocationIcon />
-                     </a>
 
-                     <Typography variant="p">
-                        106452, г. Бишкек, Гражданская 119
-                     </Typography>
+                        <Typography>
+                           106452, г. Бишкек, Гражданская 119
+                        </Typography>
+                     </a>
                   </Box>
 
-                  <Box>
+                  <Box className="time">
                      <HourIcon />
 
-                     <Typography variant="p" sx={{ color: 'green' }}>
-                        пн-сб
-                     </Typography>
+                     <Typography className="days">пн-сб</Typography>
 
-                     <Typography variant="p"> 08:00 до 18:00 </Typography>
+                     <Typography> 08:00 до 18:00 </Typography>
                   </Box>
                </Box>
 
                <SearchInput placeholder="Поиск по фото" />
 
-               <StyledIconsContainer>
+               <Box className="socials">
                   {HEADER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
-                     <Box key={id}>
-                        <a aria-label={ariaLabel} href={href}>
-                           {icon}
-                        </a>
-                     </Box>
+                     <a aria-label={ariaLabel} href={href} key={id}>
+                        {icon}
+                     </a>
                   ))}
-               </StyledIconsContainer>
+               </Box>
 
-               <StyledNumBlock>
-                  <a aria-label="phone number" href="tel:+996 800 000">
-                     <DefaultPhoneIcon />
-                  </a>
+               <Box className="phone-numbers-box">
+                  <DefaultPhoneIcon />
+
                   <Box>
-                     <Typography variant="p">+996(800) 000 000</Typography>
+                     <a aria-label="phone-number" href="tel:+996 223 238 750">
+                        <Typography> +996 (223) 238 750</Typography>
+                     </a>
 
-                     <Typography variant="p">+996(505) 000 000</Typography>
+                     <a aria-label="phone-number" href="tel:+996 551 130 187">
+                        <Typography> +996 (551) 130 187</Typography>
+                     </a>
                   </Box>
-               </StyledNumBlock>
+               </Box>
 
                <Box>
-                  <StyledHeaderProfile
+                  <HeaderProfileIcon
+                     className="profile"
                      aria-controls={open ? 'basic-menu' : null}
                      onClick={handleClick}
                   />
@@ -83,141 +87,149 @@ const Header = () => {
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <MenuItem className="menu-item">Войти</MenuItem>
+                     <StyledMenuItem>Войти</StyledMenuItem>
 
-                     <MenuItem>Регистрация</MenuItem>
+                     <StyledMenuItem>Регистрация</StyledMenuItem>
                   </StyledMenu>
                </Box>
             </Box>
 
             <hr />
 
-            <StyledSecondMainContainer>
-               <StyledIconContainer>
+            <Box className="header-bottom">
+               <Box className="logo">
                   <HealthCheckIcon />
 
                   <Typography variant="h1">
                      <Typography variant="p">HEALTH</Typography> CHECK
                   </Typography>
-               </StyledIconContainer>
+               </Box>
 
-               <StyledNaviList>
+               <nav>
                   {HEADER_NAV.map(({ text, id }) => (
-                     <Box key={id}>
-                        <p>{text}</p>
-                     </Box>
+                     <Typography key={id}>{text}</Typography>
                   ))}
-               </StyledNaviList>
+               </nav>
 
-               <StyledButtonContainer>
-                  <StyledBtn className="button" variant="secondary">
-                     получить результаты
-                  </StyledBtn>
+               <Box className="buttons">
+                  <StyledButton className="button" variant="secondary">
+                     ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
+                  </StyledButton>
 
-                  <StyledBtn className="button">запись онлайн </StyledBtn>
-               </StyledButtonContainer>
-            </StyledSecondMainContainer>
+                  <StyledButton className="button">ЗАПИСЬ ОНАЛЙН</StyledButton>
+               </Box>
+            </Box>
          </Box>
-      </StyledHeaderMainContaier>
+      </StyledContainer>
    )
 }
 
 export default Header
 
-const StyledHeaderMainContaier = styled('header')(() => ({
-   width: '100%',
+const StyledContainer = styled('header')(({ theme }) => ({
    position: 'sticky',
    top: '0px',
    zIndex: '1000',
    backgroundColor: 'white',
+   padding: '0 120px',
 
-   '& .header-content': {
-      maxWidth: '1440px',
-      width: '96%',
-      margin: 'auto',
+   '& > .box': {
+      margin: '0 auto',
+      maxWidth: '1600px',
       display: 'flex',
       flexDirection: 'column',
-      padding: '0 2%',
-   },
 
-   '& .header-top': {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '21px 0',
-
-      '& .location-container': {
+      '& > .header-top': {
          display: 'flex',
-         flexDirection: 'column',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         padding: '21px 0',
 
-         '& > div': {
+         '& > .location-container': {
+            display: 'flex',
+            flexDirection: 'column',
+
+            '& > div > a, .time ': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '6px',
+               textDecoration: 'none',
+               color: 'black',
+               fontFamily: 'Manrope',
+               fontSize: '1rem',
+               fontWeight: '400',
+
+               '& > .days': {
+                  fontWeight: '500',
+                  color: 'green',
+               },
+            },
+         },
+
+         '& > .phone-numbers-box': {
+            display: 'flex',
+            gap: '0.375rem',
+
+            '& > div': {
+               '& > a': {
+                  textDecoration: 'none',
+                  color: 'black',
+               },
+            },
+         },
+
+         '& > .socials': {
+            display: 'flex',
+            gap: '0.625rem',
+         },
+
+         '& .profile': {
+            cursor: 'pointer',
+         },
+      },
+
+      '& > .header-bottom': {
+         display: 'flex',
+         justifyContent: 'space-between',
+         gap: '20x',
+         alignItems: 'center',
+         marginTop: '12px',
+
+         '& > .logo': {
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
+            gap: '0.803rem',
+
+            '& .MuiTypography-root': {
+               fontSize: '1.375rem',
+               fontWeight: 600,
+               letterPacing: '0.044rem',
+
+               '& .MuiTypography-root': {
+                  color: theme.palette.primary.darkGreen,
+               },
+            },
+         },
+
+         '& > nav': {
+            display: 'flex',
+            gap: '36px',
+
+            '& > p': {
+               fontSize: '14px',
+               cursor: 'pointer',
+            },
+         },
+
+         '& > .buttons': {
+            display: 'flex',
+            gap: '1rem',
          },
       },
    },
 }))
 
-const StyledSecondMainContainer = styled('div')(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
-   alignItems: 'center',
-   marginTop: '12px',
-}))
-
-const StyledNumBlock = styled('div')(() => ({
-   display: 'flex',
-
-   '& > div': {
-      display: 'flex',
-      flexDirection: 'column',
-   },
-}))
-
-const StyledHeaderProfile = styled(HeaderProfile)(() => ({
-   cursor: 'pointer',
-}))
-
-const StyledIconsContainer = styled('div')(() => ({
-   display: 'flex',
-   gap: '0.625rem',
-}))
-
-const StyledIconContainer = styled('div')(({ theme }) => ({
-   display: 'flex',
-   alignItems: 'center',
-   gap: '0.803rem',
-
-   '& .MuiTypography-root': {
-      fontSize: '1.375rem',
-      fontStyle: 'normal',
-      fontWeight: 600,
-      lineHeight: 'normal',
-      letterPacing: '0.044rem',
-
-      '& .MuiTypography-root': {
-         color: theme.palette.primary.darkGreen,
-      },
-   },
-}))
-
-const StyledNaviList = styled('nav')(() => ({
-   display: 'flex',
-   gap: '36px',
-
-   '& > div': {
-      fontSize: '14px',
-      cursor: 'pointer',
-   },
-}))
-
-const StyledButtonContainer = styled('div')(() => ({
-   display: 'flex',
-   gap: '1rem',
-}))
-
-const StyledBtn = styled(Button)(() => ({
+const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       padding: '5px 0',
       width: '191px',
@@ -235,13 +247,20 @@ const StyledBtn = styled(Button)(() => ({
    },
 }))
 
-const StyledMenu = styled(Menu)(({ theme }) => ({
+const StyledMenu = styled(Menu)(() => ({
    position: 'absolute',
    zIndex: 1000,
    marginLeft: '10px',
    marginTop: '10px',
+}))
 
-   '& .menu-item': {
-      '&:hover': { color: theme.palette.primary.darkGreen },
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+   '&.MuiMenuItem-root': {
+      backgroundColor: 'white',
+      color: 'black',
+   },
+
+   '&.MuiMenuItem-root:hover': {
+      color: theme.palette.primary.darkGreen,
    },
 }))

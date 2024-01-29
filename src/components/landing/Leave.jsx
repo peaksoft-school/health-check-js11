@@ -1,8 +1,8 @@
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
-import Button from './UI/Button'
-import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../assets/icons'
-import { DoctorLeaveImage } from '../assets/images/index'
-import NumberInput from './UI/inputs/NumberInput'
+import Button from '../UI/Button'
+import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
+import { DoctorLeaveImage } from '../../assets/images/pngs/index'
+import NumberInput from '../UI/inputs/NumberInput'
 
 const Leave = () => (
    <StyledContainer>

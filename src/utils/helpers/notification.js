@@ -2,8 +2,8 @@ import { Typography, styled } from '@mui/material'
 import { toast } from 'react-toastify'
 
 export const showToast = ({
-   message = 'default',
-   status = 'default',
+   message = 'Success',
+   status = 'success',
    position,
    duration,
    autoClose,
@@ -13,6 +13,7 @@ export const showToast = ({
       icon: false,
       position,
       duration,
+
       style: {
          borderLeft: '10px',
          borderLeftColor: status === 'error' ? 'red' : 'green',

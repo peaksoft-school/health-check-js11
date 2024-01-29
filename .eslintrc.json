@@ -3,20 +3,27 @@
       "browser": true,
       "es2021": true
    },
+
    "extends": [
       "plugin:react/recommended",
       "airbnb",
       "plugin:prettier/recommended"
    ],
+
    "parserOptions": {
       "ecmaFeatures": {
          "jsx": true
       },
+
       "ecmaVersion": "latest",
       "sourceType": "module"
    },
+
    "plugins": ["react"],
+
    "rules": {
+      "global-require": 0,
+      "import/no-extraneous-dependencies": "off",
       "react/prop-types": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "react/jsx-props-no-spreading": "off",
@@ -26,8 +33,10 @@
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "off",
       "react/function-component-definition": "off",
+
       "max-len": [
          "error",
+
          {
             "code": 100,
             "ignoreStrings": true,
@@ -35,9 +44,12 @@
             "ignoreRegExpLiterals": true
          }
       ],
+
       "no-console": ["warn", { "allow": ["warn", "error"] }],
+
       "jsx-a11y/label-has-associated-control": [
          "error",
+
          {
             "required": {
                "some": ["nesting", "id"]
