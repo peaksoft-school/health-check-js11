@@ -29,7 +29,7 @@ const Modal = ({ children, isCloseIcon = true, handleClose, open }) => (
 export default Modal
 
 const StyledContainer = styled(Dialog)(() => ({
-   '& .MuiPaper-root': {
+   '& .MuiDialog-paper': {
       borderRadius: '0.625rem',
       padding: '0.87rem 1.62rem 3.13rem 2.5rem',
    },

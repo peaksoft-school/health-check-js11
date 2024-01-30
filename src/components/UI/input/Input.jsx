@@ -18,7 +18,7 @@ const Input = forwardRef(
 const StyledInput = styled(TextField)(({ theme }) => ({
    width: '414px',
    height: '42px',
-   borderRadius: '1px solid',
+   borderRadius: '8px solid',
 
    '& .MuiOutlinedInput-input': {
       borderRadius: '2px',

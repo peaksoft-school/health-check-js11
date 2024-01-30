@@ -15,8 +15,8 @@ import {
    GoogleIcon,
    OpenEyesIcon,
 } from '../../assets/icons/index'
-import { validationSchemaSingIn } from '../../utils/helpers/validate/singInValidate'
-import { showErrors } from '../../utils/helpers/validate/errors'
+import { validationSchemaSingIn } from '../../utils/helpers/validation/formValidate'
+import { showErrors } from '../../utils/helpers/validation/errors'
 
 const SingIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -24,7 +24,10 @@ const SingIn = () => {
    const showPasswordHandle = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const onSubmit = (values, { resetForm }) => {
+      console.log(values)
+      resetForm()
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
@@ -39,20 +42,25 @@ const SingIn = () => {
    const open = true
 
    return (
-      <StyledModal open={open}>
+      <Modal open={open}>
          <StyledForm onSubmit={handleSubmit}>
             <Typography> ВОЙТИ </Typography>
 
             <div className="input-box">
-               <Input
+               <StyledInput
                   placeholder="Логин"
+                  autoComplete="on"
                   value={values.name}
+                  error={!!errors.name}
                   onChange={handleChange('name')}
                />
-               <Input
+
+               <StyledInput
                   placeholder="Пароль"
+                  autoComplete="on"
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
+                  error={!!errors.password}
                   onChange={handleChange('password')}
                   InputProps={{
                      endAdornment: (
@@ -76,7 +84,7 @@ const SingIn = () => {
 
             <StyledButton type="submit">ВОЙТИ</StyledButton>
 
-            <a href="gsdfgsdfgsdgsfsd#">Забыли пароль?</a>
+            <Typography className="navigate">Забыли пароль?</Typography>
 
             <Line>
                <hr className="lineFirst" />
@@ -93,10 +101,12 @@ const SingIn = () => {
 
             <Typography>
                Нет аккаунта?
-               <a href="#[pvot9hyi8ujikglf"> Зарегистрироваться </a>
+               <Typography variant="span" className="navigate">
+                  Зарегистрироваться
+               </Typography>
             </Typography>
          </StyledForm>
-      </StyledModal>
+      </Modal>
    )
 }
 
@@ -108,7 +118,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    alignItems: 'center',
    background: theme.palette.primary.main,
 
-   '& a ': {
+   '& .navigate ': {
       textDecoration: 'none',
       color: theme.palette.tertiary.lightBlue,
    },
@@ -118,15 +128,6 @@ const StyledForm = styled('form')(({ theme }) => ({
       flexDirection: 'column',
       gap: '26px',
       marginTop: '24px',
-
-      '& .MuiOutlinedInput-input ': {
-         height: '15px',
-         borderRadius: '30px',
-      },
-
-      '& .error-input': {
-         border: '1px solid red',
-      },
    },
 
    '& .google-button': {
@@ -150,6 +151,32 @@ const StyledForm = styled('form')(({ theme }) => ({
       fontSize: '0.ыы8rem',
       position: 'absolute',
       bottom: '295px',
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '& .MuiOutlinedInput-input': {
+      height: '8px',
+      borderRadius: '8px',
+   },
+
+   '& .MuiOutlinedInput-root ': {
+      height: '42px',
+      borderRadius: '8px',
+   },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   '&.MuiButtonBase-root': {
+      marginTop: '40px',
+      marginBottom: '20px',
+      width: '414px',
+      height: '44px',
+      fontSize: '14px',
+
+      '&:active': {
+         borderRadius: '10px',
+      },
    },
 }))
 

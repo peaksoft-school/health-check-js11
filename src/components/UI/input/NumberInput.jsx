@@ -4,10 +4,10 @@ import { PatternFormat } from 'react-number-format'
 
 const NumberInput = forwardRef(
    (
-      { value, children, onChange, rest, placeholder, format, id, mask },
+      { value, children, onChange, rest, error, placeholder, format, id, mask },
       ref
    ) => (
-      <StyledInputBox>
+      <StyledInputBox error={error}>
          {children}
 
          <StyledInput
@@ -46,16 +46,11 @@ const StyledInput = styled(PatternFormat)(({ theme }) => ({
    },
 }))
 
-const StyledInputBox = styled(Paper)(({ theme }) => ({
-   width: '16.4375rem',
+const StyledInputBox = styled(Paper)(({ error }) => ({
+   width: '100%',
    height: ' 2.625rem',
    display: 'flex',
    alignItems: 'center',
-   border: '1px solid rgba(0, 147, 68, 0.50)',
+   border: `1px solid ${error ? 'red' : ' rgba(0, 147, 68, 0.50)'}`,
    marginTop: '0.375rem',
-
-   [theme.breakpoints.down('lg')]: {
-      width: '13.4375rem',
-      height: ' 2.3rem',
-   },
 }))

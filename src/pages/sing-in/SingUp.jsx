@@ -1,39 +1,152 @@
-import { Typography, styled, ButtonBase } from '@mui/material'
+import { useState } from 'react'
+import { useFormik } from 'formik'
+import {
+   Typography,
+   styled,
+   ButtonBase,
+   IconButton,
+   InputAdornment,
+} from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/input/Input'
 import NumberInput from '../../components/UI/input/NumberInput'
 import Button from '../../components/UI/Button'
-import { GoogleIcon } from '../../assets/icons'
+import { CloseEyesIcon, GoogleIcon, OpenEyesIcon } from '../../assets/icons'
+import { validationSchemaSingUp } from '../../utils/helpers/validation/formValidate'
+import { showErrorsSingUp } from '../../utils/helpers/validation/errors'
 
 const SingUp = () => {
+   const [showPassword1, setShowPassword1] = useState(false)
+   const [showPassword2, setShowPassword2] = useState(false)
+
+   const showPasswordHandle1 = () =>
+      setShowPassword1((prevShowPassword1) => !prevShowPassword1)
+
+   const showPasswordHandle2 = () =>
+      setShowPassword2((prevShowPassword2) => !prevShowPassword2)
+
+   const onSubmit = (values, { resetForm }) => {
+      console.log(values)
+      resetForm()
+   }
+
+   const { values, handleChange, handleSubmit, errors } = useFormik({
+      initialValues: {
+         name: '',
+         sureName: '',
+         email: '',
+         phoneNumber: '',
+         password: '',
+         confirmPassword: '',
+      },
+      validateOnChange: false,
+      onSubmit,
+      validationSchema: validationSchemaSingUp,
+   })
+
    const open = true
 
    return (
       <Modal open={open}>
-         <StyledForm action="">
-            <Typography>РГИСТРАЦИЯ</Typography>
+         <StyledForm onSubmit={handleSubmit}>
+            <Typography>РЕГИСТРАЦИЯ</Typography>
+
             <div className="input-box">
-               <StyledInput />
-               <StyledInput />
-               <StyledNumberInput
+               <StyledInput
+                  placeholder="name"
+                  name="name"
+                  autoComplete="on"
+                  value={values.name}
+                  onChange={handleChange}
+                  error={!!errors.name}
+               />
+
+               <StyledInput
+                  name="sureName"
+                  placeholder="sureName"
+                  autoComplete="on"
+                  value={values.sureName}
+                  onChange={handleChange}
+                  error={!!errors.sureName}
+               />
+
+               <StyledInput
+                  name="email"
+                  placeholder="email"
+                  autoComplete="on"
+                  value={values.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+               />
+
+               <NumberInput
                   id="number"
+                  name="phoneNumber"
+                  autoComplete="on"
+                  value={values.phoneNumber}
+                  onChange={handleChange('phoneNumber')}
+                  error={!!errors.phoneNumber}
                   mask="_"
                   format="+996 (###) ##-##-##"
                   placeholder="+996 (_ _ _) _ _-_ _-_ _"
                />
 
-               <StyledInput />
-               <StyledInput />
-               <StyledInput />
-               <StyledInput />
+               <StyledInput
+                  name="password"
+                  placeholder="Введите пароль"
+                  autoComplete="on"
+                  value={values.password}
+                  onChange={handleChange('password')}
+                  error={!!errors.password}
+                  type={showPassword1 ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={showPasswordHandle1}>
+                              {showPassword1 ? (
+                                 <OpenEyesIcon />
+                              ) : (
+                                 <CloseEyesIcon />
+                              )}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+
+               <StyledInput
+                  name="confirmPassword"
+                  placeholder="Повторите пароль"
+                  autoComplete="on"
+                  value={values.confirmPassword}
+                  onChange={handleChange('confirmPassword')}
+                  error={!!errors.confirmPassword}
+                  type={showPassword2 ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={showPasswordHandle2}>
+                              {showPassword2 ? (
+                                 <OpenEyesIcon />
+                              ) : (
+                                 <CloseEyesIcon />
+                              )}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
             </div>
+
+            {showErrorsSingUp(errors) && (
+               <p className="message">{showErrorsSingUp(errors)}</p>
+            )}
+
             <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
 
             <Line>
                <hr className="lineFirst" />
-
                <span>или</span>
-
                <hr className="lineSecond" />
             </Line>
 
@@ -44,7 +157,7 @@ const SingUp = () => {
 
             <Typography>
                У вас уже есть аккаунт?
-               <a href="#[pvot9hyi8ujikglf"> Войти </a>
+               <Typography className="navigate"> Войти </Typography>
             </Typography>
          </StyledForm>
       </Modal>
@@ -52,8 +165,6 @@ const SingUp = () => {
 }
 
 export default SingUp
-
-const StyledNumberInput = styled(NumberInput)(() => ({}))
 
 const StyledForm = styled('form')(({ theme }) => ({
    display: 'flex',
@@ -67,7 +178,15 @@ const StyledForm = styled('form')(({ theme }) => ({
       gap: '14px',
       marginTop: '24px',
    },
-   '& a ': { textDecoration: 'none' },
+
+   '& .navigate ': {
+      textDecoration: 'none',
+      color: theme.palette.tertiary.lightBlue,
+   },
+
+   '& .message': {
+      color: 'red',
+   },
 
    '& .google-button': {
       '&.MuiButtonBase-root': {
@@ -87,14 +206,20 @@ const StyledForm = styled('form')(({ theme }) => ({
 }))
 
 const StyledInput = styled(Input)(() => ({
-   '& .MuiOutlinedInput-input ': {
-      height: '15px',
+   '& .MuiOutlinedInput-input': {
+      height: '8px',
+      borderRadius: '8px',
+   },
+
+   '& .MuiOutlinedInput-root ': {
+      height: '42px',
+      borderRadius: '8px',
    },
 }))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      marginTop: '46px',
+      marginTop: '20px',
       marginBottom: '20px',
       width: '414px',
       height: '44px',

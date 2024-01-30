@@ -3,27 +3,26 @@ import { Typography, styled } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/input/Input'
 import Button from '../../components/UI/Button'
+import { validateEmail } from '../../utils/helpers/validation/formValidate'
 
 const ForgotPassword = () => {
    const [email, setEmail] = useState('')
-   const [emailError, setEmailError] = useState(null)
+   const [emailError, setEmailError] = useState(false)
 
-   const validateEmail = (email) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!email) {
-         return 'Email is required'
-      }
-      if (!emailRegex.test(email)) {
-         return 'Invalid email address'
-      }
-      return ''
+   const handleChange = (e) => {
+      setEmail(e.target.value)
+      setEmailError(false)
    }
 
-   const handleEmailChange = (event) => {
-      const { value } = event.target
-      setEmail(value)
-      const error = validateEmail(value)
-      setEmailError(error)
+   const handleSubmit = (e) => {
+      e.preventDefault()
+      const error = validateEmail(email)
+      if (error) {
+         setEmailError(true)
+      } else {
+         console.log('успешно')
+         setEmail('')
+      }
    }
 
    const open = true
@@ -33,19 +32,21 @@ const ForgotPassword = () => {
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 
-            <form className="form" action="">
+            <form onSubmit={handleSubmit} className="form" action="">
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
 
                <Input
-                  error={emailError}
+                  value={email}
+                  autoComplete="on"
+                  onChange={handleChange}
                   type="email"
                   placeholder="Email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  error={emailError}
                />
-               {emailError && <p className="message">{emailError}</p>}
+
+               {emailError && <p className="message">Invalid email address</p>}
 
                <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
 
@@ -94,9 +95,8 @@ const StyledButton = styled(Button)(() => ({
       width: '414px',
       height: '44px',
       fontSize: '14px',
+      BackHandColor: 'white',
 
       '&:active': { borderRadius: '10px' },
    },
 }))
-
-// rtk query
