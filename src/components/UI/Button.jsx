@@ -50,20 +50,19 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          '&.MuiButtonBase-root': {
             borderRadius: '10px',
             padding: '10px 26px',
-            border: '1px solid #959595',
+            border: '1px solid #048741',
             color: theme.palette.primary.darkGreen,
-            borderColor: '#048741',
             transition: 'all 0.4s',
 
             '&:hover': {
+               border: '1px solid #048741',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
-               border: 'none',
                color: theme.palette.primary.main,
             },
 
             '&:active': {
-               border: 'none',
+               border: '1px solid #048741',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             },

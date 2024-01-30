@@ -4,7 +4,7 @@ import { SearchIcon } from '../../../assets/icons'
 
 const SearchInput = forwardRef(
    ({ placeholder, onChange, value, ...rest }, ref) => (
-      <StyledInputContainer>
+      <StyledContainer>
          <InputBase
             placeholder={placeholder}
             onChange={onChange}
@@ -13,24 +13,35 @@ const SearchInput = forwardRef(
             {...rest}
          />
 
-         <SearchIcon className="search-icon" />
-      </StyledInputContainer>
+         <SearchIcon />
+      </StyledContainer>
    )
 )
 
 export default SearchInput
 
-const StyledInputContainer = styled(Paper)(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   padding: '0.125rem 0.9rem',
-   justifyContent: 'space-between',
-   width: '100%',
-   borderRadius: '1.563rem',
-   backgroundColor: 'white',
-   boxShadow: 'none',
+const StyledContainer = styled(Paper)(() => {
+   const defaultStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0.125rem 0.9rem',
+      justifyContent: 'space-between',
+      width: '22.938rem',
+      borderRadius: '1.563rem',
+      backgroundColor: '#F3F1F1',
+      boxShadow: 'none',
+      p: ' 0.125rem 0.25rem',
 
-   '& .search-icon': {
-      cursor: 'pointer',
-   },
-}))
+      '& .input': {
+         flex: 1,
+         fontSize: '0.875rem',
+         marginLeft: '0.063rem',
+      },
+
+      '& .search-icon': {
+         cursor: 'pointer',
+      },
+   }
+
+   return defaultStyle
+})

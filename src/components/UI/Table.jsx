@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import { memo, useMemo } from 'react'
 
-const Table = ({ tableHeader, data }) => {
-   const columns = useMemo(() => tableHeader, [])
+const Table = ({ columns: headers, data }) => {
+   const columns = useMemo(() => headers, [])
 
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
       useTable({
