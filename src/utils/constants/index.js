@@ -24,7 +24,8 @@ import {
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
-import UserIcon from '../../assets/images/User-icon.png'
+import UserIcon from '../../assets/images/user-icon.png'
+import Checkbox from '../../components/UI/Checkbox'
 
 const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
@@ -294,6 +295,226 @@ const COLUMNS = [
    },
 ]
 
+const COLUMNS_FOR_ONLINE_SIGN_UP = [
+   {
+      Header: <Checkbox checked={!false} />,
+      accessor: 'checkbox',
+
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+   },
+
+   {
+      Header: <DeleteIcon />,
+      accessor: 'action',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
+   },
+
+   {
+      Header: '№',
+      accessor: 'index',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Имя и фамилия',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.25,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.25,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Почта',
+      accessor: 'email',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.23,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Выбор услуги',
+      accessor: 'service',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Выбор специалиста',
+      accessor: 'specialist',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.3,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Дата и время',
+      accessor: 'time',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <div>
+            <p>{row.original.date}</p>
+            <p>{row.original.time}</p>
+         </div>
+      ),
+   },
+
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.2,
+         display: 'flex',
+         justifyContent: 'center',
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         alignItems: 'start',
+      },
+   },
+
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'end',
+      },
+
+      Cell: ({ row }) => {
+         return (
+            <DeleteIcon
+               {...row.original}
+               style={{
+                  cursor: 'pointer',
+                  width: '26px',
+                  height: '22px',
+               }}
+            />
+         )
+      },
+   },
+]
+
+const DATA_FOR_ONLINE_SIGN_UP = [
+   {
+      checkbox: <Checkbox />,
+      index: 1,
+      name: 'Sharapat',
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      service: 'Окулист',
+      specialist: 'Манак Елена',
+      time: '15:00',
+      date: '12.01.2023',
+      processed: <Checkbox />,
+   },
+   {
+      checkbox: <Checkbox />,
+      index: 2,
+      name: 'Sharapat',
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      service: 'Окулист',
+      specialist: 'Манак Елена',
+      time: '15:00',
+      date: '12.01.2023',
+      processed: <Checkbox />,
+   },
+   {
+      checkbox: <Checkbox />,
+      index: 3,
+      name: 'Sharapat',
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      service: 'Окулист',
+      specialist: 'Манак Елена',
+      time: '15:00',
+      date: '12.01.2023',
+      processed: <Checkbox />,
+   },
+]
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -306,4 +527,6 @@ export {
    INFO_DOCTORS,
    COLUMNS,
    FAKE_DATA,
+   DATA_FOR_ONLINE_SIGN_UP,
+   COLUMNS_FOR_ONLINE_SIGN_UP,
 }
