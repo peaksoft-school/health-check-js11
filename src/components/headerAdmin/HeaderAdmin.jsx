@@ -1,7 +1,7 @@
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import { HEADER_ADMIN } from '../../utils/constants/index'
-import { HealthCheckIcon, DownIcon } from '../../assets/icons'
+import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
 
 const HeaderAdmin = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -19,27 +19,32 @@ const HeaderAdmin = () => {
                <HealthCheckIcon />
                HEALTH
                <Typography className="title" variant="span">
-                  CHECK{' '}
+                  CHECK
                </Typography>
             </div>
          </StyledMainText>
+
          <div className="navigaiton">
             {HEADER_ADMIN.map(({ text, id }) => (
-               <Box key={id}>
-                  <p>{text}</p>
-               </Box>
+               <p key={id}>{text}</p>
             ))}
          </div>
+
          <Box>
-            <StyledAdmin>
+            <StyledAdmin onClick={handleClick}>
                Администратор
-               <DownIcon
-                  aria-controls={open ? 'basic-menu' : null}
-                  onClick={handleClick}
-                  className="icon"
-               />
+               {open ? (
+                  <ArrowUpIcon />
+               ) : (
+                  <ArrowDownIcon
+                     aria-controls={open ? 'basic-menu' : null}
+                     className="icon"
+                     onClick={handleClick}
+                  />
+               )}
             </StyledAdmin>
-            <Menu
+
+            <StyledMenu
                anchorEl={anchorEl}
                open={open}
                onClose={handleClose}
@@ -47,8 +52,8 @@ const HeaderAdmin = () => {
                   'aria-labelledby': 'basic-button',
                }}
             >
-               <MenuItem>Выйти</MenuItem>
-            </Menu>
+               <StyledMenuItem>Выйти</StyledMenuItem>
+            </StyledMenu>
          </Box>
       </StyledContainer>
    )
@@ -63,6 +68,10 @@ const StyledContainer = styled('header')(() => ({
    fontSize: '1.375rem',
    height: '6.675rem',
    alignItems: 'center',
+   maxWidth: '1600px',
+   margin: '0 auto',
+   padding: '0 4.37rem',
+
    '& .navigaiton': {
       display: 'flex',
       gap: '2.88rem',
@@ -74,6 +83,7 @@ const StyledMainText = styled(Typography)(({ theme }) => ({
    fontSize: '1.375rem',
    fontWeight: '600',
    lineHeight: 'normal',
+
    '.MuiTypography-root': {
       color: theme.palette.primary.lightBlack,
    },
@@ -81,6 +91,7 @@ const StyledMainText = styled(Typography)(({ theme }) => ({
    '&.title': {
       color: '#222',
    },
+
    '& .block': {
       display: 'flex',
       alignItems: 'center',
@@ -96,7 +107,27 @@ const StyledAdmin = styled(Typography)(({ theme }) => ({
    gap: '0.625rem',
    width: '9.1875rem',
    height: '1.375rem',
+
    '&. icon': {
       color: theme.palette.primary.lightBlack,
+   },
+}))
+
+const StyledMenu = styled(Menu)(() => ({
+   position: 'absolute',
+   zIndex: 1000,
+   marginLeft: '65px',
+   marginTop: '10px',
+}))
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+   '&.MuiMenuItem-root': {
+      backgroundColor: 'white',
+      color: 'black',
+      height: '30px',
+   },
+
+   '&.MuiMenuItem-root:hover': {
+      color: theme.palette.primary.darkGreen,
    },
 }))

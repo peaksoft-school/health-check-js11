@@ -1,10 +1,10 @@
 import { Paper, InputBase, styled } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
 import { forwardRef } from 'react'
+import { SearchIcon } from '../../../assets/icons'
 
 const SearchInput = forwardRef(
    ({ placeholder, onChange, value, ...rest }, ref) => (
-      <StyledInputContainer>
+      <StyledContainer>
          <InputBase
             placeholder={placeholder}
             onChange={onChange}
@@ -14,13 +14,13 @@ const SearchInput = forwardRef(
          />
 
          <SearchIcon />
-      </StyledInputContainer>
+      </StyledContainer>
    )
 )
 
 export default SearchInput
 
-const StyledInputContainer = styled(Paper)(() => {
+const StyledContainer = styled(Paper)(() => {
    const defaultStyle = {
       display: 'flex',
       alignItems: 'center',
