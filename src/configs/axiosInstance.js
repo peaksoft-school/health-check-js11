@@ -14,6 +14,10 @@ export const injectStore = (store) => {
    storre = store
 }
 
+const signOut = () => {
+   console.log('User signed out')
+}
+
 axios.interceptors.request.use(
    function (config) {
       const updatedConfig = { ...config }
@@ -34,10 +38,13 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
    function (response) {
-      return response
+      return Promise.resolve(response)
    },
 
    function (error) {
+      if (error.response && error.response.status === 401) {
+         signOut()
+      }
       return Promise.reject(error)
    }
 )
