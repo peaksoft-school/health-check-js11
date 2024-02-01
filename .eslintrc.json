@@ -22,6 +22,8 @@
    "plugins": ["react"],
 
    "rules": {
+      "no-unused-vars":"off",
+      "no-param-reassign":"off",
       "global-require": 0,
       "import/no-extraneous-dependencies": "off",
       "react/prop-types": "off",

@@ -10,6 +10,7 @@ import {
    OnkologiyaIcon,
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
+
 import {
    DeleteIcon,
    FooterInstagramIcon,
@@ -19,6 +20,7 @@ import {
    HeaderTelegramIcon,
    HeaderWhatsAppIcon,
 } from '../../assets/icons'
+
 import {
    DemoReviewImage,
    FifthBestDoctorImage,
@@ -513,6 +515,19 @@ const DATA_FOR_ONLINE_SIGN_UP = [
       processed: <Checkbox />,
    },
 ]
+export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
+
+export const BASE_URL = 'http://18.208.146.212'
+
+export const routes = {
+   LOGIN: '/login',
+   ADMIN: {
+      index: '/admin',
+   },
+   USER: {
+      index: '/user',
+   },
+}
 
 export {
    HEADER_SOCIALS,

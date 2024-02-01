@@ -8,35 +8,33 @@ import Button from './UI/Button'
 import { PlusIcon } from '../assets/icons'
 import SearchInput from './UI/inputs/SearchInput'
 
-const OnlineSignUp = () => {
-   return (
-      <StyledContainer>
-         <StyledAddAntry>
-            <Typography className="title">Онлайн-запись</Typography>
+const OnlineSignUp = () => (
+   <StyledContainer>
+      <StyledAddAntry>
+         <Typography className="title">Онлайн-запись</Typography>
 
-            <StyledAddButton className="add-button">
-               <PlusIcon className="plus-icon" /> Добавить запись
-            </StyledAddButton>
-         </StyledAddAntry>
+         <Button className="add-button">
+            <PlusIcon className="plus-icon" /> Добавить запись
+         </Button>
+      </StyledAddAntry>
 
-         <Box>
-            <ButtonBase className="route">Онлайн-запись</ButtonBase>
-            <ButtonBase className="route">Расписание</ButtonBase>
-         </Box>
+      <Box>
+         <ButtonBase className="route">Онлайн-запись</ButtonBase>
+         <ButtonBase className="route">Расписание</ButtonBase>
+      </Box>
 
-         <Box className="input-container">
-            <SearchInput placeholder="Поиск" className="search-input" />
-         </Box>
+      <Box className="input-container">
+         <StyledInput placeholder="Поиск" />
+      </Box>
 
-         <Box className="table-container">
-            <Table
-               tableHeader={COLUMNS_FOR_ONLINE_SIGN_UP}
-               data={DATA_FOR_ONLINE_SIGN_UP}
-            />
-         </Box>
-      </StyledContainer>
-   )
-}
+      <Box className="table-container">
+         <Table
+            columns={COLUMNS_FOR_ONLINE_SIGN_UP}
+            data={DATA_FOR_ONLINE_SIGN_UP}
+         />
+      </Box>
+   </StyledContainer>
+)
 
 export default OnlineSignUp
 
@@ -67,16 +65,6 @@ const StyledContainer = styled(Box)(() => ({
    '& .input-container': {
       width: '37.5rem',
       marginTop: '2.12rem',
-
-      '& .search-input': {
-         height: '2.5rem',
-         padding: '0rem 0.3rem',
-         display: 'inline-flex',
-         justifyContent: 'center',
-         fontFamily: 'Manrope',
-         background: 'white',
-         width: '100%',
-      },
    },
 
    '& .table-container': {
@@ -87,6 +75,15 @@ const StyledContainer = styled(Box)(() => ({
       height: '100%',
       marginTop: '1.25rem',
    },
+}))
+
+const StyledInput = styled(SearchInput)(() => ({
+   height: '2.5rem',
+   padding: '0rem 0.3rem',
+   display: 'inline-flex',
+   justifyContent: 'center',
+   fontFamily: 'Manrope',
+   width: '100%',
 }))
 
 const StyledAddAntry = styled(Box)(() => ({
@@ -128,5 +125,3 @@ const StyledAddAntry = styled(Box)(() => ({
       lineHeight: 'normal',
    },
 }))
-
-const StyledAddButton = styled(Button)(() => ({}))
