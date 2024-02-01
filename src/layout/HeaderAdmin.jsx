@@ -63,7 +63,7 @@ export default HeaderAdmin
 const StyledContainer = styled('header')(() => ({
    display: 'flex',
    justifyContent: 'space-around',
-   color: 'green',
+   color: '#048741',
    fontSize: '1.375rem',
    height: '6.675rem',
    alignItems: 'center',
