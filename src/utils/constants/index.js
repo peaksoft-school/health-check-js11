@@ -292,6 +292,13 @@ const COLUMNS = [
    },
 ]
 
+const HEADER_ADMIN = [
+   { id: 1, text: 'Онлайн-запись' },
+   { id: 2, text: 'Заявки' },
+   { id: 3, text: 'Специалисты' },
+   { id: 4, text: 'Пациенты' },
+]
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -304,11 +311,5 @@ export {
    BEST_DOCTORS,
    COLUMNS,
    FAKE_DATA,
+   HEADER_ADMIN,
 }
-
-export const HEADER_ADMIN = [
-   { id: 1, text: 'Онлайн-запись' },
-   { id: 2, text: 'Заявки' },
-   { id: 3, text: 'Специалисты' },
-   { id: 4, text: 'Пациенты' },
-]

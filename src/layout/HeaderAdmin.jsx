@@ -1,7 +1,7 @@
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
-import { HEADER_ADMIN } from '../../utils/constants/index'
-import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
+import { HEADER_ADMIN } from '../utils/constants/index'
+import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../assets/icons'
 
 const HeaderAdmin = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -38,7 +38,6 @@ const HeaderAdmin = () => {
                ) : (
                   <ArrowDownIcon
                      aria-controls={open ? 'basic-menu' : null}
-                     className="icon"
                      onClick={handleClick}
                   />
                )}
@@ -75,15 +74,14 @@ const StyledContainer = styled('header')(() => ({
    '& .navigaiton': {
       display: 'flex',
       gap: '2.88rem',
-      color: '#222',
+      color: '#707070',
    },
 }))
 
-const StyledMainText = styled(Typography)(({ theme }) => ({
+const StyledMainText = styled('h2')(({ theme }) => ({
    fontSize: '1.375rem',
    fontWeight: '600',
    lineHeight: 'normal',
-
    '.MuiTypography-root': {
       color: theme.palette.primary.lightBlack,
    },
@@ -99,18 +97,13 @@ const StyledMainText = styled(Typography)(({ theme }) => ({
    },
 }))
 
-const StyledAdmin = styled(Typography)(({ theme }) => ({
+const StyledAdmin = styled(Typography)(() => ({
    display: 'flex',
    justifyContent: 'center',
    alignItems: 'center',
    color: '#222',
    gap: '0.625rem',
-   width: '9.1875rem',
-   height: '1.375rem',
-
-   '&. icon': {
-      color: theme.palette.primary.lightBlack,
-   },
+   fontSize: '1.10rem',
 }))
 
 const StyledMenu = styled(Menu)(() => ({
