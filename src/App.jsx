@@ -1,12 +1,7 @@
 import './App.css'
-import OnlineSignUp from './components/OnlineSignUp'
 
 const App = () => {
-   return (
-      <div>
-         <OnlineSignUp />
-      </div>
-   )
+   return <div>health-check-js11</div>
 }
 
 export default App
