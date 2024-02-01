@@ -8,7 +8,7 @@ const HeaderAdmin = () => {
 
    const open = Boolean(anchorEl)
 
-   const handleClick = (event) => setAnchorEl(event.currentTarget)
+   const handleClick = (e) => setAnchorEl(e.currentTarget)
 
    const handleClose = () => setAnchorEl(null)
 
