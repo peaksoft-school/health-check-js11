@@ -12,6 +12,7 @@ const SearchInput = forwardRef(
             ref={ref}
             {...rest}
          />
+
          <SearchIcon />
       </StyledContainer>
    )
