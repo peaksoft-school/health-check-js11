@@ -1,7 +1,12 @@
 import './App.css'
+import OnlineAppointments from './components/OnlineAppointments'
 
 const App = () => {
-   return <div>health-check-js11</div>
+   return (
+      <div>
+         <OnlineAppointments />
+      </div>
+   )
 }
 
 export default App

@@ -8,7 +8,7 @@ import Button from './UI/Button'
 import { PlusIcon } from '../assets/icons'
 import SearchInput from './UI/inputs/SearchInput'
 
-const OnlineSignUp = () => (
+const OnlineAppointments = () => (
    <StyledContainer>
       <StyledAddAntry>
          <Typography className="title">Онлайн-запись</Typography>
@@ -36,7 +36,7 @@ const OnlineSignUp = () => (
    </StyledContainer>
 )
 
-export default OnlineSignUp
+export default OnlineAppointments
 
 const StyledContainer = styled(Box)(() => ({
    display: 'flex',

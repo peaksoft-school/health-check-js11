@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Typography } from '@mui/material'
 import {
    VaccinationIcon,
@@ -30,6 +31,7 @@ import {
    ThirdBestDoctorImage,
 } from '../../assets/images'
 import Checkbox from '../../components/UI/Checkbox'
+import DeleteButton from '../../components/UI/DeleteButton'
 
 const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
@@ -463,16 +465,7 @@ const COLUMNS_FOR_ONLINE_SIGN_UP = [
       },
 
       Cell: ({ row }) => {
-         return (
-            <DeleteIcon
-               {...row.original}
-               style={{
-                  cursor: 'pointer',
-                  width: '26px',
-                  height: '22px',
-               }}
-            />
-         )
+         return <DeleteButton {...row.original} />
       },
    },
 ]
@@ -515,6 +508,7 @@ const DATA_FOR_ONLINE_SIGN_UP = [
       processed: <Checkbox />,
    },
 ]
+
 export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
 export const BASE_URL = 'http://18.208.146.212'

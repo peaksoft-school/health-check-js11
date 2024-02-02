@@ -31,7 +31,7 @@ export default Modal
 const StyledContainer = styled(Dialog)(() => ({
    '& .MuiPaper-root': {
       borderRadius: '0.625rem',
-      padding: '0.87rem 1.62rem 3.13rem 2.5rem',
+      padding: '0.87rem 1.62rem 0.87rem 2.5rem',
    },
 
    '& .close-button-container': {
