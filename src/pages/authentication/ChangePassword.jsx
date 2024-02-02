@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Typography, styled, IconButton, InputAdornment } from '@mui/material'
 import { useFormik } from 'formik'
 import Modal from '../../components/UI/Modal'
-import Input from '../../components/UI/input/Input'
+import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import { validationSchemForgotPassword } from '../../utils/helpers/validation/formValidate'
 import { passwordErrorrs } from '../../utils/helpers/validation/errors'
-import { CloseEyesIcon, OpenEyesIcon } from '../../assets/icons'
+import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
 
 const ChangePassword = () => {
    const [showPassword1, setShowPassword1] = useState(false)
@@ -57,9 +57,9 @@ const ChangePassword = () => {
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle1}>
                               {showPassword1 ? (
-                                 <OpenEyesIcon />
+                                 <OpenEyeIcon />
                               ) : (
-                                 <CloseEyesIcon />
+                                 <CloseEyeIcon />
                               )}
                            </IconButton>
                         </InputAdornment>
@@ -79,9 +79,9 @@ const ChangePassword = () => {
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle2}>
                               {showPassword2 ? (
-                                 <OpenEyesIcon />
+                                 <OpenEyeIcon />
                               ) : (
-                                 <CloseEyesIcon />
+                                 <CloseEyeIcon />
                               )}
                            </IconButton>
                         </InputAdornment>

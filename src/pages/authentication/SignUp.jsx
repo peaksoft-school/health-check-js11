@@ -6,12 +6,13 @@ import {
    ButtonBase,
    IconButton,
    InputAdornment,
+   Box,
 } from '@mui/material'
 import Modal from '../../components/UI/Modal'
-import Input from '../../components/UI/input/Input'
-import NumberInput from '../../components/UI/input/NumberInput'
+import Input from '../../components/UI/inputs/Input'
+import NumberInput from '../../components/UI/inputs/NumberInput'
 import Button from '../../components/UI/Button'
-import { CloseEyesIcon, GoogleIcon, OpenEyesIcon } from '../../assets/icons'
+import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { validationSchemaSingUp } from '../../utils/helpers/validation/formValidate'
 import { showErrorsSingUp } from '../../utils/helpers/validation/errors'
 
@@ -51,9 +52,9 @@ const SingUp = () => {
          <StyledForm onSubmit={handleSubmit}>
             <Typography>РЕГИСТРАЦИЯ</Typography>
 
-            <div className="input-box">
+            <Box className="input-box">
                <StyledInput
-                  placeholder="name"
+                  placeholder="Имя"
                   name="name"
                   autoComplete="on"
                   value={values.name}
@@ -63,32 +64,33 @@ const SingUp = () => {
 
                <StyledInput
                   name="sureName"
-                  placeholder="sureName"
+                  placeholder="Фамилия"
                   autoComplete="on"
                   value={values.sureName}
                   onChange={handleChange}
                   error={!!errors.sureName}
                />
 
-               <StyledInput
-                  name="email"
-                  placeholder="email"
-                  autoComplete="on"
-                  value={values.email}
-                  onChange={handleChange}
-                  error={!!errors.email}
-               />
-
                <NumberInput
+                  variant="authentication"
                   id="number"
                   name="phoneNumber"
                   autoComplete="on"
                   value={values.phoneNumber}
                   onChange={handleChange('phoneNumber')}
-                  error={!!errors.phoneNumber}
+                  error={errors.phoneNumber}
                   mask="_"
                   format="+996 (###) ##-##-##"
                   placeholder="+996 (_ _ _) _ _-_ _-_ _"
+               />
+
+               <StyledInput
+                  name="email"
+                  placeholder="Email"
+                  autoComplete="on"
+                  value={values.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
                />
 
                <StyledInput
@@ -104,9 +106,9 @@ const SingUp = () => {
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle1}>
                               {showPassword1 ? (
-                                 <OpenEyesIcon />
+                                 <OpenEyeIcon />
                               ) : (
-                                 <CloseEyesIcon />
+                                 <CloseEyeIcon />
                               )}
                            </IconButton>
                         </InputAdornment>
@@ -127,37 +129,41 @@ const SingUp = () => {
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle2}>
                               {showPassword2 ? (
-                                 <OpenEyesIcon />
+                                 <OpenEyeIcon />
                               ) : (
-                                 <CloseEyesIcon />
+                                 <CloseEyeIcon />
                               )}
                            </IconButton>
                         </InputAdornment>
                      ),
                   }}
                />
-            </div>
+            </Box>
 
             {showErrorsSingUp(errors) && (
-               <p className="message">{showErrorsSingUp(errors)}</p>
+               <Typography className="message">
+                  {showErrorsSingUp(errors)}
+               </Typography>
             )}
 
             <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
 
             <Line>
-               <hr className="lineFirst" />
-               <span>или</span>
-               <hr className="lineSecond" />
+               <hr className="line-first" />
+               <Typography variant="span">или</Typography>
+               <hr className="line-second" />
             </Line>
 
             <ButtonBase className="google-button" type="button">
                <GoogleIcon />
-               Продолжить с Google
+               Зарегистрироваться с Google
             </ButtonBase>
 
             <Typography>
                У вас уже есть аккаунт?
-               <Typography className="navigate"> Войти </Typography>
+               <Typography variant="span" className="navigate">
+                  Войти
+               </Typography>
             </Typography>
          </StyledForm>
       </Modal>
@@ -186,6 +192,7 @@ const StyledForm = styled('form')(({ theme }) => ({
 
    '& .message': {
       color: 'red',
+      marginTop: '10px',
    },
 
    '& .google-button': {
@@ -206,11 +213,6 @@ const StyledForm = styled('form')(({ theme }) => ({
 }))
 
 const StyledInput = styled(Input)(() => ({
-   '& .MuiOutlinedInput-input': {
-      height: '8px',
-      borderRadius: '8px',
-   },
-
    '& .MuiOutlinedInput-root ': {
       height: '42px',
       borderRadius: '8px',
@@ -238,7 +240,7 @@ const Line = styled('div')(() => ({
    marginBottom: '20px',
    marginTop: '20px',
 
-   '& .lineFirst': {
+   '& .line-first': {
       width: '10.313rem',
       margin: '0.5rem 0',
       height: '0rem',
@@ -253,7 +255,7 @@ const Line = styled('div')(() => ({
       color: '#222222',
    },
 
-   '& .lineSecond': {
+   '& .line-second': {
       width: '10.313rem',
       color: '#F3F1F1',
       margin: '0.5rem 0',

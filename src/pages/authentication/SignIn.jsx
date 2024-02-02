@@ -7,14 +7,10 @@ import {
    IconButton,
    InputAdornment,
 } from '@mui/material'
-import Input from '../../components/UI/input/Input'
+import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import Modal from '../../components/UI/Modal'
-import {
-   CloseEyesIcon,
-   GoogleIcon,
-   OpenEyesIcon,
-} from '../../assets/icons/index'
+import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { validationSchemaSingIn } from '../../utils/helpers/validation/formValidate'
 import { showErrors } from '../../utils/helpers/validation/errors'
 
@@ -67,9 +63,9 @@ const SingIn = () => {
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle}>
                               {showPassword ? (
-                                 <OpenEyesIcon />
+                                 <OpenEyeIcon />
                               ) : (
-                                 <CloseEyesIcon />
+                                 <CloseEyeIcon />
                               )}
                            </IconButton>
                         </InputAdornment>
@@ -87,11 +83,11 @@ const SingIn = () => {
             <Typography className="navigate">Забыли пароль?</Typography>
 
             <Line>
-               <hr className="lineFirst" />
+               <hr className="line-first" />
 
-               <span>или</span>
+               <Typography variant="span">или</Typography>
 
-               <hr className="lineSecond" />
+               <hr className="line-second" />
             </Line>
 
             <ButtonBase className="google-button" type="button">
@@ -187,7 +183,7 @@ const Line = styled('div')(() => ({
    marginBottom: '20px',
    marginTop: '20px',
 
-   '& .lineFirst': {
+   '& .line-first': {
       width: '10.313rem',
       margin: '0.5rem 0',
       height: '0rem',
@@ -202,7 +198,7 @@ const Line = styled('div')(() => ({
       color: '#222222',
    },
 
-   '& .lineSecond': {
+   '& .line-second': {
       width: '10.313rem',
       color: '#F3F1F1',
       margin: '0.5rem 0',

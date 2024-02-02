@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Typography, styled } from '@mui/material'
 import Modal from '../../components/UI/Modal'
-import Input from '../../components/UI/input/Input'
+import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import { validateEmail } from '../../utils/helpers/validation/formValidate'
 

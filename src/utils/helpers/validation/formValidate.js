@@ -22,10 +22,7 @@ const validationSchemaSingUp = Yup.object().shape({
    password: Yup.string()
       .required('Введите новый пароль')
       .min(8, 'Минимальная длина пароля 8 символов')
-      .matches(
-         /^(?=.*[A-Z]).*$/,
-         'Пароль должен содержать хотя бы одну заглавную букву'
-      ),
+      .matches(/^(?=.*[A-Z]).*$/, 'Пароль требует заглавную букву.'),
    confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Пароли не совпада')
       .required('Подтвердите пароль'),
@@ -36,10 +33,7 @@ const validationSchemaSingIn = Yup.object().shape({
    password: Yup.string()
       .required('Введите новый пароль')
       .min(8, 'Минимальная длина пароля 8 символов')
-      .matches(
-         /^(?=.*[A-Z]).*$/,
-         'Пароль должен содержать хотя бы одну заглавную букву'
-      ),
+      .matches(/^(?=.*[A-Z]).*$/, 'Пароль требует заглавную букву.'),
 })
 
 const validateEmail = (email) => {
@@ -53,10 +47,7 @@ const validationSchemForgotPassword = Yup.object().shape({
    newPassword: Yup.string()
       .required('Введите новый пароль')
       .min(8, 'Минимальная длина пароля 8 символов')
-      .matches(
-         /^(?=.*[A-Z]).*$/,
-         'Пароль должен содержать хотя бы одну заглавную букву'
-      ),
+      .matches(/^(?=.*[A-Z]).*$/, 'Пароль требует заглавную букву.'),
    confirmPassword: Yup.string()
       .oneOf([Yup.ref('newPassword'), null], 'Пароли не совпада')
       .required('Подтвердите пароль'),
