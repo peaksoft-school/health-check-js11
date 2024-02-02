@@ -1,5 +1,4 @@
 import { forwardRef } from 'react'
-// import { Select as ReactSelector } from 'react-select'
 import Selector from 'react-select'
 
 const customStyles = {

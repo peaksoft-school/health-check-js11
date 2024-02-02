@@ -26,7 +26,7 @@ const HeaderAdmin = () => {
 
          <div className="navigaiton">
             {HEADER_ADMIN.map(({ text, id }) => (
-               <p key={id}>{text}</p>
+               <Typography key={id}>{text}</Typography>
             ))}
          </div>
 
@@ -64,14 +64,13 @@ const StyledContainer = styled('header')(() => ({
    display: 'flex',
    justifyContent: 'space-around',
    color: '#048741',
-   fontSize: '1.375rem',
-   height: '6.675rem',
    alignItems: 'center',
-   maxWidth: '1600px',
-   margin: '0 auto',
-   padding: '0 4.37rem',
-
-   '& .navigaiton': {
+   position: 'sticky',
+   top: '0px',
+   zIndex: '1000',
+   backgroundColor: 'white',
+   padding: '21px 0',
+   '& > .navigaiton': {
       display: 'flex',
       gap: '2.88rem',
       color: '#707070',
@@ -86,7 +85,7 @@ const StyledMainText = styled('h2')(({ theme }) => ({
       color: theme.palette.primary.lightBlack,
    },
 
-   '&.title': {
+   '& > .title': {
       color: '#222',
    },
 
@@ -109,7 +108,7 @@ const StyledAdmin = styled(Typography)(() => ({
 const StyledMenu = styled(Menu)(() => ({
    position: 'absolute',
    zIndex: 1000,
-   marginLeft: '65px',
+   marginLeft: '20px',
    marginTop: '10px',
 }))
 
@@ -117,7 +116,9 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
    '&.MuiMenuItem-root': {
       backgroundColor: 'white',
       color: 'black',
-      height: '30px',
+      height: '40px',
+      width: '135px',
+      boxShadow: ' 0px 1px 12px -70px rgba(241, 241, 241, 0.71)',
    },
 
    '&.MuiMenuItem-root:hover': {
