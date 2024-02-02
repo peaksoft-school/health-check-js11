@@ -45,7 +45,6 @@ const Table = ({ columns: headers, data }) => {
             <TableBody {...getTableBodyProps()}>
                {rows.map((row) => {
                   prepareRow(row)
-
                   return (
                      <TableRow
                         {...row.getRowProps()}
