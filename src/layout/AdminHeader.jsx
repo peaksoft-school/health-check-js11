@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { HEADER_ADMIN } from '../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../assets/icons'
 
-const HeaderAdmin = () => {
+const AdminHeader = () => {
    const [anchorEl, setAnchorEl] = useState(null)
 
    const open = Boolean(anchorEl)
@@ -14,103 +14,103 @@ const HeaderAdmin = () => {
 
    return (
       <StyledContainer>
-         <StyledMainText>
-            <div className="block">
+         <Box className="box">
+            <Box className="logo">
                <HealthCheckIcon />
                HEALTH
                <Typography className="title" variant="span">
                   CHECK
                </Typography>
-            </div>
-         </StyledMainText>
+            </Box>
 
-         <div className="navigaiton">
-            {HEADER_ADMIN.map(({ text, id }) => (
-               <Typography key={id}>{text}</Typography>
-            ))}
-         </div>
+            <Box className="navigation">
+               {HEADER_ADMIN.map(({ text, id }) => (
+                  <Typography key={id}>{text}</Typography>
+               ))}
+            </Box>
 
-         <Box>
-            <StyledAdmin onClick={handleClick}>
-               Администратор
-               {open ? (
-                  <ArrowUpIcon />
-               ) : (
-                  <ArrowDownIcon
-                     aria-controls={open ? 'basic-menu' : null}
-                     onClick={handleClick}
-                  />
-               )}
-            </StyledAdmin>
+            <Box>
+               <Typography className="exit" onClick={handleClick}>
+                  Администратор
+                  {open ? (
+                     <ArrowUpIcon />
+                  ) : (
+                     <ArrowDownIcon
+                        aria-controls={open ? 'basic-menu' : null}
+                        onClick={handleClick}
+                     />
+                  )}
+               </Typography>
 
-            <StyledMenu
-               anchorEl={anchorEl}
-               open={open}
-               onClose={handleClose}
-               MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-               }}
-            >
-               <StyledMenuItem>Выйти</StyledMenuItem>
-            </StyledMenu>
+               <StyledMenu
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                     'aria-labelledby': 'basic-button',
+                  }}
+               >
+                  <StyledMenuItem>Выйти</StyledMenuItem>
+               </StyledMenu>
+            </Box>
          </Box>
       </StyledContainer>
    )
 }
 
-export default HeaderAdmin
+export default AdminHeader
 
-const StyledContainer = styled('header')(() => ({
-   display: 'flex',
-   height: '9.900rem',
-   justifyContent: 'space-around',
-   color: '#048741',
-   alignItems: 'center',
-   position: 'sticky',
-   top: '0px',
-   zIndex: '1000',
-   backgroundColor: 'white',
-   padding: '21px 0',
-   '& > .navigaiton': {
+const StyledContainer = styled('header')(({ theme }) => ({
+   padding: '0 70px',
+
+   '& > .box': {
+      margin: '0 auto',
+      maxWidth: '1600px',
+      width: '100%',
       display: 'flex',
-      gap: '2.88rem',
-      color: '#707070',
-   },
-}))
-
-const StyledMainText = styled('h2')(({ theme }) => ({
-   fontSize: '1.375rem',
-   fontWeight: '600',
-   lineHeight: 'normal',
-   '.MuiTypography-root': {
-      color: theme.palette.primary.lightBlack,
-   },
-
-   '& > .title': {
-      color: '#222',
-   },
-
-   '& .block': {
-      display: 'flex',
+      justifyContent: 'space-around',
       alignItems: 'center',
-      gap: '0.5rem',
-   },
-}))
+      position: 'sticky',
+      top: '0px',
+      zIndex: '1000',
+      backgroundColor: theme.palette.primary.main,
+      padding: '30px 0',
+      color: '#048741',
 
-const StyledAdmin = styled(Typography)(() => ({
-   display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center',
-   color: '#222',
-   gap: '0.625rem',
-   fontSize: '1.10rem',
+      '& > .logo': {
+         display: 'flex',
+         alignItems: 'center',
+         gap: '0.5rem',
+         fontSize: '1.375rem',
+         fontWeight: '600',
+         lineHeight: 'normal',
+
+         '& > .title': {
+            color: theme.palette.primary.lightBlack,
+         },
+      },
+
+      '& > .navigation': {
+         display: 'flex',
+         gap: '2.88rem',
+         color: '#707070',
+      },
+
+      '& .exit': {
+         display: 'flex',
+         justifyContent: 'center',
+         alignItems: 'center',
+         color: '#222',
+         gap: '0.625rem',
+         fontSize: '1.10rem',
+      },
+   },
 }))
 
 const StyledMenu = styled(Menu)(() => ({
    position: 'absolute',
    zIndex: 1000,
    marginLeft: '20px',
-   marginTop: '10px',
 }))
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
