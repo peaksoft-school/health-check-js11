@@ -294,6 +294,12 @@ const COLUMNS = [
    },
 ]
 
+const HEADER_ADMIN = [
+   { id: 1, text: 'Онлайн-запись' },
+   { id: 2, text: 'Заявки' },
+   { id: 3, text: 'Специалисты' },
+   { id: 4, text: 'Пациенты' },
+]
 export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
 export const BASE_URL = 'http://18.208.146.212'
@@ -320,4 +326,5 @@ export {
    BEST_DOCTORS,
    COLUMNS,
    FAKE_DATA,
+   HEADER_ADMIN,
 }
