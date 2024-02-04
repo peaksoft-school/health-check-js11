@@ -1,4 +1,4 @@
-const showErrors = (errors) => {
+const signInError = (errors) => {
    let errorMessage = null
 
    if (Object.keys(errors).length > 1) {
@@ -16,7 +16,7 @@ const showErrors = (errors) => {
    return errorMessage
 }
 
-const passwordErrorrs = (errors) => {
+const passwordError = (errors) => {
    let errorMessage = null
 
    if (errors.newPassword) {
@@ -28,15 +28,13 @@ const passwordErrorrs = (errors) => {
    return errorMessage
 }
 
-const showErrorsSingUp = (errors) => {
+const singUpError = (errors) => {
    let errorMessage = null
-
-   console.log(errors)
 
    if (errors?.name) {
       errorMessage = errors.name
-   } else if (errors?.sureName) {
-      errorMessage = errors.sureName
+   } else if (errors?.surename) {
+      errorMessage = errors.surename
    } else if (errors?.email) {
       errorMessage = errors.email
    } else if (errors?.phoneNumber) {
@@ -50,4 +48,4 @@ const showErrorsSingUp = (errors) => {
    return errorMessage
 }
 
-export { showErrors, showErrorsSingUp, passwordErrorrs }
+export { signInError, singUpError, passwordError }

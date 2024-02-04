@@ -6,13 +6,14 @@ import {
    ButtonBase,
    IconButton,
    InputAdornment,
+   Box,
 } from '@mui/material'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import Modal from '../../components/UI/Modal'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
-import { validationSchemaSingIn } from '../../utils/helpers/validation/formValidate'
-import { showErrors } from '../../utils/helpers/validation/errors'
+import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
+import { signInError } from '../../utils/helpers/index'
 
 const SingIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -20,19 +21,17 @@ const SingIn = () => {
    const showPasswordHandle = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = (values, { resetForm }) => {
-      console.log(values)
-      resetForm()
-   }
+   const onSubmit = ({ resetForm }) => resetForm()
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          name: '',
          password: '',
       },
+
       validateOnChange: false,
       onSubmit,
-      validationSchema: validationSchemaSingIn,
+      validationSchema: VALIDATION_SIGN_IN,
    })
 
    const open = true
@@ -74,8 +73,10 @@ const SingIn = () => {
                />
             </div>
 
-            {showErrors(errors) && (
-               <p className="message">{showErrors(errors)}</p>
+            {signInError(errors) && (
+               <Typography className="error-message">
+                  {signInError(errors)}
+               </Typography>
             )}
 
             <StyledButton type="submit">ВОЙТИ</StyledButton>
@@ -90,7 +91,7 @@ const SingIn = () => {
                <hr className="line-second" />
             </Line>
 
-            <ButtonBase className="google-button" type="button">
+            <ButtonBase className="google" type="button">
                <GoogleIcon />
                Продолжить с Google
             </ButtonBase>
@@ -116,72 +117,73 @@ const StyledForm = styled('form')(({ theme }) => ({
 
    '& .navigate ': {
       textDecoration: 'none',
+      marginLeft: '0.625rem',
       color: theme.palette.tertiary.lightBlue,
    },
 
    '& > .input-box': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '26px',
-      marginTop: '24px',
+      gap: '1.625rem',
+      marginTop: '1.5rem',
    },
 
-   '& .google-button': {
+   '& .google': {
       '&.MuiButtonBase-root': {
          backgroundColor: theme.palette.primary.backgroundAdmin,
-         width: '414px',
+         width: '25.875rem',
          color: theme.palette.primary.lightBlack,
          height: '44px',
-         borderRadius: '8px',
+         borderRadius: '0.5rem',
          fontFamily: ' Manrope',
          fontWeight: '600',
-         marginBottom: '20px',
-         fontSize: '16px',
+         marginBottom: '1.25rem',
+         fontSize: '1rem',
          display: 'flex',
-         gap: '14px',
+         gap: '0.875rem',
       },
    },
 
-   '& .message': {
+   '& .error-message': {
       color: 'red',
-      fontSize: '0.ыы8rem',
+      fontSize: '0.8rem',
       position: 'absolute',
-      bottom: '295px',
+      bottom: '18.438rem',
    },
 }))
 
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-input': {
-      height: '8px',
-      borderRadius: '8px',
+      height: '0.5rem',
+      borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-root ': {
-      height: '42px',
-      borderRadius: '8px',
+      height: '2.625rem',
+      borderRadius: '0.5rem',
    },
 }))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      marginTop: '40px',
-      marginBottom: '20px',
-      width: '414px',
-      height: '44px',
-      fontSize: '14px',
+      marginTop: '2.5rem',
+      marginBottom: '1.25rem',
+      width: '25.875rem',
+      height: '2.75rem',
+      fontSize: '0.875rem',
 
       '&:active': {
-         borderRadius: '10px',
+         borderRadius: '0.625rem',
       },
    },
 }))
 
-const Line = styled('div')(() => ({
+const Line = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '1rem',
-   marginBottom: '20px',
-   marginTop: '20px',
+   marginBottom: '1.25rem',
+   marginTop: '1.25rem',
 
    '& .line-first': {
       width: '10.313rem',
@@ -195,7 +197,7 @@ const Line = styled('div')(() => ({
       fontWeight: '500',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
-      color: '#222222',
+      color: theme.palette.primary.lightBlack,
    },
 
    '& .line-second': {

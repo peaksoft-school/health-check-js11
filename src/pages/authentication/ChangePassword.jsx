@@ -1,36 +1,40 @@
 import { useState } from 'react'
-import { Typography, styled, IconButton, InputAdornment } from '@mui/material'
+import {
+   Typography,
+   styled,
+   IconButton,
+   InputAdornment,
+   Box,
+} from '@mui/material'
 import { useFormik } from 'formik'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
-import { validationSchemForgotPassword } from '../../utils/helpers/validation/formValidate'
-import { passwordErrorrs } from '../../utils/helpers/validation/errors'
+import { VALIDATION_FORGOT_PASSWORD } from '../../utils/helpers/validate'
+import { passwordError } from '../../utils/helpers/index'
 import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
 
 const ChangePassword = () => {
-   const [showPassword1, setShowPassword1] = useState(false)
-   const [showPassword2, setShowPassword2] = useState(false)
+   const [showNewPassword, setShowNewPassword] = useState(false)
+   const [showReplayPassword, setShowReplayPassword] = useState(false)
 
    const showPasswordHandle1 = () =>
-      setShowPassword1((prevShowPassword1) => !prevShowPassword1)
+      setShowNewPassword((prevShowPassword1) => !prevShowPassword1)
 
    const showPasswordHandle2 = () =>
-      setShowPassword2((prevShowPassword2) => !prevShowPassword2)
+      setShowReplayPassword((prevShowPassword2) => !prevShowPassword2)
 
-   const onSubmit = (values, { resetForm }) => {
-      console.log(values)
-      resetForm()
-   }
+   const onSubmit = ({ resetForm }) => resetForm()
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          newPassword: '',
          confirmPassword: '',
       },
+
       validateOnChange: false,
       onSubmit,
-      validationSchema: validationSchemForgotPassword,
+      validationSchema: VALIDATION_FORGOT_PASSWORD,
    })
 
    const open = true
@@ -38,15 +42,17 @@ const ChangePassword = () => {
    return (
       <Modal open={open}>
          <StyledContainer>
-            <Typography className="title">СМЕНА ПАРОЛЯ</Typography>
+            <Typography variant="h2" className="title">
+               СМЕНА ПАРОЛЯ
+            </Typography>
 
-            <form className="form" onSubmit={handleSubmit} action="">
+            <form onSubmit={handleSubmit}>
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
 
                <StyledInput
-                  type={showPassword1 ? 'text' : 'password'}
+                  type={showNewPassword ? 'text' : 'password'}
                   value={values.newPassword}
                   placeholder="Введите новый пароль"
                   onChange={handleChange('newPassword')}
@@ -56,7 +62,7 @@ const ChangePassword = () => {
                      endAdornment: (
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle1}>
-                              {showPassword1 ? (
+                              {showNewPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />
@@ -68,7 +74,7 @@ const ChangePassword = () => {
                />
 
                <StyledInput
-                  type={showPassword2 ? 'text' : 'password'}
+                  type={showReplayPassword ? 'text' : 'password'}
                   placeholder="Повторите пароль"
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
@@ -78,7 +84,7 @@ const ChangePassword = () => {
                      endAdornment: (
                         <InputAdornment position="end">
                            <IconButton onClick={showPasswordHandle2}>
-                              {showPassword2 ? (
+                              {showReplayPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />
@@ -89,11 +95,13 @@ const ChangePassword = () => {
                   }}
                />
 
-               {passwordErrorrs(errors) && (
-                  <p className="message">{passwordErrorrs(errors)}</p>
+               {passwordError(errors) && (
+                  <Typography className="error-message">
+                     {passwordError(errors)}
+                  </Typography>
                )}
 
-               <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
+               <StyledButton type="submit">ПОДТВЕРДИТЬ</StyledButton>
             </form>
          </StyledContainer>
       </Modal>
@@ -102,37 +110,39 @@ const ChangePassword = () => {
 
 export default ChangePassword
 
-const StyledContainer = styled('div')(({ theme }) => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    color: theme.palette.secondary.lightGrey,
    fontFamily: 'Manrope',
-   gap: '24px',
+   gap: '1.5rem',
    alignItems: 'center',
 
-   '& .title': {
-      color: '#222',
-      fontSize: '18px',
+   '& > .title': {
+      color: theme.palette.primary.lightBlack,
+      fontSize: '1.125rem',
    },
 
-   '& .form': {
+   '& > form': {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '13px',
+      gap: '0.813rem',
 
-      '& .text': { marginRight: '30px' },
+      '& > .text': {
+         marginRight: '1.875rem',
+      },
 
-      '& .message': {
+      '& > .error-message': {
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '105px',
+         bottom: '6.563rem',
 
-         '& .input-box': {
+         '& > .input-box': {
             display: 'flex',
             flexDirection: 'column',
-            gap: '20px',
+            gap: '1.25rem',
          },
       },
    },
@@ -140,24 +150,25 @@ const StyledContainer = styled('div')(({ theme }) => ({
 
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-input': {
-      height: '8px',
-      borderRadius: '8px',
+      height: '0.5rem',
+      borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-root ': {
-      height: '42px',
-      borderRadius: '8px',
+      height: '2.625rem',
+      borderRadius: '0.5rem',
    },
 }))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      marginTop: '24px',
+      marginTop: '1.5rem',
+      width: '25.875rem',
+      height: '2.75rem',
+      fontSize: '0.875rem',
 
-      width: '414px',
-      height: '44px',
-      fontSize: '14px',
-
-      '&:active': { borderRadius: '10px' },
+      '&:active': {
+         borderRadius: '0.625rem',
+      },
    },
 }))

@@ -29,6 +29,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
 
    '& .MuiOutlinedInput-input': {
       borderRadius: '2px',
+      color: theme.palette.secondary.lightGrey,
    },
 
    '& .MuiOutlinedInput-root': {
@@ -46,6 +47,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
 
       '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
          borderColor: theme.palette.tertiary.red,
+         color: theme.palette.tertiary.red,
       },
    },
 }))

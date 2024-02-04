@@ -38,11 +38,11 @@ const NumberInput = forwardRef(
 export default NumberInput
 
 const StyledInput = styled(PatternFormat)(({ theme }) => ({
-   background: ' #FFF',
+   background: theme.palette.primary.main,
    padding: '0rem 0.625rem px',
    border: 'none',
    fontSize: '1rem',
-   color: '#9d9d9d',
+   color: '#9D9D9D',
    marginLeft: '0.5rem',
 
    [theme.breakpoints.down('lg')]: {
@@ -52,7 +52,7 @@ const StyledInput = styled(PatternFormat)(({ theme }) => ({
 
    '&:focus': {
       outline: 'none',
-      color: 'rgba(0, 0, 0, 0.87)',
+      color: 'black',
    },
 }))
 
@@ -71,6 +71,7 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
          ...defaultStyles,
          borderRadius: '0.5225rem',
          border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
+         color: `${theme.palette.secondary.lightGrey} !important`,
 
          '&:hover': {
             border: `1px solid ${

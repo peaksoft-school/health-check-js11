@@ -13,36 +13,34 @@ import Input from '../../components/UI/inputs/Input'
 import NumberInput from '../../components/UI/inputs/NumberInput'
 import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
-import { validationSchemaSingUp } from '../../utils/helpers/validation/formValidate'
-import { showErrorsSingUp } from '../../utils/helpers/validation/errors'
+import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
+import { singUpError } from '../../utils/helpers/index'
 
 const SingUp = () => {
-   const [showPassword1, setShowPassword1] = useState(false)
-   const [showPassword2, setShowPassword2] = useState(false)
+   const [showPassword, setShowPassword] = useState(false)
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-   const showPasswordHandle1 = () =>
-      setShowPassword1((prevShowPassword1) => !prevShowPassword1)
+   const showPasswordHandle = () =>
+      setShowPassword((prevShowPassword1) => !prevShowPassword1)
 
-   const showPasswordHandle2 = () =>
-      setShowPassword2((prevShowPassword2) => !prevShowPassword2)
+   const showConfirmPasswordHandle = () =>
+      setShowConfirmPassword((prevShowPassword2) => !prevShowPassword2)
 
-   const onSubmit = (values, { resetForm }) => {
-      console.log(values)
-      resetForm()
-   }
+   const onSubmit = ({ resetForm }) => resetForm()
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          name: '',
-         sureName: '',
+         surename: '',
          email: '',
          phoneNumber: '',
          password: '',
          confirmPassword: '',
       },
+
       validateOnChange: false,
       onSubmit,
-      validationSchema: validationSchemaSingUp,
+      validationSchema: VALIDATION_SIGN_UP,
    })
 
    const open = true
@@ -63,12 +61,12 @@ const SingUp = () => {
                />
 
                <StyledInput
-                  name="sureName"
+                  name="surename"
                   placeholder="Фамилия"
                   autoComplete="on"
-                  value={values.sureName}
+                  value={values.surename}
                   onChange={handleChange}
-                  error={!!errors.sureName}
+                  error={!!errors.surename}
                />
 
                <NumberInput
@@ -100,12 +98,12 @@ const SingUp = () => {
                   value={values.password}
                   onChange={handleChange('password')}
                   error={!!errors.password}
-                  type={showPassword1 ? 'text' : 'password'}
+                  type={showPassword ? 'text' : 'password'}
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle1}>
-                              {showPassword1 ? (
+                           <IconButton onClick={showPasswordHandle}>
+                              {showPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />
@@ -123,12 +121,12 @@ const SingUp = () => {
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   error={!!errors.confirmPassword}
-                  type={showPassword2 ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle2}>
-                              {showPassword2 ? (
+                           <IconButton onClick={showConfirmPasswordHandle}>
+                              {showConfirmPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />
@@ -140,9 +138,9 @@ const SingUp = () => {
                />
             </Box>
 
-            {showErrorsSingUp(errors) && (
+            {singUpError(errors) && (
                <Typography className="message">
-                  {showErrorsSingUp(errors)}
+                  {singUpError(errors)}
                </Typography>
             )}
 
@@ -154,7 +152,7 @@ const SingUp = () => {
                <hr className="line-second" />
             </Line>
 
-            <ButtonBase className="google-button" type="button">
+            <ButtonBase className="google" type="button">
                <GoogleIcon />
                Зарегистрироваться с Google
             </ButtonBase>
@@ -186,6 +184,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    },
 
    '& .navigate ': {
+      marginLeft: '10px',
       textDecoration: 'none',
       color: theme.palette.tertiary.lightBlue,
    },
@@ -195,37 +194,42 @@ const StyledForm = styled('form')(({ theme }) => ({
       marginTop: '10px',
    },
 
-   '& .google-button': {
+   '& .google': {
       '&.MuiButtonBase-root': {
          backgroundColor: theme.palette.primary.backgroundAdmin,
-         width: '414px',
+         width: '25.875rem',
          color: theme.palette.primary.lightBlack,
          height: '44px',
-         borderRadius: '8px',
+         borderRadius: '0.5rem',
          fontFamily: ' Manrope',
          fontWeight: '600',
-         marginBottom: '20px',
-         fontSize: '16px',
+         marginBottom: '1.25rem',
+         fontSize: '1rem',
          display: 'flex',
-         gap: '14px',
+         gap: '0.875rem',
       },
    },
 }))
 
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
-      height: '42px',
-      borderRadius: '8px',
+      height: '2.625rem',
+      borderRadius: '0.5rem',
+   },
+
+   '& .MuiOutlinedInput-input': {
+      height: '0.4375em',
+      borderRadius: '0.5rem',
    },
 }))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      marginTop: '20px',
-      marginBottom: '20px',
-      width: '414px',
-      height: '44px',
-      fontSize: '14px',
+      marginTop: '1.25rem',
+      marginBottom: '1.25rem',
+      width: '25.875rem',
+      height: '2.75rem',
+      fontSize: '0.875rem',
 
       '&:active': {
          borderRadius: '10px',
@@ -233,12 +237,12 @@ const StyledButton = styled(Button)(() => ({
    },
 }))
 
-const Line = styled('div')(() => ({
+const Line = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '1rem',
-   marginBottom: '20px',
-   marginTop: '20px',
+   marginBottom: '1.25rem',
+   marginTop: '1.25rem',
 
    '& .line-first': {
       width: '10.313rem',
@@ -252,7 +256,7 @@ const Line = styled('div')(() => ({
       fontWeight: '500',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
-      color: '#222222',
+      color: theme.palette.primary.lightBlack,
    },
 
    '& .line-second': {

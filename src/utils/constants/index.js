@@ -26,7 +26,7 @@ import {
    FifthBestDoctorImage,
    FirstBestDoctorImage,
    FourthBestDoctorImage,
-   OrthopedicsReview,
+   OrthopedicsReviewImage,
    PsychologistReviewImage,
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
@@ -139,7 +139,7 @@ const REVIEWS = [
    {
       id: 3,
       name: 'Тимур',
-      img: OrthopedicsReview,
+      img: OrthopedicsReviewImage,
       rating: 5,
       review:
          'Моя поездка в отделение ортопедии этой клиники была очень успешной. Врачи были внимательны и профессиональны, они провели все необходимые исследования и дали мне точный диагноз. Я получил отличное лечение и подробные инструкции по реабилитации. Весь персонал был дружелюбным и готовым помочь. Я благодарен этой клинике за их высокий уровень заботы о пациентах.',

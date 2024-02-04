@@ -29,7 +29,7 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 
       '&.Mui-checked': {
          transform: 'translateX(16px)',
-         color: '#fff',
+         color: theme.palette.primary.main,
 
          '+ .MuiSwitch-track': {
             backgroundColor: theme.palette.primary.darkGreen,
@@ -44,7 +44,7 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 
       '&.Mui-focusVisible .MuiSwitch-thumb': {
          color: theme.palette.tertiary.lightBlue,
-         border: '6px solid #fff',
+         border: `6px solid ${theme.palette.primary.main}`,
       },
 
       '&.Mui-disabled .MuiSwitch-thumb': {

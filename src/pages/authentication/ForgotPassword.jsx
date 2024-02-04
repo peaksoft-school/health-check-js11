@@ -1,13 +1,21 @@
 import { useState } from 'react'
-import { Typography, styled } from '@mui/material'
+import { Typography, styled, Box } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
-import { validateEmail } from '../../utils/helpers/validation/formValidate'
 
 const ForgotPassword = () => {
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
+
+   const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
+
+   const validaionEmail = (email) => {
+      if (!emailRegex.test(email)) {
+         return 'Неверный адрес электронной почты'
+      }
+      return ''
+   }
 
    const handleChange = (e) => {
       setEmail(e.target.value)
@@ -16,11 +24,11 @@ const ForgotPassword = () => {
 
    const handleSubmit = (e) => {
       e.preventDefault()
-      const error = validateEmail(email)
+
+      const error = validaionEmail(email)
       if (error) {
          setEmailError(true)
       } else {
-         console.log('успешно')
          setEmail('')
       }
    }
@@ -32,7 +40,7 @@ const ForgotPassword = () => {
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 
-            <form onSubmit={handleSubmit} className="form" action="">
+            <form onSubmit={handleSubmit}>
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
@@ -46,11 +54,15 @@ const ForgotPassword = () => {
                   error={emailError}
                />
 
-               {emailError && <p className="message">Invalid email address</p>}
+               {emailError && (
+                  <Typography className="error-message">
+                     {validaionEmail(email)}
+                  </Typography>
+               )}
 
                <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
 
-               <Typography>Отмена</Typography>
+               <Typography>Отменить</Typography>
             </form>
          </StyledContainer>
       </Modal>
@@ -59,44 +71,48 @@ const ForgotPassword = () => {
 
 export default ForgotPassword
 
-const StyledContainer = styled('div')(({ theme }) => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    color: theme.palette.secondary.lightGrey,
    fontFamily: 'Manrope',
-   gap: '24px',
+   gap: '1.5rem',
    alignItems: 'center',
 
    '& .title': {
-      color: '#222',
-      fontSize: '18px',
+      color: theme.palette.primary.lightBlack,
+      fontSize: '1.125rem',
    },
 
-   '& .form': {
+   '& > form': {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '20px',
+      gap: '1.25rem',
 
-      '& .text': { marginRight: '30px' },
+      '& > .text': {
+         marginRight: '1.875rem',
+      },
 
-      '& .message': {
+      '& > .error-message': {
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '145px',
+         bottom: '9.063rem',
       },
    },
 }))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      marginTop: '24px',
-      width: '414px',
-      height: '44px',
-      fontSize: '14px',
+      marginTop: '1.5rem',
+      width: '25.875rem',
+      height: '2.75rem',
+      fontSize: '0.875rem',
       BackHandColor: 'white',
 
-      '&:active': { borderRadius: '10px' },
+      '&:active': {
+         borderRadius: '10px',
+      },
    },
 }))
