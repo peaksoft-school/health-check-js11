@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Typography } from '@mui/material'
 import {
    VaccinationIcon,
@@ -13,7 +12,6 @@ import {
 } from '../../assets/icons/servicesIcons'
 
 import {
-   DeleteIcon,
    FooterInstagramIcon,
    FooterTelegramIcon,
    FooterWhatsAppIcon,
@@ -30,8 +28,13 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
+
 import Checkbox from '../../components/UI/Checkbox'
-import DeleteButton from '../../components/UI/DeleteButton'
+import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
+import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
+import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
+import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
+import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
 
 const HEADER_NAV = [
    { id: 1, text: 'О клинике' },
@@ -298,23 +301,69 @@ const COLUMNS = [
    },
 ]
 
-const COLUMNS_FOR_ONLINE_SIGN_UP = [
+const DATA_FOR_ONLINE_SIGN_UP = [
    {
-      Header: <Checkbox checked={!false} />,
+      id: 1,
+      index: 1,
+      name: 'Sharapat',
+      checkbox: false,
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      time: '15:00',
+      service: 'Окулист',
+      specialist: 'Манак Елена',
+      date: '12.01.2023',
+      processed: true,
+   },
+   {
+      id: 2,
+      index: 2,
+      name: 'Bermet',
+      checkbox: false,
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      time: '15:00',
+      service: 'Окулист',
+      date: '12.01.2023',
+      specialist: 'Манак Елена',
+      processed: false,
+   },
+   {
+      id: 3,
+      index: 3,
+      name: 'Nurana',
+      checkbox: false,
+      number: '+996 707 123 456',
+      email: 'saadat@gmail.com',
+      service: 'Окулист',
+      specialist: 'Манак Елена',
+      time: '15:00',
+      date: '12.01.2023',
+      processed: true,
+   },
+]
+
+const ONLINE_APPOINTMENTS_COLUMN = [
+   {
+      Header: <SelectAll />,
       accessor: 'checkbox',
 
       style: {
          padding: '17px 0 20px 17px',
          flex: 0.06,
       },
+
+      Cell: ({ row }) => {
+         return <SelectSeparately checked={row.original.checkbox} />
+      },
    },
 
    {
-      Header: <DeleteIcon />,
+      Header: <DeleteSelected />,
       accessor: 'action',
 
       style: {
-         padding: '19px 0 20px',
+         padding: '17px 0 20px',
          flex: 0.06,
          cursor: 'pointer',
       },
@@ -447,6 +496,10 @@ const COLUMNS_FOR_ONLINE_SIGN_UP = [
          display: 'flex',
          alignItems: 'start',
       },
+
+      Cell: ({ row }) => {
+         return <ProcessedCheckbox checked={row.original.processed} />
+      },
    },
 
    {
@@ -465,47 +518,13 @@ const COLUMNS_FOR_ONLINE_SIGN_UP = [
       },
 
       Cell: ({ row }) => {
-         return <DeleteButton {...row.original} />
+         return (
+            <DeleteButton
+               name={row.original.name}
+               disabled={row.original.processed}
+            />
+         )
       },
-   },
-]
-
-const DATA_FOR_ONLINE_SIGN_UP = [
-   {
-      checkbox: <Checkbox />,
-      index: 1,
-      name: 'Sharapat',
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      service: 'Окулист',
-      specialist: 'Манак Елена',
-      time: '15:00',
-      date: '12.01.2023',
-      processed: <Checkbox />,
-   },
-   {
-      checkbox: <Checkbox />,
-      index: 2,
-      name: 'Sharapat',
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      service: 'Окулист',
-      specialist: 'Манак Елена',
-      time: '15:00',
-      date: '12.01.2023',
-      processed: <Checkbox />,
-   },
-   {
-      checkbox: <Checkbox />,
-      index: 3,
-      name: 'Sharapat',
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      service: 'Окулист',
-      specialist: 'Манак Елена',
-      time: '15:00',
-      date: '12.01.2023',
-      processed: <Checkbox />,
    },
 ]
 
@@ -536,5 +555,5 @@ export {
    COLUMNS,
    FAKE_DATA,
    DATA_FOR_ONLINE_SIGN_UP,
-   COLUMNS_FOR_ONLINE_SIGN_UP,
+   ONLINE_APPOINTMENTS_COLUMN,
 }

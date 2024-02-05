@@ -1,10 +1,10 @@
+import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useState } from 'react'
-import { Box, Typography, styled } from '@mui/material'
-import { DeleteIcon } from '../../assets/icons'
-import Modal from './Modal'
-import Button from './Button'
+import Button from '../../Button'
+import { DeleteIcon } from '../../../../assets/icons'
+import Modal from '../../Modal'
 
-const DeleteButton = () => {
+const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
 
    const openModal = () => {
@@ -14,17 +14,17 @@ const DeleteButton = () => {
    const handleClose = () => {
       setOpen(false)
    }
-
    return (
       <>
-         <StyledDeleteIcon onClick={openModal} />
+         <StyledDeleteButton onClick={openModal}>
+            <DeleteIcon />
+         </StyledDeleteButton>
+
          <Modal handleClose={handleClose} open={open} isCloseIcon={false}>
             <StyledContainer>
                <Typography className="description">
-                  Вы уверены, что хотите удалить запись
+                  Вы уверены, что хотите удалить выбранные записи?
                </Typography>
-
-               <Typography className="name">Салтанат Жумагуловой?</Typography>
 
                <div className="buttonsContainer">
                   <Button
@@ -43,12 +43,20 @@ const DeleteButton = () => {
    )
 }
 
-export default DeleteButton
+export default DeleteSelected
 
-const StyledDeleteIcon = styled(DeleteIcon)(() => ({
+const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',
    width: '26px',
    height: '22px',
+   transition: '0.3s ease-in-out',
+
+   '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: 0.5,
+      backgroundColor: '#d1d1d1',
+      borderRadius: '5px',
+   },
 }))
 
 const StyledContainer = styled(Box)(() => ({
@@ -58,19 +66,12 @@ const StyledContainer = styled(Box)(() => ({
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .name': {
-      fontFamily: 'Manrope',
-      fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '24.59px',
-      marginBottom: '1.25rem',
-   },
-
    '& .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
       lineHeight: '24.59px',
+      marginBottom: '40px',
    },
 
    '& .buttonsContainer': {

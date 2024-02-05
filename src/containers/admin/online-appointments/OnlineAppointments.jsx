@@ -1,37 +1,39 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
-import Table from './UI/Table'
+import Table from '../../../components/UI/Table'
 import {
-   COLUMNS_FOR_ONLINE_SIGN_UP,
+   ONLINE_APPOINTMENTS_COLUMN,
    DATA_FOR_ONLINE_SIGN_UP,
-} from '../utils/constants'
-import Button from './UI/Button'
-import { PlusIcon } from '../assets/icons'
-import SearchInput from './UI/inputs/SearchInput'
+} from '../../../utils/constants'
+import Button from '../../../components/UI/Button'
+import { PlusIcon } from '../../../assets/icons'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
 
 const OnlineAppointments = () => (
    <StyledContainer>
-      <StyledAddAntry>
-         <Typography className="title">Онлайн-запись</Typography>
+      <Box className="box">
+         <StyledAddAntry>
+            <Typography className="title">Онлайн-запись</Typography>
 
-         <Button className="add-button">
-            <PlusIcon className="plus-icon" /> Добавить запись
-         </Button>
-      </StyledAddAntry>
+            <Button className="add-button">
+               <PlusIcon className="plus-icon" /> Добавить запись
+            </Button>
+         </StyledAddAntry>
 
-      <Box>
-         <ButtonBase className="route">Онлайн-запись</ButtonBase>
-         <ButtonBase className="route">Расписание</ButtonBase>
-      </Box>
+         <Box>
+            <ButtonBase className="route">Онлайн-запись</ButtonBase>
+            <ButtonBase className="route">Расписание</ButtonBase>
+         </Box>
 
-      <Box className="input-container">
-         <StyledInput placeholder="Поиск" />
-      </Box>
+         <Box className="input-container">
+            <StyledInput placeholder="Поиск" />
+         </Box>
 
-      <Box className="table-container">
-         <Table
-            columns={COLUMNS_FOR_ONLINE_SIGN_UP}
-            data={DATA_FOR_ONLINE_SIGN_UP}
-         />
+         <Box className="table-container">
+            <Table
+               columns={ONLINE_APPOINTMENTS_COLUMN}
+               data={DATA_FOR_ONLINE_SIGN_UP}
+            />
+         </Box>
       </Box>
    </StyledContainer>
 )
@@ -39,13 +41,16 @@ const OnlineAppointments = () => (
 export default OnlineAppointments
 
 const StyledContainer = styled(Box)(() => ({
-   display: 'flex',
-   flexDirection: 'column',
    padding: '1.87rem 4.37rem 0',
    backgroundColor: '#F5F5F5',
-   height: '100vh',
-   maxWidth: '1600px',
-   margin: '0 auto',
+
+   '& .box': {
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '1600px',
+      height: '100vh',
+      margin: '0 auto',
+   },
 
    '& .route': {
       fontSize: '0.75rem',
