@@ -173,6 +173,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
+   paddingRight: '1rem',
 
    '& > .input-box': {
       display: 'flex',
@@ -207,22 +208,6 @@ const StyledForm = styled('form')(({ theme }) => ({
          display: 'flex',
          gap: '0.875rem',
       },
-   },
-
-   '& ::-webkit-scrollbar': {
-      width: '5px',
-      // backgroundColor: '#f9f9fd',
-   },
-
-   '& ::-webkit-scrollbar-thumb': {
-      borderRadius: '10px',
-      // backgroundColor: '#18aaaa',
-   },
-
-   '& ::-webkit-scrollbar-track': {
-      // -webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
-      borderRadius: '10px',
-      // backgroundColor: '#f9f9fd',
    },
 }))
 
