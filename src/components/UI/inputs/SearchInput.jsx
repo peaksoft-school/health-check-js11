@@ -20,7 +20,7 @@ const SearchInput = forwardRef(
 
 export default SearchInput
 
-const StyledContainer = styled(Paper)(() => {
+const StyledContainer = styled(Paper)(({ theme }) => {
    const defaultStyle = {
       display: 'flex',
       alignItems: 'center',
@@ -30,7 +30,7 @@ const StyledContainer = styled(Paper)(() => {
       borderRadius: '1.563rem',
       backgroundColor: '#F3F1F1',
       boxShadow: 'none',
-      p: ' 0.125rem 0.25rem',
+      caretColor: theme.palette.primary.darkGreen,
 
       '& .input': {
          flex: 1,

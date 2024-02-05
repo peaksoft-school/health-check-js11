@@ -136,6 +136,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
 
    '& .slick-next': {
       left: '29.375rem',
+      top: '450px',
 
       [theme.breakpoints.down('lg')]: {
          left: '25.375rem',
@@ -146,6 +147,7 @@ const StyledSlider = styled(Slider)(({ theme }) => ({
 
    '& .slick-prev': {
       left: '17.063rem',
+      top: '450px',
 
       [theme.breakpoints.down('lg')]: {
          left: '13.375rem',
@@ -182,6 +184,7 @@ const StyledSlide = styled(Box)(({ theme }) => ({
       '& > img': {
          width: '50px',
          height: '50px',
+         borderRadius: '50%',
       },
 
       '& > .wrapper': {
