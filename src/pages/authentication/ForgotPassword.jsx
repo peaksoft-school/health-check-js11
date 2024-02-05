@@ -45,7 +45,7 @@ const ForgotPassword = () => {
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
 
-               <Input
+               <StyledInput
                   value={email}
                   autoComplete="on"
                   onChange={handleChange}
@@ -103,16 +103,41 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const StyledButton = styled(Button)(() => ({
+const StyledInput = styled(Input)(() => ({
+   '& .MuiOutlinedInput-root ': {
+      height: '2.625rem',
+      borderRadius: '0.5rem',
+   },
+
+   '& .MuiOutlinedInput-input': {
+      height: '0.4375em',
+      borderRadius: '0.5rem',
+   },
+}))
+
+const StyledButton = styled(Button)(({ theme }) => ({
    '&.MuiButtonBase-root': {
-      marginTop: '1.5rem',
+      marginTop: '1rem',
       width: '25.875rem',
       height: '2.75rem',
       fontSize: '0.875rem',
-      BackHandColor: 'white',
+      backgroundColor: 'white',
 
       '&:active': {
-         borderRadius: '10px',
+         borderRadius: '0.625rem',
+         backgroundColor: theme.palette.primary.linearGradient,
+      },
+
+      '&:hover': {
+         backgroundColor:
+            'linear-gradient(181deg, #087D 0.45%, #048950 82.76%)',
+         border: 'none',
+      },
+
+      '&:disabled': {
+         border: 'none',
+         backgroundColor: theme.palette.secondary.lightGrey,
+         color: theme.palette.primary.main,
       },
    },
 }))

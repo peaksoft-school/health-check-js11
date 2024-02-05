@@ -41,7 +41,7 @@ const SingIn = () => {
          <StyledForm onSubmit={handleSubmit}>
             <Typography> ВОЙТИ </Typography>
 
-            <div className="input-box">
+            <Box className="input-box">
                <StyledInput
                   placeholder="Логин"
                   autoComplete="on"
@@ -71,7 +71,7 @@ const SingIn = () => {
                      ),
                   }}
                />
-            </div>
+            </Box>
 
             {signInError(errors) && (
                <Typography className="error-message">

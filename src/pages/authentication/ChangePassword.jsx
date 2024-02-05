@@ -19,10 +19,10 @@ const ChangePassword = () => {
    const [showReplayPassword, setShowReplayPassword] = useState(false)
 
    const showPasswordHandle1 = () =>
-      setShowNewPassword((prevShowPassword1) => !prevShowPassword1)
+      setShowNewPassword((prevShowPassword) => !prevShowPassword)
 
    const showPasswordHandle2 = () =>
-      setShowReplayPassword((prevShowPassword2) => !prevShowPassword2)
+      setShowReplayPassword((prevShowPassword) => !prevShowPassword)
 
    const onSubmit = ({ resetForm }) => resetForm()
 

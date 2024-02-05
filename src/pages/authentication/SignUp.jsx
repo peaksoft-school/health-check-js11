@@ -20,11 +20,10 @@ const SingUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-   const showPasswordHandle = () =>
-      setShowPassword((prevShowPassword1) => !prevShowPassword1)
+   const showPasswordHandle = () => setShowPassword((prev) => !prev)
 
    const showConfirmPasswordHandle = () =>
-      setShowConfirmPassword((prevShowPassword2) => !prevShowPassword2)
+      setShowConfirmPassword((prev) => !prev)
 
    const onSubmit = ({ resetForm }) => resetForm()
 
@@ -139,7 +138,7 @@ const SingUp = () => {
             </Box>
 
             {singUpError(errors) && (
-               <Typography className="message">
+               <Typography className="error-message">
                   {singUpError(errors)}
                </Typography>
             )}
@@ -179,19 +178,19 @@ const StyledForm = styled('form')(({ theme }) => ({
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
-      gap: '14px',
-      marginTop: '24px',
+      gap: '0.875rem',
+      marginTop: '1.5rem',
    },
 
    '& .navigate ': {
-      marginLeft: '10px',
+      marginLeft: '0.625rem',
       textDecoration: 'none',
       color: theme.palette.tertiary.lightBlue,
    },
 
-   '& .message': {
+   '& .error-message': {
       color: 'red',
-      marginTop: '10px',
+      marginTop: '0.625rem',
    },
 
    '& .google': {
@@ -208,6 +207,22 @@ const StyledForm = styled('form')(({ theme }) => ({
          display: 'flex',
          gap: '0.875rem',
       },
+   },
+
+   '& ::-webkit-scrollbar': {
+      width: '5px',
+      // backgroundColor: '#f9f9fd',
+   },
+
+   '& ::-webkit-scrollbar-thumb': {
+      borderRadius: '10px',
+      // backgroundColor: '#18aaaa',
+   },
+
+   '& ::-webkit-scrollbar-track': {
+      // -webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
+      borderRadius: '10px',
+      // backgroundColor: '#f9f9fd',
    },
 }))
 
