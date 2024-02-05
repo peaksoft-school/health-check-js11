@@ -15,7 +15,7 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 
-const SingIn = () => {
+const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
 
    const showPasswordHandle = () =>
@@ -83,13 +83,11 @@ const SingIn = () => {
 
             <Typography className="navigate">Забыли пароль?</Typography>
 
-            <Line>
-               <hr className="line-first" />
-
+            <StyledLine>
+               <hr />
                <Typography variant="span">или</Typography>
-
-               <hr className="line-second" />
-            </Line>
+               <hr />
+            </StyledLine>
 
             <ButtonBase className="google" type="button">
                <GoogleIcon />
@@ -107,13 +105,14 @@ const SingIn = () => {
    )
 }
 
-export default SingIn
+export default SignIn
 
 const StyledForm = styled('form')(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
    background: theme.palette.primary.main,
+   paddingRight: '15px',
 
    '& .navigate ': {
       textDecoration: 'none',
@@ -178,32 +177,25 @@ const StyledButton = styled(Button)(() => ({
    },
 }))
 
-const Line = styled(Box)(({ theme }) => ({
+const StyledLine = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '1rem',
    marginBottom: '1.25rem',
    marginTop: '1.25rem',
 
-   '& .line-first': {
+   '& hr': {
       width: '10.313rem',
       margin: '0.5rem 0',
       height: '0rem',
-      color: '#F3F1F1',
+      border: '1px solid #F3F1F1',
    },
 
-   '& span': {
+   '& > span': {
       fontFamily: 'Manrope',
       fontWeight: '500',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
       color: theme.palette.primary.lightBlack,
-   },
-
-   '& .line-second': {
-      width: '10.313rem',
-      color: '#F3F1F1',
-      margin: '0.5rem 0',
-      height: '0rem',
    },
 }))

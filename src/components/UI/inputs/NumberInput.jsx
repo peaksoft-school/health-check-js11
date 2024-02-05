@@ -44,11 +44,7 @@ const StyledInput = styled(PatternFormat)(({ theme }) => ({
    fontSize: '1rem',
    color: '#9D9D9D',
    marginLeft: '0.5rem',
-
-   [theme.breakpoints.down('lg')]: {
-      width: '10rem',
-      fontSize: '0.85rem',
-   },
+   caretColor: theme.palette.primary.darkGreen,
 
    '&:focus': {
       outline: 'none',
@@ -66,12 +62,19 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
       border: `1px solid ${error ? 'red' : ' rgba(0, 147, 68, 0.50)'}`,
    }
 
-   if (variant === 'authentication') {
+   if (variant === 'secondary') {
       return {
          ...defaultStyles,
          borderRadius: '0.5225rem',
          border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
-         color: `${theme.palette.secondary.lightGrey} !important`,
+
+         '& input': {
+            color: `${theme.palette.secondary.lightGrey} !important`,
+         },
+
+         '& input::placeholder': {
+            color: `${theme.palette.secondary.main}`,
+         },
 
          '&:hover': {
             border: `1px solid ${
@@ -80,5 +83,6 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
          },
       }
    }
+
    return defaultStyles
 })

@@ -14,6 +14,7 @@ const ForgotPassword = () => {
       if (!emailRegex.test(email)) {
          return 'Неверный адрес электронной почты'
       }
+
       return ''
    }
 
@@ -62,7 +63,7 @@ const ForgotPassword = () => {
 
                <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
 
-               <Typography>Отменить</Typography>
+               <Typography className="cancel">Отменить</Typography>
             </form>
          </StyledContainer>
       </Modal>
@@ -79,7 +80,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    gap: '1.5rem',
    alignItems: 'center',
 
-   '& .title': {
+   '& > .title': {
       color: theme.palette.primary.lightBlack,
       fontSize: '1.125rem',
    },
@@ -99,6 +100,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontSize: '0.8rem',
          position: 'absolute',
          bottom: '9.063rem',
+      },
+
+      '& > .cancel': {
+         cursor: 'pointer',
       },
    },
 }))

@@ -16,7 +16,7 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { singUpError } from '../../utils/helpers/index'
 
-const SingUp = () => {
+const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -25,7 +25,7 @@ const SingUp = () => {
    const showConfirmPasswordHandle = () =>
       setShowConfirmPassword((prev) => !prev)
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const onSubmit = (_, { resetForm }) => resetForm()
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
@@ -69,7 +69,7 @@ const SingUp = () => {
                />
 
                <NumberInput
-                  variant="authentication"
+                  variant="secondary"
                   id="number"
                   name="phoneNumber"
                   autoComplete="on"
@@ -145,11 +145,11 @@ const SingUp = () => {
 
             <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
 
-            <Line>
-               <hr className="line-first" />
+            <StyledLine>
+               <hr />
                <Typography variant="span">или</Typography>
-               <hr className="line-second" />
-            </Line>
+               <hr />
+            </StyledLine>
 
             <ButtonBase className="google" type="button">
                <GoogleIcon />
@@ -167,7 +167,7 @@ const SingUp = () => {
    )
 }
 
-export default SingUp
+export default SignUp
 
 const StyledForm = styled('form')(({ theme }) => ({
    display: 'flex',
@@ -237,32 +237,25 @@ const StyledButton = styled(Button)(() => ({
    },
 }))
 
-const Line = styled(Box)(({ theme }) => ({
+const StyledLine = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'row',
    gap: '1rem',
    marginBottom: '1.25rem',
    marginTop: '1.25rem',
 
-   '& .line-first': {
+   '& > hr': {
       width: '10.313rem',
       margin: '0.5rem 0',
       height: '0rem',
-      color: '#F3F1F1',
+      border: '1px solid #F3F1F1',
    },
 
-   '& span': {
+   '& > span': {
       fontFamily: 'Manrope',
       fontWeight: '500',
       textTransform: 'uppercase',
       fontSize: '0.75rem',
       color: theme.palette.primary.lightBlack,
-   },
-
-   '& .line-second': {
-      width: '10.313rem',
-      color: '#F3F1F1',
-      margin: '0.5rem 0',
-      height: '0rem',
    },
 }))

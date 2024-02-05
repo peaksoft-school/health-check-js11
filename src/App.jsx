@@ -1,6 +1,7 @@
 import './App.css'
+import SignUp from './pages/sign-up/SignUp'
 
 const App = () => {
-   return <div>health-check-js11</div>
+   return <SignUp />
 }
 export default App

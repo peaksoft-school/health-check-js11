@@ -7,6 +7,7 @@ const Input = forwardRef(
       ref
    ) => {
       const hasError = !!error
+
       return (
          <StyledInput
             error={hasError}
@@ -26,6 +27,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
    width: '414px',
    height: '42px',
    borderRadius: '8px solid',
+   caretColor: theme.palette.primary.darkGreen,
 
    '& .MuiOutlinedInput-input': {
       borderRadius: '2px',
