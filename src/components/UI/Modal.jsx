@@ -8,6 +8,7 @@ const Transition = forwardRef((props, ref) => (
 
 const Modal = ({ children, isCloseIcon = true, handleClose, open }) => (
    <StyledContainer
+      id="modal"
       open={open}
       TransitionComponent={Transition}
       keepMounted
@@ -28,8 +29,18 @@ const Modal = ({ children, isCloseIcon = true, handleClose, open }) => (
 
 export default Modal
 
-const StyledContainer = styled(Dialog)(() => ({
-   '& .MuiPaper-root': {
+const StyledContainer = styled(Dialog)(({ theme }) => ({
+   '& ::-webkit-scrollbar-thumb': {
+      borderRadius: '10px',
+      backgroundColor: theme.palette.secondary.input,
+   },
+
+   '& ::-webkit-scrollbar': {
+      width: '7px',
+      backgroundColor: theme.palette.primary.backgroundAdmin,
+   },
+
+   '& .MuiDialog-paper': {
       borderRadius: '0.625rem',
       padding: '0.87rem 1.62rem 0.87rem 2.5rem',
    },

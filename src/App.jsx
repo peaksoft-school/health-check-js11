@@ -1,8 +1,6 @@
 import './App.css'
-import OnlineAppointments from './containers/admin/online-appointments/OnlineAppointments'
 
 const App = () => {
-   return <OnlineAppointments />
+   return <div>health-check-js11</div>
 }
-
 export default App

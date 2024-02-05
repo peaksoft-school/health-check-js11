@@ -68,8 +68,8 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
 
             '&:disabled': {
                border: 'none',
-               backgroundColor: '#F5F5F5',
-               color: '#D9D9D9',
+               backgroundColor: theme.palette.primary.backgroundAdmin,
+               color: theme.palette.tertiary.main,
             },
          },
       }
@@ -81,7 +81,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             transition: '0.2s',
             borderRadius: '10px',
             padding: '10px 26px',
-            border: '1px solid #959595',
+            border: '1px solid',
             color: theme.palette.secondary.lightGrey,
 
             '&:hover': {
@@ -99,7 +99,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             '&:disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.main,
-               color: '#D9D9D9',
+               color: theme.palette.secondary.input,
             },
          },
       }

@@ -1,6 +1,6 @@
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import Button from '../UI/Button'
-import NumberInput from '../UI/inputs/NumberInput'
+import NumberInput from '../UI/input/NumberInput'
 import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
 import { DoctorLeaveImage } from '../../assets/images'
 

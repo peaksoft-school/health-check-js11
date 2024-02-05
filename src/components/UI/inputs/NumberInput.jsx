@@ -4,10 +4,21 @@ import { PatternFormat } from 'react-number-format'
 
 const NumberInput = forwardRef(
    (
-      { value, children, onChange, rest, placeholder, format, id, mask },
+      {
+         value,
+         children,
+         onChange,
+         variant,
+         rest,
+         error,
+         placeholder,
+         format,
+         id,
+         mask,
+      },
       ref
    ) => (
-      <StyledInputBox>
+      <StyledInputBox error={error} variant={variant}>
          {children}
 
          <StyledInput
@@ -27,35 +38,51 @@ const NumberInput = forwardRef(
 export default NumberInput
 
 const StyledInput = styled(PatternFormat)(({ theme }) => ({
-   borderRadius: '0.3125rem',
-   background: ' #FFF',
+   background: theme.palette.primary.main,
    padding: '0rem 0.625rem px',
    border: 'none',
    fontSize: '1rem',
-   color: '#9d9d9d',
+   color: '#9D9D9D',
    marginLeft: '0.5rem',
-
-   [theme.breakpoints.down('lg')]: {
-      width: '10rem',
-      fontSize: '0.85rem',
-   },
+   caretColor: theme.palette.primary.darkGreen,
 
    '&:focus': {
       outline: 'none',
-      color: 'rgba(0, 0, 0, 0.87)',
+      color: 'black',
    },
 }))
 
-const StyledInputBox = styled(Paper)(({ theme }) => ({
-   width: '16.4375rem',
-   height: ' 2.625rem',
-   display: 'flex',
-   alignItems: 'center',
-   border: '1px solid rgba(0, 147, 68, 0.50)',
-   marginTop: '0.375rem',
+const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
+   const defaultStyles = {
+      borderRadius: '0.3125rem',
+      width: '100%',
+      height: ' 2.625rem',
+      display: 'flex',
+      alignItems: 'center',
+      border: `1px solid ${error ? 'red' : ' rgba(0, 147, 68, 0.50)'}`,
+   }
 
-   [theme.breakpoints.down('lg')]: {
-      width: '13.4375rem',
-      height: ' 2.3rem',
-   },
-}))
+   if (variant === 'secondary') {
+      return {
+         ...defaultStyles,
+         borderRadius: '0.5225rem',
+         border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
+
+         '& input': {
+            color: `${theme.palette.secondary.lightGrey} !important`,
+         },
+
+         '& input::placeholder': {
+            color: `${theme.palette.secondary.main}`,
+         },
+
+         '&:hover': {
+            border: `1px solid ${
+               error ? 'red' : theme.palette.secondary.lightGrey
+            }`,
+         },
+      }
+   }
+
+   return defaultStyles
+})
