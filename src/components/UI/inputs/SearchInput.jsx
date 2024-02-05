@@ -20,20 +20,16 @@ const SearchInput = forwardRef(
 
 export default SearchInput
 
-const StyledContainer = styled(Paper)(({ theme }) => {
-   const defaultStyle = {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0.125rem 0.9rem',
-      justifyContent: 'space-between',
-      width: '22.938rem',
-      borderRadius: '1.563rem',
-      backgroundColor: '#F3F1F1',
-      boxShadow: 'none',
-      caretColor: theme.palette.primary.darkGreen,
+const StyledContainer = styled(Paper)(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   padding: '0.125rem 0.9rem',
+   justifyContent: 'space-between',
+   width: '100%',
+   borderRadius: '1.563rem',
+   boxShadow: 'none',
 
-      '& .search-icon': {
-         cursor: 'pointer',
-      },
-   }
-})
+   '& .search-icon': {
+      cursor: 'pointer',
+   },
+}))
