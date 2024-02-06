@@ -48,7 +48,9 @@ const Header = () => {
                   </Box>
                </Box>
 
-               <SearchInput placeholder="Поиск по фото" />
+               <Box className="search-input-container">
+                  <SearchInput placeholder="Поиск по фото" />
+               </Box>
 
                <Box className="socials">
                   {HEADER_SOCIALS.map(({ id, icon, ariaLabel, href }) => (
@@ -161,6 +163,10 @@ const StyledContainer = styled('header')(({ theme }) => ({
                   fontWeight: '500',
                   color: 'green',
                },
+            },
+
+            '& .search-input-container': {
+               width: '22.938rem',
             },
          },
 

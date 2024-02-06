@@ -68,13 +68,13 @@ const StyledContainer = styled('header')(({ theme }) => ({
       maxWidth: '1600px',
       width: '100%',
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
       alignItems: 'center',
       position: 'sticky',
       top: '0px',
       zIndex: '1000',
       backgroundColor: theme.palette.primary.main,
-      padding: '30px 0',
+      padding: '10px 0',
       color: '#048741',
 
       '& > .logo': {

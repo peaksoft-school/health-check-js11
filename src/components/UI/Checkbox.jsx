@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
-import { Checkbox as MuiCheckbox } from '@mui/material'
+import { Checkbox as MuiCheckbox, styled } from '@mui/material'
 
 const Checkbox = forwardRef(
    ({ color = 'success', checked, onChange, ...rest }, ref) => (
-      <MuiCheckbox
+      <StyledCheckbox
          color={color}
          checked={checked}
          onChange={onChange}
@@ -14,3 +14,7 @@ const Checkbox = forwardRef(
 )
 
 export default Checkbox
+
+const StyledCheckbox = styled(MuiCheckbox)(() => ({
+   padding: '0',
+}))

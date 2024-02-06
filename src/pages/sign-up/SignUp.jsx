@@ -8,6 +8,7 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
+
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import NumberInput from '../../components/UI/inputs/NumberInput'
