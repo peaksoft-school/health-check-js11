@@ -94,8 +94,6 @@ const Header = () => {
                </Box>
             </Box>
 
-            <hr />
-
             <Box className="header-bottom">
                <Box className="logo">
                   <HealthCheckIcon />

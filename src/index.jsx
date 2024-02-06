@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client'
 import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
-import App from './App'
 import Notification from './components/Notification'
+import App from './App'
 import Themes from './components/Themes'
 import './index.css'
 import { store } from './store/store'
@@ -14,6 +14,7 @@ root.render(
       <Provider store={store}>
          <Themes>
             <App />
+
             <Notification />
          </Themes>
       </Provider>

@@ -1,33 +1,37 @@
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import LandingPage from '../pages/LandingPage'
-import { routes } from '../utils/constants/routes'
-import { PrivateRoute } from './PrivateRoute'
-import { ROLES } from '../utils/constants/routes'
-import { adminRoutes } from './AdminRoutes'
+import { ROUTES, ROLES } from '../utils/constants/routes'
 import AdminLayout from '../layout/admin/AdminLayout'
+import UserLayout from '../layout/user/UserLayout'
+import { ADMIN_ROUTES } from './admin-routes'
+import { USER_ROUTES } from './user-routes'
+import ProtectedRoute from './ProtectedRoute'
 
 const AppRoutes = () => {
    const router = createBrowserRouter([
       {
-         path: routes.ADMIN.index,
+         path: ROUTES.ADMIN.index,
          element: (
-            <PrivateRoute
+            <ProtectedRoute
                roles={[ROLES.ADMIN]}
                fallBackPath="/"
-               component={<AdminLayout />}
+               Component={<AdminLayout />}
             />
          ),
-         children: adminRoutes,
+
+         children: ADMIN_ROUTES,
       },
+
       {
-         path: routes.USER.index,
+         path: ROUTES.USER.index,
          element: (
             <PrivateRoute
                roles={[ROLES.USER, ROLES.GUEST]}
                fallBackPath="/admin"
-               component={<LandingPage />}
+               Component={<UserLayout />}
             />
          ),
+
+         children: USER_ROUTES,
       },
 
       {
@@ -36,7 +40,7 @@ const AppRoutes = () => {
       },
    ])
 
-   return <RouterProvider routes={router} />
+   return <RouterProvider router={router} />
 }
 
 export default AppRoutes

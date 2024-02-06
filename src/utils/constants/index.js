@@ -305,7 +305,7 @@ const HEADER_ADMIN = [
 ]
 export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
-export const BASE_URL = 'http://18.208.146.212'
+export const BASE_URL = 'http://healthcheck.peaksoftprojects.com'
 
 export {
    HEADER_SOCIALS,

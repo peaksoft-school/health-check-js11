@@ -1,5 +1,3 @@
-import React from 'react'
-import Header from '../layout/Header'
 import Footer from '../layout/Footer'
 import Welcome from '../components/landing/Welcome'
 import WhyWe from '../components/landing/WhyWe'
@@ -12,7 +10,6 @@ import Leave from '../components/landing/Leave'
 const LandingPage = () => {
    return (
       <>
-         <Header />
          <Welcome />
          <WhyWe />
          <OurServices />

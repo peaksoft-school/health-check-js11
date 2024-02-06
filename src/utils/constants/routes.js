@@ -1,14 +1,17 @@
-export const routes = {
+const ROUTES = {
    USER: {
       index: '/',
    },
+
    ADMIN: {
       index: '/admin',
    },
 }
 
-export const ROLES = {
+const ROLES = {
    ADMIN: 'ADMIN',
    USER: 'USER',
    GUEST: 'GUEST',
 }
+
+export { ROUTES, ROLES }
