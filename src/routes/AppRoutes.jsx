@@ -9,6 +9,19 @@ import ProtectedRoute from './ProtectedRoute'
 const AppRoutes = () => {
    const router = createBrowserRouter([
       {
+         path: ROUTES.USER.index,
+         element: (
+            <ProtectedRoute
+               roles={[ROLES.USER, ROLES.GUEST]}
+               fallBackPath="/admin"
+               Component={<UserLayout />}
+            />
+         ),
+
+         children: USER_ROUTES,
+      },
+
+      {
          path: ROUTES.ADMIN.index,
          element: (
             <ProtectedRoute
@@ -19,19 +32,6 @@ const AppRoutes = () => {
          ),
 
          children: ADMIN_ROUTES,
-      },
-
-      {
-         path: ROUTES.USER.index,
-         element: (
-            <PrivateRoute
-               roles={[ROLES.USER, ROLES.GUEST]}
-               fallBackPath="/admin"
-               Component={<UserLayout />}
-            />
-         ),
-
-         children: USER_ROUTES,
       },
 
       {

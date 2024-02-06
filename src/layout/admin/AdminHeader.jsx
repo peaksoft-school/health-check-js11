@@ -1,7 +1,7 @@
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
-import { HEADER_ADMIN } from '../utils/constants/index'
-import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../assets/icons'
+import { HEADER_ADMIN } from '../../utils/constants/index'
+import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
 
 const AdminHeader = () => {
    const [anchorEl, setAnchorEl] = useState(null)

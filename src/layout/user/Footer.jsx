@@ -5,8 +5,12 @@ import {
    HourIcon,
    LocationIcon,
    SmsIcon,
-} from '../assets/icons/index'
-import { FOOTER_SOCIALS, HEADER_NAV, LOCATION } from '../utils/constants/index'
+} from '../../assets/icons/index'
+import {
+   FOOTER_SOCIALS,
+   HEADER_NAV,
+   LOCATION,
+} from '../../utils/constants/index'
 
 const Footer = () => (
    <StyledContainer>

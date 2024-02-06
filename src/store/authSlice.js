@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { routes } from '../utils/constants/routes'
+import { ROUTES } from '../utils/constants/routes'
 
 const initialState = {
    accessToken: null,
    isAuth: true,
-   role: 'USER',
+   role: 'ADMIN',
    email: null,
 }
 
@@ -18,7 +18,7 @@ export const authSlice = createSlice({
          state.role = data.role
          state.accessToken = data.token
          state.email = data.email
-         navigate(routes[data.role].index)
+         navigate(ROUTES[data.role].index)
       },
 
       logoutAction(state) {
@@ -28,4 +28,3 @@ export const authSlice = createSlice({
 })
 
 export const { loginAction, logoutAction } = authSlice.actions
-export const getIsAuthorized = (state) => state.login

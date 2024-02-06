@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
-import Button from '../components/UI/Button'
-import SearchInput from '../components/UI/inputs/SearchInput'
+import Button from '../../components/UI/Button'
+import SearchInput from '../../components/UI/inputs/SearchInput'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
-} from '../assets/icons'
-import { HEADER_NAV, HEADER_SOCIALS, LOCATION } from '../utils/constants/index'
+} from '../../assets/icons'
+import {
+   HEADER_NAV,
+   HEADER_SOCIALS,
+   LOCATION,
+} from '../../utils/constants/index'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
