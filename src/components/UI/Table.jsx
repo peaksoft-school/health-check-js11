@@ -25,7 +25,12 @@ const Table = ({ columns: headers, data }) => {
             <TableHead className="table-head">
                {headerGroups.map((headerGroup, i) => (
                   <TableRow
-                     {...headerGroup.getHeaderGroupProps()}
+                     {...headerGroup.getHeaderGroupProps({
+                        style: {
+                           display: 'flex',
+                           width: '100%',
+                        },
+                     })}
                      key={headerGroup.headers[i].Header}
                   >
                      {headerGroup.headers.map((column) => (
@@ -47,7 +52,11 @@ const Table = ({ columns: headers, data }) => {
                   prepareRow(row)
                   return (
                      <TableRow
-                        {...row.getRowProps()}
+                        {...row.getRowProps({
+                           style: {
+                              display: 'flex',
+                           },
+                        })}
                         key={row.id}
                         index={row.index}
                      >
@@ -56,6 +65,7 @@ const Table = ({ columns: headers, data }) => {
                               {...cell.getCellProps({
                                  style: {
                                     ...cell.column.style,
+                                    ...cell.column.tdStyle,
                                  },
                               })}
                               key={cell.column.id}
