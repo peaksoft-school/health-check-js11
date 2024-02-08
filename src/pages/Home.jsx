@@ -6,7 +6,7 @@ import BestDoctors from '../components/landing/BestDoctors'
 import Reviews from '../components/landing/Reviews'
 import Leave from '../components/landing/Leave'
 
-const LandingPage = () => (
+const Home = () => (
    <>
       <Welcome />
       <WhyWe />
@@ -18,4 +18,4 @@ const LandingPage = () => (
    </>
 )
 
-export default LandingPage
+export default Home

@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import LandingPage from '../../pages/LandingPage'
+import Home from '../../pages/Home'
 import Header from './Header'
 import Footer from './Footer'
 
@@ -10,7 +10,7 @@ const UserLayout = () => {
    return (
       <>
          {location.pathname !== '/results' && <Header />}
-         {isLandingPage && <LandingPage />}
+         {isLandingPage && <Home />}
          <Outlet />
          {location.pathname !== '/results' && <Footer />}
       </>

@@ -5,6 +5,7 @@ import UserLayout from '../layout/user/UserLayout'
 import ProtectedRoute from './ProtectedRoute'
 import { USER_ROUTES } from './user-router'
 import { ADMIN_ROUTES } from './admin-router'
+import NotFound from '../pages/NotFound'
 
 const AppRoutes = () => {
    const router = createBrowserRouter([
@@ -34,7 +35,7 @@ const AppRoutes = () => {
 
       {
          path: '*',
-         element: <div>Not Found</div>,
+         element: <NotFound />,
       },
    ])
 
