@@ -1,12 +1,12 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import Table from '../../../components/UI/Table'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Button from '../../../components/UI/Button'
 import {
    ONLINE_APPOINTMENTS_COLUMN,
    DATA_FOR_ONLINE_SIGN_UP,
 } from '../../../utils/constants'
-import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
 
 const OnlineAppointments = () => (
    <StyledContainer>
@@ -20,8 +20,8 @@ const OnlineAppointments = () => (
          </StyledAddAntry>
 
          <Box>
-            <ButtonBase className="route">Онлайн-запись</ButtonBase>
-            <ButtonBase className="route">Расписание</ButtonBase>
+            <ButtonBase className="tab">Онлайн-запись</ButtonBase>
+            <ButtonBase className="tab">Расписание</ButtonBase>
          </Box>
 
          <Box className="input-container">
@@ -44,41 +44,41 @@ const StyledContainer = styled(Box)(() => ({
    padding: '1.87rem 4.37rem 0',
    backgroundColor: '#F5F5F5',
 
-   '& .box': {
+   '& > .box': {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '1600px',
       height: '100vh',
       margin: '0 auto',
-   },
 
-   '& .route': {
-      fontSize: '0.75rem',
-      fontWeight: '600',
-      lineHeight: 'normal',
-      letterSpacing: '0.0625rem',
-      textTransform: 'uppercase',
-      marginRight: '1.87rem',
-      paddingBottom: '0.56rem',
+      '& .tab': {
+         fontSize: '0.75rem',
+         fontWeight: '600',
+         lineHeight: 'normal',
+         letterSpacing: '0.0625rem',
+         textTransform: 'uppercase',
+         marginRight: '1.87rem',
+         paddingBottom: '0.56rem',
 
-      '&:focus': {
-         color: '#048741',
-         borderBottom: '1px solid green',
+         '&:focus': {
+            color: '#048741',
+            borderBottom: '1px solid green',
+         },
       },
-   },
 
-   '& .input-container': {
-      width: '37.5rem',
-      marginTop: '2.12rem',
-   },
+      '& > .input-container': {
+         width: '37.5rem',
+         marginTop: '2.12rem',
+      },
 
-   '& .table-container': {
-      width: '100%',
-      borderRadius: '0.375rem',
-      bordeRradius: ' 0.375rem',
-      background: '#FFF',
-      height: '100%',
-      marginTop: '1.25rem',
+      '& > .table-container': {
+         width: '100%',
+         borderRadius: '0.375rem',
+         bordeRradius: ' 0.375rem',
+         background: '#FFF',
+         height: '100%',
+         marginTop: '1.25rem',
+      },
    },
 }))
 
@@ -97,7 +97,13 @@ const StyledAddAntry = styled(Box)(() => ({
    marginBottom: '1.87rem',
    width: '100%',
 
-   '& .add-button': {
+   '& > .title': {
+      fontSize: '1.375rem',
+      fontWeight: '400',
+      lineHeight: 'normal',
+   },
+
+   '& > .add-button': {
       fontFamily: 'Manrope',
       fontSize: '0.875rem',
       fontStyle: 'normal',
@@ -118,15 +124,9 @@ const StyledAddAntry = styled(Box)(() => ({
          background: '#0b8f54',
       },
 
-      '& .plus-icon': {
+      '& > .plus-icon': {
          width: '1.125rem',
          height: '1.125rem',
       },
-   },
-
-   '& .title': {
-      fontSize: '1.375rem',
-      fontWeight: '400',
-      lineHeight: 'normal',
    },
 }))
