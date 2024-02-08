@@ -14,6 +14,7 @@ import {
    HEADER_SOCIALS,
    LOCATION,
 } from '../../utils/constants/index'
+import AppLinks from '../../components/UI/AppLinks'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -53,7 +54,10 @@ const Header = () => {
                </Box>
 
                <Box className="search-input-container">
-                  <SearchInput placeholder="Поиск по фото" />
+                  <SearchInput
+                     variant="secondary"
+                     placeholder="Поиск по фото"
+                  />
                </Box>
 
                <Box className="socials">
@@ -110,9 +114,7 @@ const Header = () => {
                </Box>
 
                <nav>
-                  {HEADER_NAV.map(({ text, id }) => (
-                     <Typography key={id}>{text}</Typography>
-                  ))}
+                  <AppLinks link={HEADER_NAV} />
                </nav>
 
                <Box className="buttons">

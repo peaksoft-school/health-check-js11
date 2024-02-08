@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import { ROUTES, ROLES } from '../utils/constants/routes'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ROUTES, ROLES } from './routes'
 import AdminLayout from '../layout/admin/AdminLayout'
 import UserLayout from '../layout/user/UserLayout'
-import { ADMIN_ROUTES } from './admin-routes'
-import { USER_ROUTES } from './user-routes'
 import ProtectedRoute from './ProtectedRoute'
+import { USER_ROUTES } from './user-router'
+import { ADMIN_ROUTES } from './admin-router'
 
 const AppRoutes = () => {
    const router = createBrowserRouter([
@@ -17,7 +17,6 @@ const AppRoutes = () => {
                Component={<UserLayout />}
             />
          ),
-
          children: USER_ROUTES,
       },
 
@@ -30,13 +29,12 @@ const AppRoutes = () => {
                Component={<AdminLayout />}
             />
          ),
-
          children: ADMIN_ROUTES,
       },
 
       {
          path: '*',
-         element: <Navigate to="/" />,
+         element: <div>Not Found</div>,
       },
    ])
 

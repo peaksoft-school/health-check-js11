@@ -11,6 +11,7 @@ import {
    HEADER_NAV,
    LOCATION,
 } from '../../utils/constants/index'
+import AppLinks from '../../components/UI/AppLinks'
 
 const Footer = () => (
    <StyledContainer>
@@ -109,9 +110,7 @@ const Footer = () => (
 
          <Box className="second-container">
             <Box className="navigation-section">
-               {HEADER_NAV.map(({ text, id }) => (
-                  <Typography key={id}>{text}</Typography>
-               ))}
+               <AppLinks link={HEADER_NAV} />
             </Box>
          </Box>
 
@@ -301,6 +300,10 @@ const StyledContainer = styled('footer')(({ theme }) => ({
             display: 'flex',
             gap: '2.5rem',
             marginBottom: '3rem',
+
+            '& > a': {
+               color: '#CCC',
+            },
 
             [theme.breakpoints.down('lg')]: {
                fontSize: '0.780rem',

@@ -31,7 +31,6 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-
 import Checkbox from '../../components/UI/Checkbox'
 import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
 import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
@@ -40,11 +39,11 @@ import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
 
 const HEADER_NAV = [
-   { id: 1, text: 'О клинике' },
-   { id: 2, text: 'Услуги' },
-   { id: 3, text: 'Врачи' },
-   { id: 4, text: 'Прайс' },
-   { id: 5, text: 'Контакты' },
+   { id: 1, to: '/about', label: 'О клинике' },
+   { id: 2, to: '/services', label: 'Услуги' },
+   { id: 3, to: '/doctors', label: 'Врачи' },
+   { id: 4, to: '/price', label: 'Прайс' },
+   { id: 5, to: '/contacts', label: 'Контакты' },
 ]
 
 const HEADER_SOCIALS = [
@@ -538,8 +537,6 @@ const HEADER_ADMIN = [
    { id: 4, text: 'Пациенты' },
 ]
 export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
-
-export const BASE_URL = 'http://healthcheck.peaksoftprojects.com'
 
 export {
    HEADER_SOCIALS,
