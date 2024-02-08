@@ -8,7 +8,6 @@ const Transition = forwardRef((props, ref) => (
 
 const Modal = ({ children, isCloseIcon = true, handleClose, open }) => (
    <StyledContainer
-      id="modal"
       open={open}
       TransitionComponent={Transition}
       keepMounted

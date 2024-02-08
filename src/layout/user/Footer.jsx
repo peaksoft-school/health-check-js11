@@ -1,12 +1,17 @@
 import { styled, Box, Typography } from '@mui/material'
+import Navigations from '../../components/UI/Navigations'
 import {
    DefaultPhoneIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
    SmsIcon,
-} from '../assets/icons/index'
-import { FOOTER_SOCIALS, HEADER_NAV, LOCATION } from '../utils/constants/index'
+} from '../../assets/icons/index'
+import {
+   FOOTER_SOCIALS,
+   LOCATION,
+   NAVIGATIONS,
+} from '../../utils/constants/index'
 
 const Footer = () => (
    <StyledContainer>
@@ -104,11 +109,9 @@ const Footer = () => (
          </Box>
 
          <Box className="second-container">
-            <Box className="navigation-section">
-               {HEADER_NAV.map(({ text, id }) => (
-                  <Typography key={id}>{text}</Typography>
-               ))}
-            </Box>
+            <nav className="navigation-section">
+               <Navigations links={NAVIGATIONS} />
+            </nav>
          </Box>
 
          <hr />
@@ -297,6 +300,10 @@ const StyledContainer = styled('footer')(({ theme }) => ({
             display: 'flex',
             gap: '2.5rem',
             marginBottom: '3rem',
+
+            '& > a': {
+               color: '#CCC',
+            },
 
             [theme.breakpoints.down('lg')]: {
                fontSize: '0.780rem',

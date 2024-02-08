@@ -9,8 +9,8 @@ const WhyWe = () => (
          </Typography>
 
          <Box className="qualities">
-            {BEST_QUALITIES.map(({ number, title, key, text }) => (
-               <Box className="qualitie" key={key}>
+            {BEST_QUALITIES.map(({ number, title, id, text }) => (
+               <Box className="qualitie" key={id}>
                   <Typography className="number" variant="h1">
                      {number}
                   </Typography>

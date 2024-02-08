@@ -1,6 +1,6 @@
 import './App.css'
+import AppRoutes from './routes/AppRoutes'
 
-const App = () => {
-   return <div>health-check-js-11</div>
-}
+const App = () => <AppRoutes />
+
 export default App
