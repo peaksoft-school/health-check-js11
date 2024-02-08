@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
+import Navigations from '../../components/UI/Navigations'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
@@ -10,11 +11,10 @@ import {
    LocationIcon,
 } from '../../assets/icons'
 import {
-   HEADER_NAV,
    HEADER_SOCIALS,
    LOCATION,
+   NAVIGATIONS,
 } from '../../utils/constants/index'
-import AppLinks from '../../components/UI/AppLinks'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -114,7 +114,7 @@ const Header = () => {
                </Box>
 
                <nav>
-                  <AppLinks link={HEADER_NAV} />
+                  <Navigations links={NAVIGATIONS} />
                </nav>
 
                <Box className="buttons">

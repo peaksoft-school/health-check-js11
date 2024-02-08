@@ -1,4 +1,5 @@
 import { styled, Box, Typography } from '@mui/material'
+import Navigations from '../../components/UI/Navigations'
 import {
    DefaultPhoneIcon,
    HealthCheckIcon,
@@ -8,10 +9,9 @@ import {
 } from '../../assets/icons/index'
 import {
    FOOTER_SOCIALS,
-   HEADER_NAV,
    LOCATION,
+   NAVIGATIONS,
 } from '../../utils/constants/index'
-import AppLinks from '../../components/UI/AppLinks'
 
 const Footer = () => (
    <StyledContainer>
@@ -109,9 +109,9 @@ const Footer = () => (
          </Box>
 
          <Box className="second-container">
-            <Box className="navigation-section">
-               <AppLinks link={HEADER_NAV} />
-            </Box>
+            <nav className="navigation-section">
+               <Navigations links={NAVIGATIONS} />
+            </nav>
          </Box>
 
          <hr />

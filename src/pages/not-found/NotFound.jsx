@@ -1,6 +1,6 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { NotFoundImage } from '../assets/images'
+import { NotFoundImage } from '../../assets/images'
 
 const NotFound = () => (
    <StyledContainer>

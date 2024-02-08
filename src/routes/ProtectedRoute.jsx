@@ -6,7 +6,7 @@ const ProtectedRoute = ({ Component, fallBackPath, roles }) => {
 
    const isAllowed = () => roles.includes(role)
 
-   if (!isAuth && isAllowed()) {
+   if (isAuth && isAllowed()) {
       return <Navigate to={fallBackPath} />
    }
 

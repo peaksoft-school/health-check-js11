@@ -15,7 +15,7 @@ import NumberInput from '../../components/UI/inputs/NumberInput'
 import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
-import { singUpError } from '../../utils/helpers/index'
+import { signUpError } from '../../utils/helpers/index'
 
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -138,9 +138,9 @@ const SignUp = () => {
                />
             </Box>
 
-            {singUpError(errors) && (
+            {signUpError(errors) && (
                <Typography className="error-message">
-                  {singUpError(errors)}
+                  {signUpError(errors)}
                </Typography>
             )}
 

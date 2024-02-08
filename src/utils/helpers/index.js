@@ -28,7 +28,7 @@ const passwordError = (errors) => {
    return errorMessage
 }
 
-const singUpError = (errors) => {
+const signUpError = (errors) => {
    let errorMessage = null
 
    if (errors?.name) {
@@ -48,4 +48,4 @@ const singUpError = (errors) => {
    return errorMessage
 }
 
-export { signInError, singUpError, passwordError }
+export { signInError, signUpError, passwordError }
