@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
@@ -106,11 +107,13 @@ const Header = () => {
 
             <Box className="header-bottom">
                <Box className="logo">
-                  <HealthCheckIcon />
+                  <NavLink to="/">
+                     <HealthCheckIcon />
 
-                  <Typography variant="h1">
-                     <Typography variant="p">HEALTH</Typography> CHECK
-                  </Typography>
+                     <Typography variant="h1">
+                        <Typography variant="p">HEALTH</Typography> CHECK
+                     </Typography>
+                  </NavLink>
                </Box>
 
                <nav>
@@ -206,9 +209,13 @@ const StyledContainer = styled('header')(({ theme }) => ({
          marginTop: '12px',
 
          '& > .logo': {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.803rem',
+            '& > a': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '0.803rem',
+               textDecoration: 'none',
+               color: '#34453C',
+            },
 
             '& .MuiTypography-root': {
                fontSize: '1.375rem',
