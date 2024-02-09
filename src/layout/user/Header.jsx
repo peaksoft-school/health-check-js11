@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import SignUp from '../../pages/sign-up/SignUp'
+import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
@@ -19,6 +21,12 @@ import {
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
+   const [openModal, setOpenModal] = useState(false)
+   const [openSingInModal, setOpenSingInModal] = useState(false)
+
+   const openModalHandler = () => setOpenModal((prev) => !prev)
+
+   const openModalSingInHandler = () => setOpenSingInModal((prev) => !prev)
 
    const open = Boolean(anchorEl)
 
@@ -98,9 +106,22 @@ const Header = () => {
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <StyledMenuItem>Войти</StyledMenuItem>
+                     <StyledMenuItem onClick={openModalSingInHandler}>
+                        Войти
+                     </StyledMenuItem>
 
-                     <StyledMenuItem>Регистрация</StyledMenuItem>
+                     <StyledMenuItem onClick={openModalHandler}>
+                        Регистрация
+                     </StyledMenuItem>
+
+                     {openModal && <SignUp onClose={openModalHandler} />}
+
+                     {openSingInModal && (
+                        <SignIn
+                           open={openSingInModal}
+                           onClose={openModalSingInHandler}
+                        />
+                     )}
                   </StyledMenu>
                </Box>
             </Box>

@@ -10,7 +10,7 @@ import {
    PERSIST,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { authSlice } from './authSlice'
+import { authSlice } from './slices/auth/authSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,

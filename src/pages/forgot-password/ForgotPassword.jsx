@@ -4,7 +4,7 @@ import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ onClose }) => {
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
 
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
    const open = true
 
    return (
-      <Modal open={open}>
+      <Modal open={open} handleClose={onClose}>
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 

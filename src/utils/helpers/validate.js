@@ -9,7 +9,7 @@ const passwordRegex = /^(?=.*[A-Z]).*$/
 
 const VALIDATION_SIGN_UP = Yup.object().shape({
    name: Yup.string().required('Имя обязятельное!'),
-   surename: Yup.string().required('Фамилия обязятельное!'),
+   lastName: Yup.string().required('Фамилия обязятельное!'),
    email: Yup.string()
       .email()
       .matches(
@@ -18,7 +18,7 @@ const VALIDATION_SIGN_UP = Yup.object().shape({
       )
       .required('Почта обязятельное!'),
 
-   phoneNumber: Yup.string()
+   number: Yup.string()
       .matches(phoneNumberRegex, 'Неверный формат номера телефона!')
       .required('Номер телефона обязательное!'),
    password: Yup.string()

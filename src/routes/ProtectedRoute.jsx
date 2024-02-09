@@ -6,11 +6,11 @@ const ProtectedRoute = ({ Component, fallBackPath, roles }) => {
 
    const isAllowed = () => roles.includes(role)
 
-   if (isAuth && isAllowed()) {
-      return <Navigate to={fallBackPath} />
+   if (!isAuth && isAllowed()) {
+      return Component
    }
 
-   return Component
+   return <Navigate to={fallBackPath} />
 }
 
 export default ProtectedRoute

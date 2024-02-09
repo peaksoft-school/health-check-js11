@@ -14,14 +14,22 @@ import Modal from '../../components/UI/Modal'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
+import ForgotPassword from '../forgot-password/ForgotPassword'
 
-const SignIn = () => {
+const SignIn = ({ onClose, open }) => {
    const [showPassword, setShowPassword] = useState(false)
+   const [openForgotPassword, setOpenForgotPassword] = useState(false)
+
+   const openModaForgotPasswordHandler = () => {
+      setOpenForgotPassword((prev) => !prev)
+   }
 
    const showPasswordHandle = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const onSubmit = (values, { resetForm }) => {
+      resetForm()
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
@@ -34,10 +42,8 @@ const SignIn = () => {
       validationSchema: VALIDATION_SIGN_IN,
    })
 
-   const open = true
-
    return (
-      <Modal open={open}>
+      <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
             <Typography> ВОЙТИ </Typography>
 
@@ -81,7 +87,15 @@ const SignIn = () => {
 
             <StyledButton type="submit">ВОЙТИ</StyledButton>
 
-            <Typography className="navigate">Забыли пароль?</Typography>
+            <Typography
+               className="navigate"
+               onClick={openModaForgotPasswordHandler}
+            >
+               Забыли пароль?
+            </Typography>
+            {openForgotPassword && (
+               <ForgotPassword onClose={openModaForgotPasswordHandler} />
+            )}
 
             <StyledLine>
                <hr />
@@ -115,6 +129,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    paddingRight: '15px',
 
    '& .navigate ': {
+      cursor: 'pointer',
       textDecoration: 'none',
       marginLeft: '0.625rem',
       color: theme.palette.tertiary.lightBlue,
@@ -147,7 +162,7 @@ const StyledForm = styled('form')(({ theme }) => ({
       color: 'red',
       fontSize: '0.8rem',
       position: 'absolute',
-      bottom: '18.438rem',
+      bottom: '16rem',
    },
 }))
 

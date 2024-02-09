@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = process.env.API_URL
+const BASE_URL = process.env.REACT_APP_API_URL
 
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
@@ -23,8 +23,7 @@ axios.interceptors.request.use(
    function (config) {
       const updatedConfig = { ...config }
 
-      const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDcyMTEyOTIsImlhdCI6MTcwNjYwNjQ5MiwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.58ghUGtCnVx0ymesWbGyEUDlX3eSsf6Zi3iWFtkH4Fk'
+      const token = null
 
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`

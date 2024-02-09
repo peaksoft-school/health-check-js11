@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
 import {
    Typography,
    styled,
@@ -16,24 +17,38 @@ import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
+import { signUp } from '../../store/slices/auth/authSlice'
 
-const SignUp = () => {
+const SignUp = ({ onClose }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+   const dispatch = useDispatch()
 
    const showPasswordHandle = () => setShowPassword((prev) => !prev)
 
    const showConfirmPasswordHandle = () =>
       setShowConfirmPassword((prev) => !prev)
 
-   const onSubmit = (_, { resetForm }) => resetForm()
+   const onSubmit = (values, { resetForm }) => {
+      const dataToSend = {
+         name: values.name,
+         lastName: values.lastName,
+         email: values.email,
+         number: '+996741852963',
+         password: values.password,
+      }
+
+      dispatch(signUp(dataToSend))
+      resetForm()
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          name: '',
-         surename: '',
+         lastName: '',
          email: '',
-         phoneNumber: '',
+         number: '',
          password: '',
          confirmPassword: '',
       },
@@ -46,7 +61,7 @@ const SignUp = () => {
    const open = true
 
    return (
-      <Modal open={open}>
+      <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
             <Typography>РЕГИСТРАЦИЯ</Typography>
 
@@ -61,22 +76,22 @@ const SignUp = () => {
                />
 
                <StyledInput
-                  name="surename"
+                  name="lastName"
                   placeholder="Фамилия"
                   autoComplete="on"
-                  value={values.surename}
+                  value={values.lastName}
                   onChange={handleChange}
-                  error={!!errors.surename}
+                  error={!!errors.lastName}
                />
 
                <NumberInput
                   variant="secondary"
+                  name="number"
                   id="number"
-                  name="phoneNumber"
                   autoComplete="on"
-                  value={values.phoneNumber}
-                  onChange={handleChange('phoneNumber')}
-                  error={errors.phoneNumber}
+                  value={values.number}
+                  onChange={handleChange('number')}
+                  error={errors.number}
                   mask="_"
                   format="+996 (###) ##-##-##"
                   placeholder="+996 (_ _ _) _ _-_ _-_ _"
