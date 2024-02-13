@@ -3,8 +3,8 @@ import { ROLES, ROUTES } from '../routes/routes'
 
 const initialState = {
    accessToken: null,
-   isAuth: false,
-   role: ROLES.GUEST,
+   isAuth: true,
+   role: ROLES.ADMIN,
    email: null,
 }
 

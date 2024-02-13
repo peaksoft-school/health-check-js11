@@ -530,11 +530,146 @@ const ONLINE_APPOINTMENTS_COLUMN = [
    },
 ]
 
+const ONLINE_APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAll />,
+      accessor: 'checkbox',
+
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+
+      Cell: ({ row }) => {
+         return <SelectSeparately checked={row.original.checkbox} />
+      },
+   },
+
+   {
+      Header: <DeleteSelected />,
+      accessor: 'action',
+
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
+   },
+
+   {
+      Header: '№',
+      accessor: 'index',
+
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'time',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.3,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <div>
+            <p>{row.original.date}</p>
+         </div>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.69,
+         display: 'flex',
+         justifyContent: 'center',
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         alignItems: 'start',
+      },
+
+      Cell: ({ row }) => {
+         return <ProcessedCheckbox checked={row.original.processed} />
+      },
+   },
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => {
+         return (
+            <DeleteButton
+               name={row.original.name}
+               disabled={row.original.processed}
+            />
+         )
+      },
+   },
+]
+
 const HEADER_ADMIN = [
-   { id: 1, text: 'Онлайн-запись' },
-   { id: 2, text: 'Заявки' },
-   { id: 3, text: 'Специалисты' },
-   { id: 4, text: 'Пациенты' },
+   { id: 1, to: '/admin/registration', label: 'Онлайн-запись' },
+   { id: 2, to: '/admin/applications', label: 'Заявки' },
+   { id: 3, to: '/admin/specialists', label: 'Специалисты' },
+   { id: 4, to: '/admin/patient', label: 'Пациенты' },
 ]
 export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
@@ -553,4 +688,5 @@ export {
    DATA_FOR_ONLINE_SIGN_UP,
    ONLINE_APPOINTMENTS_COLUMN,
    HEADER_ADMIN,
+   ONLINE_APPLICATIONS_COLUMN,
 }
