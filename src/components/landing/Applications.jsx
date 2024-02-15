@@ -1,26 +1,72 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import SearchInput from '../UI/inputs/SearchInput'
 import Table from '../UI/Table'
+import { ONLINE_APPLICATIONS_COLUMN } from '../../utils/constants/index'
 import {
-   DATA_FOR_ONLINE_SIGN_UP,
-   ONLINE_APPLICATIONS_COLUMN,
-} from '../../utils/constants/index'
+   applicationSearch,
+   deleteApplicationById,
+   getApplicationData,
+   updateApplication,
+} from '../../store/slices/applications-slice/aplicationsSlice'
 
 const Applications = () => {
+   const aplication = useSelector((state) => state.data.items)
+   const update = useSelector((state) => state.data.isActive)
+   const dispatch = useDispatch()
+   const [searchText, setSearchText] = useState('')
+
+   useEffect(() => {
+      dispatch(getApplicationData())
+   }, [])
+
+   const handleUpdate = async ({ id, isActive }) => {
+      dispatch(updateApplication({ id, isActive }))
+   }
+
+   const handleDelete = ({ id }) => {
+      dispatch(deleteApplicationById({ id }))
+   }
+
+   const handleSearch = (e) => {
+      const newSearchText = e.target.value
+      setSearchText(newSearchText)
+      dispatch(
+         applicationSearch({
+            searchText: newSearchText,
+            otherParam: 'word',
+         })
+      )
+   }
+
+   const preperadeArray = aplication.map((item, index) => {
+      return {
+         ...item,
+         index: index + 1,
+         date: item.dateOfApplicationCreation,
+         number: item.phoneNumber,
+         processed: item.processed,
+         name: item.username,
+         update: (id, isActive) => handleUpdate({ id, isActive }),
+         delete: (id) => handleDelete({ id }),
+      }
+   })
+
    return (
       <StyledContainer>
          <StyledMainText>
             <Typography className="title">Заявки</Typography>
          </StyledMainText>
          <Box className="input-container">
-            <SearchInput placeholder="Поиск" />
+            <SearchInput
+               value={searchText}
+               onChange={handleSearch}
+               placeholder="Поиск"
+            />
          </Box>
          <Box className="table-container">
-            <Table
-               columns={ONLINE_APPLICATIONS_COLUMN}
-               data={DATA_FOR_ONLINE_SIGN_UP}
-            />
+            <Table columns={ONLINE_APPLICATIONS_COLUMN} data={preperadeArray} />
          </Box>
       </StyledContainer>
    )

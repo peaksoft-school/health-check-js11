@@ -33,6 +33,7 @@ import {
 } from '../../assets/images'
 import Checkbox from '../../components/UI/Checkbox'
 import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
+import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
 import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
 import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
@@ -558,7 +559,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
 
    {
       Header: '№',
-      accessor: 'index',
+      accessor: 'id',
 
       style: {
          padding: '17px 0 20px',
@@ -624,7 +625,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
 
       style: {
          padding: '19px 0 20px',
-         flex: 0.69,
+         flex: 0.81,
          display: 'flex',
          justifyContent: 'center',
          fontWeight: '700',
@@ -636,7 +637,13 @@ const ONLINE_APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <ProcessedCheckbox checked={row.original.processed} />
+         // console.log(row)
+         return (
+            <ProcessedCheckbox
+               checked={row.original.processed}
+               id={row.original.id}
+            />
+         )
       },
    },
    {
@@ -656,8 +663,9 @@ const ONLINE_APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => {
          return (
-            <DeleteButton
-               name={row.original.name}
+            <DeleteApplication
+               id={row.original.id}
+               name={row.original.username}
                disabled={row.original.processed}
             />
          )
