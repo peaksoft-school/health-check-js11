@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { routes } from '../utils/constants'
+import { routes } from '../../utils/constants'
 
 const initialState = {
    accessToken: null,
@@ -11,6 +11,7 @@ const initialState = {
 export const authSlice = createSlice({
    name: 'auth',
    initialState,
+
    reducers: {
       loginAction(state, { payload }) {
          const { data, navigate } = payload

@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import Checkbox from '../../Checkbox'
+import { APPOINTMENTS_ACTIONS } from '../../../../store/slices/appointmentsSlice'
 
-const SelectSeparately = ({ checked }) => {
-   const [isChecked, setIsChecked] = useState(checked)
+const SelectSeparately = ({ isSelected, appointmentId }) => {
+   const dispatch = useDispatch()
 
-   const handleCheckboxChange = () => {
-      setIsChecked((prev) => !prev)
+   const handleChange = () => {
+      dispatch(
+         APPOINTMENTS_ACTIONS.handleIsCheckedItem({
+            appointmentId,
+            checked: isSelected,
+         })
+      )
    }
 
-   return <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+   return <Checkbox checked={isSelected} onChange={handleChange} />
 }
 
 export default SelectSeparately

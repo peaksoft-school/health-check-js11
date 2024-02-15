@@ -1,12 +1,19 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
 import Button from '../../Button'
+import { deleteAppointmentById } from '../../../../store/thunks/appointmentThunk'
 
-const DeleteButton = ({ name, disabled }) => {
+const DeleteButton = ({ name, disabled, appointmentId }) => {
+   const dispatch = useDispatch()
    const [open, setOpen] = useState(false)
    const [isButtonDisabled, setIsButtonDisabled] = useState(!disabled)
+
+   useEffect(() => {
+      setIsButtonDisabled(!disabled)
+   }, [disabled])
 
    const openModal = () => {
       setOpen(true)
@@ -16,21 +23,19 @@ const DeleteButton = ({ name, disabled }) => {
       setOpen(false)
    }
 
-   const handleDelete = () => {
-      handleClose()
-   }
-
-   const handleButtonChange = () => {
-      setIsButtonDisabled((prev) => !prev)
+   const handleDelete = async () => {
+      try {
+         dispatch(deleteAppointmentById(appointmentId))
+      } catch (error) {
+         console.error('Error deleting appointment:', error)
+      } finally {
+         handleClose()
+      }
    }
 
    return (
       <>
-         <StyledDeleteButton
-            onClick={openModal}
-            disabled={isButtonDisabled}
-            onChange={handleButtonChange}
-         >
+         <StyledDeleteButton onClick={openModal} disabled={isButtonDisabled}>
             <DeleteIcon />
          </StyledDeleteButton>
 

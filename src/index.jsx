@@ -7,6 +7,9 @@ import Notification from './components/Notification'
 import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
+import { injectStore } from './configs/axiosInstance'
+
+injectStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 

@@ -1,11 +1,20 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
+import {
+   deleteAllAppointments,
+   deleteAppointmentById,
+} from '../../../../store/thunks/appointmentThunk'
 import Modal from '../../Modal'
 
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
+   const { deletedAppointmentsIds } = useSelector(
+      (state) => state.appointmentsAdmin
+   )
+   const dispatch = useDispatch()
 
    const openModal = () => {
       setOpen(true)
@@ -14,9 +23,23 @@ const DeleteSelected = ({ disabled }) => {
    const handleClose = () => {
       setOpen(false)
    }
+
+   const handleDelete = async () => {
+      try {
+         dispatch(deleteAllAppointments(deletedAppointmentsIds))
+      } catch (error) {
+         console.error('Error deleting appointments:', error)
+      } finally {
+         handleClose()
+      }
+   }
+
    return (
       <>
-         <StyledDeleteButton onClick={openModal}>
+         <StyledDeleteButton
+            onClick={openModal}
+            disabled={disabled || deletedAppointmentsIds.length === 0}
+         >
             <DeleteIcon />
          </StyledDeleteButton>
 
@@ -35,7 +58,9 @@ const DeleteSelected = ({ disabled }) => {
                      Отменить
                   </Button>
 
-                  <Button className="button">Удалить</Button>
+                  <Button className="button" onClick={handleDelete}>
+                     Удалить
+                  </Button>
                </div>
             </StyledContainer>
          </Modal>
@@ -46,16 +71,13 @@ const DeleteSelected = ({ disabled }) => {
 export default DeleteSelected
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
-   cursor: 'pointer',
    width: '26px',
    height: '22px',
    transition: '0.3s ease-in-out',
 
    '&:disabled': {
+      opacity: 0.2,
       cursor: 'not-allowed',
-      opacity: 0.5,
-      backgroundColor: '#d1d1d1',
-      borderRadius: '5px',
    },
 }))
 

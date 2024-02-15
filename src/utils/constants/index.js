@@ -32,7 +32,6 @@ import {
    ThirdBestDoctorImage,
 } from '../../assets/images'
 
-import Checkbox from '../../components/UI/Checkbox'
 import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
 import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
 import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
@@ -304,48 +303,6 @@ const COLUMNS = [
    },
 ]
 
-const DATA_FOR_ONLINE_SIGN_UP = [
-   {
-      id: 1,
-      index: 1,
-      name: 'Sharapat',
-      checkbox: false,
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      time: '15:00',
-      service: 'Окулист',
-      specialist: 'Манак Елена',
-      date: '12.01.2023',
-      processed: true,
-   },
-   {
-      id: 2,
-      index: 2,
-      name: 'Bermet',
-      checkbox: false,
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      time: '15:00',
-      service: 'Окулист',
-      date: '12.01.2023',
-      specialist: 'Манак Елена',
-      processed: false,
-   },
-   {
-      id: 3,
-      index: 3,
-      name: 'Nurana',
-      checkbox: false,
-      number: '+996 707 123 456',
-      email: 'saadat@gmail.com',
-      service: 'Окулист',
-      specialist: 'Манак Елена',
-      time: '15:00',
-      date: '12.01.2023',
-      processed: true,
-   },
-]
-
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
       Header: <SelectAll />,
@@ -357,7 +314,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <SelectSeparately checked={row.original.checkbox} />
+         return <SelectSeparately {...row.original} />
       },
    },
 
@@ -368,18 +325,17 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       style: {
          padding: '17px 0 20px',
          flex: 0.06,
-         cursor: 'pointer',
       },
    },
 
    {
       Header: '№',
-      accessor: 'index',
+      accessor: 'appointmentId',
 
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.1,
+         flex: 0.08,
       },
 
       tdStyle: {
@@ -389,12 +345,12 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
    {
       Header: 'Имя и фамилия',
-      accessor: 'name',
+      accessor: 'fullName',
 
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.25,
+         flex: 0.2,
       },
 
       tdStyle: {
@@ -404,12 +360,12 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
    {
       Header: 'Номер телефона',
-      accessor: 'number',
+      accessor: 'phoneNumber',
 
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.25,
+         flex: 0.2,
       },
 
       tdStyle: {
@@ -424,7 +380,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.23,
+         flex: 0.25,
       },
 
       tdStyle: {
@@ -434,7 +390,8 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
    {
       Header: 'Выбор услуги',
-      accessor: 'service',
+      accessor: 'facility',
+
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
@@ -453,7 +410,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.3,
+         flex: 0.22,
       },
 
       tdStyle: {
@@ -468,7 +425,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.2,
+         flex: 0.16,
       },
 
       tdStyle: {
@@ -477,19 +434,19 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => (
          <div>
-            <p>{row.original.date}</p>
-            <p>{row.original.time}</p>
+            <p>{row.original.localDate}</p>
+            <p>{row.original.localTime}</p>
          </div>
       ),
    },
 
    {
       Header: 'Обработан',
-      accessor: 'processed',
+      accessor: 'status',
 
       style: {
          padding: '19px 0 20px',
-         flex: 0.2,
+         flex: 0.16,
          display: 'flex',
          justifyContent: 'center',
          fontWeight: '700',
@@ -501,7 +458,12 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <ProcessedCheckbox checked={row.original.processed} />
+         return (
+            <ProcessedCheckbox
+               checked={row.original.status}
+               appointmentId={row.original.appointmentId}
+            />
+         )
       },
    },
 
@@ -510,21 +472,22 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       accessor: 'totalDiscount',
 
       style: {
-         padding: '19px 10px 20px',
+         padding: '19px 10px 20px 10px',
          fontWeight: '700',
          flex: 0.1,
       },
 
       tdStyle: {
          display: 'flex',
-         justifyContent: 'end',
+         justifyContent: 'center',
       },
 
       Cell: ({ row }) => {
          return (
             <DeleteButton
-               name={row.original.name}
-               disabled={row.original.processed}
+               name={row.original.fullName}
+               disabled={row.original.status}
+               appointmentId={row.original.appointmentId}
             />
          )
       },
@@ -537,9 +500,8 @@ const HEADER_ADMIN = [
    { id: 3, text: 'Специалисты' },
    { id: 4, text: 'Пациенты' },
 ]
-export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
-export const BASE_URL = 'http://18.208.146.212'
+export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
 
 export const routes = {
    LOGIN: '/login',
@@ -563,7 +525,6 @@ export {
    BEST_DOCTORS,
    COLUMNS,
    FAKE_DATA,
-   DATA_FOR_ONLINE_SIGN_UP,
    ONLINE_APPOINTMENTS_COLUMN,
    HEADER_ADMIN,
 }

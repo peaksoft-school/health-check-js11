@@ -1,47 +1,130 @@
-import { Box, ButtonBase, Typography, styled } from '@mui/material'
+import { Box, Typography, Tab, styled } from '@mui/material'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
+import { useDispatch, useSelector } from 'react-redux'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
-import {
-   ONLINE_APPOINTMENTS_COLUMN,
-   DATA_FOR_ONLINE_SIGN_UP,
-} from '../../../utils/constants'
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants'
 import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import {
+   getAppointments,
+   searchAppointments,
+} from '../../../store/thunks/appointmentThunk'
 
-const OnlineAppointments = () => (
-   <StyledContainer>
-      <Box className="box">
-         <StyledAddAntry>
-            <Typography className="title">Онлайн-запись</Typography>
+const OnlineAppointments = () => {
+   const [value, setValue] = useState('1')
+   const [searchText, setSearchText] = useState('')
+   const [initialDataLoaded, setInitialDataLoaded] = useState(false)
 
-            <Button className="add-button">
-               <PlusIcon className="plus-icon" /> Добавить запись
-            </Button>
-         </StyledAddAntry>
+   const dispatch = useDispatch()
 
-         <Box>
-            <ButtonBase className="route">Онлайн-запись</ButtonBase>
-            <ButtonBase className="route">Расписание</ButtonBase>
+   const handleSearchChange = useCallback((e) => {
+      setSearchText(e.target.value)
+   }, [])
+
+   const [debouncedSearchText] = useDebounce(searchText, 500)
+
+   useEffect(() => {
+      if (debouncedSearchText !== undefined) {
+         dispatch(
+            searchAppointments({
+               searchText: debouncedSearchText,
+               otherParam: 'word',
+            })
+         )
+      }
+
+      if (!initialDataLoaded) {
+         const fetchData = async () => {
+            try {
+               dispatch(getAppointments())
+               setInitialDataLoaded(true)
+            } catch (error) {
+               console.error('Error fetching appointments:', error)
+            }
+         }
+         fetchData()
+      }
+   }, [debouncedSearchText, initialDataLoaded, dispatch])
+
+   const { isLoading, appointments, error } = useSelector(
+      (state) => state.appointmentsAdmin
+   )
+
+   const filteredAppointments = useMemo(() => {
+      return appointments?.filter((appointment) =>
+         appointment.fullName
+            .toLowerCase()
+            .includes(debouncedSearchText.toLowerCase())
+      )
+   }, [appointments, debouncedSearchText])
+
+   const handleChange = useCallback((event, newValue) => {
+      setValue(newValue)
+   }, [])
+
+   return (
+      <StyledContainer>
+         <Box className="box">
+            <StyledAddAntry>
+               <Typography className="title">Онлайн-запись</Typography>
+               <Button className="add-button">
+                  <PlusIcon className="plus-icon" /> Добавить запись
+               </Button>
+            </StyledAddAntry>
+
+            <Box sx={{ width: '100%', typography: 'body1' }}>
+               <TabContext value={value}>
+                  <Box className="tabs-container">
+                     <TabList
+                        onChange={handleChange}
+                        aria-label="lab API tabs example"
+                     >
+                        <Tab
+                           label="Онлайн-запись"
+                           value="1"
+                           className="route"
+                        />
+                        <Tab label="Расписание" value="2" className="route" />
+                     </TabList>
+                  </Box>
+
+                  <Box className="input-container">
+                     <StyledInput
+                        placeholder="Поиск"
+                        value={searchText}
+                        onChange={handleSearchChange}
+                     />
+                  </Box>
+
+                  <TabPanel value="1" className="tables">
+                     {isLoading && <p>Loading...</p>}
+                     {error && <p>Error: {error.message}</p>}
+                     <Box className="table-container">
+                        <Table
+                           columns={ONLINE_APPOINTMENTS_COLUMN}
+                           data={filteredAppointments}
+                        />
+                     </Box>
+                  </TabPanel>
+
+                  <TabPanel value="2" className="tables">
+                     Item Two
+                  </TabPanel>
+               </TabContext>
+            </Box>
          </Box>
-
-         <Box className="input-container">
-            <StyledInput placeholder="Поиск" />
-         </Box>
-
-         <Box className="table-container">
-            <Table
-               columns={ONLINE_APPOINTMENTS_COLUMN}
-               data={DATA_FOR_ONLINE_SIGN_UP}
-            />
-         </Box>
-      </Box>
-   </StyledContainer>
-)
+      </StyledContainer>
+   )
+}
 
 export default OnlineAppointments
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
+   height: 'auto',
    backgroundColor: '#F5F5F5',
 
    '& .box': {
@@ -52,18 +135,60 @@ const StyledContainer = styled(Box)(() => ({
       margin: '0 auto',
    },
 
+   '& .MuiTabs-scroller > .MuiTabs-indicator': {
+      backgroundColor: '#048741 !important',
+   },
+
    '& .route': {
       fontSize: '0.75rem',
-      fontWeight: '600',
       lineHeight: 'normal',
-      letterSpacing: '0.0625rem',
-      textTransform: 'uppercase',
       marginRight: '1.87rem',
-      paddingBottom: '0.56rem',
+      padding: '0rem',
+      transition: '0.3s',
+      fontWeight: '500',
+      color: theme.palette.secondary.LightGrey,
+   },
 
-      '&:focus': {
-         color: '#048741',
-         borderBottom: '1px solid green',
+   '& .Mui-selected': {
+      transition: '1s',
+      color: '#048741 !important',
+   },
+
+   '& .tables': {
+      padding: '0rem',
+
+      '& .loading': {
+         position: 'absolute',
+         top: '50%',
+         left: '50%',
+         transform: 'translate(-50%,-50%) scale(2)',
+
+         '& > svg > polyline': {
+            fill: 'none',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+
+            '& #back': {
+               stroke: 'rgba(#6E7BF2,.3)',
+            },
+
+            ' &#front': {
+               stroke: ' #6E7BF2',
+               strokeDasharray: '12, 36',
+               strokeDashoffset: '48',
+               animation: 'dash 1s linear infinite',
+            },
+         },
+
+         '& @keyframes dash': {
+            '62.5%': {
+               opacity: '0',
+            },
+            to: {
+               strokeDashoffset: '0',
+            },
+         },
       },
    },
 
