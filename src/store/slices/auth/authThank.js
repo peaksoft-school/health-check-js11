@@ -4,24 +4,29 @@ import { showToast } from '../../../utils/helpers/notification'
 
 const signUp = createAsyncThunk(
    'auth/signUp',
-   async (userData, { rejectWithValue }) => {
+   async ({ dataToSend, resetForm, onClose }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post('/api/auth/signUp', userData)
+         const response = await axiosInstance.post(
+            '/api/auth/signUp',
+            dataToSend
+         )
 
          showToast({
-            message: 'Регистрация прошла успешно',
-            position: 'top-right',
-            duration: 3000,
-            autoClose: true,
+            message: 'вы успешно зарегистрировались',
          })
+
+         const { email, role, token } = response.data
+
+         if (email && role && token) {
+            resetForm()
+            onClose()
+         }
 
          return response.data
       } catch (error) {
          showToast({
-            message: 'ошибка',
+            message: error.response.data.message,
             status: 'error',
-            position: 'top-right',
-            autoClose: true,
          })
 
          return rejectWithValue(error)
@@ -31,23 +36,22 @@ const signUp = createAsyncThunk(
 
 const signIn = createAsyncThunk(
    'auth/signIn',
-   async (userData, { rejectWithValue }) => {
+   async ({ values, resetForm, onClose }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post('/api/auth/signIn', userData)
+         const response = await axiosInstance.post('/api/auth/signIn', values)
 
          showToast({
             message: 'вы успешно вошли в аккаунт',
-            position: 'top-right',
-            autoClose: true,
          })
+
+         resetForm()
+         onClose()
 
          return response.data
       } catch (error) {
          showToast({
             message: error.response.data.message,
             status: 'error',
-            position: 'top-right',
-            autoClose: true,
          })
 
          return rejectWithValue(error)
@@ -57,24 +61,47 @@ const signIn = createAsyncThunk(
 
 const forgotPassword = createAsyncThunk(
    'auth/forgotPassword',
+   async ({ email, link, onClose, setEmail }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.post(
+            `/api/auth/send-email?email=${email}&link=${link}`
+         )
+
+         showToast({
+            message: 'Вам отправлено ссылка для сброса пароля',
+         })
+
+         onClose()
+         setEmail('')
+
+         return response
+      } catch (error) {
+         showToast({
+            message: error.response.data.message,
+            status: 'error',
+         })
+
+         return rejectWithValue(error.response.data)
+      }
+   }
+)
+
+const changePassword = createAsyncThunk(
+   'auth/changePassword',
    async (payload, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
-            `/api/auth/send-email?email=${payload.email}&link=${payload.link}`
+            `/api/auth/forgot-password?token=${payload.token}&newPassword=${payload.newPassword}`
          )
          showToast({
-            message: 'Вам отправлено ссылка для сброса пароля',
-            position: 'top-right',
-            autoClose: true,
+            message: 'пароль успешно изменен!',
          })
 
          return response
       } catch (error) {
          showToast({
-            message: '403 forbidden',
+            message: error.response.data.message,
             status: 'error',
-            position: 'top-right',
-            autoClose: true,
          })
 
          return rejectWithValue(error.response.data)
@@ -91,16 +118,14 @@ const authWithGoogle = createAsyncThunk(
          )
 
          showToast({
-            title: 'Success',
-            message: 'You have just successfully registered',
+            message: 'вы успешно зарегистрировались',
          })
 
          return response
       } catch (error) {
          showToast({
-            title: 'Reject',
             status: 'error',
-            message: 'Sorry, registration failed, try again',
+            message: 'Извините, регистрация не удалась, попробуйте еще раз',
          })
 
          return rejectWithValue(error)
@@ -108,4 +133,4 @@ const authWithGoogle = createAsyncThunk(
    }
 )
 
-export { signUp, signIn, forgotPassword, authWithGoogle }
+export { signUp, signIn, forgotPassword, authWithGoogle, changePassword }

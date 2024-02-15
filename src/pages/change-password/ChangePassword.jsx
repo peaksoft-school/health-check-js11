@@ -6,17 +6,24 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import { VALIDATION_FORGOT_PASSWORD } from '../../utils/helpers/validate'
 import { passwordError } from '../../utils/helpers/index'
 import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
+import { changePassword } from '../../store/slices/auth/authThank'
 
 const ChangePassword = () => {
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+   const dispatch = useDispatch()
+
+   const navigate = useNavigate()
 
    const toggleShowNewPassword = () =>
       setShowNewPassword((prevShowNewPassword) => !prevShowNewPassword)
@@ -26,7 +33,27 @@ const ChangePassword = () => {
          (prevShowConfirmPassword) => !prevShowConfirmPassword
       )
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const token = localStorage.getItem('changePasswordToken')
+
+   const onSubmit = async (values, { resetForm }) => {
+      try {
+         const response = await dispatch(
+            changePassword({
+               newPassword: values.newPassword,
+               token,
+            })
+         )
+
+         if (response.type === 'auth/changePassword/fulfilled') {
+            navigate('/')
+            resetForm()
+
+            localStorage.removeItem('changePasswordToken')
+         }
+      } catch (error) {
+         throw error.message
+      }
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
@@ -47,7 +74,7 @@ const ChangePassword = () => {
                СМЕНА ПАРОЛЯ
             </Typography>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
@@ -57,7 +84,6 @@ const ChangePassword = () => {
                   value={values.newPassword}
                   placeholder="Введите новый пароль"
                   onChange={handleChange('newPassword')}
-                  autoComplete="on"
                   error={!!errors.newPassword}
                   InputProps={{
                      endAdornment: (
@@ -80,7 +106,6 @@ const ChangePassword = () => {
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   error={!!errors.confirmPassword}
-                  autoComplete="on"
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
@@ -102,7 +127,9 @@ const ChangePassword = () => {
                   </Typography>
                )}
 
-               <StyledButton type="submit">ПОДТВЕРДИТЬ</StyledButton>
+               <StyledButton colorLoading="secondary" type="submit">
+                  ПОДТВЕРДИТЬ
+               </StyledButton>
             </form>
          </StyledContainer>
       </Modal>
@@ -138,7 +165,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '6.563rem',
+         bottom: '4.3rem',
 
          '& > .input-box': {
             display: 'flex',

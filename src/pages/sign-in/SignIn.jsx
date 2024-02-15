@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import {
    styled,
@@ -21,12 +21,11 @@ import { authWithGoogle, signIn } from '../../store/slices/auth/authThank'
 import { auth, provider } from '../../utils/constants/logInWithGoogle'
 
 const SignIn = ({ onClose, open, closeSignUp }) => {
+   const { isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
    const [isForgotPasswordVisible, setIsForgotPasswordVisible] = useState(false)
 
    const dispatch = useDispatch()
-
-   // console.log(closeSignUp())
 
    const openModalForgotPasswordHandler = () => {
       setIsForgotPasswordVisible((prev) => !prev)
@@ -40,14 +39,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
    const onSubmit = (values, { resetForm }) => {
-      dispatch(signIn(values)).then((res) => {
-         const { email, role, token } = res.payload
-
-         if (email && role && token) {
-            resetForm()
-            onClose()
-         }
-      })
+      dispatch(signIn({ values, resetForm, onClose }))
    }
 
    const openSignUp = () => {
@@ -82,13 +74,12 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
 
    return (
       <Modal open={open} handleClose={onClose}>
-         <StyledForm onSubmit={handleSubmit}>
+         <StyledForm onSubmit={handleSubmit} autoComplete="off">
             <Typography> ВОЙТИ </Typography>
 
             <Box className="input-box">
                <StyledInput
                   placeholder="Логин"
-                  autoComplete="on"
                   value={values.email}
                   error={!!errors.email}
                   onChange={handleChange('email')}
@@ -96,7 +87,6 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
 
                <StyledInput
                   placeholder="Пароль"
-                  autoComplete="on"
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   error={!!errors.password}
@@ -123,7 +113,13 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                </Typography>
             )}
 
-            <StyledButton type="submit">ВОЙТИ</StyledButton>
+            <StyledButton
+               type="submit"
+               colorLoading="secondary"
+               isLoading={isLoading}
+            >
+               ВОЙТИ
+            </StyledButton>
 
             <Typography
                className="navigate"

@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import SignUp from '../../pages/sign-up/SignUp'
 import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
@@ -18,32 +19,46 @@ import {
    LOCATION,
    NAVIGATIONS,
 } from '../../utils/constants/index'
-import { showToast } from '../../utils/helpers/notification'
+import { logOut } from '../../store/slices/auth/authSlice'
+import Modal from '../../components/UI/Modal'
 
 const Header = () => {
+   const { role } = useSelector((state) => state.auth)
    const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
    const [openSignUpModal, setOpenSignUpModal] = useState(false)
    const [openSignInModal, setOpenSignInModal] = useState(false)
+   const [toggleLogOutModal, setToggleLogOutModal] = useState(false)
+
+   const dispatch = useDispatch()
+
+   const navigate = useNavigate()
+
+   const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
 
    const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
 
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
+
+   const toggleLogOutHandler = () => setToggleLogOutModal((prev) => !prev)
 
    const isProfileMenuOpen = Boolean(profileMenuAnchorEl)
 
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
 
-   const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
-
-   const show = () => {
-      showToast({
-         message: 'вы успешно вошли в аккаунт',
-         position: 'top-right',
-         autoClose: true,
-      })
+   const handlelogOut = () => {
+      dispatch(logOut({ navigate }))
+      handleProfileMenuClose()
    }
 
+   const navigateToPprofile = () => {
+      navigate('profile')
+      handleProfileMenuClose()
+   }
+   const navigateToMyRecords = () => {
+      navigate('records')
+      handleProfileMenuClose()
+   }
    return (
       <StyledContainer>
          <Box className="box">
@@ -68,7 +83,7 @@ const Header = () => {
 
                      <Typography className="days">пн-сб</Typography>
 
-                     <Typography onClick={show}> 08:00 до 18:00 </Typography>
+                     <Typography> 08:00 до 18:00 </Typography>
                   </Box>
                </Box>
 
@@ -116,13 +131,63 @@ const Header = () => {
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <StyledMenuItem onClick={toggleSignInModal}>
-                        Войти
-                     </StyledMenuItem>
-
-                     <StyledMenuItem onClick={toggleSignUpModal}>
-                        Регистрация
-                     </StyledMenuItem>
+                     {role === 'GUEST' ? (
+                        <StyledMenu
+                           anchorEl={profileMenuAnchorEl}
+                           open={isProfileMenuOpen}
+                           onClose={handleProfileMenuClose}
+                           MenuListProps={{
+                              'aria-labelledby': 'basic-button',
+                           }}
+                        >
+                           <StyledMenuItem onClick={toggleSignInModal}>
+                              Войти
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={toggleSignUpModal}>
+                              Регистрация
+                           </StyledMenuItem>
+                        </StyledMenu>
+                     ) : (
+                        <StyledMenu
+                           anchorEl={profileMenuAnchorEl}
+                           open={isProfileMenuOpen}
+                           onClose={handleProfileMenuClose}
+                           MenuListProps={{
+                              'aria-labelledby': 'basic-button',
+                           }}
+                        >
+                           <StyledMenuItem onClick={navigateToMyRecords}>
+                              Мои записи
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={navigateToPprofile}>
+                              Профиль
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={toggleLogOutHandler}>
+                              Выйти
+                           </StyledMenuItem>
+                        </StyledMenu>
+                     )}
+                     <Modal
+                        open={toggleLogOutModal}
+                        onClose={toggleLogOutHandler}
+                        isCloseIcon={false}
+                     >
+                        <StyledModal>
+                           Вы уврены, что хотите выйти?
+                           <br />
+                           <br />
+                           <Box className="buttons-box">
+                              <Button
+                                 className="closeButton"
+                                 onClick={toggleLogOutHandler}
+                                 variant="grey"
+                              >
+                                 Отменить
+                              </Button>
+                              <Button onClick={handlelogOut}>Выйти</Button>
+                           </Box>
+                        </StyledModal>
+                     </Modal>
 
                      <SignUp
                         open={openSignUpModal}
@@ -159,7 +224,9 @@ const Header = () => {
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
 
-                  <StyledButton className="button">ЗАПИСЬ ОНАЛЙН</StyledButton>
+                  <StyledButton className="button" onClick={toggleSignUpModal}>
+                     ЗАПИСЬ ОНАЛЙН
+                  </StyledButton>
                </Box>
             </Box>
          </Box>
@@ -296,6 +363,29 @@ const StyledButton = styled(Button)(() => ({
 
    '&:hover': {
       borderRadius: '1.5rem',
+   },
+   '& .modal': {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '7000px',
+   },
+}))
+
+const StyledModal = styled(Box)(() => ({
+   boxSizing: 'content-box',
+   padding: '10px  45px 10px 45px',
+   textAlign: 'center',
+
+   '& >.buttons-box': {
+      display: 'flex',
+      gap: '30px',
+
+      '& > .MuiButtonBase-root': {
+         padding: '5px 0',
+         width: '120px',
+         height: '40px',
+         fontSize: '12px',
+      },
    },
 }))
 

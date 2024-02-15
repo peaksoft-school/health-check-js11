@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled, Box } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
@@ -7,8 +7,11 @@ import Button from '../../components/UI/Button'
 import { forgotPassword } from '../../store/slices/auth/authThank'
 
 const ForgotPassword = ({ open, onClose }) => {
+   const { isLoading } = useSelector((state) => state.auth)
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
+
+   const dispatch = useDispatch()
 
    const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
 
@@ -25,22 +28,20 @@ const ForgotPassword = ({ open, onClose }) => {
       setEmailError(false)
    }
 
-   const dispatch = useDispatch()
-
    const handleSubmit = (e) => {
       e.preventDefault()
 
       const error = validaionEmail(email)
+
       if (!error) {
          dispatch(
             forgotPassword({
                email,
                link: 'http://localhost:3000/change-password',
+               setEmail,
+               onClose,
             })
          )
-
-         setEmail('')
-         onClose()
       } else {
          setEmailError(true)
       }
@@ -51,14 +52,13 @@ const ForgotPassword = ({ open, onClose }) => {
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
 
                <StyledInput
                   value={email}
-                  autoComplete="on"
                   onChange={handleChange}
                   type="email"
                   placeholder="Email"
@@ -71,7 +71,13 @@ const ForgotPassword = ({ open, onClose }) => {
                   </Typography>
                )}
 
-               <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
+               <StyledButton
+                  type="submit"
+                  colorLoading="secondary"
+                  isLoading={isLoading}
+               >
+                  ОТПРАВИТЬ
+               </StyledButton>
 
                <StyledCloseButton
                   variant="grey"

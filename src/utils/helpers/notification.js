@@ -5,12 +5,11 @@ import { CloseIcon } from '../../assets/icons'
 export const showToast = ({
    message = 'Success',
    status = 'success',
-   position = 'top-right',
-   duration = 4000000000000,
+   duration = 3000,
 }) => {
    toast[status](<StyledMessage>{message}</StyledMessage>, {
       icon: false,
-      position,
+      position: 'top-right',
       autoClose: duration,
 
       style: {

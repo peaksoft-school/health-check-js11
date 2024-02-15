@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ROLES, ROUTES } from '../../../routes/routes'
-import { authWithGoogle, forgotPassword, signIn, signUp } from './authThank'
+import { ROLES } from '../../../routes/routes'
+import {
+   authWithGoogle,
+   changePassword,
+   forgotPassword,
+   signIn,
+   signUp,
+} from './authThank'
 
 const initialState = {
    isLoading: false,
@@ -14,19 +20,15 @@ export const authSlice = createSlice({
    name: 'auth',
    initialState,
    reducers: {
-      logIn: (state, { payload }) => {
-         const { data, navigate } = payload
-
+      logOut: (state, { payload }) => {
+         state.isLoading = false
+         state.accessToken = null
          state.isAuth = false
-         state.role = data.role
-         state.token = data.token
-         state.email = data.email
+         state.role = ROLES.GUEST
+         state.email = null
 
-         navigate(ROUTES[data.role].index)
-      },
-
-      logOut: (state) => {
-         state = initialState
+         localStorage.removeItem('HEALTH_CHECK')
+         payload.navigate('/')
       },
    },
 
@@ -39,30 +41,32 @@ export const authSlice = createSlice({
             state.email = payload.email
          })
 
-         .addCase(signUp.rejected, (state) => {
-            state.isLoading = false
-         })
-
          .addCase(signUp.pending, (state) => {
             state.isLoading = true
          })
 
+         .addCase(signUp.rejected, (state) => {
+            state.isLoading = false
+         })
+
          .addCase(signIn.fulfilled, (state, { payload }) => {
+            state.isLoading = false
             state.accessToken = payload.token
             state.role = payload.role
             state.email = payload.email
-         })
-
-         .addCase(signIn.rejected, (state) => {
-            state.isLoading = false
          })
 
          .addCase(signIn.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(forgotPassword.fulfilled, (state) => {
+         .addCase(signIn.rejected, (state) => {
             state.isLoading = false
+         })
+
+         .addCase(forgotPassword.fulfilled, (state, { payload }) => {
+            state.isLoading = false
+            localStorage.setItem('changePasswordToken', payload.data.message)
          })
 
          .addCase(forgotPassword.pending, (state) => {
@@ -70,6 +74,23 @@ export const authSlice = createSlice({
          })
 
          .addCase(forgotPassword.rejected, (state) => {
+            state.isLoading = false
+         })
+
+         .addCase(changePassword.fulfilled, (state, { payload }) => {
+            const { email, role, token } = payload.data
+            state.isLoading = false
+            state.accessToken = token
+            state.isAuth = true
+            state.role = role
+            state.email = email
+         })
+
+         .addCase(changePassword.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(changePassword.rejected, (state) => {
             state.isLoading = false
          })
 
@@ -92,4 +113,4 @@ export const authSlice = createSlice({
    },
 })
 
-export const { logIn, logOut } = authSlice.actions
+export const { logOut } = authSlice.actions

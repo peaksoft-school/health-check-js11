@@ -12,17 +12,14 @@ const VALIDATION_SIGN_UP = Yup.object().shape({
    lastName: Yup.string().required('Фамилия обязятельное!'),
    email: Yup.string()
       .email()
-      .matches(
-         emailRegex,
-         'Адрес электронной почты должен быть в формате ...@gmail.com!'
-      )
+      .matches(emailRegex, 'email должен быть в формате ...@gmail.com!')
       .required('Почта обязятельное!'),
 
    number: Yup.string()
       .matches(phoneNumberRegex, 'Неверный формат номера телефона!')
       .required('Номер телефона обязательное!'),
    password: Yup.string()
-      .required('Введите новый пароль!')
+      .required('Введите пароль!')
       .min(8, 'Минимальная длина пароля 8 символов!')
       .matches(passwordRegex, 'Не правильный формат пароля'),
 
@@ -40,7 +37,7 @@ const VALIDATION_SIGN_IN = Yup.object().shape({
       )
       .required('Почта обязятельное!'),
    password: Yup.string()
-      .required('Введите новый пароль!')
+      .required('Введите пароль!')
       .min(8, 'Минимальная длина пароля 8 символов!')
       .matches(passwordRegex, 'Пароль требует заглавную букву!'),
 })

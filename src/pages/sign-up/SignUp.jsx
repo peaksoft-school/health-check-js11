@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
 import {
    Typography,
@@ -20,16 +20,19 @@ import { signUpError } from '../../utils/helpers/index'
 import { authWithGoogle, signUp } from '../../store/slices/auth/authThank'
 import { auth, provider } from '../../utils/constants/logInWithGoogle'
 import SignIn from '../sign-in/SignIn'
+import { showToast } from '../../utils/helpers/notification'
 
 const SignUp = ({ onClose, open, closeSignUp }) => {
+   const { isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-   const [openSignIn1, setOpenSignIn1] = useState(false)
+   const [toggleSignIn, setToggleSignIn] = useState(false)
 
    const dispatch = useDispatch()
 
    const showPasswordHandle = () => setShowPassword((prev) => !prev)
-   const openSignInHandle = () => setOpenSignIn1((prev) => !prev)
+
+   const toggleSignInHandle = () => setToggleSignIn((prev) => !prev)
 
    const showConfirmPasswordHandle = () =>
       setShowConfirmPassword((prev) => !prev)
@@ -43,18 +46,11 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
          password: values.password,
       }
 
-      dispatch(signUp(dataToSend)).then((res) => {
-         const { email, role, token } = res.payload
-
-         if (email && role && token) {
-            resetForm()
-            onClose()
-         }
-      })
+      dispatch(signUp({ dataToSend, resetForm, onClose }))
    }
 
    const openSignIn = () => {
-      setOpenSignIn1((prev) => !prev)
+      setToggleSignIn((prev) => !prev)
       onClose()
    }
 
@@ -83,15 +79,18 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
       validationSchema: VALIDATION_SIGN_UP,
    })
 
+   const fofj = () => {
+      showToast({})
+   }
+
    return (
       <Modal open={open} handleClose={onClose}>
-         <StyledForm onSubmit={handleSubmit}>
+         <StyledForm onSubmit={handleSubmit} autoComplete="off">
             <Typography>РЕГИСТРАЦИЯ</Typography>
             <Box className="input-box">
                <StyledInput
                   placeholder="Имя"
                   name="name"
-                  autoComplete="on"
                   value={values.name}
                   onChange={handleChange}
                   error={!!errors.name}
@@ -100,7 +99,6 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
                <StyledInput
                   name="lastName"
                   placeholder="Фамилия"
-                  autoComplete="on"
                   value={values.lastName}
                   onChange={handleChange}
                   error={!!errors.lastName}
@@ -122,7 +120,6 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
                <StyledInput
                   name="email"
                   placeholder="Email"
-                  autoComplete="on"
                   value={values.email}
                   onChange={handleChange}
                   error={!!errors.email}
@@ -131,7 +128,6 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
                <StyledInput
                   name="password"
                   placeholder="Введите пароль"
-                  autoComplete="on"
                   value={values.password}
                   onChange={handleChange('password')}
                   error={!!errors.password}
@@ -154,7 +150,6 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
                <StyledInput
                   name="confirmPassword"
                   placeholder="Повторите пароль"
-                  autoComplete="on"
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   error={!!errors.confirmPassword}
@@ -181,12 +176,18 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
             )}
 
             <SignIn
-               open={openSignIn1}
-               onClose={openSignInHandle}
+               open={toggleSignIn}
+               onClose={toggleSignInHandle}
                closeSignUp={closeSignUp}
             />
 
-            <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
+            <StyledButton
+               type="submit"
+               colorLoading="secondary"
+               isLoading={isLoading}
+            >
+               СОЗДАТЬ АККАУНТ
+            </StyledButton>
 
             <StyledLine>
                <hr />
