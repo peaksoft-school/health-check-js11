@@ -35,12 +35,12 @@ const updateAppointmentStatus = createAsyncThunk(
 
 const searchAppointments = createAsyncThunk(
    'appointments/search',
-   async ({ searchText, otherParam }, { rejectWithValue }) => {
+   async ({ searchName, otherParam }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
-            `/api/appointment/getAppointment?word=${searchText}`,
+            `/api/appointment/getAppointment?word=${searchName}`,
             {
-               params: { searchText, otherParam },
+               params: { searchName, otherParam },
             }
          )
 
@@ -66,11 +66,13 @@ const deleteAppointmentById = createAsyncThunk(
 
 const deleteAllAppointments = createAsyncThunk(
    'appointments/deleteAll',
-   async (_, { dispatch }) => {
+   async (appointmentIds, { dispatch }) => {
       try {
-         await axiosInstance.delete('/api/appointment/deleteAll')
+         await axiosInstance.delete('/api/appointment/deleteAll', {
+            data: appointmentIds,
+         })
          dispatch(getAppointments())
-         return true
+         return appointmentIds
       } catch (error) {
          throw new Error('Error deleting all appointments', error)
       }

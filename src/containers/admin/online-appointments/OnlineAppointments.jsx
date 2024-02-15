@@ -12,26 +12,27 @@ import {
    getAppointments,
    searchAppointments,
 } from '../../../store/thunks/appointmentThunk'
+import Loading from '../../../components/UI/Loading'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
-   const [searchText, setSearchText] = useState('')
+   const [searchName, setSearchName] = useState('')
    const [initialDataLoaded, setInitialDataLoaded] = useState(false)
 
    const dispatch = useDispatch()
 
    const handleSearchChange = useCallback((e) => {
-      setSearchText(e.target.value)
+      setSearchName(e.target.value)
    }, [])
 
-   const [debouncedSearchText] = useDebounce(searchText, 500)
+   const [debouncedSearchText] = useDebounce(searchName, 1000)
 
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
             searchAppointments({
                searchText: debouncedSearchText,
-               otherParam: 'word',
+               otherParam: 'name',
             })
          )
       }
@@ -94,13 +95,13 @@ const OnlineAppointments = () => {
                   <Box className="input-container">
                      <StyledInput
                         placeholder="Поиск"
-                        value={searchText}
+                        value={searchName}
                         onChange={handleSearchChange}
                      />
                   </Box>
 
                   <TabPanel value="1" className="tables">
-                     {isLoading && <p>Loading...</p>}
+                     {isLoading && <Loading />}
                      {error && <p>Error: {error.message}</p>}
                      <Box className="table-container">
                         <Table
@@ -111,7 +112,7 @@ const OnlineAppointments = () => {
                   </TabPanel>
 
                   <TabPanel value="2" className="tables">
-                     Item Two
+                     Raspisanie
                   </TabPanel>
                </TabContext>
             </Box>
@@ -156,40 +157,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& .tables': {
       padding: '0rem',
-
-      '& .loading': {
-         position: 'absolute',
-         top: '50%',
-         left: '50%',
-         transform: 'translate(-50%,-50%) scale(2)',
-
-         '& > svg > polyline': {
-            fill: 'none',
-            strokeWidth: '2',
-            strokeLinecap: 'round',
-            strokeLinejoin: 'round',
-
-            '& #back': {
-               stroke: 'rgba(#6E7BF2,.3)',
-            },
-
-            ' &#front': {
-               stroke: ' #6E7BF2',
-               strokeDasharray: '12, 36',
-               strokeDashoffset: '48',
-               animation: 'dash 1s linear infinite',
-            },
-         },
-
-         '& @keyframes dash': {
-            '62.5%': {
-               opacity: '0',
-            },
-            to: {
-               strokeDashoffset: '0',
-            },
-         },
-      },
    },
 
    '& .input-container': {

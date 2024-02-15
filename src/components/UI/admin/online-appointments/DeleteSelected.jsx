@@ -3,11 +3,9 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
-import {
-   deleteAllAppointments,
-   deleteAppointmentById,
-} from '../../../../store/thunks/appointmentThunk'
+import { deleteAllAppointments } from '../../../../store/thunks/appointmentThunk'
 import Modal from '../../Modal'
+import { APPOINTMENTS_ACTIONS } from '../../../../store/slices/appointmentsSlice'
 
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
@@ -27,12 +25,14 @@ const DeleteSelected = ({ disabled }) => {
    const handleDelete = async () => {
       try {
          dispatch(deleteAllAppointments(deletedAppointmentsIds))
+         dispatch(APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds())
       } catch (error) {
          console.error('Error deleting appointments:', error)
       } finally {
          handleClose()
       }
    }
+   console.log(deletedAppointmentsIds)
 
    return (
       <>

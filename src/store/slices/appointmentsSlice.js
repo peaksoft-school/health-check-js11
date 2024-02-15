@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
+   deleteAllAppointments,
    deleteAppointmentById,
    getAppointments,
    updateAppointmentStatus,
@@ -30,8 +31,6 @@ export const appointmentsSlice = createSlice({
          state.deletedAppointmentsIds = state.appointments
             .filter((appointment) => appointment.isSelected)
             .map((appointment) => appointment.appointmentId)
-
-         console.log(state.deletedAppointmentsIds)
       },
 
       handleIsCheckedItem: (state, { payload }) => {
@@ -49,8 +48,6 @@ export const appointmentsSlice = createSlice({
             .filter((appointment) => appointment.isSelected)
             .map((appointment) => appointment.appointmentId)
 
-         console.log(state.deletedAppointmentsIds)
-
          if (
             state.deletedAppointmentsIds.length === state.appointments.length
          ) {
@@ -59,6 +56,10 @@ export const appointmentsSlice = createSlice({
             state.selectAll = false
          }
       },
+   },
+
+   clearDeletedAppointmentsIds: (state) => {
+      state.deletedAppointmentsIds = []
    },
 
    extraReducers: (builder) => {
@@ -70,6 +71,11 @@ export const appointmentsSlice = createSlice({
             }))
 
             state.appointments = updatedAppointments
+            state.isLoading = false
+         })
+
+         .addCase(getAppointments.pending, (state) => {
+            state.isLoading = true
          })
 
          .addCase(updateAppointmentStatus.fulfilled, (state) => {
@@ -92,6 +98,12 @@ export const appointmentsSlice = createSlice({
          .addCase(deleteAppointmentById.fulfilled, () => {
             showToast({
                message: 'Запись успешно удалена',
+            })
+         })
+
+         .addCase(deleteAllAppointments.fulfilled, () => {
+            showToast({
+               message: 'Выбранные записи успешно удалены',
             })
          })
    },
