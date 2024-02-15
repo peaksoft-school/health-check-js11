@@ -15,33 +15,32 @@ export const injectStore = (store) => {
    storre = store
 }
 
-const signOut = () => {
-   console.log('User signed out')
-}
+const signOut = () => console.log('User signed out')
 
-axios.interceptors.request.use(
-   function (config) {
+axiosInstance.interceptors.request.use(
+   (config) => {
       const updatedConfig = { ...config }
 
-      const token = null
+      const token = storre.getState().auth.accessToken
 
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }
+
       return config
    },
 
-   function (error) {
+   (error) => {
       return Promise.reject(error)
    }
 )
 
-axios.interceptors.response.use(
-   function (response) {
+axiosInstance.interceptors.response.use(
+   (response) => {
       return Promise.resolve(response)
    },
 
-   function (error) {
+   (error) => {
       if (error.response && error.response.status === 401) {
          signOut()
       }

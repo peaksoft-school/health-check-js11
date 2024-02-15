@@ -18,21 +18,31 @@ import {
    LOCATION,
    NAVIGATIONS,
 } from '../../utils/constants/index'
+import { showToast } from '../../utils/helpers/notification'
 
 const Header = () => {
-   const [anchorEl, setAnchorEl] = useState(null)
-   const [openModal, setOpenModal] = useState(false)
-   const [openSingInModal, setOpenSingInModal] = useState(false)
+   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
+   const [openSignUpModal, setOpenSignUpModal] = useState(false)
+   const [openSignInModal, setOpenSignInModal] = useState(false)
 
-   const openModalHandler = () => setOpenModal((prev) => !prev)
+   const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
 
-   const openModalSingInHandler = () => setOpenSingInModal((prev) => !prev)
+   const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
 
-   const open = Boolean(anchorEl)
+   const isProfileMenuOpen = Boolean(profileMenuAnchorEl)
 
-   const handleClick = (e) => setAnchorEl(e.currentTarget)
+   const handleProfileMenuOpen = (event) =>
+      setProfileMenuAnchorEl(event.currentTarget)
 
-   const handleClose = () => setAnchorEl(null)
+   const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
+
+   const show = () => {
+      showToast({
+         message: 'вы успешно вошли в аккаунт',
+         position: 'top-right',
+         autoClose: true,
+      })
+   }
 
    return (
       <StyledContainer>
@@ -58,7 +68,7 @@ const Header = () => {
 
                      <Typography className="days">пн-сб</Typography>
 
-                     <Typography> 08:00 до 18:00 </Typography>
+                     <Typography onClick={show}> 08:00 до 18:00 </Typography>
                   </Box>
                </Box>
 
@@ -94,34 +104,37 @@ const Header = () => {
                <Box>
                   <HeaderProfileIcon
                      className="profile"
-                     aria-controls={open ? 'basic-menu' : null}
-                     onClick={handleClick}
+                     aria-controls={isProfileMenuOpen ? 'basic-menu' : null}
+                     onClick={handleProfileMenuOpen}
                   />
 
                   <StyledMenu
-                     anchorEl={anchorEl}
-                     open={open}
-                     onClose={handleClose}
+                     anchorEl={profileMenuAnchorEl}
+                     open={isProfileMenuOpen}
+                     onClose={handleProfileMenuClose}
                      MenuListProps={{
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <StyledMenuItem onClick={openModalSingInHandler}>
+                     <StyledMenuItem onClick={toggleSignInModal}>
                         Войти
                      </StyledMenuItem>
 
-                     <StyledMenuItem onClick={openModalHandler}>
+                     <StyledMenuItem onClick={toggleSignUpModal}>
                         Регистрация
                      </StyledMenuItem>
 
-                     {openModal && <SignUp onClose={openModalHandler} />}
+                     <SignUp
+                        open={openSignUpModal}
+                        closeSignUp={toggleSignUpModal}
+                        onClose={toggleSignUpModal}
+                     />
 
-                     {openSingInModal && (
-                        <SignIn
-                           open={openSingInModal}
-                           onClose={openModalSingInHandler}
-                        />
-                     )}
+                     <SignIn
+                        open={openSignInModal}
+                        onClose={toggleSignInModal}
+                        closeSignUp={toggleSignUpModal}
+                     />
                   </StyledMenu>
                </Box>
             </Box>

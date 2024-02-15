@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Typography, styled, Box } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
+import { forgotPassword } from '../../store/slices/auth/authThank'
 
-const ForgotPassword = ({ onClose }) => {
+const ForgotPassword = ({ open, onClose }) => {
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
 
@@ -23,18 +25,26 @@ const ForgotPassword = ({ onClose }) => {
       setEmailError(false)
    }
 
+   const dispatch = useDispatch()
+
    const handleSubmit = (e) => {
       e.preventDefault()
 
       const error = validaionEmail(email)
-      if (error) {
-         setEmailError(true)
-      } else {
+      if (!error) {
+         dispatch(
+            forgotPassword({
+               email,
+               link: 'http://localhost:3000/change-password',
+            })
+         )
+
          setEmail('')
+         onClose()
+      } else {
+         setEmailError(true)
       }
    }
-
-   const open = true
 
    return (
       <Modal open={open} handleClose={onClose}>
@@ -63,7 +73,13 @@ const ForgotPassword = ({ onClose }) => {
 
                <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
 
-               <Typography className="cancel">Отменить</Typography>
+               <StyledCloseButton
+                  variant="grey"
+                  className="cancel"
+                  onClick={onClose}
+               >
+                  Отменить
+               </StyledCloseButton>
             </form>
          </StyledContainer>
       </Modal>
@@ -99,11 +115,23 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '9.063rem',
+         bottom: '8rem',
       },
 
       '& > .cancel': {
          cursor: 'pointer',
+      },
+   },
+}))
+
+const StyledCloseButton = styled(Button)(({ theme }) => ({
+   width: '100%',
+   '&.MuiButtonBase-root': {
+      border: 'none',
+
+      '&:hover': {
+         backgroundColor: theme.palette.primary.main,
+         border: 'none',
       },
    },
 }))
@@ -137,12 +165,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
          backgroundColor:
             'linear-gradient(181deg, #087D 0.45%, #048950 82.76%)',
          border: 'none',
-      },
-
-      '&:disabled': {
-         border: 'none',
-         backgroundColor: theme.palette.secondary.lightGrey,
-         color: theme.palette.primary.main,
       },
    },
 }))

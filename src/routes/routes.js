@@ -4,6 +4,8 @@ import Doctors from '../pages/user/doctors/Doctors'
 import Contacts from '../pages/user/contacts/Contacts'
 import Prices from '../pages/user/prices/Prices'
 import Home from '../pages/home/Home'
+import ChangePassword from '../pages/change-password/ChangePassword'
+import SignUp from '../pages/sign-up/SignUp'
 
 const ADMIN_ROUTES = []
 
@@ -36,6 +38,11 @@ const USER_ROUTES = [
    {
       path: '/prices',
       element: <Prices />,
+   },
+
+   {
+      path: '/change-password',
+      element: <ChangePassword />,
    },
 ]
 

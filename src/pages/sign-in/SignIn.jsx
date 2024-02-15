@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import {
    styled,
    Typography,
@@ -15,25 +17,61 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 import ForgotPassword from '../forgot-password/ForgotPassword'
+import { authWithGoogle, signIn } from '../../store/slices/auth/authThank'
+import { auth, provider } from '../../utils/constants/logInWithGoogle'
 
-const SignIn = ({ onClose, open }) => {
+const SignIn = ({ onClose, open, closeSignUp }) => {
    const [showPassword, setShowPassword] = useState(false)
-   const [openForgotPassword, setOpenForgotPassword] = useState(false)
+   const [isForgotPasswordVisible, setIsForgotPasswordVisible] = useState(false)
 
-   const openModaForgotPasswordHandler = () => {
-      setOpenForgotPassword((prev) => !prev)
+   const dispatch = useDispatch()
+
+   // console.log(closeSignUp())
+
+   const openModalForgotPasswordHandler = () => {
+      setIsForgotPasswordVisible((prev) => !prev)
+      onClose()
    }
 
-   const showPasswordHandle = () =>
+   const toggleForgotPassword = () =>
+      setIsForgotPasswordVisible((prev) => !prev)
+
+   const toggleShowPassword = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
    const onSubmit = (values, { resetForm }) => {
-      resetForm()
+      dispatch(signIn(values)).then((res) => {
+         const { email, role, token } = res.payload
+
+         if (email && role && token) {
+            resetForm()
+            onClose()
+         }
+      })
+   }
+
+   const openSignUp = () => {
+      closeSignUp()
+      onClose()
+   }
+
+   const signInWithGoogleHandler = async () => {
+      await signInWithPopup(auth, provider)
+         .then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+         })
+         .catch((error) => {
+            throw error
+         })
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
-         name: '',
+         email: '',
          password: '',
       },
 
@@ -51,9 +89,9 @@ const SignIn = ({ onClose, open }) => {
                <StyledInput
                   placeholder="Логин"
                   autoComplete="on"
-                  value={values.name}
-                  error={!!errors.name}
-                  onChange={handleChange('name')}
+                  value={values.email}
+                  error={!!errors.email}
+                  onChange={handleChange('email')}
                />
 
                <StyledInput
@@ -66,7 +104,7 @@ const SignIn = ({ onClose, open }) => {
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle}>
+                           <IconButton onClick={toggleShowPassword}>
                               {showPassword ? (
                                  <OpenEyeIcon />
                               ) : (
@@ -89,13 +127,15 @@ const SignIn = ({ onClose, open }) => {
 
             <Typography
                className="navigate"
-               onClick={openModaForgotPasswordHandler}
+               onClick={openModalForgotPasswordHandler}
             >
                Забыли пароль?
             </Typography>
-            {openForgotPassword && (
-               <ForgotPassword onClose={openModaForgotPasswordHandler} />
-            )}
+
+            <ForgotPassword
+               open={isForgotPasswordVisible}
+               onClose={toggleForgotPassword}
+            />
 
             <StyledLine>
                <hr />
@@ -103,14 +143,22 @@ const SignIn = ({ onClose, open }) => {
                <hr />
             </StyledLine>
 
-            <ButtonBase className="google" type="button">
+            <ButtonBase
+               onClick={signInWithGoogleHandler}
+               className="google"
+               type="button"
+            >
                <GoogleIcon />
                Продолжить с Google
             </ButtonBase>
 
             <Typography>
                Нет аккаунта?
-               <Typography variant="span" className="navigate">
+               <Typography
+                  onClick={openSignUp}
+                  variant="span"
+                  className="navigate"
+               >
                   Зарегистрироваться
                </Typography>
             </Typography>

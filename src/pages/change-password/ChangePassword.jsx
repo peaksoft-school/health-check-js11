@@ -16,13 +16,15 @@ import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
 
 const ChangePassword = () => {
    const [showNewPassword, setShowNewPassword] = useState(false)
-   const [showReplayPassword, setShowReplayPassword] = useState(false)
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-   const showPasswordHandle1 = () =>
-      setShowNewPassword((prevShowPassword) => !prevShowPassword)
+   const toggleShowNewPassword = () =>
+      setShowNewPassword((prevShowNewPassword) => !prevShowNewPassword)
 
-   const showPasswordHandle2 = () =>
-      setShowReplayPassword((prevShowPassword) => !prevShowPassword)
+   const toggleShowConfirmPassword = () =>
+      setShowConfirmPassword(
+         (prevShowConfirmPassword) => !prevShowConfirmPassword
+      )
 
    const onSubmit = ({ resetForm }) => resetForm()
 
@@ -31,7 +33,6 @@ const ChangePassword = () => {
          newPassword: '',
          confirmPassword: '',
       },
-
       validateOnChange: false,
       onSubmit,
       validationSchema: VALIDATION_FORGOT_PASSWORD,
@@ -61,7 +62,7 @@ const ChangePassword = () => {
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle1}>
+                           <IconButton onClick={toggleShowNewPassword}>
                               {showNewPassword ? (
                                  <OpenEyeIcon />
                               ) : (
@@ -74,7 +75,7 @@ const ChangePassword = () => {
                />
 
                <StyledInput
-                  type={showReplayPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Повторите пароль"
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
@@ -83,8 +84,8 @@ const ChangePassword = () => {
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle2}>
-                              {showReplayPassword ? (
+                           <IconButton onClick={toggleShowConfirmPassword}>
+                              {showConfirmPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />

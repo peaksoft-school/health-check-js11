@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import {
    Typography,
    styled,
@@ -9,7 +10,6 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
-
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import NumberInput from '../../components/UI/inputs/NumberInput'
@@ -17,30 +17,55 @@ import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
-import { signUp } from '../../store/slices/auth/authSlice'
+import { authWithGoogle, signUp } from '../../store/slices/auth/authThank'
+import { auth, provider } from '../../utils/constants/logInWithGoogle'
+import SignIn from '../sign-in/SignIn'
 
-const SignUp = ({ onClose }) => {
+const SignUp = ({ onClose, open, closeSignUp }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+   const [openSignIn1, setOpenSignIn1] = useState(false)
 
    const dispatch = useDispatch()
 
    const showPasswordHandle = () => setShowPassword((prev) => !prev)
+   const openSignInHandle = () => setOpenSignIn1((prev) => !prev)
 
    const showConfirmPasswordHandle = () =>
       setShowConfirmPassword((prev) => !prev)
 
-   const onSubmit = (values, { resetForm }) => {
+   const onSubmit = async (values, { resetForm }) => {
       const dataToSend = {
          name: values.name,
          lastName: values.lastName,
          email: values.email,
-         number: '+996741852963',
+         number: values.number,
          password: values.password,
       }
 
-      dispatch(signUp(dataToSend))
-      resetForm()
+      dispatch(signUp(dataToSend)).then((res) => {
+         const { email, role, token } = res.payload
+
+         if (email && role && token) {
+            resetForm()
+            onClose()
+         }
+      })
+   }
+
+   const openSignIn = () => {
+      setOpenSignIn1((prev) => !prev)
+      onClose()
+   }
+
+   const signUpWithGoogleHandler = async () => {
+      await signInWithPopup(auth, provider).then((data) => {
+         dispatch(
+            authWithGoogle({
+               tokenId: data.user.accessToken,
+            })
+         )
+      })
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
@@ -58,13 +83,10 @@ const SignUp = ({ onClose }) => {
       validationSchema: VALIDATION_SIGN_UP,
    })
 
-   const open = true
-
    return (
       <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
             <Typography>РЕГИСТРАЦИЯ</Typography>
-
             <Box className="input-box">
                <StyledInput
                   placeholder="Имя"
@@ -93,8 +115,8 @@ const SignUp = ({ onClose }) => {
                   onChange={handleChange('number')}
                   error={errors.number}
                   mask="_"
-                  format="+996 (###) ##-##-##"
-                  placeholder="+996 (_ _ _) _ _-_ _-_ _"
+                  format="+996#########"
+                  placeholder="+996 (___) ___ ___"
                />
 
                <StyledInput
@@ -152,12 +174,17 @@ const SignUp = ({ onClose }) => {
                   }}
                />
             </Box>
-
             {signUpError(errors) && (
                <Typography className="error-message">
                   {signUpError(errors)}
                </Typography>
             )}
+
+            <SignIn
+               open={openSignIn1}
+               onClose={openSignInHandle}
+               closeSignUp={closeSignUp}
+            />
 
             <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
 
@@ -167,14 +194,21 @@ const SignUp = ({ onClose }) => {
                <hr />
             </StyledLine>
 
-            <ButtonBase className="google" type="button">
+            <ButtonBase
+               onClick={signUpWithGoogleHandler}
+               className="google"
+               type="button"
+            >
                <GoogleIcon />
                Зарегистрироваться с Google
             </ButtonBase>
-
             <Typography>
                У вас уже есть аккаунт?
-               <Typography variant="span" className="navigate">
+               <Typography
+                  onClick={openSignIn}
+                  variant="span"
+                  className="navigate"
+               >
                   Войти
                </Typography>
             </Typography>

@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import { styled } from '@mui/material'
 import 'react-toastify/dist/ReactToastify.css'
+import { CloseIcon } from '../assets/icons'
 
 const Notification = () => <StyledToastContainer icon={false} />
 
