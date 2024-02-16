@@ -18,12 +18,12 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
 import { authWithGoogle, signUp } from '../../store/slices/auth/authThank'
-import { auth, provider } from '../../utils/constants/logInWithGoogle'
+import { auth, provider } from '../../utils/constants/authWithGoogle'
 import SignIn from '../sign-in/SignIn'
-import { showToast } from '../../utils/helpers/notification'
 
 const SignUp = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)
+
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
    const [toggleSignIn, setToggleSignIn] = useState(false)
@@ -78,10 +78,6 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
       onSubmit,
       validationSchema: VALIDATION_SIGN_UP,
    })
-
-   const fofj = () => {
-      showToast({})
-   }
 
    return (
       <Modal open={open} handleClose={onClose}>

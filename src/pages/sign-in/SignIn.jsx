@@ -18,10 +18,11 @@ import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 import ForgotPassword from '../forgot-password/ForgotPassword'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThank'
-import { auth, provider } from '../../utils/constants/logInWithGoogle'
+import { auth, provider } from '../../utils/constants/authWithGoogle'
 
 const SignIn = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)
+
    const [showPassword, setShowPassword] = useState(false)
    const [isForgotPasswordVisible, setIsForgotPasswordVisible] = useState(false)
 

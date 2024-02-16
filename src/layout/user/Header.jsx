@@ -24,6 +24,7 @@ import Modal from '../../components/UI/Modal'
 
 const Header = () => {
    const { role } = useSelector((state) => state.auth)
+
    const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
    const [openSignUpModal, setOpenSignUpModal] = useState(false)
    const [openSignInModal, setOpenSignInModal] = useState(false)
@@ -55,10 +56,12 @@ const Header = () => {
       navigate('profile')
       handleProfileMenuClose()
    }
+
    const navigateToMyRecords = () => {
       navigate('records')
       handleProfileMenuClose()
    }
+
    return (
       <StyledContainer>
          <Box className="box">

@@ -8,6 +8,7 @@ import { forgotPassword } from '../../store/slices/auth/authThank'
 
 const ForgotPassword = ({ open, onClose }) => {
    const { isLoading } = useSelector((state) => state.auth)
+
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
 

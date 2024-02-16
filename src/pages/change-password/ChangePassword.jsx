@@ -18,6 +18,8 @@ import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
 import { changePassword } from '../../store/slices/auth/authThank'
 
 const ChangePassword = () => {
+   const { isLoading } = useSelector((state) => state.auth)
+
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -127,7 +129,11 @@ const ChangePassword = () => {
                   </Typography>
                )}
 
-               <StyledButton colorLoading="secondary" type="submit">
+               <StyledButton
+                  type="submit"
+                  colorLoading="secondary"
+                  isLoading={isLoading}
+               >
                   ПОДТВЕРДИТЬ
                </StyledButton>
             </form>
