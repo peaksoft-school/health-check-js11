@@ -1,25 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import SearchInput from '../UI/inputs/SearchInput'
 import Table from '../UI/Table'
 import { ONLINE_APPLICATIONS_COLUMN } from '../../utils/constants/index'
 import {
-   applicationSearch,
    deleteApplicationById,
    getApplicationData,
    updateApplication,
+   searchApplications,
 } from '../../store/slices/applications-slice/aplicationsSlice'
 
 const Applications = () => {
-   const aplication = useSelector((state) => state.data.items)
+   const application = useSelector((state) => state.data.items)
    const update = useSelector((state) => state.data.isActive)
    const dispatch = useDispatch()
    const [searchText, setSearchText] = useState('')
+   const searchResults = useSelector((state) => state.data.items)
+
+   useEffect(() => {}, [searchText])
 
    useEffect(() => {
-      dispatch(getApplicationData())
-   }, [])
+      if (searchText.trim() === '') {
+         dispatch(getApplicationData())
+      }
+   }, [searchText])
 
    const handleUpdate = async ({ id, isActive }) => {
       dispatch(updateApplication({ id, isActive }))
@@ -28,19 +33,18 @@ const Applications = () => {
    const handleDelete = ({ id }) => {
       dispatch(deleteApplicationById({ id }))
    }
-
    const handleSearch = (e) => {
       const newSearchText = e.target.value
       setSearchText(newSearchText)
-      dispatch(
-         applicationSearch({
-            searchText: newSearchText,
-            otherParam: 'word',
-         })
-      )
+      dispatch(searchApplications(newSearchText))
    }
+   const filteredApplications = useMemo(() => {
+      return searchResults?.filter((searchResult) =>
+         searchResult.username.toLowerCase().includes(searchText.toLowerCase())
+      )
+   }, [searchResults, searchText])
 
-   const preperadeArray = aplication.map((item, index) => {
+   const preperadeArray = filteredApplications.map((item, index) => {
       return {
          ...item,
          index: index + 1,
@@ -77,6 +81,7 @@ export default Applications
 const StyledContainer = styled(Box)(() => ({
    padding: '1.87rem 4.37rem 0',
    backgroundColor: '#F5F5F5',
+   minHeight: '100vh',
 
    '& > .input-container': {
       width: '37.5rem',
@@ -93,7 +98,7 @@ const StyledContainer = styled(Box)(() => ({
    },
 }))
 
-const StyledMainText = styled(Typography)(() => ({
+const StyledMainText = styled('h3')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
    marginBottom: '1.87rem',

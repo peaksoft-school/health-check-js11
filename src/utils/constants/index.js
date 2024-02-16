@@ -31,13 +31,16 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-import Checkbox from '../../components/UI/Checkbox'
 import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
-import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
 import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
 import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
+import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
+import ApplicationCheckbox from '../../pages/admin/application/ApplicationCheckbox'
+import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
+import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
+import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
 
 const NAVIGATIONS = [
    { id: 1, to: '/about-clinic', label: 'О клинике' },
@@ -533,7 +536,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
 const ONLINE_APPLICATIONS_COLUMN = [
    {
-      Header: <SelectAll />,
+      Header: <SelectAllApplication />,
       accessor: 'checkbox',
 
       style: {
@@ -542,12 +545,12 @@ const ONLINE_APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <SelectSeparately checked={row.original.checkbox} />
+         return <SelectSeparatelyApplication checked={row.original.checkbox} />
       },
    },
 
    {
-      Header: <DeleteSelected />,
+      Header: <DeleteSelectedApplication />,
       accessor: 'action',
 
       style: {
@@ -639,7 +642,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
       Cell: ({ row }) => {
          // console.log(row)
          return (
-            <ProcessedCheckbox
+            <ApplicationCheckbox
                checked={row.original.processed}
                id={row.original.id}
             />

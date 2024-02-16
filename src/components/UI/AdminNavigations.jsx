@@ -7,9 +7,9 @@ const AdminNavigations = ({ links }) => {
    return (
       <>
          {links.map(({ id, to, label }) => (
-            <StyledNavLink key={id} to={to} activeClassName="active">
+            <StyledNavLink key={id} to={to} className="active">
                {label}
-               <div className={`nurana ${pathname === to && 'nurs'}`} />
+               <div className={`line ${pathname === to && 'tab'}`} />
             </StyledNavLink>
          ))}
       </>
@@ -33,7 +33,7 @@ const StyledNavLink = styled(NavLink)(() => ({
       color: '#222222',
       fontWeight: 500,
    },
-   '& .nurana': {
+   '& .line': {
       width: '0px',
       height: '2px',
       background: 'none',
@@ -41,7 +41,7 @@ const StyledNavLink = styled(NavLink)(() => ({
       bottom: -36.5,
       transition: '0.5s width ease',
    },
-   '& .nurana.nurs': {
+   '& .line.tab': {
       width: '100%',
       color: '#222222',
       fontWeight: 500,

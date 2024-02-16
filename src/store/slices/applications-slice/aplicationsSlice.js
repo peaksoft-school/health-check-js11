@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-import { showToast } from '../../../utils/helpers/notification'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
 
 const BASE_URL = process.env.API_URL
 
@@ -35,7 +33,7 @@ export const updateApplication = createAsyncThunk(
    'data/updateData',
    async ({ id, isActive }, { dispatch, rejectWithValue }) => {
       try {
-         await axiosInstance.put(`/api/application/update`, {
+         await axiosInstance.put('/api/application/update', {
             isActive,
             id,
          })
@@ -47,13 +45,14 @@ export const updateApplication = createAsyncThunk(
    }
 )
 
-export const applicationSearch = createAsyncThunk(
+export const searchApplications = createAsyncThunk(
    'aplication/search',
-   async (searchText, ontherParam, { rejectWithValue }) => {
+   async (searchText, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get('/api/application/getAll', {
-            params: { searchText, ontherParam },
-         })
+         const response = await axiosInstance.get(
+            `/api/application/getApplication?word=${searchText}`
+         )
+
          return response.data
       } catch (error) {
          return rejectWithValue(error)
@@ -99,6 +98,17 @@ export const applicationSlice = createSlice({
             state.error = false
          })
          .addCase(updateApplication.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+         })
+         .addCase(searchApplications.pending, (state) => {
+            state.status = 'loading'
+         })
+         .addCase(searchApplications.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.items = action.payload
+         })
+         .addCase(searchApplications.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
          })

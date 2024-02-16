@@ -1,20 +1,11 @@
-import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
-import Button from '../../Button'
-import { deleteApplicationById } from '../../../../store/slices/applications-slice/aplicationsSlice'
 
-const DeleteButton = ({ id, name, disabled, checked }) => {
+const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
-   const [isButtonDisabled, setIsButtonDisabled] = useState(disabled)
-
-   const dispatch = useDispatch()
-
-   useEffect(() => {
-      setIsButtonDisabled(!disabled || checked)
-   }, [disabled, checked])
 
    const openModal = () => {
       setOpen(true)
@@ -23,38 +14,17 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
    const handleClose = () => {
       setOpen(false)
    }
-
-   const handleDelete = () => {
-      try {
-         dispatch(deleteApplicationById(id))
-      } catch (error) {
-         console.error('Error deleting appointment', error)
-      } finally {
-         handleClose()
-      }
-   }
-
-   const handleButtonChange = () => {
-      setIsButtonDisabled((prev) => !prev)
-   }
-
    return (
       <>
-         <StyledDeleteButton
-            onClick={openModal}
-            onChange={handleButtonChange}
-            disabled={isButtonDisabled}
-         >
+         <StyledDeleteButton onClick={openModal}>
             <DeleteIcon />
          </StyledDeleteButton>
 
          <Modal handleClose={handleClose} open={open} isCloseIcon={false}>
             <StyledContainer>
                <Typography className="description">
-                  Вы уверены, что хотите удалить запись
+                  Вы уверены, что хотите удалить выбранные записи?
                </Typography>
-
-               <Typography className="name">{name}?</Typography>
 
                <div className="buttonsContainer">
                   <Button
@@ -65,13 +35,7 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
                      Отменить
                   </Button>
 
-                  <Button
-                     className="button"
-                     onClick={handleDelete}
-                     disabled={isButtonDisabled}
-                  >
-                     Удалить
-                  </Button>
+                  <Button className="button">Удалить</Button>
                </div>
             </StyledContainer>
          </Modal>
@@ -79,7 +43,7 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
    )
 }
 
-export default DeleteButton
+export default DeleteSelected
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',
@@ -89,7 +53,9 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
 
    '&:disabled': {
       cursor: 'not-allowed',
-      opacity: 0.2,
+      opacity: 0.5,
+      backgroundColor: '#d1d1d1',
+      borderRadius: '5px',
    },
 }))
 
@@ -100,19 +66,12 @@ const StyledContainer = styled(Box)(() => ({
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .name': {
-      fontFamily: 'Manrope',
-      fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '24.59px',
-      marginBottom: '1.25rem',
-   },
-
    '& .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
       lineHeight: '24.59px',
+      marginBottom: '40px',
    },
 
    '& .buttonsContainer': {
