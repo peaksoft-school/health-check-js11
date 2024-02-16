@@ -14,7 +14,8 @@ import { authSlice } from './slices/authSlice'
 import { appointmentsSlice } from './slices/appointmentsSlice'
 
 const rootReducer = combineReducers({
-   login: authSlice.reducer,
+   [authSlice.name]: authSlice.reducer,
+   [appointmentsSlice.name]: appointmentsSlice.reducer,
 })
 
 const persistConfig = {
@@ -25,11 +26,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-   reducer: {
-      login: persistedReducer,
-      [appointmentsSlice.name]: appointmentsSlice.reducer,
-   },
-
+   reducer: persistedReducer,
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
          serializableCheck: {

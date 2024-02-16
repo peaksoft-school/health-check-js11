@@ -60,6 +60,7 @@ export const appointmentsSlice = createSlice({
 
    clearDeletedAppointmentsIds: (state) => {
       state.deletedAppointmentsIds = []
+      // localStorage.removeItem('deletedAppointmentsIds')
    },
 
    extraReducers: (builder) => {
@@ -90,6 +91,7 @@ export const appointmentsSlice = createSlice({
 
          .addCase(updateAppointmentStatus.rejected, (state, action) => {
             state.isLoading = false
+
             showToast({
                message: (state.error = action.error.message),
             })

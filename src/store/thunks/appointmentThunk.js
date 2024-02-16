@@ -6,6 +6,7 @@ const getAppointments = createAsyncThunk(
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('api/appointment/all')
+
          return response.data
       } catch (error) {
          return rejectWithValue(error)
@@ -71,7 +72,9 @@ const deleteAllAppointments = createAsyncThunk(
          await axiosInstance.delete('/api/appointment/deleteAll', {
             data: appointmentIds,
          })
+
          dispatch(getAppointments())
+
          return appointmentIds
       } catch (error) {
          throw new Error('Error deleting all appointments', error)

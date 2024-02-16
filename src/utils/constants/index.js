@@ -38,12 +38,12 @@ import DeleteSelected from '../../components/UI/admin/online-appointments/Delete
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
 
-const HEADER_NAV = [
-   { id: 1, text: 'О клинике' },
-   { id: 2, text: 'Услуги' },
-   { id: 3, text: 'Врачи' },
-   { id: 4, text: 'Прайс' },
-   { id: 5, text: 'Контакты' },
+const NAVIGATIONS = [
+   { id: 1, to: '/about-clinic', label: 'О клинике' },
+   { id: 2, to: '/services', label: 'Услуги' },
+   { id: 3, to: '/doctors', label: 'Врачи' },
+   { id: 4, to: '/prices', label: 'Цены' },
+   { id: 5, to: '/contacts', label: 'Контакты' },
 ]
 
 const HEADER_SOCIALS = [
@@ -501,22 +501,10 @@ const HEADER_ADMIN = [
    { id: 4, text: 'Пациенты' },
 ]
 
-export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
-
-export const routes = {
-   LOGIN: '/login',
-   ADMIN: {
-      index: '/admin',
-   },
-   USER: {
-      index: '/user',
-   },
-}
-
 export {
    HEADER_SOCIALS,
    REVIEWS,
-   HEADER_NAV,
+   NAVIGATIONS,
    FOOTER_SOCIALS,
    BEST_QUALITIES,
    LOCATION,

@@ -1,12 +1,18 @@
 import { styled, Box, Typography } from '@mui/material'
+import { NavLink } from 'react-router-dom'
+import Navigations from '../../components/UI/Navigations'
 import {
    DefaultPhoneIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
    SmsIcon,
-} from '../assets/icons/index'
-import { FOOTER_SOCIALS, HEADER_NAV, LOCATION } from '../utils/constants/index'
+} from '../../assets/icons/index'
+import {
+   FOOTER_SOCIALS,
+   LOCATION,
+   NAVIGATIONS,
+} from '../../utils/constants/index'
 
 const Footer = () => (
    <StyledContainer>
@@ -14,11 +20,13 @@ const Footer = () => (
          <Box className="first-container">
             <Box className="about-us">
                <Box className="clinic-logo">
-                  <HealthCheckIcon />
+                  <NavLink to="/">
+                     <HealthCheckIcon />
 
-                  <Typography variant="h1">
-                     <Typography variant="span">HEALTH</Typography> CHECK
-                  </Typography>
+                     <Typography variant="h1">
+                        <Typography variant="span">HEALTH</Typography> CHECK
+                     </Typography>
+                  </NavLink>
                </Box>
 
                <Box className="clinic-info">
@@ -104,11 +112,9 @@ const Footer = () => (
          </Box>
 
          <Box className="second-container">
-            <Box className="navigation-section">
-               {HEADER_NAV.map(({ text, id }) => (
-                  <Typography key={id}>{text}</Typography>
-               ))}
-            </Box>
+            <nav className="navigation">
+               <Navigations links={NAVIGATIONS} />
+            </nav>
          </Box>
 
          <hr />
@@ -175,18 +181,22 @@ const StyledContainer = styled('footer')(({ theme }) => ({
             gap: '1.75rem',
 
             '& > .clinic-logo': {
-               display: 'flex',
-               alignItems: 'center',
-               gap: '0.803rem',
                maxHeight: '5.5rem',
 
-               '& .MuiTypography-root': {
-                  fontSize: '1.375rem',
-                  fontWeight: '600',
-                  color: theme.palette.primary.main,
+               '& > a': {
+                  gap: '0.803rem',
+                  alignItems: 'center',
+                  display: 'flex',
+                  textDecoration: 'none',
 
-                  '& .MuiTypography-root': {
-                     color: theme.palette.primary.darkGreen,
+                  '& > .MuiTypography-root': {
+                     fontSize: '1.375rem',
+                     fontWeight: '600',
+                     color: theme.palette.primary.main,
+
+                     '& .MuiTypography-root': {
+                        color: theme.palette.primary.darkGreen,
+                     },
                   },
                },
             },
@@ -293,10 +303,18 @@ const StyledContainer = styled('footer')(({ theme }) => ({
          display: 'flex',
          alignItems: 'center',
 
-         '& > .navigation-section': {
+         '& > .navigation': {
             display: 'flex',
             gap: '2.5rem',
             marginBottom: '3rem',
+
+            '& > a': {
+               color: '#CCC',
+            },
+
+            '& > .active': {
+               color: theme.palette.primary.darkGreen,
+            },
 
             [theme.breakpoints.down('lg')]: {
                fontSize: '0.780rem',

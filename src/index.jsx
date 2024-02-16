@@ -2,12 +2,13 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StrictMode } from 'react'
-import App from './App'
 import Notification from './components/Notification'
+import App from './App'
 import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
+import OnlineAppointments from './pages/admin/online-appointments/OnlineAppointments'
 
 injectStore(store)
 
@@ -20,7 +21,8 @@ root.render(
             <Themes>
                <Notification />
 
-               <App />
+               {/* <App /> */}
+               <OnlineAppointments />
             </Themes>
          </PersistGate>
       </Provider>

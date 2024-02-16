@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
-import Button from '../components/UI/Button'
-import SearchInput from '../components/UI/inputs/SearchInput'
+import { NavLink } from 'react-router-dom'
+import Button from '../../components/UI/Button'
+import SearchInput from '../../components/UI/inputs/SearchInput'
+import Navigations from '../../components/UI/Navigations'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
    HealthCheckIcon,
    HourIcon,
    LocationIcon,
-} from '../assets/icons'
-import { HEADER_NAV, HEADER_SOCIALS, LOCATION } from '../utils/constants/index'
+} from '../../assets/icons'
+import {
+   HEADER_SOCIALS,
+   LOCATION,
+   NAVIGATIONS,
+} from '../../utils/constants/index'
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -49,7 +55,10 @@ const Header = () => {
                </Box>
 
                <Box className="search-input-container">
-                  <SearchInput placeholder="Поиск по фото" />
+                  <SearchInput
+                     variant="secondary"
+                     placeholder="Поиск по фото"
+                  />
                </Box>
 
                <Box className="socials">
@@ -96,21 +105,19 @@ const Header = () => {
                </Box>
             </Box>
 
-            <hr />
-
             <Box className="header-bottom">
                <Box className="logo">
-                  <HealthCheckIcon />
+                  <NavLink to="/">
+                     <HealthCheckIcon />
 
-                  <Typography variant="h1">
-                     <Typography variant="p">HEALTH</Typography> CHECK
-                  </Typography>
+                     <Typography variant="h1">
+                        <Typography variant="p">HEALTH</Typography> CHECK
+                     </Typography>
+                  </NavLink>
                </Box>
 
                <nav>
-                  {HEADER_NAV.map(({ text, id }) => (
-                     <Typography key={id}>{text}</Typography>
-                  ))}
+                  <Navigations links={NAVIGATIONS} />
                </nav>
 
                <Box className="buttons">
@@ -202,9 +209,13 @@ const StyledContainer = styled('header')(({ theme }) => ({
          marginTop: '12px',
 
          '& > .logo': {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.803rem',
+            '& > a': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '0.803rem',
+               textDecoration: 'none',
+               color: '#34453C',
+            },
 
             '& .MuiTypography-root': {
                fontSize: '1.375rem',

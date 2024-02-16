@@ -1,13 +1,6 @@
 import './App.css'
-import OnlineAppointments from './containers/admin/online-appointments/OnlineAppointments'
-import AdminHeader from './layout/AdminHeader'
+import AppRoutes from './routes/AppRoutes'
 
-const App = () => {
-   return (
-      <div>
-         <AdminHeader />
-         <OnlineAppointments />
-      </div>
-   )
-}
+const App = () => <AppRoutes />
+
 export default App

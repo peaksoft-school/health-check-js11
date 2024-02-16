@@ -32,6 +32,7 @@ const DeleteSelected = ({ disabled }) => {
          handleClose()
       }
    }
+
    console.log(deletedAppointmentsIds)
 
    return (
