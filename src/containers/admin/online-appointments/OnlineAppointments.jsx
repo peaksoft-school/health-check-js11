@@ -103,6 +103,7 @@ const OnlineAppointments = () => {
                   <TabPanel value="1" className="tables">
                      {isLoading && <Loading />}
                      {error && <p>Error: {error.message}</p>}
+
                      <Box className="table-container">
                         <Table
                            columns={ONLINE_APPOINTMENTS_COLUMN}
