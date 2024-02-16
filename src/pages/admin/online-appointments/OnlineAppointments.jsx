@@ -88,15 +88,15 @@ const OnlineAppointments = () => {
                      </TabList>
                   </Box>
 
-                  <Box className="input-container">
-                     <StyledInput
-                        placeholder="Поиск"
-                        value={searchName}
-                        onChange={handleSearchChange}
-                     />
-                  </Box>
-
                   <TabPanel value="1" className="tables">
+                     <Box className="input-container">
+                        <StyledInput
+                           placeholder="Поиск"
+                           value={searchName}
+                           onChange={handleSearchChange}
+                        />
+                     </Box>
+
                      {isLoading && <Loading />}
                      {error && <p>Error: {error.message}</p>}
 
@@ -160,11 +160,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginTop: '2.12rem',
       },
 
-      '& > .table-container': {
+      '& .table-container': {
          width: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
-         background: '#FFF',
+         background: 'white',
          height: '100%',
          marginTop: '1.25rem',
       },

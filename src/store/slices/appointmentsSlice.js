@@ -13,7 +13,8 @@ const initialState = {
    isLoading: false,
    error: null,
    selectAll: false,
-   deletedAppointmentsIds: [],
+   deletedAppointmentsIds:
+      JSON.parse(localStorage.getItem('deletedAppointmentsIds')) || [],
 }
 
 export const appointmentsSlice = createSlice({
@@ -55,12 +56,17 @@ export const appointmentsSlice = createSlice({
          } else {
             state.selectAll = false
          }
+
+         localStorage.setItem(
+            'deletedAppointmentsIds',
+            JSON.stringify(state.deletedAppointmentsIds)
+         )
       },
    },
 
    clearDeletedAppointmentsIds: (state) => {
       state.deletedAppointmentsIds = []
-      // localStorage.removeItem('deletedAppointmentsIds')
+      localStorage.removeItem('deletedAppointmentsIds')
    },
 
    extraReducers: (builder) => {
@@ -103,7 +109,8 @@ export const appointmentsSlice = createSlice({
             })
          })
 
-         .addCase(deleteAllAppointments.fulfilled, () => {
+         .addCase(deleteAllAppointments.fulfilled, (state) => {
+            state.deletedAppointmentsIds = []
             showToast({
                message: 'Выбранные записи успешно удалены',
             })
