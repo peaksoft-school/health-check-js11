@@ -18,9 +18,7 @@ const Applications = () => {
    const [searchText, setSearchText] = useState('')
    const searchResults = useSelector((state) => state.data.items)
 
-   useEffect(() => {
-      dispatch(getApplicationData())
-   }, [searchText])
+   useEffect(() => {}, [searchText])
 
    useEffect(() => {
       if (searchText.trim() === '') {

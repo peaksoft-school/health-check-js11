@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const BASE_URL = process.env.REACT_APP_API_URL
 
+// console.log(BASE_URL)
+
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
 
@@ -16,14 +18,17 @@ export const injectStore = (store) => {
    storre = store
 }
 
-const signOut = () => {}
+const signOut = () => {
+   console.log('User signed out')
+}
 
 axiosInstance.interceptors.request.use(
    function (config) {
       const updatedConfig = { ...config }
 
       const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDgzMzMzNzcsImlhdCI6MTcwODA3NDE3NywiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.Ncmbm3y_qBSwXiw0UGb5Rvdh9f7yTEMkNiik6ltrslU'
+         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDcyMTEyOTIsImlhdCI6MTcwNjYwNjQ5MiwidXNlcm5hbWUiOiJhZG1pbkBnbWFpbC5jb20ifQ.58ghUGtCnVx0ymesWbGyEUDlX3eSsf6Zi3iWFtkH4Fk'
+
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }

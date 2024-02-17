@@ -2,6 +2,7 @@ import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import { HEADER_ADMIN } from '../../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
+import AdminNavigations from '../../components/UI/AdminNavigations'
 
 const AdminHeader = () => {
    const [anchorEl, setAnchorEl] = useState(null)
@@ -23,11 +24,9 @@ const AdminHeader = () => {
                </Typography>
             </Box>
 
-            <Box className="navigation">
-               {HEADER_ADMIN.map(({ text, id }) => (
-                  <Typography key={id}>{text}</Typography>
-               ))}
-            </Box>
+            <nav className="navigation">
+               <AdminNavigations links={HEADER_ADMIN} />
+            </nav>
 
             <Box>
                <Typography className="exit" onClick={handleClick}>

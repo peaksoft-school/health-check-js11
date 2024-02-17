@@ -31,12 +31,16 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-
 import DeleteButton from '../../components/UI/admin/online-appointments/DeleteButton'
 import ProcessedCheckbox from '../../components/UI/admin/online-appointments/ProcessedCheckbox'
 import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
+import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
+import ApplicationCheckbox from '../../pages/admin/application/ApplicationCheckbox'
+import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
+import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
+import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
 
 const NAVIGATIONS = [
    { id: 1, to: '/about-clinic', label: 'О клинике' },
@@ -458,21 +462,132 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
+         return <ProcessedCheckbox checked={row.original.processed} />
+      },
+   },
+]
+
+const ONLINE_APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAllApplication />,
+      accessor: 'checkbox',
+
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+
+      Cell: ({ row }) => {
+         return <SelectSeparatelyApplication checked={row.original.checkbox} />
+      },
+   },
+
+   {
+      Header: <DeleteSelectedApplication />,
+      accessor: 'action',
+
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
+   },
+
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'time',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.3,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <div>
+            <p>{row.original.date}</p>
+         </div>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.81,
+         display: 'flex',
+         justifyContent: 'center',
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         alignItems: 'start',
+      },
+
+      Cell: ({ row }) => {
+         // console.log(row)
          return (
-            <ProcessedCheckbox
-               checked={row.original.status}
-               appointmentId={row.original.appointmentId}
+            <ApplicationCheckbox
+               checked={row.original.processed}
+               id={row.original.id}
             />
          )
       },
    },
-
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
 
       style: {
-         padding: '19px 10px 20px 10px',
+         padding: '19px 10px 20px',
          fontWeight: '700',
          flex: 0.1,
       },
@@ -485,9 +600,150 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Cell: ({ row }) => {
          return (
             <DeleteButton
-               name={row.original.fullName}
-               disabled={row.original.status}
-               appointmentId={row.original.appointmentId}
+               name={row.original.name}
+               disabled={row.original.processed}
+            />
+         )
+      },
+   },
+]
+
+const ONLINE_APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAllApplication />,
+      accessor: 'checkbox',
+
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+
+      Cell: ({ row }) => {
+         return <SelectSeparatelyApplication checked={row.original.checkbox} />
+      },
+   },
+
+   {
+      Header: <DeleteSelectedApplication />,
+      accessor: 'action',
+
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
+   },
+
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'time',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.3,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <div>
+            <p>{row.original.date}</p>
+         </div>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.81,
+         display: 'flex',
+         justifyContent: 'center',
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         alignItems: 'start',
+      },
+
+      Cell: ({ row }) => {
+         // console.log(row)
+         return (
+            <ApplicationCheckbox
+               checked={row.original.processed}
+               id={row.original.id}
+            />
+         )
+      },
+   },
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => {
+         return (
+            <DeleteApplication
+               id={row.original.id}
+               name={row.original.username}
+               disabled={row.original.processed}
             />
          )
       },
@@ -495,10 +751,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 ]
 
 const HEADER_ADMIN = [
-   { id: 1, text: 'Онлайн-запись' },
-   { id: 2, text: 'Заявки' },
-   { id: 3, text: 'Специалисты' },
-   { id: 4, text: 'Пациенты' },
+   { id: 1, to: '/admin/registration', label: 'Онлайн-запись' },
+   { id: 2, to: '/admin/applications', label: 'Заявки' },
+   { id: 3, to: '/admin/specialists', label: 'Специалисты' },
+   { id: 4, to: '/admin/patient', label: 'Пациенты' },
 ]
 
 export {
@@ -515,4 +771,5 @@ export {
    FAKE_DATA,
    ONLINE_APPOINTMENTS_COLUMN,
    HEADER_ADMIN,
+   ONLINE_APPLICATIONS_COLUMN,
 }
