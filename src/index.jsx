@@ -7,6 +7,7 @@ import App from './App'
 import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
+import AddOnlineAppointments from './pages/admin/online-appointments/AddOnlineAppointments'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -17,7 +18,8 @@ root.render(
             <Themes>
                <Notification />
 
-               <App />
+               {/* <App /> */}
+               <AddOnlineAppointments />
             </Themes>
          </PersistGate>
       </Provider>
