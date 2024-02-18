@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
+import { useDebounce } from 'use-debounce'
 import SearchInput from '../UI/inputs/SearchInput'
 import Table from '../UI/Table'
 import { ONLINE_APPLICATIONS_COLUMN } from '../../utils/constants/index'
@@ -18,21 +19,32 @@ const Applications = () => {
    const [searchText, setSearchText] = useState('')
    const searchResults = useSelector((state) => state.data.items)
 
-   useEffect(() => {}, [searchText])
-
    useEffect(() => {
       if (searchText.trim() === '') {
          dispatch(getApplicationData())
       }
    }, [searchText])
 
-   const handleUpdate = async ({ id, isActive }) => {
-      dispatch(updateApplication({ id, isActive }))
-   }
+   const [debouncedSearchText] = useDebounce(searchText, 1000)
 
-   const handleDelete = ({ id }) => {
-      dispatch(deleteApplicationById({ id }))
-   }
+   useEffect(() => {
+      if (debouncedSearchText !== undefined) {
+         dispatch(
+            searchApplications({
+               searchText: debouncedSearchText,
+            })
+         )
+      }
+      const fetchData = async () => {
+         try {
+            dispatch(getApplicationData)
+         } catch (error) {
+            console.log('error')
+         }
+      }
+      fetchData()
+   }, [debouncedSearchText, dispatch])
+
    const handleSearch = (e) => {
       const newSearchText = e.target.value
       setSearchText(newSearchText)
@@ -42,7 +54,15 @@ const Applications = () => {
       return searchResults?.filter((searchResult) =>
          searchResult.username.toLowerCase().includes(searchText.toLowerCase())
       )
-   }, [searchResults, searchText])
+   }, [searchResults, debouncedSearchText])
+
+   const handleUpdate = async ({ id, isActive }) => {
+      dispatch(updateApplication({ id, isActive }))
+   }
+
+   const handleDelete = ({ id }) => {
+      dispatch(deleteApplicationById({ id }))
+   }
 
    const preperadeArray = filteredApplications.map((item, index) => {
       return {

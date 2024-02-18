@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use(
       const updatedConfig = { ...config }
 
       const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDgzNDUzODYsImlhdCI6MTcwODA4NjE4NiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.i61H8jUjET-OOtg8JI81E7q13VuwgBxOdncMzJcaewc'
+         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDg1MDk4NzAsImlhdCI6MTcwODI1MDY3MCwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.7BZQraIO4-7p4GmrGKu4sb02P0JMnIUVOhZyZFLZLHU'
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }

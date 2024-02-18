@@ -37,7 +37,7 @@ import DeleteSelected from '../../components/UI/admin/online-appointments/Delete
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
 import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
-import ApplicationCheckbox from '../../pages/admin/application/ApplicationCheckbox'
+import ApplicationCheckbox from '../../components/UI/admin/application/ApplicationCheckbox'
 import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
 import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
 import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
