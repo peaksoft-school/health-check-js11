@@ -15,6 +15,20 @@ export const getApplicationData = createAsyncThunk(
       }
    }
 )
+export const searchApplications = createAsyncThunk(
+   'aplication/search',
+   async (searchText, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/application/getApplication?word=${searchText}`
+         )
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
 
 export const deleteApplicationById = createAsyncThunk(
    'data/deleteData',
@@ -41,21 +55,6 @@ export const updateApplication = createAsyncThunk(
          return { isActive, id }
       } catch (error) {
          return rejectWithValue(error.response.data)
-      }
-   }
-)
-
-export const searchApplications = createAsyncThunk(
-   'aplication/search',
-   async (searchText, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get(
-            `/api/application/getApplication?word=${searchText}`
-         )
-
-         return response.data
-      } catch (error) {
-         return rejectWithValue(error)
       }
    }
 )
