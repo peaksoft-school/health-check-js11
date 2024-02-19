@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
 import Button from '../../Button'
-import { deleteApplicationById } from '../../../../store/slices/applications-slice/aplicationsSlice'
+import { deleteApplicationById } from '../../../../store/slices/application-slice/aplicationSlice'
 
 const DeleteButton = ({ id, name, disabled, checked }) => {
    const [open, setOpen] = useState(false)

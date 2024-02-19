@@ -4,7 +4,7 @@ import Checkbox from '../../Checkbox'
 import {
    updateApplication,
    getApplicationData,
-} from '../../../../store/slices/applications-slice/aplicationsSlice'
+} from '../../../../store/slices/application-slice/aplicationSlice'
 
 const ApplicationCheckbox = ({ checked, id }) => {
    const [isChecked, setIsChecked] = useState(checked)

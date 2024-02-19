@@ -59,6 +59,19 @@ export const updateApplication = createAsyncThunk(
    }
 )
 
+export const deleteAllApplication = createAsyncThunk(
+   'application/all',
+   async (id, { dispatch }) => {
+      try {
+         await axiosInstance.delete('/api/application/all', {
+            data: id,
+         })
+      } catch (error) {
+         throw new Error('Error', error)
+      }
+   }
+)
+
 export const applicationSlice = createSlice({
    name: 'data',
    initialState: {
@@ -108,6 +121,10 @@ export const applicationSlice = createSlice({
             state.items = action.payload
          })
          .addCase(searchApplications.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+         })
+         .addCase(deleteAllApplication.fulfilled, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
          })

@@ -10,45 +10,27 @@ import {
    getApplicationData,
    updateApplication,
    searchApplications,
-} from '../../store/slices/applications-slice/aplicationsSlice'
+} from '../../store/slices/application-slice/aplicationSlice'
 
 const Applications = () => {
-   const application = useSelector((state) => state.data.items)
    const update = useSelector((state) => state.data.isActive)
    const dispatch = useDispatch()
    const [searchText, setSearchText] = useState('')
    const searchResults = useSelector((state) => state.data.items)
 
-   useEffect(() => {
-      if (searchText.trim() === '') {
-         dispatch(getApplicationData())
-      }
-   }, [searchText])
-
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
    useEffect(() => {
-      if (debouncedSearchText !== undefined) {
-         dispatch(
-            searchApplications({
-               searchText: debouncedSearchText,
-            })
-         )
-      }
-      const fetchData = async () => {
-         try {
-            dispatch(getApplicationData)
-         } catch (error) {
-            console.log('error')
-         }
-      }
-      fetchData()
-   }, [debouncedSearchText, dispatch])
+      dispatch(getApplicationData())
+   }, [])
+
+   useEffect(() => {
+      dispatch(searchApplications(debouncedSearchText))
+   }, [debouncedSearchText])
 
    const handleSearch = (e) => {
       const newSearchText = e.target.value
       setSearchText(newSearchText)
-      dispatch(searchApplications(newSearchText))
    }
    const filteredApplications = useMemo(() => {
       return searchResults?.filter((searchResult) =>
