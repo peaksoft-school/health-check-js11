@@ -39,14 +39,16 @@ const Leave = () => (
                   Номер мобильного телефона
                </label>
 
-               <NumberInput
-                  id="number"
-                  mask="_"
-                  format="+996 (###) ##-##-##"
-                  placeholder="+996 (___) __-__-__"
-               >
-                  <ActivePhoneIcon className="input-icons" />
-               </NumberInput>
+               <Box className="number-input-container">
+                  <NumberInput
+                     id="number"
+                     mask="_"
+                     format="+996 (###) ##-##-##"
+                     placeholder="+996 (___) __-__-__"
+                  >
+                     <ActivePhoneIcon className="input-icons" />
+                  </NumberInput>
+               </Box>
             </StyledInputContainer>
          </Box>
 
@@ -138,6 +140,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
       fontSize: '0.875rem',
       textTransform: 'uppercase',
       width: '13.5625rem',
+      marginTop: '40px',
 
       '&:hover': {
          padding: '0.5rem 0.75rem 0.5rem 1.5rem',
@@ -163,9 +166,14 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }))
 
 const StyledInputContainer = styled(Box)(({ theme }) => ({
+   height: '2.3rem',
    display: 'flex',
    alignItems: 'flex-start',
    flexDirection: 'column',
+
+   '& > .number-input-container': {
+      marginTop: '6px !important',
+   },
 
    '& > .input-label': {
       [theme.breakpoints.down('lg')]: {

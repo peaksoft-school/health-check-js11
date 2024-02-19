@@ -71,14 +71,14 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             transition: 'all 0.4s',
 
             '&:hover': {
-               border: '1px solid #048741',
+               border: 'none',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
                color: theme.palette.primary.main,
             },
 
             '&:active': {
-               border: '1px solid #048741',
+               border: 'none',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             },
