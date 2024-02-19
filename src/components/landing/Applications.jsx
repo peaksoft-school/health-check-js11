@@ -54,7 +54,7 @@ const Applications = () => {
       return searchResults?.filter((searchResult) =>
          searchResult.username.toLowerCase().includes(searchText.toLowerCase())
       )
-   }, [searchResults, debouncedSearchText])
+   }, [searchResults])
 
    const handleUpdate = async ({ id, isActive }) => {
       dispatch(updateApplication({ id, isActive }))
