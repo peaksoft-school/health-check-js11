@@ -1,9 +1,10 @@
-import { styled, Typography } from '@mui/material'
+import { styled, Typography, Box } from '@mui/material'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
 import TimePicker from '../../../components/UI/TimePicker'
 import { DAYS } from '../../../utils/constants'
+import Button from '../../../components/UI/Button'
 
 const AddOnlineAppointments = () => {
    const open = true
@@ -11,62 +12,67 @@ const AddOnlineAppointments = () => {
       <Modal open={open}>
          <StyledForm>
             <h2>Добавление записей</h2>
-            <div>
+            <Box>
                <Typography>Услуги</Typography>
                <Select placeholder="Выберите услугу" className="select" />
-            </div>
-            <div>
+            </Box>
+            <Box>
                <Typography>Специалисты</Typography>
                <Select placeholder="Выберите специалиста" />
-            </div>
-            <div className="block-inputs">
-               <div>
+            </Box>
+            <Box className="input-block">
+               <Box>
                   <Typography>Дата начало</Typography>
                   <DatePicker />
-               </div>
+               </Box>
                <span>-</span>
-               <div>
+               <Box>
                   <Typography>Дата окончания</Typography>
                   <DatePicker />
-               </div>
-            </div>
-            <div className="block-inputs">
-               <div>
+               </Box>
+            </Box>
+            <Box className="input-block">
+               <Box>
                   <Typography>Время от</Typography>
                   <TimePicker />
-               </div>
+               </Box>
                <span>-</span>
-               <div>
+               <Box>
                   <Typography>Время до</Typography>
                   <TimePicker />
-               </div>
-               <div>
+               </Box>
+               <Box>
                   <Typography>Интервал часов </Typography>
                   <Select placeholder="Выберите интервал часов" />
-               </div>
-            </div>
-            <div className="block-inputs">
-               <div>
+               </Box>
+            </Box>
+            <Box className="input-block">
+               <Box>
                   <Typography>Время от</Typography>
                   <TimePicker />
-               </div>
+               </Box>
                <span>-</span>
-               <div>
+               <Box>
                   <Typography>Время до</Typography>
                   <TimePicker />
-               </div>
-               <div>
+               </Box>
+               <Box>
                   <Typography>Выберите время для перерыва </Typography>
-               </div>
-            </div>
-            <div className="asd">
+               </Box>
+            </Box>
+            <Box className="asd">
                {DAYS.map(({ id, label }) => (
                   <button type="button" className="active" key={id}>
                      {label}
                   </button>
                ))}
-            </div>
-            <div>{/* <Button type="butt/on">ОТМЕНИТЬ</Button> */}</div>
+            </Box>
+            <Box className="button-group">
+               <StyledButton type="button" variant="grey">
+                  ОТМЕНИТЬ
+               </StyledButton>
+               <StyledButton type="button">ОПУБЛИКОВАТЬ </StyledButton>
+            </Box>
          </StyledForm>
       </Modal>
    )
@@ -82,22 +88,20 @@ const StyledForm = styled('form')(() => ({
    flexDirection: 'column',
    justifyContent: 'space-between',
 
-   '& h2': {
+   '& > h2': {
       textAlign: 'center',
       fontSize: '24px',
       fontWeight: '500',
       color: '#222',
    },
 
-   '& .custom-select': {
+   '& > .custom-select': {
       borderRadius: '6px !important',
       height: '5.2vh',
       border: 'none',
    },
 
-   '& > .select': {},
-
-   '& > .block-inputs': {
+   '& > .input-block': {
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
@@ -106,10 +110,11 @@ const StyledForm = styled('form')(() => ({
       },
    },
 
-   '& .asd': {
+   '& > .asd': {
       display: 'flex',
       justifyContent: 'space-between',
    },
+
    '& .active': {
       backgroundColor: '#fff',
       padding: '10px 17px 10px 16px',
@@ -125,4 +130,14 @@ const StyledForm = styled('form')(() => ({
       // color: '#ffffff',
       // border: '0.3px solid #3977c0',
    },
+
+   '& > .button-group': {
+      display: 'flex',
+      justifyContent: 'space-between',
+   },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   width: '14.3rem',
+   height: '2.5rem',
 }))
