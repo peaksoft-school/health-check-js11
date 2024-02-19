@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Checkbox from '../../Checkbox'
-import { updateAppointmentStatus } from '../../../../store/thunks/appointmentThunk'
+import { updateAppointmentStatus } from '../../../../store/slices/appointmentThunk'
 
 const ProcessedCheckbox = ({ checked, appointmentId }) => {
    const [isChecked, setIsChecked] = useState(checked)

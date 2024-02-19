@@ -4,7 +4,10 @@ import AdminHeader from './AdminHeader'
 const AdminLayout = () => (
    <>
       <AdminHeader />
-      <Outlet />
+
+      <div style={{ backgroundColor: 'red' }}>
+         <Outlet />
+      </div>
    </>
 )
 

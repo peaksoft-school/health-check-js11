@@ -11,7 +11,7 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 import {
    getAppointments,
    searchAppointments,
-} from '../../../store/thunks/appointmentThunk'
+} from '../../../store/slices/appointmentThunk'
 import Loading from '../../../components/UI/Loading'
 
 const OnlineAppointments = () => {
@@ -65,12 +65,7 @@ const OnlineAppointments = () => {
    return (
       <StyledContainer>
          <Box className="box">
-            <StyledAddAntry>
-               <Typography className="title">Онлайн-запись</Typography>
-               <Button className="add-button">
-                  <PlusIcon className="plus-icon" /> Добавить запись
-               </Button>
-            </StyledAddAntry>
+            <Typography className="title">Онлайн-запись</Typography>
 
             <Box sx={{ width: '100%', typography: 'body1' }}>
                <TabContext value={value}>
@@ -84,11 +79,18 @@ const OnlineAppointments = () => {
                            value="1"
                            className="route"
                         />
+
                         <Tab label="Расписание" value="2" className="route" />
                      </TabList>
                   </Box>
 
                   <TabPanel value="1" className="tables">
+                     <Box className="button-container">
+                        <Button className="add-button">
+                           <PlusIcon className="plus-icon" /> Добавить запись
+                        </Button>
+                     </Box>
+
                      <Box className="input-container">
                         <StyledInput
                            placeholder="Поиск"
@@ -122,15 +124,21 @@ export default OnlineAppointments
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   height: 'auto',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: '#fe0000',
 
    '& > .box': {
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '1600px',
-      height: '100vh',
       margin: '0 auto',
+      paddingBottom: '30px',
+
+      '& .title': {
+         fontSize: '1.375rem',
+         fontWeight: '400',
+         lineHeight: 'normal',
+         marginBottom: '1.87rem',
+      },
 
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
          backgroundColor: '#048741 !important',
@@ -153,6 +161,33 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '& .tables': {
          padding: '0rem',
+
+         '& .button-container': {
+            display: 'flex',
+            justifyContent: 'flex-end',
+
+            '& > .add-button': {
+               fontFamily: 'Manrope',
+               fontSize: '0.875rem',
+               fontStyle: 'normal',
+               fontWeight: '600',
+               lineHeight: 'normal',
+               letterSpacing: '0.02625rem',
+               textTransform: 'uppercase',
+               display: 'flex',
+               height: '2.75rem',
+               padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+               alignItems: 'center',
+               gap: '0.625rem',
+               width: '13.0625rem !important',
+               flexShrink: '0',
+
+               '& > .plus-icon': {
+                  width: '1.125rem',
+                  height: '1.125rem',
+               },
+            },
+         },
       },
 
       '& .input-container': {
@@ -165,7 +200,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
          background: 'white',
-         height: '100%',
          marginTop: '1.25rem',
       },
    },
@@ -178,44 +212,4 @@ const StyledInput = styled(SearchInput)(() => ({
    justifyContent: 'center',
    fontFamily: 'Manrope',
    width: '100%',
-}))
-
-const StyledAddAntry = styled(Box)(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
-   marginBottom: '1.87rem',
-   width: '100%',
-
-   '& > .title': {
-      fontSize: '1.375rem',
-      fontWeight: '400',
-      lineHeight: 'normal',
-   },
-
-   '& > .add-button': {
-      fontFamily: 'Manrope',
-      fontSize: '0.875rem',
-      fontStyle: 'normal',
-      fontWeight: '600',
-      lineHeight: 'normal',
-      letterSpacing: '0.02625rem',
-      textTransform: 'uppercase',
-      display: 'inline-flex',
-      height: '2.75rem',
-      padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-      alignItems: 'center',
-      gap: '0.625rem',
-      width: '13.0625rem !important',
-      flexShrink: '0',
-      background: '#0b8f54',
-
-      '&:hover': {
-         background: '#0b8f54',
-      },
-
-      '& > .plus-icon': {
-         width: '1.125rem',
-         height: '1.125rem',
-      },
-   },
 }))

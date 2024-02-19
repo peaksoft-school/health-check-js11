@@ -4,7 +4,7 @@ import {
    deleteAppointmentById,
    getAppointments,
    updateAppointmentStatus,
-} from '../thunks/appointmentThunk'
+} from './appointmentThunk'
 import { showToast } from '../../utils/helpers/notification'
 
 const initialState = {

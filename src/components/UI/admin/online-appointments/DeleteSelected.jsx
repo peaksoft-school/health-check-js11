@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
-import { deleteAllAppointments } from '../../../../store/thunks/appointmentThunk'
+import { deleteAllAppointments } from '../../../../store/slices/appointmentThunk'
 import Modal from '../../Modal'
 import { APPOINTMENTS_ACTIONS } from '../../../../store/slices/appointmentsSlice'
 

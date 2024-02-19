@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
 import Button from '../../Button'
-import { deleteAppointmentById } from '../../../../store/thunks/appointmentThunk'
+import { deleteAppointmentById } from '../../../../store/slices/appointmentThunk'
 
 const DeleteButton = ({ name, disabled, appointmentId }) => {
    const dispatch = useDispatch()
