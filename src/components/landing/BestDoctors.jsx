@@ -11,7 +11,7 @@ const BestDoctors = () => (
          </Typography>
 
          <Typography>
-            Попасть в команду медицинской клиники «MedCheck» могут <br />
+            Попасть в команду медицинской клиники «Health Check» могут <br />
             только лучшие специалисты с многолетней практикой и доказанным
             опытом.
          </Typography>
@@ -63,9 +63,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          justifyContent: 'space-between',
          flexWrap: 'wrap',
          gap: '30px',
-         cursor: 'pointer',
 
          '& .doctor': {
+            cursor: 'pointer',
+
             '& > img': {
                borderRadius: '50%',
                backgroundColor: theme.palette.secondary.linearGradient,
@@ -99,4 +100,5 @@ const StyledButton = styled(Button)(() => ({
    marginTop: '52px',
    margin: '52px auto 0',
    display: 'block',
+   height: '2.625rem',
 }))
