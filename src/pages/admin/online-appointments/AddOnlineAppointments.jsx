@@ -3,13 +3,14 @@ import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
 import TimePicker from '../../../components/UI/TimePicker'
-import { DAYS } from '../../../utils/constants'
 import Button from '../../../components/UI/Button'
+import { DAYS } from '../../../utils/constants'
 
-const AddOnlineAppointments = () => {
-   const open = true
+const AddOnlineAppointments = ({ open, onClose }) => {
+   const open1 = true
+
    return (
-      <Modal open={open}>
+      <Modal open={open1}>
          <StyledForm>
             <h2>Добавление записей</h2>
             <Box>
