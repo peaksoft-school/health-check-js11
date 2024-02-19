@@ -1,5 +1,4 @@
 import { styled, Typography } from '@mui/material'
-import Input from '../../../components/UI/inputs/Input'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
@@ -60,13 +59,14 @@ const AddOnlineAppointments = () => {
                   <Typography>Выберите время для перерыва </Typography>
                </div>
             </div>
-            <div>
+            <div className="asd">
                {DAYS.map(({ id, label }) => (
                   <button type="button" className="active" key={id}>
                      {label}
                   </button>
                ))}
             </div>
+            <div>{/* <Button type="butt/on">ОТМЕНИТЬ</Button> */}</div>
          </StyledForm>
       </Modal>
    )
@@ -105,11 +105,17 @@ const StyledForm = styled('form')(() => ({
          marginTop: '1rem',
       },
    },
+
+   '& .asd': {
+      display: 'flex',
+      justifyContent: 'space-between',
+   },
    '& .active': {
       backgroundColor: '#fff',
       padding: '10px 17px 10px 16px',
       justifyContent: 'center',
       alignItems: 'center',
+
       borderRadius: '10px',
       border: '1px solid #d9d9d9',
       fontSize: '16px',
