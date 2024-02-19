@@ -42,14 +42,14 @@ const Header = () => {
 
    const toggleLogOutHandler = () => setToggleLogOutModal((prev) => !prev)
 
-   const isProfileMenuOpen = Boolean(profileMenuAnchorEl)
+   const isProfileMenuOpen = !!profileMenuAnchorEl
 
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
 
    const handlelogOut = () => {
-      dispatch(logOut({ navigate }))
       handleProfileMenuClose()
+      dispatch(logOut({ navigate }))
    }
 
    const navigateToPprofile = () => {
@@ -168,29 +168,31 @@ const Header = () => {
                            <StyledMenuItem onClick={toggleLogOutHandler}>
                               Выйти
                            </StyledMenuItem>
+                           <Modal
+                              open={toggleLogOutModal}
+                              onClose={toggleLogOutHandler}
+                              isCloseIcon={false}
+                           >
+                              <StyledModal>
+                                 Вы уврены, что хотите выйти?
+                                 <br />
+                                 <br />
+                                 <Box className="buttons-box">
+                                    <Button
+                                       className="closeButton"
+                                       onClick={toggleLogOutHandler}
+                                       variant="grey"
+                                    >
+                                       Отменить
+                                    </Button>
+                                    <Button onClick={handlelogOut}>
+                                       Выйти
+                                    </Button>
+                                 </Box>
+                              </StyledModal>
+                           </Modal>
                         </StyledMenu>
                      )}
-                     <Modal
-                        open={toggleLogOutModal}
-                        onClose={toggleLogOutHandler}
-                        isCloseIcon={false}
-                     >
-                        <StyledModal>
-                           Вы уврены, что хотите выйти?
-                           <br />
-                           <br />
-                           <Box className="buttons-box">
-                              <Button
-                                 className="closeButton"
-                                 onClick={toggleLogOutHandler}
-                                 variant="grey"
-                              >
-                                 Отменить
-                              </Button>
-                              <Button onClick={handlelogOut}>Выйти</Button>
-                           </Box>
-                        </StyledModal>
-                     </Modal>
 
                      <SignUp
                         open={openSignUpModal}

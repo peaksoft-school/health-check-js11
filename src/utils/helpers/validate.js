@@ -31,10 +31,7 @@ const VALIDATION_SIGN_UP = Yup.object().shape({
 const VALIDATION_SIGN_IN = Yup.object().shape({
    email: Yup.string()
       .email()
-      .matches(
-         emailRegex,
-         'Адрес электронной почты должен быть в формате ...@gmail.com!'
-      )
+      .matches(emailRegex, 'email должен быть в формате ...@gmail.com!')
       .required('Почта обязятельное!'),
    password: Yup.string()
       .required('Введите пароль!')

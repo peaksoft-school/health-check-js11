@@ -1,16 +1,33 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { HEADER_ADMIN } from '../../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
+import { logOut } from '../../store/slices/auth/authSlice'
+import Modal from '../../components/UI/Modal'
+import Button from '../../components/UI/Button'
 
 const AdminHeader = () => {
    const [anchorEl, setAnchorEl] = useState(null)
+   const [toggleLogOutModal, setToggleLogOutModal] = useState(false)
+
+   const dispatch = useDispatch()
 
    const open = Boolean(anchorEl)
 
    const handleClick = (e) => setAnchorEl(e.currentTarget)
 
+   const toggleLogOutHandler = () => setToggleLogOutModal((prev) => !prev)
+
    const handleClose = () => setAnchorEl(null)
+
+   const navigate = useNavigate()
+
+   const handlelogOut = () => {
+      dispatch(logOut({ navigate }))
+      handleClose()
+   }
 
    return (
       <StyledContainer>
@@ -50,7 +67,31 @@ const AdminHeader = () => {
                      'aria-labelledby': 'basic-button',
                   }}
                >
-                  <StyledMenuItem>Выйти</StyledMenuItem>
+                  <Modal
+                     open={toggleLogOutModal}
+                     onClose={toggleLogOutHandler}
+                     isCloseIcon={false}
+                  >
+                     <StyledModal>
+                        Вы уврены, что хотите выйти?
+                        <br />
+                        <br />
+                        <Box className="buttons-box">
+                           <Button
+                              className="closeButton"
+                              onClick={toggleLogOutHandler}
+                              variant="grey"
+                           >
+                              Отменить
+                           </Button>
+                           <Button onClick={handlelogOut}>Выйти</Button>
+                        </Box>
+                     </StyledModal>
+                  </Modal>
+
+                  <StyledMenuItem onClick={toggleLogOutHandler}>
+                     Выйти
+                  </StyledMenuItem>
                </StyledMenu>
             </Box>
          </Box>
@@ -124,5 +165,23 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 
    '&.MuiMenuItem-root:hover': {
       color: theme.palette.primary.darkGreen,
+   },
+}))
+
+const StyledModal = styled(Box)(() => ({
+   boxSizing: 'content-box',
+   padding: '10px  45px 10px 45px',
+   textAlign: 'center',
+
+   '& >.buttons-box': {
+      display: 'flex',
+      gap: '30px',
+
+      '& > .MuiButtonBase-root': {
+         padding: '5px 0',
+         width: '120px',
+         height: '40px',
+         fontSize: '12px',
+      },
    },
 }))
