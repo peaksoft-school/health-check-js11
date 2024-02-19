@@ -153,6 +153,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
          justifyContent: 'space-between',
          alignItems: 'center',
          padding: '21px 0',
+         borderBottom: `1px solid ${theme.palette.secondary.lightGrey}`,
 
          '& > .location-container': {
             display: 'flex',
@@ -170,7 +171,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
 
                '& > .days': {
                   fontWeight: '500',
-                  color: 'green',
+                  color: '#048741',
                },
             },
 

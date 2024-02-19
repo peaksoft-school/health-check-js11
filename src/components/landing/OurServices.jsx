@@ -91,6 +91,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          display: 'grid',
          placeItems: 'center',
          marginTop: '48px',
+
+         '& .button': {
+            height: '42px !important',
+         },
       },
    },
 }))
@@ -100,8 +104,8 @@ const StyledServiceIcon = styled(Box)(({ theme }) => ({
    placeItems: 'center',
    borderRadius: '1.125rem',
    border: '1px solid #DEDEDE',
-   width: '5.6rem',
-   height: '5.6rem',
+   width: '6.275rem',
+   height: '6.625rem',
    transition: '0.5s',
    cursor: 'pointer',
 
