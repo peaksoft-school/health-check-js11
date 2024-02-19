@@ -58,6 +58,16 @@ export const updateApplication = createAsyncThunk(
       }
    }
 )
+// const deleteAllAplications = createAsyncThunk(
+//    'application/deleteAll',
+//    async (applicatio) => {
+//       try{
+
+//       }catch(error) {
+//          trow new Error('Error deleting all apontments',error)
+//       }
+//    }
+// )
 
 export const applicationSlice = createSlice({
    name: 'data',

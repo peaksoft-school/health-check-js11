@@ -13,17 +13,20 @@ import {
 } from '../../store/slices/applications-slice/aplicationsSlice'
 
 const Applications = () => {
-   const application = useSelector((state) => state.data.items)
-   const update = useSelector((state) => state.data.isActive)
+   // const application = useSelector((state) => state.data.items)
+   // const update = useSelector((state) => state.data.isActive)
    const dispatch = useDispatch()
    const [searchText, setSearchText] = useState('')
    const searchResults = useSelector((state) => state.data.items)
 
-   useEffect(() => {
-      if (searchText.trim() === '') {
-         dispatch(getApplicationData())
-      }
-   }, [searchText])
+   // useEffect(() => {
+   //    dispatch(getApplicationData())
+   // }, [dispatch])
+   const handleSearch = (e) => {
+      const newSearchText = e.target.value
+      setSearchText(newSearchText)
+      dispatch(searchApplications(newSearchText))
+   }
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
@@ -32,12 +35,13 @@ const Applications = () => {
          dispatch(
             searchApplications({
                searchText: debouncedSearchText,
+               otherParam: 'name',
             })
          )
       }
       const fetchData = async () => {
          try {
-            dispatch(getApplicationData)
+            dispatch(getApplicationData())
          } catch (error) {
             console.log('error')
          }
@@ -45,11 +49,6 @@ const Applications = () => {
       fetchData()
    }, [debouncedSearchText, dispatch])
 
-   const handleSearch = (e) => {
-      const newSearchText = e.target.value
-      setSearchText(newSearchText)
-      dispatch(searchApplications(newSearchText))
-   }
    const filteredApplications = useMemo(() => {
       return searchResults?.filter((searchResult) =>
          searchResult.username.toLowerCase().includes(searchText.toLowerCase())

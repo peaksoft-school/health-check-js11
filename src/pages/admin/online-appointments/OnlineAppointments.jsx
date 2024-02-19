@@ -1,5 +1,5 @@
 import { Box, Typography, Tab, styled } from '@mui/material'
-import { TabContext, TabList, TabPanel } from '@mui-lab'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDebounce } from 'use-debounce'
