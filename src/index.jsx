@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StrictMode } from 'react'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 import Notification from './components/Notification'
 import App from './App'
 import Themes from './components/Themes'
@@ -13,15 +15,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
    <StrictMode>
-      <Provider store={store}>
-         <PersistGate loading={null} persistor={persistor}>
-            <Themes>
-               <Notification />
+      <LocalizationProvider adapterLocale="ru" dateAdapter={AdapterDayjs}>
+         <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+               <Themes>
+                  <Notification />
 
-               {/* <App /> */}
-               <AddOnlineAppointments />
-            </Themes>
-         </PersistGate>
-      </Provider>
+                  {/* <App /> */}
+                  <AddOnlineAppointments />
+               </Themes>
+            </PersistGate>
+         </Provider>
+      </LocalizationProvider>
    </StrictMode>
 )

@@ -536,7 +536,37 @@ const HEADER_ADMIN = [
    { id: 3, text: 'Специалисты' },
    { id: 4, text: 'Пациенты' },
 ]
-export const LOGIN_USER_KEY = 'LOGIN_LMS_USER_KEY'
+
+const DAYS = [
+   {
+      id: 0,
+      label: 'Пн',
+   },
+   {
+      id: 1,
+      label: 'Вт',
+   },
+   {
+      id: 2,
+      label: 'Ср',
+   },
+   {
+      id: 3,
+      label: 'Чт',
+   },
+   {
+      id: 4,
+      label: 'Пт',
+   },
+   {
+      id: 5,
+      label: 'Сб',
+   },
+   {
+      id: 6,
+      label: 'Вт',
+   },
+]
 
 export {
    HEADER_SOCIALS,
@@ -553,4 +583,5 @@ export {
    DATA_FOR_ONLINE_SIGN_UP,
    ONLINE_APPOINTMENTS_COLUMN,
    HEADER_ADMIN,
+   DAYS,
 }

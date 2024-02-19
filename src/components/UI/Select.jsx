@@ -23,15 +23,18 @@ const customStyles = {
    }),
 }
 
-const Select = forwardRef(({ options, onChange, ...rest }, ref) => (
-   <Selector
-      options={options}
-      onChange={onChange}
-      styles={customStyles}
-      ref={ref}
-      isSearchable={false}
-      {...rest}
-   />
-))
+const Select = forwardRef(
+   ({ options, onChange, placeholder, styles, ...rest }, ref) => (
+      <Selector
+         options={options}
+         onChange={onChange}
+         styles={(customStyles, styles)}
+         placeholder={placeholder}
+         ref={ref}
+         isSearchable={false}
+         {...rest}
+      />
+   )
+)
 
 export default Select
