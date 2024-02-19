@@ -1,4 +1,4 @@
-import { styled, Box } from '@mui/material'
+import { styled, Box, Typography } from '@mui/material'
 import { DoctorWelcomeImage } from '../../assets/images'
 import Button from '../UI/Button'
 
@@ -6,7 +6,9 @@ const Welcome = () => (
    <StyledContainer>
       <Box className="welcome">
          <Box className="texts">
-            <StyledTitle>Добро пожаловать в клинику HealthCheck</StyledTitle>
+            <StyledTitle variant="h1">
+               Добро пожаловать в клинику HealthCheck
+            </StyledTitle>
 
             <StyledDescription>
                Международный Медицинская клиника «HealthCheck — это клиника, в
@@ -59,7 +61,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const StyledTitle = styled('h1')(({ theme }) => ({
+const StyledTitle = styled(Typography)(({ theme }) => ({
    fontSize: '3rem',
    fontWeight: '900',
    lineHeight: '140%',

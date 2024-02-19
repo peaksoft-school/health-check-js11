@@ -6,6 +6,7 @@ const BASE_URL = process.env.REACT_APP_API_URL
 
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
+
    headers: {
       'Content-Type': 'application/json',
    },
@@ -18,7 +19,7 @@ export const injectStore = (store) => {
 }
 
 const signOut = () => {
-   // console.log('User signed out')
+   console.log('User signed out')
 }
 
 axiosInstance.interceptors.request.use(
@@ -38,7 +39,7 @@ axiosInstance.interceptors.request.use(
    }
 )
 
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
    function (response) {
       return Promise.resolve(response)
    },
