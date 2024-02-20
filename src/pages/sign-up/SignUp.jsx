@@ -62,6 +62,8 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
             })
          )
       })
+
+      onClose()
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({

@@ -60,6 +60,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
          .catch((error) => {
             throw error
          })
+      onClose()
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({

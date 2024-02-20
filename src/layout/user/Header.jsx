@@ -40,7 +40,9 @@ const Header = () => {
 
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
 
-   const toggleLogOutHandler = () => setToggleLogOutModal((prev) => !prev)
+   const closeLogOutHandler = () => setToggleLogOutModal(false)
+
+   const openLogOutHandler = () => setToggleLogOutModal(true)
 
    const isProfileMenuOpen = !!profileMenuAnchorEl
 
@@ -49,6 +51,7 @@ const Header = () => {
 
    const handlelogOut = () => {
       handleProfileMenuClose()
+      closeLogOutHandler()
       dispatch(logOut({ navigate }))
    }
 
@@ -165,12 +168,12 @@ const Header = () => {
                            <StyledMenuItem onClick={navigateToPprofile}>
                               Профиль
                            </StyledMenuItem>
-                           <StyledMenuItem onClick={toggleLogOutHandler}>
+                           <StyledMenuItem onClick={openLogOutHandler}>
                               Выйти
                            </StyledMenuItem>
                            <Modal
                               open={toggleLogOutModal}
-                              onClose={toggleLogOutHandler}
+                              onClose={closeLogOutHandler}
                               isCloseIcon={false}
                            >
                               <StyledModal>
@@ -180,7 +183,7 @@ const Header = () => {
                                  <Box className="buttons-box">
                                     <Button
                                        className="closeButton"
-                                       onClick={toggleLogOutHandler}
+                                       onClick={closeLogOutHandler}
                                        variant="grey"
                                     >
                                        Отменить

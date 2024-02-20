@@ -124,10 +124,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          position: 'absolute',
          bottom: '8rem',
       },
-
-      '& > .cancel': {
-         cursor: 'pointer',
-      },
    },
 }))
 
