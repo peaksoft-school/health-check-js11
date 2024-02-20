@@ -1,86 +1,12 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosInstance } from '../../../configs/axiosInstance'
+import { createSlice } from '@reduxjs/toolkit'
+import {
+   deleteApplicationById,
+   getApplicationData,
+   searchApplications,
+   updateApplication,
+} from '../../thunks/applicationThunk'
 
 const BASE_URL = process.env.API_URL
-
-export const getApplicationData = createAsyncThunk(
-   'data/fetchData',
-   async (_, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get('/api/application/getAll')
-
-         return response.data
-      } catch (error) {
-         return rejectWithValue(error)
-      }
-   }
-)
-export const searchApplications = createAsyncThunk(
-   'aplication/search',
-   async (searchText, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get(
-            `/api/application/getApplication?word=${searchText}`
-         )
-
-         return response.data
-      } catch (error) {
-         return rejectWithValue(error)
-      }
-   }
-)
-
-export const deleteApplicationById = createAsyncThunk(
-   'data/deleteData',
-   async (id, { rejectWithValue, dispatch }) => {
-      try {
-         await axiosInstance.delete(`/api/application/${id}`)
-         dispatch(getApplicationData())
-         return id
-      } catch (error) {
-         return rejectWithValue(error.response.data)
-      }
-   }
-)
-
-export const updateApplication = createAsyncThunk(
-   'data/updateData',
-   async ({ id, isActive }, { dispatch, rejectWithValue }) => {
-      try {
-         await axiosInstance.put('/api/application/update', {
-            isActive,
-            id,
-         })
-         dispatch(getApplicationData())
-         return { isActive, id }
-      } catch (error) {
-         return rejectWithValue(error.response.data)
-      }
-   }
-)
-// const deleteAllAplications = createAsyncThunk(
-//    'application/deleteAll',
-//    async (applicatio) => {
-//       try{
-
-//       }catch(error) {
-//          trow new Error('Error deleting all apontments',error)
-//       }
-//    }
-// )
-
-export const deleteAllApplication = createAsyncThunk(
-   'application/all',
-   async (id, { dispatch }) => {
-      try {
-         await axiosInstance.delete('/api/application/all', {
-            data: id,
-         })
-      } catch (error) {
-         throw new Error('Error', error)
-      }
-   }
-)
 
 export const applicationSlice = createSlice({
    name: 'data',
@@ -88,8 +14,48 @@ export const applicationSlice = createSlice({
       items: [],
       status: 'idle',
       error: null,
+      selectAllApplications: [],
+      arrayForIds: [],
+      selectAll: false,
    },
-   reducers: {},
+   reducers: {
+      removeSelectedArray(state) {
+         state.selectAllApplications = []
+      },
+      handleIsCheckedItem(state, { payload }) {
+         state.items = state.items.map((appointment) => {
+            // console.log(state.items, 'items')
+            // console.log(appointment, 'appointment')
+            if (appointment.appointmenId === payload.id) {
+               return {
+                  ...appointment,
+                  isSelected: !appointment.isSelected,
+               }
+            }
+            return appointment
+         })
+         state.arrayForIds = state.items
+            .filter((appointment) => appointment.isSelected)
+            .map((appointment) => appointment.appointmentId)
+         if (state.arrayForIds.length === state.items.length) {
+            state.selectAll = true
+         } else {
+            state.selectAll = false
+         }
+      },
+
+      handleIsChecked: (state) => {
+         console.log(state.arrayForIds, 'arrayforids')
+         state.selectAll = !state.selectAll
+         state.items = state.items.map((appointment) => ({
+            ...appointment,
+            isSelected: state.selectAll,
+         }))
+         state.arrayForIds = state.items
+            .filter((appointment) => appointment.isSelected)
+            .map((appointment) => appointment.id)
+      },
+   },
    extraReducers: (builder) => {
       builder
          .addCase(getApplicationData.pending, (state) => {
@@ -134,11 +100,13 @@ export const applicationSlice = createSlice({
             state.status = 'failed'
             state.error = action.error.message
          })
-         .addCase(deleteAllApplication.fulfilled, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-         })
    },
 })
 
 export const applicationActions = applicationSlice.actions
+export const {
+   selectAllApplicationsArrayFN,
+   removeSelectedArray,
+   handleIsCheckedItem,
+   handleIsChecked,
+} = applicationSlice.actions

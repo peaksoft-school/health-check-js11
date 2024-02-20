@@ -8,7 +8,6 @@ import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
-import OnlineAppointments from './pages/admin/online-appointments/OnlineAppointments'
 
 injectStore(store)
 
@@ -21,8 +20,7 @@ root.render(
             <Themes>
                <Notification />
 
-               {/* <App /> */}
-               <OnlineAppointments />
+               <App />
             </Themes>
          </PersistGate>
       </Provider>

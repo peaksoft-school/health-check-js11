@@ -10,13 +10,17 @@ import {
    getApplicationData,
    updateApplication,
    searchApplications,
-} from '../../store/slices/application-slice/aplicationSlice'
+} from '../../store/thunks/applicationThunk'
 
 const Applications = () => {
+   const application = useSelector((state) => state.data)
    const update = useSelector((state) => state.data.isActive)
    const dispatch = useDispatch()
    const [searchText, setSearchText] = useState('')
    const searchResults = useSelector((state) => state.data.items)
+   const selecedItems = useSelector((state) => state.data.selectAllApplications)
+
+   // console.log(selecedItems)
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
@@ -34,7 +38,7 @@ const Applications = () => {
    }
    const filteredApplications = useMemo(() => {
       return searchResults?.filter((searchResult) =>
-         searchResult.username.toLowerCase().includes(searchText.toLowerCase())
+         searchResult.username?.toLowerCase().includes(searchText.toLowerCase())
       )
    }, [searchResults])
 
@@ -42,7 +46,7 @@ const Applications = () => {
       dispatch(updateApplication({ id, isActive }))
    }
 
-   const handleDelete = ({ id }) => {
+   const handleDelete = async ({ id }) => {
       dispatch(deleteApplicationById({ id }))
    }
 
@@ -55,7 +59,8 @@ const Applications = () => {
          processed: item.processed,
          name: item.username,
          update: (id, isActive) => handleUpdate({ id, isActive }),
-         delete: (id) => handleDelete({ id }),
+         delete: (id) => handleDelete(id),
+         isAllSelected: selecedItems.includes(item.id),
       }
    })
 

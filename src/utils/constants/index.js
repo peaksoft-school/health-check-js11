@@ -478,7 +478,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <SelectSeparatelyApplication checked={row.original.checkbox} />
+         return <SelectSeparatelyApplication {...row.original} />
       },
    },
 
@@ -599,7 +599,8 @@ const ONLINE_APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => {
          return (
-            <DeleteButton
+            <DeleteApplication
+               id={row.original.id}
                name={row.original.name}
                disabled={row.original.processed}
             />

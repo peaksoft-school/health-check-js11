@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Checkbox from '../../Checkbox'
+import { handleIsChecked } from '../../../../store/slices/application-slice/aplicationSlice'
 
 const SelectAllApplication = () => {
-   const [isChecked, setIsChecked] = useState(false)
-
+   const { items, selectAllApplications, selectAll } = useSelector(
+      (store) => store.data
+   )
+   const dispatch = useDispatch()
    const handleCheckboxChange = () => {
-      setIsChecked((prev) => !prev)
+      dispatch(handleIsChecked())
    }
 
-   return <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+   return <Checkbox checked={selectAll} onChange={handleCheckboxChange} />
 }
 
 export default SelectAllApplication
