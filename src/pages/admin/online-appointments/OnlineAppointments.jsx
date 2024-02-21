@@ -15,33 +15,19 @@ import {
 } from '../../../store/slices/appointmentThunk'
 
 const OnlineAppointments = () => {
-   const { isLoading, error, appointments } = useSelector(
-      (state) => state.appointmentsAdmin
-   )
-
    const [value, setValue] = useState('1')
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
-   const [searchResults, setSearchResults] = useState(appointments)
 
    const dispatch = useDispatch()
 
-   const handleSearchChange = (e) => {
-      setSearchName(e.target.value)
-   }
+   const { isLoading, appointments, error } = useSelector(
+      (state) => state.appointmentsAdmin
+   )
+
+   const handleSearchChange = (e) => setSearchName(e.target.value)
 
    const [debouncedSearchText] = useDebounce(searchName, 1000)
-
-   useEffect(() => {
-      const fetchData = async () => {
-         try {
-            dispatch(getAppointments())
-         } catch (error) {
-            console.error('Error fetching appointments:', error)
-         }
-      }
-      fetchData()
-   }, [dispatch])
 
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
@@ -50,14 +36,15 @@ const OnlineAppointments = () => {
                searchName: debouncedSearchText,
                otherParam: 'name',
             })
-         ).then((action) => {
-            const results = action.payload
-            setSearchResults(results)
-         })
+         )
       }
-   }, [debouncedSearchText, appointments, dispatch])
+   }, [debouncedSearchText])
 
-   const handleChange = (event, newValue) => {
+   useEffect(() => {
+      dispatch(getAppointments())
+   }, [])
+
+   const handleChange = (_, newValue) => {
       setValue(newValue)
       setShowAddButton(newValue === '1')
    }
@@ -105,12 +92,11 @@ const OnlineAppointments = () => {
                      </Box>
 
                      {isLoading && <Loading />}
-                     {error && <p>Error: {error.message}</p>}
 
                      <Box className="table-container">
                         <Table
                            columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={searchResults}
+                           data={appointments}
                         />
                      </Box>
                   </TabPanel>

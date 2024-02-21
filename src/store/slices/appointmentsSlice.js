@@ -3,6 +3,7 @@ import {
    deleteAllAppointments,
    deleteAppointmentById,
    getAppointments,
+   searchAppointments,
    updateAppointmentStatus,
 } from './appointmentThunk'
 import { showToast } from '../../utils/helpers/notification'
@@ -82,6 +83,20 @@ export const appointmentsSlice = createSlice({
 
          .addCase(getAppointments.pending, (state) => {
             state.isLoading = true
+         })
+
+         .addCase(searchAppointments.fulfilled, (state, action) => {
+            const updatedAppointments = action.payload.map((appointment) => ({
+               ...appointment,
+               isSelected: false,
+            }))
+
+            updatedAppointments.sort(
+               (a, b) => a.appointmentId - b.appointmentId
+            )
+
+            state.appointments = updatedAppointments
+            state.isLoading = false
          })
 
          .addCase(updateAppointmentStatus.fulfilled, (state) => {
