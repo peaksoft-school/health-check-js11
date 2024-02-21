@@ -20,11 +20,11 @@ const signOut = () => {
 }
 
 axios.interceptors.request.use(
-   function (config) {
+   (config) => {
       const updatedConfig = { ...config }
 
       const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDg3MTE1NjcsImlhdCI6MTcwODQ1MjM2NywiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.giZjeAWPoiqzjJDP6SPvi0CAchbWEl1BoRMb6TATU04'
+         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDg3NjQ2MzAsImlhdCI6MTcwODUwNTQzMCwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.EXR3U4NODU7QTHOh-9MP3xbL9YV6Ua7WAo1YvXNbtqw'
 
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
@@ -32,17 +32,17 @@ axios.interceptors.request.use(
       return config
    },
 
-   function (error) {
+   (error) => {
       return Promise.reject(error)
    }
 )
 
 axios.interceptors.response.use(
-   function (response) {
+   (response) => {
       return Promise.resolve(response)
    },
 
-   function (error) {
+   (error) => {
       if (error.response && error.response.status === 401) {
          signOut()
       }

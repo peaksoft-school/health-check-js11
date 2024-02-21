@@ -1,46 +1,70 @@
 import { useEffect } from 'react'
 import { styled, Typography, Box } from '@mui/material'
 import { useFormik } from 'formik'
+import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
 import TimePicker from '../../../components/UI/TimePicker'
 import Button from '../../../components/UI/Button'
-import { DAYS, DEPARTMENTS, INTERVAL_TIME } from '../../../utils/constants'
+import {
+   DAYS,
+   DEPARTMENTS,
+   INTERVAL_TIME,
+   RUSSIAN_DAYS,
+} from '../../../utils/constants'
 import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
 import { getAllDoctors } from '../../../store/schedule/scheduleThunk'
+import { showToast } from '../../../utils/helpers/notification'
+import { appointmentsError } from '../../../utils/helpers'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
    const open1 = true
    const dispatch = useDispatch()
 
-   useEffect(() => {
-      dispatch(getAllDoctors())
-   }, [])
+   // useEffect(() => {
+   //    dispatch(getAllDoctors())
+   // }, [])
 
-   const serviceChangeHandler = (e) => {
-      const departmentId = DEPARTMENTS.id
-      dispatch(getAllDoctors({ departmentId }))
-   }
+   // const serviceChangeHandler = (e) => {
+   // const selectedService = e.label
+   // console.log(e.label, 'asd')
+   // dispatch(getAllDoctors({ departmentId }))
+   // }
 
    const onSubmit = (values, { resetForm }) => {
-      resetForm()
-      console.log(values)
+      console.log(values, 'values')
+      values.createStartDate = format(
+         new Date(values.createStartDate),
+         'yyyy-MM-dd'
+      )
+
+      values.createEndDate = format(
+         new Date(values.createEndDate),
+         'yyyy-MM-dd'
+      )
+
+      values.startTime = format(new Date(values.startTime), 'HH:mm')
+      values.endTime = format(new Date(values.endTime), 'HH:mm')
+      values.startBreak = format(new Date(values.startBreak), 'HH:mm')
+      values.endBreak = format(new Date(values.endBreak), 'HH:mm')
+      // resetForm()
    }
 
    const { values, handleChange, handleSubmit, errors, setFieldValue } =
       useFormik({
          initialValues: {
-            departmentName: 'ehjkjubz',
-            doctor: 'cnkdsnkdcncsk',
+            departmentName: '',
+            doctor: '',
             createStartDate: '',
             createEndDate: '',
             startTime: '',
             endTime: '',
-            interval: '45',
+            interval: '',
             startBreak: '',
             endBreak: '',
+
             dayOfWeek: {},
          },
 
@@ -49,6 +73,13 @@ const AddOnlineAppointments = ({ open, onClose }) => {
          validationSchema: VALIDATION_SCHEDULE,
       })
 
+   console.log(errors)
+   console.log(values)
+
+   const handleDayButtonClick = (dayLabel) => {
+      setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
+   }
+
    return (
       <Modal open={open1}>
          <StyledForm onSubmit={handleSubmit}>
@@ -56,23 +87,23 @@ const AddOnlineAppointments = ({ open, onClose }) => {
             <Box>
                <Typography>Услуги</Typography>
                <Select
+                  name="departmentName"
                   options={DEPARTMENTS}
-                  value={values.departmentName}
-                  onChange={serviceChangeHandler}
+                  value={DEPARTMENTS.find(
+                     (option) => option.value === values.departmentName
+                  )}
+                  onChange={(selectedOption) => {
+                     handleChange('departmentName')(selectedOption.value)
+                  }}
                   error={!!errors.departmentName}
                   placeholder="Выберите услугу"
                   className="custom-select"
                />
             </Box>
-
             <Box>
                <Typography>Специалисты</Typography>
                <Select placeholder="Выберите специалиста" />
-               {errors.doctorId && (
-                  <Typography color="error">{errors.doctorId}</Typography>
-               )}
             </Box>
-
             <Box className="input-block">
                <Box>
                   <Typography>Дата начала</Typography>
@@ -81,11 +112,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(date) => setFieldValue('createStartDate', date)}
                      error={!!errors.createStartDate}
                   />
-                  {errors.createStartDate && (
-                     <Typography color="error">
-                        {errors.createStartDate}
-                     </Typography>
-                  )}
                </Box>
 
                <span>-</span>
@@ -97,14 +123,8 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(date) => setFieldValue('createEndDate', date)}
                      error={!!errors.createEndDate}
                   />
-                  {errors.createEndDate && (
-                     <Typography color="error">
-                        {errors.createEndDate}
-                     </Typography>
-                  )}
                </Box>
             </Box>
-
             <Box className="input-block">
                <Box>
                   <Typography>Время от</Typography>
@@ -114,10 +134,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(time) => setFieldValue('startTime', time)}
                      error={!!errors.startTime}
                   />
-
-                  {errors.startTime && (
-                     <Typography color="error">{errors.startTime}</Typography>
-                  )}
                </Box>
 
                <span>-</span>
@@ -130,10 +146,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(time) => setFieldValue('endTime', time)}
                      error={!!errors.endTime}
                   />
-
-                  {errors.endTime && (
-                     <Typography color="error">{errors.endTime}</Typography>
-                  )}
                </Box>
 
                <Box>
@@ -141,16 +153,17 @@ const AddOnlineAppointments = ({ open, onClose }) => {
 
                   <Select
                      options={INTERVAL_TIME}
-                     value={values.interval}
-                     onChange={handleChange}
+                     value={INTERVAL_TIME.find(
+                        (literval) => literval.label === values.interval
+                     )}
+                     onChange={(selectedInterval) => {
+                        console.log(selectedInterval)
+                        handleChange('interval')(selectedInterval.time)
+                     }}
                      error={!!errors.interval}
                      placeholder="Выберите интервал часов"
                      className="custom-select"
                   />
-
-                  {errors.interval && (
-                     <Typography color="error">{errors.interval}</Typography>
-                  )}
                </Box>
             </Box>
             <Box className="input-block">
@@ -162,10 +175,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(time) => setFieldValue('startBreak', time)}
                      error={!!errors.startBreak}
                   />
-
-                  {errors.startBreak && (
-                     <Typography color="error">{errors.startBreak}</Typography>
-                  )}
                </Box>
 
                <span>-</span>
@@ -177,30 +186,31 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(time) => setFieldValue('endBreak', time)}
                      error={!!errors.endBreak}
                   />
-                  {errors.endBreak && (
-                     <Typography color="error">{errors.endBreak}</Typography>
-                  )}
                </Box>
+
                <Box>
                   <Typography>Выберите время для перерыва </Typography>
                </Box>
             </Box>
+            <Typography>Дни повторения </Typography>
             <Box className="asd">
-               {DAYS.map(({ id, label }) => (
+               {DAYS.map((day, index) => (
                   <button
+                     key={day.id}
+                     onClick={() => handleDayButtonClick(day.label)}
                      type="button"
-                     className={`active ${
-                        values.dayOfWeek[id] ? 'selected' : ''
-                     }`}
-                     key={id}
-                     onClick={() =>
-                        setFieldValue(`dayOfWeek.${id}`, !values.dayOfWeek[id])
+                     className={
+                        values.dayOfWeek[day.label] ? 'active' : 'bermet'
                      }
                   >
-                     {label}
+                     {RUSSIAN_DAYS[index].label}
                   </button>
                ))}
             </Box>
+            {/* {showToast({
+               message: appointmentsError(errors),
+               status: 'error',
+            })} */}
             <Box className="button-group">
                <StyledButton type="button" variant="grey">
                   ОТМЕНИТЬ
@@ -249,7 +259,7 @@ const StyledForm = styled('form')(() => ({
       justifyContent: 'space-between',
    },
 
-   '& .active': {
+   '& .bermet': {
       backgroundColor: '#fff',
       padding: '10px 17px 10px 16px',
       justifyContent: 'center',
@@ -260,9 +270,19 @@ const StyledForm = styled('form')(() => ({
       fontSize: '16px',
       fontWeight: '600',
       color: '#959595',
-      // backgroundColor: '#3977c0',
-      // color: '#ffffff',
-      // border: '0.3px solid #3977c0',
+   },
+
+   '&  .active': {
+      padding: '10px 17px 10px 16px',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      borderRadius: '10px',
+      fontSize: '16px',
+      fontWeight: '600',
+      backgroundColor: '#3977c0',
+      color: '#ffffff',
+      border: '0.3px solid #3977c0',
    },
 
    '& > .button-group': {

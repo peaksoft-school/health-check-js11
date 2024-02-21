@@ -47,5 +47,28 @@ const signUpError = (errors) => {
 
    return errorMessage
 }
+const appointmentsError = (errors) => {
+   let errorMessage = null
 
-export { signInError, signUpError, passwordError }
+   if (Object.keys(errors).length > 1) {
+      errorMessage = 'Пожалуйста заполните все поля!'
+   } else if (errors?.departmentName) {
+      errorMessage = errors.departmentName
+   } else if (errors?.doctor) {
+      errorMessage = errors.doctor
+   } else if (errors?.createStartDate) {
+      errorMessage = errors.createStartDate
+   } else if (errors?.createEndDate) {
+      errorMessage = errors.createEndDate
+   } else if (errors.startTime) {
+      errorMessage = errors.startTime
+   } else if (errors.interval) {
+      errorMessage = errors.interval
+   } else if (errors.dayOfWeek) {
+      errorMessage = errors.dayOfWeek
+   }
+
+   return errorMessage
+}
+
+export { signInError, signUpError, passwordError, appointmentsError }
