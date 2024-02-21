@@ -15,7 +15,7 @@ import Button from '../../components/UI/Button'
 import { VALIDATION_FORGOT_PASSWORD } from '../../utils/helpers/validate'
 import { passwordError } from '../../utils/helpers/index'
 import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
-import { changePassword } from '../../store/slices/auth/authThank'
+import { changePassword } from '../../store/slices/auth/authThunk'
 
 const ChangePassword = () => {
    const { isLoading } = useSelector((state) => state.auth)
@@ -70,7 +70,7 @@ const ChangePassword = () => {
    const open = true
 
    return (
-      <Modal open={open}>
+      <Modal open={open} isCloseIcon={false}>
          <StyledContainer>
             <Typography variant="h2" className="title">
                СМЕНА ПАРОЛЯ
@@ -151,6 +151,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    fontFamily: 'Manrope',
    gap: '1.5rem',
    alignItems: 'center',
+   paddingTop: '20px',
 
    '& > .title': {
       color: theme.palette.primary.lightBlack,

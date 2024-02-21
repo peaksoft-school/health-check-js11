@@ -201,9 +201,11 @@ const Header = () => {
                         open={openSignUpModal}
                         closeSignUp={toggleSignUpModal}
                         onClose={toggleSignUpModal}
+                        closeMenu={handleProfileMenuClose}
                      />
 
                      <SignIn
+                        closeMenu={handleProfileMenuClose}
                         open={openSignInModal}
                         onClose={toggleSignInModal}
                         closeSignUp={toggleSignUpModal}

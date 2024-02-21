@@ -6,7 +6,7 @@ import {
    forgotPassword,
    signIn,
    signUp,
-} from './authThank'
+} from './authThunk'
 
 const initialState = {
    isLoading: false,

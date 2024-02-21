@@ -17,10 +17,10 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 import ForgotPassword from '../forgot-password/ForgotPassword'
-import { authWithGoogle, signIn } from '../../store/slices/auth/authThank'
+import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
 import { auth, provider } from '../../utils/constants/authWithGoogle'
 
-const SignIn = ({ onClose, open, closeSignUp }) => {
+const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
    const { isLoading } = useSelector((state) => state.auth)
 
    const [showPassword, setShowPassword] = useState(false)
@@ -40,6 +40,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
    const onSubmit = (values, { resetForm }) => {
+      closeMenu()
       dispatch(signIn({ values, resetForm, onClose }))
    }
 
@@ -56,6 +57,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                   tokenId: data.user.accessToken,
                })
             )
+            closeMenu()
          })
          .catch((error) => {
             throw error

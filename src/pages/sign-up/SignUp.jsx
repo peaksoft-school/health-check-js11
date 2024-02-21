@@ -17,11 +17,11 @@ import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
-import { authWithGoogle, signUp } from '../../store/slices/auth/authThank'
+import { authWithGoogle, signUp } from '../../store/slices/auth/authThunk'
 import { auth, provider } from '../../utils/constants/authWithGoogle'
 import SignIn from '../sign-in/SignIn'
 
-const SignUp = ({ onClose, open, closeSignUp }) => {
+const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
    const { isLoading } = useSelector((state) => state.auth)
 
    const [showPassword, setShowPassword] = useState(false)
@@ -45,7 +45,7 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
          number: values.number,
          password: values.password,
       }
-
+      closeMenu()
       dispatch(signUp({ dataToSend, resetForm, onClose }))
    }
 
@@ -55,14 +55,18 @@ const SignUp = ({ onClose, open, closeSignUp }) => {
    }
 
    const signUpWithGoogleHandler = async () => {
-      await signInWithPopup(auth, provider).then((data) => {
-         dispatch(
-            authWithGoogle({
-               tokenId: data.user.accessToken,
-            })
-         )
-      })
-
+      await signInWithPopup(auth, provider)
+         .then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            closeMenu()
+         })
+         .catch((error) => {
+            throw error
+         })
       onClose()
    }
 

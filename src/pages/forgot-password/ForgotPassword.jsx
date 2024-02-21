@@ -4,7 +4,7 @@ import { Typography, styled, Box } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
-import { forgotPassword } from '../../store/slices/auth/authThank'
+import { forgotPassword } from '../../store/slices/auth/authThunk'
 
 const ForgotPassword = ({ open, onClose }) => {
    const { isLoading } = useSelector((state) => state.auth)

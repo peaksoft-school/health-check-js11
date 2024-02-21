@@ -21,7 +21,7 @@ const VALIDATION_SIGN_UP = Yup.object().shape({
    password: Yup.string()
       .required('Введите пароль!')
       .min(8, 'Минимальная длина пароля 8 символов!')
-      .matches(passwordRegex, 'Не правильный формат пароля'),
+      .matches(passwordRegex, 'Пароль должен содержать уникальный символ!'),
 
    confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Пароли не совпадают!')
