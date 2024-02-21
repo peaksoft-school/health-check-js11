@@ -4,8 +4,8 @@ import { APPOINTMENTS_ACTIONS } from '../../../../store/slices/appointmentsSlice
 
 const SelectSeparately = ({ isSelected, appointmentId }) => {
    const dispatch = useDispatch()
-   const deletedAppointmentsIds = useSelector(
-      (state) => state.appointmentsAdmin.deletedAppointmentsIds
+   const { deletedAppointmentsIds } = useSelector(
+      (state) => state.appointmentsAdmin
    )
 
    const handleChange = () => {

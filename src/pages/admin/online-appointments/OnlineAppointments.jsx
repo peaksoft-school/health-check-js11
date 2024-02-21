@@ -1,45 +1,36 @@
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants'
 import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Loading from '../../../components/UI/Loading'
 import {
    getAppointments,
    searchAppointments,
 } from '../../../store/slices/appointmentThunk'
-import Loading from '../../../components/UI/Loading'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
    const [searchName, setSearchName] = useState('')
+   const [showAddButton, setShowAddButton] = useState(true)
+   const [searchResults, setSearchResults] = useState([])
 
    const dispatch = useDispatch()
 
-   const { isLoading, appointments, error } = useSelector(
-      (state) => state.appointmentsAdmin
-   )
+   const { isLoading, error } = useSelector((state) => state.appointmentsAdmin)
 
-   const handleSearchChange = useCallback((e) => {
+   const handleSearchChange = (e) => {
       setSearchName(e.target.value)
-   }, [])
+   }
 
    const [debouncedSearchText] = useDebounce(searchName, 1000)
 
    useEffect(() => {
-      if (debouncedSearchText !== undefined) {
-         dispatch(
-            searchAppointments({
-               searchText: debouncedSearchText,
-               otherParam: 'name',
-            })
-         )
-      }
-
       const fetchData = async () => {
          try {
             dispatch(getAppointments())
@@ -48,24 +39,45 @@ const OnlineAppointments = () => {
          }
       }
       fetchData()
+   }, [dispatch])
+
+   useEffect(() => {
+      if (debouncedSearchText !== undefined) {
+         dispatch(
+            searchAppointments({
+               searchName: debouncedSearchText,
+               otherParam: 'name',
+            })
+         ).then((action) => {
+            const results = action.payload
+            setSearchResults(results)
+         })
+      }
    }, [debouncedSearchText, dispatch])
 
-   const filteredAppointments = useMemo(() => {
-      return appointments?.filter((appointment) =>
-         appointment.fullName
-            .toLowerCase()
-            .includes(debouncedSearchText.toLowerCase())
-      )
-   }, [appointments, debouncedSearchText])
-
-   const handleChange = useCallback((event, newValue) => {
+   const handleChange = (event, newValue) => {
       setValue(newValue)
-   }, [])
+      setShowAddButton(newValue === '1')
+   }
+
+   console.log(searchResults)
 
    return (
       <StyledContainer>
          <Box className="box">
-            <Typography className="title">Онлайн-запись</Typography>
+            <Box className="button-container">
+               <Typography className="title">Онлайн-запись</Typography>
+
+               {showAddButton && (
+                  <Button className="add-button">
+                     <PlusIcon className="plus-icon" /> Добавить запись
+                  </Button>
+               )}
+
+               {!showAddButton && (
+                  <Button className="different-button">some</Button>
+               )}
+            </Box>
 
             <Box sx={{ width: '100%', typography: 'body1' }}>
                <TabContext value={value}>
@@ -79,18 +91,11 @@ const OnlineAppointments = () => {
                            value="1"
                            className="route"
                         />
-
                         <Tab label="Расписание" value="2" className="route" />
                      </TabList>
                   </Box>
 
                   <TabPanel value="1" className="tables">
-                     <Box className="button-container">
-                        <Button className="add-button">
-                           <PlusIcon className="plus-icon" /> Добавить запись
-                        </Button>
-                     </Box>
-
                      <Box className="input-container">
                         <StyledInput
                            placeholder="Поиск"
@@ -105,7 +110,7 @@ const OnlineAppointments = () => {
                      <Box className="table-container">
                         <Table
                            columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={filteredAppointments}
+                           data={searchResults}
                         />
                      </Box>
                   </TabPanel>
@@ -124,7 +129,7 @@ export default OnlineAppointments
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#fe0000',
+   backgroundColor: '#F5F5F5',
 
    '& > .box': {
       display: 'flex',
@@ -133,11 +138,38 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       margin: '0 auto',
       paddingBottom: '30px',
 
-      '& .title': {
-         fontSize: '1.375rem',
-         fontWeight: '400',
-         lineHeight: 'normal',
-         marginBottom: '1.87rem',
+      '& .button-container': {
+         display: 'flex',
+         justifyContent: 'space-between',
+
+         '& .title': {
+            fontSize: '1.375rem',
+            fontWeight: '400',
+            lineHeight: 'normal',
+            marginBottom: '1.87rem',
+         },
+
+         '& > .add-button': {
+            fontFamily: 'Manrope',
+            fontSize: '0.875rem',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: 'normal',
+            letterSpacing: '0.02625rem',
+            textTransform: 'uppercase',
+            display: 'flex',
+            height: '2.75rem',
+            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+            alignItems: 'center',
+            gap: '0.625rem',
+            width: '13.0625rem !important',
+            flexShrink: '0',
+
+            '& > .plus-icon': {
+               width: '1.125rem',
+               height: '1.125rem',
+            },
+         },
       },
 
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
@@ -161,33 +193,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '& .tables': {
          padding: '0rem',
-
-         '& .button-container': {
-            display: 'flex',
-            justifyContent: 'flex-end',
-
-            '& > .add-button': {
-               fontFamily: 'Manrope',
-               fontSize: '0.875rem',
-               fontStyle: 'normal',
-               fontWeight: '600',
-               lineHeight: 'normal',
-               letterSpacing: '0.02625rem',
-               textTransform: 'uppercase',
-               display: 'flex',
-               height: '2.75rem',
-               padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-               alignItems: 'center',
-               gap: '0.625rem',
-               width: '13.0625rem !important',
-               flexShrink: '0',
-
-               '& > .plus-icon': {
-                  width: '1.125rem',
-                  height: '1.125rem',
-               },
-            },
-         },
       },
 
       '& .input-container': {

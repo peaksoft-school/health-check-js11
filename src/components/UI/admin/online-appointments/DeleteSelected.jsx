@@ -33,8 +33,6 @@ const DeleteSelected = ({ disabled }) => {
       }
    }
 
-   console.log(deletedAppointmentsIds)
-
    return (
       <>
          <StyledDeleteButton

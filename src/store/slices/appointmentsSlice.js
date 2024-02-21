@@ -9,7 +9,6 @@ import { showToast } from '../../utils/helpers/notification'
 
 const initialState = {
    appointments: [],
-   newAppointments: [],
    isLoading: false,
    error: null,
    selectAll: false,
