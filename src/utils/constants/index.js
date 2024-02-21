@@ -568,6 +568,134 @@ const DAYS = [
    },
 ]
 
+const DEPARTMENTS = [
+   {
+      id: 1,
+      label: 'Анестезиология',
+   },
+
+   {
+      id: 2,
+      label: 'Онкология',
+   },
+
+   {
+      id: 3,
+      label: 'Терапия',
+   },
+
+   {
+      id: 4,
+      label: 'Ортопедия',
+   },
+
+   {
+      id: 5,
+      label: 'Урология',
+   },
+
+   {
+      id: 6,
+      label: 'Вакцинация',
+   },
+
+   {
+      id: 7,
+      label: 'Оториноларинология',
+   },
+
+   {
+      id: 8,
+      label: 'Флебология',
+   },
+
+   {
+      id: 9,
+      label: 'Офтальмология',
+   },
+
+   {
+      id: 10,
+      label: 'Гинекология',
+   },
+
+   {
+      id: 11,
+      label: 'Эндокринология',
+   },
+
+   {
+      id: 12,
+      label: 'Дерматология',
+   },
+
+   {
+      id: 13,
+      title: 'Проктология',
+   },
+
+   {
+      id: 14,
+      label: 'Физиотерапия',
+   },
+
+   {
+      id: 15,
+      label: 'Кардиология',
+   },
+
+   {
+      id: 16,
+      label: 'Психотерапия',
+   },
+
+   {
+      id: 17,
+      label: 'Невропатия',
+   },
+
+   {
+      id: 18,
+      label: 'Пульмонология',
+   },
+
+   {
+      id: 19,
+      label: 'Ревмотопатия',
+   },
+
+   {
+      id: 20,
+      label: 'Нейрохирургия',
+   },
+]
+
+const INTERVAL_TIME = [
+   {
+      id: 1,
+      label: '30 минут',
+      time: 30,
+   },
+
+   {
+      id: 2,
+      label: '45 минут',
+      time: 45,
+   },
+
+   {
+      id: 3,
+      label: ' 1 час',
+      time: 60,
+   },
+
+   {
+      id: 4,
+      label: '1,5 часа',
+      time: 90,
+   },
+]
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -584,4 +712,6 @@ export {
    ONLINE_APPOINTMENTS_COLUMN,
    HEADER_ADMIN,
    DAYS,
+   DEPARTMENTS,
+   INTERVAL_TIME,
 }

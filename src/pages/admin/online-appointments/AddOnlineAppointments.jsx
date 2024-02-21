@@ -1,61 +1,185 @@
+import { useEffect } from 'react'
 import { styled, Typography, Box } from '@mui/material'
+import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
 import TimePicker from '../../../components/UI/TimePicker'
 import Button from '../../../components/UI/Button'
-import { DAYS } from '../../../utils/constants'
+import { DAYS, DEPARTMENTS, INTERVAL_TIME } from '../../../utils/constants'
+import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
+import { getAllDoctors } from '../../../store/schedule/scheduleThunk'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
    const open1 = true
+   const dispatch = useDispatch()
+
+   useEffect(() => {
+      dispatch(getAllDoctors())
+   }, [])
+
+   const serviceChangeHandler = (e) => {
+      const departmentId = DEPARTMENTS.id
+      dispatch(getAllDoctors({ departmentId }))
+   }
+
+   const onSubmit = (values, { resetForm }) => {
+      resetForm()
+      console.log(values)
+   }
+
+   const { values, handleChange, handleSubmit, errors, setFieldValue } =
+      useFormik({
+         initialValues: {
+            departmentName: 'ehjkjubz',
+            doctor: 'cnkdsnkdcncsk',
+            createStartDate: '',
+            createEndDate: '',
+            startTime: '',
+            endTime: '',
+            interval: '45',
+            startBreak: '',
+            endBreak: '',
+            dayOfWeek: {},
+         },
+
+         validateOnChange: false,
+         onSubmit,
+         validationSchema: VALIDATION_SCHEDULE,
+      })
 
    return (
       <Modal open={open1}>
-         <StyledForm>
-            <h2>Добавление записей</h2>
+         <StyledForm onSubmit={handleSubmit}>
+            <h2>Добавление расписания</h2>
             <Box>
                <Typography>Услуги</Typography>
-               <Select placeholder="Выберите услугу" className="select" />
+               <Select
+                  options={DEPARTMENTS}
+                  value={values.departmentName}
+                  onChange={serviceChangeHandler}
+                  error={!!errors.departmentName}
+                  placeholder="Выберите услугу"
+                  className="custom-select"
+               />
             </Box>
+
             <Box>
                <Typography>Специалисты</Typography>
                <Select placeholder="Выберите специалиста" />
+               {errors.doctorId && (
+                  <Typography color="error">{errors.doctorId}</Typography>
+               )}
             </Box>
+
             <Box className="input-block">
                <Box>
-                  <Typography>Дата начало</Typography>
-                  <DatePicker />
+                  <Typography>Дата начала</Typography>
+                  <DatePicker
+                     value={values.createStartDate}
+                     onChange={(date) => setFieldValue('createStartDate', date)}
+                     error={!!errors.createStartDate}
+                  />
+                  {errors.createStartDate && (
+                     <Typography color="error">
+                        {errors.createStartDate}
+                     </Typography>
+                  )}
                </Box>
+
                <span>-</span>
+
                <Box>
                   <Typography>Дата окончания</Typography>
-                  <DatePicker />
+                  <DatePicker
+                     value={values.createEndDate}
+                     onChange={(date) => setFieldValue('createEndDate', date)}
+                     error={!!errors.createEndDate}
+                  />
+                  {errors.createEndDate && (
+                     <Typography color="error">
+                        {errors.createEndDate}
+                     </Typography>
+                  )}
+               </Box>
+            </Box>
+
+            <Box className="input-block">
+               <Box>
+                  <Typography>Время от</Typography>
+
+                  <TimePicker
+                     value={values.startTime}
+                     onChange={(time) => setFieldValue('startTime', time)}
+                     error={!!errors.startTime}
+                  />
+
+                  {errors.startTime && (
+                     <Typography color="error">{errors.startTime}</Typography>
+                  )}
+               </Box>
+
+               <span>-</span>
+
+               <Box>
+                  <Typography>Время до</Typography>
+
+                  <TimePicker
+                     value={values.endTime}
+                     onChange={(time) => setFieldValue('endTime', time)}
+                     error={!!errors.endTime}
+                  />
+
+                  {errors.endTime && (
+                     <Typography color="error">{errors.endTime}</Typography>
+                  )}
+               </Box>
+
+               <Box>
+                  <Typography>Интервал часов</Typography>
+
+                  <Select
+                     options={INTERVAL_TIME}
+                     value={values.interval}
+                     onChange={handleChange}
+                     error={!!errors.interval}
+                     placeholder="Выберите интервал часов"
+                     className="custom-select"
+                  />
+
+                  {errors.interval && (
+                     <Typography color="error">{errors.interval}</Typography>
+                  )}
                </Box>
             </Box>
             <Box className="input-block">
                <Box>
                   <Typography>Время от</Typography>
-                  <TimePicker />
+
+                  <TimePicker
+                     value={values.startBreak}
+                     onChange={(time) => setFieldValue('startBreak', time)}
+                     error={!!errors.startBreak}
+                  />
+
+                  {errors.startBreak && (
+                     <Typography color="error">{errors.startBreak}</Typography>
+                  )}
                </Box>
+
                <span>-</span>
+
                <Box>
                   <Typography>Время до</Typography>
-                  <TimePicker />
-               </Box>
-               <Box>
-                  <Typography>Интервал часов </Typography>
-                  <Select placeholder="Выберите интервал часов" />
-               </Box>
-            </Box>
-            <Box className="input-block">
-               <Box>
-                  <Typography>Время от</Typography>
-                  <TimePicker />
-               </Box>
-               <span>-</span>
-               <Box>
-                  <Typography>Время до</Typography>
-                  <TimePicker />
+                  <TimePicker
+                     value={values.endBreak}
+                     onChange={(time) => setFieldValue('endBreak', time)}
+                     error={!!errors.endBreak}
+                  />
+                  {errors.endBreak && (
+                     <Typography color="error">{errors.endBreak}</Typography>
+                  )}
                </Box>
                <Box>
                   <Typography>Выберите время для перерыва </Typography>
@@ -63,7 +187,16 @@ const AddOnlineAppointments = ({ open, onClose }) => {
             </Box>
             <Box className="asd">
                {DAYS.map(({ id, label }) => (
-                  <button type="button" className="active" key={id}>
+                  <button
+                     type="button"
+                     className={`active ${
+                        values.dayOfWeek[id] ? 'selected' : ''
+                     }`}
+                     key={id}
+                     onClick={() =>
+                        setFieldValue(`dayOfWeek.${id}`, !values.dayOfWeek[id])
+                     }
+                  >
                      {label}
                   </button>
                ))}
@@ -72,7 +205,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                <StyledButton type="button" variant="grey">
                   ОТМЕНИТЬ
                </StyledButton>
-               <StyledButton type="button">ОПУБЛИКОВАТЬ </StyledButton>
+               <StyledButton type="submit">ОПУБЛИКОВАТЬ</StyledButton>
             </Box>
          </StyledForm>
       </Modal>

@@ -11,9 +11,11 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './authSlice'
+import { scheduleSlice } from './schedule/scheduleSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
+   [scheduleSlice.name]: scheduleSlice.reducer,
 })
 
 const persistConfig = {

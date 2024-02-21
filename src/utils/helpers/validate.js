@@ -48,4 +48,30 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
       .required('Подтвердите пароль!'),
 })
 
-export { VALIDATION_SIGN_IN, VALIDATION_FORGOT_PASSWORD, VALIDATION_SIGN_UP }
+const VALIDATION_SCHEDULE = Yup.object().shape({
+   услуги: Yup.string().required('Поле "Услуги" обязательно для заполнения'),
+   специалисты: Yup.string().required(
+      'Поле "Специалисты" обязательно для заполнения'
+   ),
+   датаНачало: Yup.date().required(
+      'Поле "Дата начала" обязательно для заполнения'
+   ),
+   датаОкончания: Yup.date().required(
+      'Поле "Дата окончания" обязательно для заполнения'
+   ),
+   времяОт: Yup.string().required('Поле "Время от" обязательно для заполнения'),
+   времяДо: Yup.string().required('Поле "Время до" обязательно для заполнения'),
+   интервалЧасов: Yup.string().required(
+      'Поле "Интервал часов" обязательно для заполнения'
+   ),
+   времяПерерыва: Yup.string().required(
+      'Поле "Выберите время для перерыва" обязательно для заполнения'
+   ),
+})
+
+export {
+   VALIDATION_SIGN_IN,
+   VALIDATION_FORGOT_PASSWORD,
+   VALIDATION_SIGN_UP,
+   VALIDATION_SCHEDULE,
+}
