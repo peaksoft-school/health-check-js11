@@ -15,14 +15,16 @@ import {
 } from '../../../store/slices/appointmentThunk'
 
 const OnlineAppointments = () => {
+   const { isLoading, error, appointments } = useSelector(
+      (state) => state.appointmentsAdmin
+   )
+
    const [value, setValue] = useState('1')
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
-   const [searchResults, setSearchResults] = useState([])
+   const [searchResults, setSearchResults] = useState(appointments)
 
    const dispatch = useDispatch()
-
-   const { isLoading, error } = useSelector((state) => state.appointmentsAdmin)
 
    const handleSearchChange = (e) => {
       setSearchName(e.target.value)
@@ -53,14 +55,12 @@ const OnlineAppointments = () => {
             setSearchResults(results)
          })
       }
-   }, [debouncedSearchText, dispatch])
+   }, [debouncedSearchText, appointments, dispatch])
 
    const handleChange = (event, newValue) => {
       setValue(newValue)
       setShowAddButton(newValue === '1')
    }
-
-   console.log(searchResults)
 
    return (
       <StyledContainer>
