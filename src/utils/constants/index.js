@@ -732,6 +732,16 @@ const RUSSIAN_DAYS = [
    { id: 6, label: 'Вс' },
 ]
 
+const DAYS_OF_WEEK = {
+   Su: 'ПН',
+   Mo: 'ВТ',
+   Tu: 'СР',
+   We: 'ЧТ',
+   Th: 'ПТ',
+   Fr: 'СБ',
+   Sa: 'ВС',
+}
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -751,4 +761,5 @@ export {
    DEPARTMENTS,
    INTERVAL_TIME,
    RUSSIAN_DAYS,
+   DAYS_OF_WEEK,
 }

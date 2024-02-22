@@ -47,12 +47,11 @@ const signUpError = (errors) => {
 
    return errorMessage
 }
+
 const appointmentsError = (errors) => {
    let errorMessage = null
 
-   if (Object.keys(errors).length > 1) {
-      errorMessage = 'Пожалуйста заполните все поля!'
-   } else if (errors?.departmentName) {
+   if (errors?.departmentName) {
       errorMessage = errors.departmentName
    } else if (errors?.doctor) {
       errorMessage = errors.doctor

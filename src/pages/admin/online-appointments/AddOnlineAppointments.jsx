@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import { styled, Typography, Box } from '@mui/material'
 import { useFormik } from 'formik'
 import { format } from 'date-fns'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
@@ -15,7 +14,10 @@ import {
    RUSSIAN_DAYS,
 } from '../../../utils/constants'
 import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
-import { getAllDoctors } from '../../../store/schedule/scheduleThunk'
+import {
+   getDoctorsByDepartment,
+   postNewSchedule,
+} from '../../../store/schedule/scheduleThunk'
 import { showToast } from '../../../utils/helpers/notification'
 import { appointmentsError } from '../../../utils/helpers'
 
@@ -23,18 +25,9 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    const open1 = true
    const dispatch = useDispatch()
 
-   // useEffect(() => {
-   //    dispatch(getAllDoctors())
-   // }, [])
-
-   // const serviceChangeHandler = (e) => {
-   // const selectedService = e.label
-   // console.log(e.label, 'asd')
-   // dispatch(getAllDoctors({ departmentId }))
-   // }
+   const { doctors } = useSelector((state) => state.schedule)
 
    const onSubmit = (values, { resetForm }) => {
-      console.log(values, 'values')
       values.createStartDate = format(
          new Date(values.createStartDate),
          'yyyy-MM-dd'
@@ -49,7 +42,35 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       values.endTime = format(new Date(values.endTime), 'HH:mm')
       values.startBreak = format(new Date(values.startBreak), 'HH:mm')
       values.endBreak = format(new Date(values.endBreak), 'HH:mm')
-      // resetForm()
+
+      const dataToSend = {
+         createStartDate: values.createStartDate,
+         createEndDate: values.createEndDate,
+         startTime: values.startTime,
+         endTime: values.endTime,
+         interval: values.interval,
+         startBreak: values.startBreak,
+         endBreak: values.endBreak,
+
+         dayOfWeek: values.dayOfWeek,
+      }
+
+      const selectedDoctorName = values.doctor
+      const selectedDoctor = doctors.find(
+         (doctor) => doctor.fullNameDoctor === selectedDoctorName
+      )
+
+      const selectedDoctorId = selectedDoctor.id
+      dispatch(
+         postNewSchedule(
+            {
+               doctorId: selectedDoctorId,
+               departmentName: values.departmentName,
+               schedule: dataToSend,
+            },
+            resetForm
+         )
+      )
    }
 
    const { values, handleChange, handleSubmit, errors, setFieldValue } =
@@ -73,8 +94,17 @@ const AddOnlineAppointments = ({ open, onClose }) => {
          validationSchema: VALIDATION_SCHEDULE,
       })
 
-   console.log(errors)
-   console.log(values)
+   // const errorMessage = appointmentsError(errors)
+
+   const getDoctors = (selectedOption) => {
+      handleChange('departmentName')(selectedOption.value)
+      dispatch(getDoctorsByDepartment({ params: selectedOption.label }))
+   }
+
+   const doctorsFullname = doctors.map((doctor) => ({
+      value: doctor.id,
+      label: doctor.fullNameDoctor,
+   }))
 
    const handleDayButtonClick = (dayLabel) => {
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
@@ -83,34 +113,48 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    return (
       <Modal open={open1}>
          <StyledForm onSubmit={handleSubmit}>
-            <h2>Добавление расписания</h2>
+            <h2>Добавление записи</h2>
+
             <Box>
                <Typography>Услуги</Typography>
+
                <Select
                   name="departmentName"
                   options={DEPARTMENTS}
                   value={DEPARTMENTS.find(
                      (option) => option.value === values.departmentName
                   )}
-                  onChange={(selectedOption) => {
-                     handleChange('departmentName')(selectedOption.value)
-                  }}
+                  onChange={(selectedOption) => getDoctors(selectedOption)}
                   error={!!errors.departmentName}
                   placeholder="Выберите услугу"
                   className="custom-select"
                />
             </Box>
+
             <Box>
                <Typography>Специалисты</Typography>
-               <Select placeholder="Выберите специалиста" />
+
+               <Select
+                  value={doctorsFullname.find(
+                     (option) => option.label === values.doctor
+                  )}
+                  options={doctorsFullname}
+                  onChange={(selectedOption) => {
+                     setFieldValue('doctor', selectedOption.label)
+                  }}
+                  placeholder="Выберите специалиста"
+               />
             </Box>
+
             <Box className="input-block">
                <Box>
                   <Typography>Дата начала</Typography>
+
                   <DatePicker
                      value={values.createStartDate}
                      onChange={(date) => setFieldValue('createStartDate', date)}
                      error={!!errors.createStartDate}
+                     variant="custom"
                   />
                </Box>
 
@@ -118,10 +162,12 @@ const AddOnlineAppointments = ({ open, onClose }) => {
 
                <Box>
                   <Typography>Дата окончания</Typography>
+
                   <DatePicker
                      value={values.createEndDate}
                      onChange={(date) => setFieldValue('createEndDate', date)}
                      error={!!errors.createEndDate}
+                     variant="custom"
                   />
                </Box>
             </Box>
@@ -156,10 +202,9 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      value={INTERVAL_TIME.find(
                         (literval) => literval.label === values.interval
                      )}
-                     onChange={(selectedInterval) => {
-                        console.log(selectedInterval)
+                     onChange={(selectedInterval) =>
                         handleChange('interval')(selectedInterval.time)
-                     }}
+                     }
                      error={!!errors.interval}
                      placeholder="Выберите интервал часов"
                      className="custom-select"
@@ -181,6 +226,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
 
                <Box>
                   <Typography>Время до</Typography>
+
                   <TimePicker
                      value={values.endBreak}
                      onChange={(time) => setFieldValue('endBreak', time)}
@@ -207,10 +253,13 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                   </button>
                ))}
             </Box>
-            {/* {showToast({
-               message: appointmentsError(errors),
-               status: 'error',
-            })} */}
+            {appointmentsError(errors) && (
+               // showToast({
+               //    message: appointmentsError(errors),
+               //    status: 'error',
+               // })
+               <p> {appointmentsError(errors)}</p>
+            )}
             <Box className="button-group">
                <StyledButton type="button" variant="grey">
                   ОТМЕНИТЬ
@@ -231,6 +280,18 @@ const StyledForm = styled('form')(() => ({
    display: 'flex',
    flexDirection: 'column',
    justifyContent: 'space-between',
+
+   '& .doctor-select-box': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+
+      '& .select-image': {
+         width: '35px',
+         height: '35px',
+         borderRadius: '50%',
+      },
+   },
 
    '& > h2': {
       textAlign: 'center',

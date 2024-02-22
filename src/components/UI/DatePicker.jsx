@@ -1,16 +1,7 @@
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
 import { parseISO } from 'date-fns'
-
-const daysOfWeekMap = {
-   Su: 'ПН',
-   Mo: 'ВТ',
-   Tu: 'СР',
-   We: 'ЧТ',
-   Th: 'ПТ',
-   Fr: 'СБ',
-   Sa: 'ВС',
-}
+import { DAYS_OF_WEEK } from '../../utils/constants'
 
 const DatePicker = ({
    value,
@@ -33,7 +24,7 @@ const DatePicker = ({
          onChange={(date) => onChange(date)}
          onBlur={onBlur}
          dayOfWeekFormatter={(_day, weekday) =>
-            daysOfWeekMap[weekday.format('dd')]
+            DAYS_OF_WEEK[weekday.format('dd')]
          }
          {...rest}
          maxDate={maxDate}
@@ -54,9 +45,11 @@ const DatePicker = ({
                   '.MuiPickersArrowSwitcher-spacer': {
                      width: '90px',
                   },
+
                   '.MuiPickersArrowSwitcher-button': {
                      marginLeft: '38px',
                   },
+
                   '.MuiDayCalendar-weekDayLabel': {
                      color: 'var(--primary-black, #222)',
                      textAlign: 'center',
@@ -65,15 +58,19 @@ const DatePicker = ({
                      fontWeight: '500',
                      textTransform: 'uppercase',
                   },
+
                   '.MuiPickersCalendarHeader-label': {
                      textTransform: 'capitalize',
                   },
+
                   '.MuiIconButton-root-MuiPickersArrowSwitcher-button': {
                      position: 'absolute',
                   },
+
                   '.MuiPickersCalendarHeader-switchViewButton': {
                      display: 'none',
                   },
+
                   '.MuiPickersCalendarHeader-labelContainer': {
                      marginLeft: '20%',
                      order: '1',
@@ -81,6 +78,7 @@ const DatePicker = ({
                      position: 'absolute',
                      right: '100px',
                   },
+
                   '.MuiPickersDay-root': {
                      borderRadius: variant === 'custom' ? '50%' : '3px',
                      height: variant === 'custom' ? 'none' : '28px',
@@ -88,6 +86,7 @@ const DatePicker = ({
                      fontWeight: '500',
                      color: 'var(--primary-black-gray, #4D4E51)',
                   },
+
                   '.MuiPickersDay-root:focus.Mui-selected': {
                      background: 'var(--primary-green, #048741) !important',
                      color: 'white',
@@ -99,12 +98,14 @@ const DatePicker = ({
    )
 }
 export default DatePicker
-const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
+
+const StyledDatePicker = styled(MuiDatePicker)(() => ({
    borderRadius: '8px',
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
-   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+   border: '1px solid #D4D4D4',
+
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',
