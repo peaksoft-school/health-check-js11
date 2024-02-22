@@ -99,13 +99,12 @@ const DatePicker = ({
 }
 export default DatePicker
 
-const StyledDatePicker = styled(MuiDatePicker)(() => ({
+const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    borderRadius: '8px',
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
-   border: '1px solid #D4D4D4',
-
+   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',

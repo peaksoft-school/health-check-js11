@@ -27,7 +27,7 @@ const postNewSchedule = createAsyncThunk(
    async ({ doctorId, departmentName, schedule }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
-            `/api/schedule/saveScheduleDoctor?facility=${departmentName}&doctorId=${doctorId}`,
+            `api/schedule/saveScheduleDoctor?facility=${departmentName}&doctorId=${doctorId}`,
             schedule
          )
          showToast({
@@ -40,6 +40,7 @@ const postNewSchedule = createAsyncThunk(
             message: error.message,
             status: 'error',
          })
+         console.log(schedule, 'success')
 
          return rejectWithValue(error)
       }

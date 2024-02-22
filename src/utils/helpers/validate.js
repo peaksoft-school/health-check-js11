@@ -55,6 +55,8 @@ const VALIDATION_SCHEDULE = Yup.object().shape({
    createEndDate: Yup.date().required('Выберите дату окончания!'),
    startTime: Yup.string().required('Выберите начало времени!'),
    endTime: Yup.string().required('Выберите время окончания!'),
+   startBreak: Yup.string().required('Выберите время начало перевыва!'),
+   endBreak: Yup.string().required('Выберите время окончания парерыва!'),
    interval: Yup.string().required('Выберите интервал часов!'),
    dayOfWeek: Yup.object().test(
       'is-empty',

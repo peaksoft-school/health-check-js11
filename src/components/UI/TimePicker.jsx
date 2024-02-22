@@ -35,13 +35,12 @@ const TimePicker = ({
 
 export default TimePicker
 
-const StyledTimePicker = styled(MuiTimePicker)(() => ({
+const StyledTimePicker = styled(MuiTimePicker)(({ error }) => ({
    borderRadius: '6px',
    fontFamily: 'Manropo',
    fontWeight: '400',
    fontSize: '14px',
-   border: '1px solid #D4D4D4',
-
+   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
    input: {
       width: '3.7rem',
       padding: '3px 6px 3px 6px',
@@ -50,11 +49,9 @@ const StyledTimePicker = styled(MuiTimePicker)(() => ({
       color: '#4D4E51',
       paddingRight: '0',
    },
-
    '.MuiOutlinedInput-notchedOutline': {
       border: 'none',
    },
-
    '.MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
       display: 'none',
    },

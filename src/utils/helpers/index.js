@@ -65,6 +65,10 @@ const appointmentsError = (errors) => {
       errorMessage = errors.interval
    } else if (errors.dayOfWeek) {
       errorMessage = errors.dayOfWeek
+   } else if (errors.startBreak) {
+      errorMessage = errors.startBreak
+   } else if (errors.endBreak) {
+      errorMessage = errors.endBreak
    }
 
    return errorMessage

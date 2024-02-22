@@ -1,6 +1,7 @@
 import { styled, Typography, Box } from '@mui/material'
 import { useFormik } from 'formik'
 import { format } from 'date-fns'
+import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
@@ -18,7 +19,6 @@ import {
    getDoctorsByDepartment,
    postNewSchedule,
 } from '../../../store/schedule/scheduleThunk'
-import { showToast } from '../../../utils/helpers/notification'
 import { appointmentsError } from '../../../utils/helpers'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
@@ -94,8 +94,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
          validationSchema: VALIDATION_SCHEDULE,
       })
 
-   // const errorMessage = appointmentsError(errors)
-
    const getDoctors = (selectedOption) => {
       handleChange('departmentName')(selectedOption.value)
       dispatch(getDoctorsByDepartment({ params: selectedOption.label }))
@@ -109,6 +107,8 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    const handleDayButtonClick = (dayLabel) => {
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
    }
+
+   const dateToday = dayjs()
 
    return (
       <Modal open={open1}>
@@ -143,6 +143,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      setFieldValue('doctor', selectedOption.label)
                   }}
                   placeholder="Выберите специалиста"
+                  error={!!errors.doctor}
                />
             </Box>
 
@@ -155,6 +156,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(date) => setFieldValue('createStartDate', date)}
                      error={!!errors.createStartDate}
                      variant="custom"
+                     minDate={dateToday}
                   />
                </Box>
 
@@ -168,6 +170,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                      onChange={(date) => setFieldValue('createEndDate', date)}
                      error={!!errors.createEndDate}
                      variant="custom"
+                     minDate={dateToday}
                   />
                </Box>
             </Box>
@@ -254,11 +257,9 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                ))}
             </Box>
             {appointmentsError(errors) && (
-               // showToast({
-               //    message: appointmentsError(errors),
-               //    status: 'error',
-               // })
-               <p> {appointmentsError(errors)}</p>
+               <Typography className="error-message">
+                  {appointmentsError(errors)}
+               </Typography>
             )}
             <Box className="button-group">
                <StyledButton type="button" variant="grey">
@@ -315,9 +316,10 @@ const StyledForm = styled('form')(() => ({
       },
    },
 
-   '& > .asd': {
+   '&  .asd': {
       display: 'flex',
       justifyContent: 'space-between',
+      marginBottom: '2em',
    },
 
    '& .bermet': {
@@ -349,6 +351,13 @@ const StyledForm = styled('form')(() => ({
    '& > .button-group': {
       display: 'flex',
       justifyContent: 'space-between',
+   },
+
+   '& .error-message': {
+      color: ' red',
+      position: 'absolute',
+      top: '560px',
+      left: '56px',
    },
 }))
 
