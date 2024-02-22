@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../configs/axiosInstance'
 
-const BASE_URL = process.env.API_URL
-
 const getApplicationData = createAsyncThunk(
    'data/fetchData',
+
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('/api/application/getAll')
@@ -15,8 +14,10 @@ const getApplicationData = createAsyncThunk(
       }
    }
 )
+
 const searchApplications = createAsyncThunk(
    'aplication/search',
+
    async (searchText, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
@@ -66,6 +67,7 @@ const deleteAllApplication = createAsyncThunk(
          await axiosInstance.delete('/api/application/all', {
             data: ids,
          })
+         dispatch(getApplicationData())
       } catch (error) {
          throw new Error('Error', error)
       }

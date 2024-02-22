@@ -5,31 +5,33 @@ import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
 import { deleteAllApplication } from '../../../../store/thunks/applicationThunk'
+import { handleRemoveChecked } from '../../../../store/slices/application-slice/aplicationSlice'
 
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
+
    const dispatch = useDispatch()
+
    const { selectAllApplications } = useSelector((store) => store.data)
 
-   const openModal = () => {
-      setOpen(true)
-   }
+   const openModal = () => setOpen(true)
 
-   const handleClose = () => {
-      setOpen(false)
-   }
+   const handleClose = () => setOpen(false)
 
    const deleteAllFunction = () => {
       if (selectAllApplications.length) {
          dispatch(deleteAllApplication(selectAllApplications))
-         setOpen(true)
-      } else {
-         alert('Please choose file')
+         dispatch(handleRemoveChecked())
+         setOpen(false)
       }
    }
+
    return (
       <>
-         <StyledDeleteButton onClick={openModal}>
+         <StyledDeleteButton
+            onClick={openModal}
+            disabled={!selectAllApplications.length}
+         >
             <DeleteIcon />
          </StyledDeleteButton>
 
@@ -68,9 +70,7 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
 
    '&:disabled': {
       cursor: 'not-allowed',
-      opacity: 0.5,
-      backgroundColor: '#d1d1d1',
-      borderRadius: '5px',
+      opacity: 0.2,
    },
 }))
 

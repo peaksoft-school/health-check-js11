@@ -5,7 +5,7 @@ import Contacts from '../pages/user/contacts/Contacts'
 import Prices from '../pages/user/prices/Prices'
 import Home from '../pages/home/Home'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
-import Applications from '../components/landing/Applications'
+import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {

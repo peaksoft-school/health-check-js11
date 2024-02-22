@@ -16,13 +16,9 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
       setIsButtonDisabled(!disabled || checked)
    }, [disabled, checked])
 
-   const openModal = () => {
-      setOpen(true)
-   }
+   const openModal = () => setOpen(true)
 
-   const handleClose = () => {
-      setOpen(false)
-   }
+   const handleClose = () => setOpen(false)
 
    const handleDelete = () => {
       try {
@@ -34,9 +30,7 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
       }
    }
 
-   const handleButtonChange = () => {
-      setIsButtonDisabled((prev) => !prev)
-   }
+   const handleButtonChange = () => setIsButtonDisabled((prev) => !prev)
 
    return (
       <>

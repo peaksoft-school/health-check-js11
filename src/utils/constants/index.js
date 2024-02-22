@@ -36,10 +36,10 @@ import ProcessedCheckbox from '../../components/UI/admin/online-appointments/Pro
 import DeleteSelected from '../../components/UI/admin/online-appointments/DeleteSelected'
 import SelectAll from '../../components/UI/admin/online-appointments/SelectAll'
 import SelectSeparately from '../../components/UI/admin/online-appointments/SelectSeparately'
+import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
 import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
 import ApplicationCheckbox from '../../components/UI/admin/application/ApplicationCheckbox'
 import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
-import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
 import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
 
 const NAVIGATIONS = [
@@ -528,7 +528,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.3,
+         flex: 0.5,
       },
 
       tdStyle: {
@@ -548,7 +548,8 @@ const ONLINE_APPLICATIONS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.4,
+         flex: 0.7,
+         justifyContent: 'center',
       },
 
       tdStyle: {
@@ -561,7 +562,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
 
       style: {
          padding: '19px 0 20px',
-         flex: 0.81,
+         flex: 0.5,
          display: 'flex',
          justifyContent: 'center',
          fontWeight: '700',
@@ -573,7 +574,6 @@ const ONLINE_APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         // console.log(row)
          return (
             <ApplicationCheckbox
                checked={row.original.processed}

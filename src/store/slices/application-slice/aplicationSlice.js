@@ -1,112 +1,111 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
    deleteApplicationById,
+   deleteAllApplication,
    getApplicationData,
    searchApplications,
    updateApplication,
 } from '../../thunks/applicationThunk'
-
-const BASE_URL = process.env.API_URL
+import { showToast } from '../../../utils/helpers/notification'
 
 export const applicationSlice = createSlice({
    name: 'data',
    initialState: {
       items: [],
+      searchItems: [],
       status: 'idle',
       error: null,
       selectAllApplications: [],
-      arrayForIds: [],
       selectAll: false,
+      deletedAppointmentsIds: [],
    },
+
    reducers: {
-      removeSelectedArray(state) {
-         state.selectAllApplications = []
-      },
-      handleIsCheckedItem(state, { payload }) {
-         state.items = state.items.map((appointment) => {
-            // console.log(state.items, 'items')
-            // console.log(appointment, 'appointment')
-            if (appointment.appointmenId === payload.id) {
-               return {
-                  ...appointment,
-                  isSelected: !appointment.isSelected,
-               }
-            }
-            return appointment
-         })
-         state.arrayForIds = state.items
-            .filter((appointment) => appointment.isSelected)
-            .map((appointment) => appointment.appointmentId)
-         if (state.arrayForIds.length === state.items.length) {
-            state.selectAll = true
-         } else {
-            state.selectAll = false
-         }
+      handleIsChecked: (state, action) => {
+         state.selectAll = !state.selectAll
+         state.selectAllApplications = action.payload
       },
 
-      handleIsChecked: (state) => {
-         console.log(state.arrayForIds, 'arrayforids')
+      handleRemoveChecked: (state) => {
          state.selectAll = !state.selectAll
-         state.items = state.items.map((appointment) => ({
-            ...appointment,
-            isSelected: state.selectAll,
-         }))
-         state.arrayForIds = state.items
-            .filter((appointment) => appointment.isSelected)
-            .map((appointment) => appointment.id)
+         state.selectAllApplications = []
+      },
+
+      handleIsCheckedItem: (state, { payload }) => {
+         const idExists = state.selectAllApplications.includes(payload.id)
+
+         state.selectAllApplications = idExists
+            ? state.selectAllApplications.filter((item) => item !== payload.id)
+            : [...state.selectAllApplications, payload.id]
       },
    },
+
    extraReducers: (builder) => {
       builder
+
          .addCase(getApplicationData.pending, (state) => {
             state.status = 'loading'
          })
+
          .addCase(getApplicationData.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.items = action.payload
          })
+
          .addCase(getApplicationData.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
          })
+
          .addCase(deleteApplicationById.pending, (state) => {
             state.status = 'loading'
          })
+
          .addCase(deleteApplicationById.fulfilled, (state, action) => {
-            state.status = 'succeeded'
+            showToast({
+               message: 'Успешно удалено',
+            })
          })
+
          .addCase(deleteApplicationById.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
          })
+
          .addCase(updateApplication.pending, (state) => {
             state.status = 'loading'
          })
+
          .addCase(updateApplication.fulfilled, (state) => {
             state.error = false
          })
+
          .addCase(updateApplication.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
          })
+
          .addCase(searchApplications.pending, (state) => {
             state.status = 'loading'
          })
+
          .addCase(searchApplications.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            state.items = action.payload
+            state.searchItems = action.payload
          })
+
          .addCase(searchApplications.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
+         })
+         .addCase(deleteAllApplication.fulfilled, (state, action) => {
+            showToast({
+               message: 'Успешно удалено ',
+            })
          })
    },
 })
 
 export const applicationActions = applicationSlice.actions
-export const {
-   selectAllApplicationsArrayFN,
-   removeSelectedArray,
-   handleIsCheckedItem,
-   handleIsChecked,
-} = applicationSlice.actions
+export const { handleIsCheckedItem, handleIsChecked, handleRemoveChecked } =
+   applicationSlice.actions
