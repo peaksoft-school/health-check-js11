@@ -1,30 +1,28 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Button from '../../Button'
-import { DeleteIcon } from '../../../../assets/icons'
-import { deleteAllAppointments } from '../../../../store/slices/appointmentThunk'
-import Modal from '../../Modal'
-import { APPOINTMENTS_ACTIONS } from '../../../../store/slices/appointmentsSlice'
+import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
+import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
+import { DeleteIcon } from '../../assets/icons'
+import Modal from '../UI/Modal'
+import Button from '../UI/Button'
 
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
-   const { deletedAppointmentsIds } = useSelector(
-      (state) => state.appointmentsAdmin
-   )
+
+   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
+
    const dispatch = useDispatch()
 
-   const openModal = () => {
-      setOpen(true)
-   }
+   const openModal = () => setOpen(true)
 
-   const handleClose = () => {
-      setOpen(false)
-   }
+   const handleClose = () => setOpen(false)
 
-   const handleDelete = async () => {
+   const handleDelete = () => {
       try {
-         dispatch(deleteAllAppointments(deletedAppointmentsIds))
+         dispatch(
+            APPOINTMENTS_THUNK.deleteAllAppointments(deletedAppointmentsIds)
+         )
          dispatch(APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds())
       } catch (error) {
          console.error('Error deleting appointments:', error)
@@ -48,7 +46,7 @@ const DeleteSelected = ({ disabled }) => {
                   Вы уверены, что хотите удалить выбранные записи?
                </Typography>
 
-               <div className="buttonsContainer">
+               <Box className="buttons-container">
                   <Button
                      variant="grey"
                      className="button"
@@ -60,7 +58,7 @@ const DeleteSelected = ({ disabled }) => {
                   <Button className="button" onClick={handleDelete}>
                      Удалить
                   </Button>
-               </div>
+               </Box>
             </StyledContainer>
          </Modal>
       </>
@@ -95,7 +93,7 @@ const StyledContainer = styled(Box)(() => ({
       marginBottom: '40px',
    },
 
-   '& .buttonsContainer': {
+   '& .buttons-container': {
       display: 'flex',
       gap: '18px',
    },

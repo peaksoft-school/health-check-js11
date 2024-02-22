@@ -5,9 +5,7 @@ const AdminLayout = () => (
    <>
       <AdminHeader />
 
-      <div style={{ backgroundColor: 'red' }}>
-         <Outlet />
-      </div>
+      <Outlet />
    </>
 )
 

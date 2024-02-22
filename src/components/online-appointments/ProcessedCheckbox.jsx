@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import Checkbox from '../../Checkbox'
-import { updateAppointmentStatus } from '../../../../store/slices/appointmentThunk'
+import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
+import Checkbox from '../UI/Checkbox'
 
 const ProcessedCheckbox = ({ checked, appointmentId }) => {
    const [isChecked, setIsChecked] = useState(checked)
+
    const dispatch = useDispatch()
 
    useEffect(() => {
       setIsChecked(checked)
    }, [checked])
 
-   const handleCheckboxChange = async () => {
+   const changeCheckbox = () => {
       try {
          dispatch(
-            updateAppointmentStatus({
+            APPOINTMENTS_THUNK.updateAppointment({
                appointmentId,
                active: !isChecked,
                setIsChecked,
@@ -25,7 +26,7 @@ const ProcessedCheckbox = ({ checked, appointmentId }) => {
       }
    }
 
-   return <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+   return <Checkbox checked={isChecked} onChange={changeCheckbox} />
 }
 
 export default ProcessedCheckbox

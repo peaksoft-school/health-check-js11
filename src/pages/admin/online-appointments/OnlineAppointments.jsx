@@ -4,15 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
-import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants'
 import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Loading from '../../../components/UI/Loading'
-import {
-   getAppointments,
-   searchAppointments,
-} from '../../../store/slices/appointmentThunk'
+import Loading from '../../../components/Loading'
+
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
+import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -21,8 +19,8 @@ const OnlineAppointments = () => {
 
    const dispatch = useDispatch()
 
-   const { isLoading, appointments, error } = useSelector(
-      (state) => state.appointmentsAdmin
+   const { isLoading, appointments } = useSelector(
+      (state) => state.Appointments
    )
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
@@ -32,21 +30,24 @@ const OnlineAppointments = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            searchAppointments({
+            APPOINTMENTS_THUNK.searchAppointment({
                searchName: debouncedSearchText,
-               otherParam: 'name',
             })
          )
       }
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(getAppointments())
+      dispatch(APPOINTMENTS_THUNK.getAppointments())
    }, [])
 
-   const handleChange = (_, newValue) => {
+   const tabsChange = (_, newValue) => {
       setValue(newValue)
       setShowAddButton(newValue === '1')
+   }
+
+   if (isLoading) {
+      return <Loading />
    }
 
    return (
@@ -66,11 +67,11 @@ const OnlineAppointments = () => {
                )}
             </Box>
 
-            <Box sx={{ width: '100%', typography: 'body1' }}>
+            <Box>
                <TabContext value={value}>
                   <Box className="tabs-container">
                      <TabList
-                        onChange={handleChange}
+                        onChange={tabsChange}
                         aria-label="lab API tabs example"
                      >
                         <Tab
@@ -78,6 +79,7 @@ const OnlineAppointments = () => {
                            value="1"
                            className="route"
                         />
+
                         <Tab label="Расписание" value="2" className="route" />
                      </TabList>
                   </Box>
@@ -90,8 +92,6 @@ const OnlineAppointments = () => {
                            onChange={handleSearchChange}
                         />
                      </Box>
-
-                     {isLoading && <Loading />}
 
                      <Box className="table-container">
                         <Table
@@ -201,6 +201,5 @@ const StyledInput = styled(SearchInput)(() => ({
    padding: '0rem 0.3rem',
    display: 'inline-flex',
    justifyContent: 'center',
-   fontFamily: 'Manrope',
    width: '100%',
 }))

@@ -19,7 +19,6 @@ export const showToast = ({
          borderLeftColor: status === 'error' ? 'red' : 'green',
          borderLeftStyle: 'solid',
          borderRadius: 0,
-         boxShadow: '-3px -2px 12px 2px rgba(0,0,0,0.75)',
       },
    })
 }
