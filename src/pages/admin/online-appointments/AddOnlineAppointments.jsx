@@ -59,7 +59,6 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       const selectedDoctor = doctors?.find(
          (doctor) => doctor.fullNameDoctor === selectedDoctorName
       )
-      console.log(values.departmentName)
 
       const selectedDoctorId = selectedDoctor.id
       dispatch(
