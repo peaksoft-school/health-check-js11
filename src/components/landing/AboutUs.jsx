@@ -119,7 +119,8 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
             '& > div': {
                display: 'flex',
-               gap: '1.625rem',
+               justifyContent: 'space-between',
+               width: '100%',
 
                '& > img': {
                   width: '173px',

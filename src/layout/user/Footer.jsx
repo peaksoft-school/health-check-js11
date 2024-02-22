@@ -91,7 +91,7 @@ const Footer = () => (
                      className="gmail"
                      href="mailto:school@peaksoft.us"
                   >
-                     <SmsIcon /> healthchek.kg
+                     <SmsIcon className="email-icon" /> healthchek.kg
                   </a>
                </Box>
             </Box>
@@ -237,13 +237,14 @@ const StyledContainer = styled('footer')(({ theme }) => ({
                   textDecoration: 'none',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
+                  gap: '1rem',
                },
 
                '& .address': {
                   color: '#CCC',
                   textDecoration: 'none',
                   display: 'flex',
+                  gap: '0.3rem',
                   alignItems: 'center',
 
                   '& > p': {
@@ -255,7 +256,7 @@ const StyledContainer = styled('footer')(({ theme }) => ({
 
                '& .phone-numbers-box': {
                   display: 'flex',
-                  gap: '0.375rem',
+                  gap: '0.575rem',
 
                   '& > div': {
                      '& > a': {
