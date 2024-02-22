@@ -46,10 +46,6 @@ const OnlineAppointments = () => {
       setShowAddButton(newValue === '1')
    }
 
-   if (isLoading) {
-      return <Loading />
-   }
-
    return (
       <StyledContainer>
          <Box className="box">
@@ -61,6 +57,8 @@ const OnlineAppointments = () => {
                      <PlusIcon className="plus-icon" /> Добавить запись
                   </Button>
                )}
+
+               {isLoading && <Loading />}
 
                {!showAddButton && (
                   <Button className="different-button">some</Button>

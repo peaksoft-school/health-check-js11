@@ -23,6 +23,7 @@ const DeleteSelected = ({ disabled }) => {
          dispatch(
             APPOINTMENTS_THUNK.deleteAllAppointments(deletedAppointmentsIds)
          )
+
          dispatch(APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds())
       } catch (error) {
          console.error('Error deleting appointments:', error)

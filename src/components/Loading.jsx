@@ -17,6 +17,7 @@ const Loading = () => (
             stroke="black"
          />
       </svg>
+
       <Box className="innercircle" />
       <Box className="outercircle" />
    </StyledContainer>
@@ -58,7 +59,7 @@ const StyledContainer = styled(Box)({
    position: 'absolute',
    width: '10vmin',
    height: '10vmin',
-   zIndex: '1',
+   zIndex: '0',
    margin: 'auto',
    top: '0',
    left: '0',
