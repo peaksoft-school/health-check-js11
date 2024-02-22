@@ -50,19 +50,18 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
    }
 
    const signInWithGoogleHandler = async () => {
-      await signInWithPopup(auth, provider)
-         .then((data) => {
+      try {
+         await signInWithPopup(auth, provider).then((data) => {
             dispatch(
                authWithGoogle({
                   tokenId: data.user.accessToken,
                })
             )
-            closeMenu()
+            onClose()
          })
-         .catch((error) => {
-            throw error
-         })
-      onClose()
+      } catch (error) {
+         throw new Error(error)
+      }
    }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
