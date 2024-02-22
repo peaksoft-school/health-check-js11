@@ -30,6 +30,7 @@ const postNewSchedule = createAsyncThunk(
             `api/schedule/saveScheduleDoctor?facility=${departmentName}&doctorId=${doctorId}`,
             schedule
          )
+
          showToast({
             message: 'запись успешно добавлена ',
          })
@@ -40,7 +41,6 @@ const postNewSchedule = createAsyncThunk(
             message: error.message,
             status: 'error',
          })
-         console.log(schedule, 'success')
 
          return rejectWithValue(error)
       }

@@ -56,9 +56,10 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       }
 
       const selectedDoctorName = values.doctor
-      const selectedDoctor = doctors.find(
+      const selectedDoctor = doctors?.find(
          (doctor) => doctor.fullNameDoctor === selectedDoctorName
       )
+      console.log(values.departmentName)
 
       const selectedDoctorId = selectedDoctor.id
       dispatch(
@@ -95,11 +96,11 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       })
 
    const getDoctors = (selectedOption) => {
-      handleChange('departmentName')(selectedOption.value)
+      handleChange('departmentName')(selectedOption.label)
       dispatch(getDoctorsByDepartment({ params: selectedOption.label }))
    }
 
-   const doctorsFullname = doctors.map((doctor) => ({
+   const doctorsFullname = doctors?.map((doctor) => ({
       value: doctor.id,
       label: doctor.fullNameDoctor,
    }))
