@@ -10,10 +10,12 @@ import {
    PERSIST,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { authSlice } from './authSlice'
+import { authSlice } from './slices/authSlice'
+import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
+   [appointmentsSlice.name]: appointmentsSlice.reducer,
 })
 
 const persistConfig = {
