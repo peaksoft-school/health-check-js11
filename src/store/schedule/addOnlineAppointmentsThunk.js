@@ -24,12 +24,18 @@ const getDoctorsByDepartment = createAsyncThunk(
 
 const postNewAppoinment = createAsyncThunk(
    'newSchedule/postSchedule',
-   async ({ doctorId, departmentName, schedule }, { rejectWithValue }) => {
+   async (
+      { doctorId, departmentName, schedule, resetForm, onClose },
+      { rejectWithValue }
+   ) => {
       try {
          const response = await axiosInstance.post(
             `api/schedule/saveScheduleDoctor?facility=${departmentName}&doctorId=${doctorId}`,
             schedule
          )
+
+         resetForm()
+         onClose()
 
          showToast({
             message: 'запись успешно добавлена ',
@@ -38,7 +44,7 @@ const postNewAppoinment = createAsyncThunk(
          return response.data
       } catch (error) {
          showToast({
-            message: error.message,
+            message: error.response.data.message,
             status: 'error',
          })
 

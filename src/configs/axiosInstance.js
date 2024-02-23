@@ -19,17 +19,15 @@ axiosInstance.interceptors.request.use(
    function (config) {
       const updatedConfig = { ...config }
 
-      const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDg4NzE1NTgsImlhdCI6MTcwODYxMjM1OCwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.6gOLH51X2oQd0Fc7hCaKmbhU3n4ZK4Ciy65OHL54RI4'
-
+      const token = storre.getState().auth.accessToken
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }
 
-      return updatedConfig
+      return config
    },
 
-   function (error) {
+   (error) => {
       return Promise.reject(error)
    }
 )
@@ -39,7 +37,7 @@ axiosInstance.interceptors.response.use(
       return Promise.resolve(response)
    },
 
-   function (error) {
+   (error) => {
       if (error.response && error.response.status === 401) {
          signOut()
       }

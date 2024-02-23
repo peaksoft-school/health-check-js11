@@ -55,20 +55,21 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       }
 
       const selectedDoctorName = values.doctor
+
       const selectedDoctor = doctors?.find(
          (doctor) => doctor.fullNameDoctor === selectedDoctorName
       )
 
       const selectedDoctorId = selectedDoctor.id
+
       dispatch(
-         postNewAppoinment(
-            {
-               doctorId: selectedDoctorId,
-               departmentName: values.departmentName,
-               schedule: dataToSend,
-            },
-            resetForm
-         )
+         postNewAppoinment({
+            doctorId: selectedDoctorId,
+            departmentName: values.departmentName,
+            schedule: dataToSend,
+            resetForm,
+            onClose,
+         })
       )
    }
 
@@ -110,7 +111,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    const dateToday = dayjs()
 
    return (
-      <Modal open={open} onClose={onClose}>
+      <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
             <h2>Добавление записи</h2>
 

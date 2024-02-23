@@ -10,8 +10,8 @@ import {
    PERSIST,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import { authSlice } from './slices/auth/authSlice'
 import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
-import { authSlice } from './slices/authSlice'
 import { addOnlineAppointmentsSlice } from './schedule/addOnlineAppointmentsSlice'
 
 const rootReducer = combineReducers({

@@ -3,10 +3,6 @@ const signInError = (errors) => {
 
    if (Object.keys(errors).length > 1) {
       errorMessage = 'Пожалуйста заполните все поля!'
-   } else if (errors?.name) {
-      errorMessage = errors?.name
-   } else if (errors?.age) {
-      errorMessage = errors?.age
    } else if (errors?.email) {
       errorMessage = errors?.email
    } else if (errors?.password) {
@@ -33,12 +29,12 @@ const signUpError = (errors) => {
 
    if (errors?.name) {
       errorMessage = errors.name
-   } else if (errors?.surename) {
-      errorMessage = errors.surename
+   } else if (errors?.lastName) {
+      errorMessage = errors.lastName
    } else if (errors?.email) {
       errorMessage = errors.email
-   } else if (errors?.phoneNumber) {
-      errorMessage = errors.phoneNumber
+   } else if (errors?.number) {
+      errorMessage = errors.number
    } else if (errors.password) {
       errorMessage = errors.password
    } else if (errors.confirmPassword) {

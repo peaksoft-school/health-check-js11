@@ -4,14 +4,15 @@ import Footer from './Footer'
 
 const UserLayout = () => {
    const location = useLocation()
+   const isChangePassword = location.pathname === '/change-password'
 
    return (
       <>
-         {location.pathname !== '/results' && <Header />}
+         {!isChangePassword && location.pathname !== '/results' && <Header />}
 
          <Outlet />
 
-         {location.pathname !== '/results' && <Footer />}
+         {!isChangePassword && location.pathname !== '/results' && <Footer />}
       </>
    )
 }
