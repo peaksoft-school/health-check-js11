@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosInstance } from '../../configs/axiosInstance'
+import { axiosInstance } from '../../../configs/axiosInstance'
 
 const getAppointments = createAsyncThunk(
-   'appointments/admin',
+   'appointments/getAppointments',
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('api/appointment/all')
@@ -14,13 +14,16 @@ const getAppointments = createAsyncThunk(
    }
 )
 
-const updateAppointmentStatus = createAsyncThunk(
+const updateAppointment = createAsyncThunk(
    'appointments/updateStatus',
-   async ({ appointmentId, active, setIsChecked }, { dispatch }) => {
+   async (
+      { appointmentId: id, active, setIsChecked },
+      { dispatch, rejectWithValue }
+   ) => {
       try {
          const response = await axiosInstance.put(`/api/appointment/update`, {
-            id: appointmentId,
             active,
+            id,
          })
 
          dispatch(getAppointments())
@@ -29,19 +32,19 @@ const updateAppointmentStatus = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         throw new Error('Error updating status:', error)
+         return rejectWithValue(error)
       }
    }
 )
 
-const searchAppointments = createAsyncThunk(
+const searchAppointment = createAsyncThunk(
    'appointments/search',
-   async ({ searchName, otherParam }, { rejectWithValue }) => {
+   async ({ searchName }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
             `/api/appointment/getAppointment?word=${searchName}`,
             {
-               params: { searchName, otherParam },
+               params: { searchName },
             }
          )
 
@@ -52,40 +55,38 @@ const searchAppointments = createAsyncThunk(
    }
 )
 
-const deleteAppointmentById = createAsyncThunk(
+const deleteAppoinment = createAsyncThunk(
    'appointments/deleteById',
-   async (appointmentId, { dispatch }) => {
+   async (appointmentId, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/appointment/${appointmentId}`)
          dispatch(getAppointments())
          return appointmentId
       } catch (error) {
-         throw new Error('Error deleting appointment:', error)
+         return rejectWithValue(error)
       }
    }
 )
 
 const deleteAllAppointments = createAsyncThunk(
    'appointments/deleteAll',
-   async (appointmentIds, { dispatch }) => {
+   async (appointmentsIds, { dispatch }) => {
       try {
          await axiosInstance.delete('/api/appointment/deleteAll', {
-            data: appointmentIds,
+            data: appointmentsIds,
          })
 
          dispatch(getAppointments())
-
-         return appointmentIds
       } catch (error) {
          throw new Error('Error deleting all appointments', error)
       }
    }
 )
 
-export {
+export const APPOINTMENTS_THUNK = {
    getAppointments,
-   updateAppointmentStatus,
-   searchAppointments,
-   deleteAppointmentById,
+   updateAppointment,
+   searchAppointment,
    deleteAllAppointments,
+   deleteAppoinment,
 }

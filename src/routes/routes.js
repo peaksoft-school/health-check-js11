@@ -9,7 +9,7 @@ import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {
-      path: '/admin/registration',
+      path: 'admin/online-appointments',
       element: <OnlineAppointments />,
    },
 

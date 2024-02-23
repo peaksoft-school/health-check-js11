@@ -1,30 +1,27 @@
-import { keyframes } from '@emotion/react'
-import { styled } from '@mui/material'
-import React from 'react'
+import { Box, keyframes, styled } from '@mui/material'
 
-const Loading = () => {
-   return (
-      <HeartbeatLoader>
-         <svg
-            className="svgdraw"
-            width="100%"
-            height="100%"
-            viewBox="0 0 150 400"
-            xmlns="http://www.w3.org/2000/svg"
-         >
-            <path
-               className="path"
-               d="M 0 200 l 40 0 l 5 -40 l 5 40 l 10 0 l 5 15 l 10 -140 l 10 220 l 5 -95 l 10 0 l 5 20 l 5 -20 l 30 0"
-               fill="transparent"
-               strokeWidth="4"
-               stroke="black"
-            />
-         </svg>
-         <div className="innercircle" />
-         <div className="outercircle" />
-      </HeartbeatLoader>
-   )
-}
+const Loading = () => (
+   <StyledContainer>
+      <svg
+         className="svgdraw"
+         width="100%"
+         height="100%"
+         viewBox="0 0 150 400"
+         xmlns="http://www.w3.org/2000/svg"
+      >
+         <path
+            className="path"
+            d="M 0 200 l 40 0 l 5 -40 l 5 40 l 10 0 l 5 15 l 10 -140 l 10 220 l 5 -95 l 10 0 l 5 20 l 5 -20 l 30 0"
+            fill="transparent"
+            strokeWidth="4"
+            stroke="black"
+         />
+      </svg>
+
+      <Box className="innercircle" />
+      <Box className="outercircle" />
+   </StyledContainer>
+)
 
 export default Loading
 
@@ -58,7 +55,7 @@ const outerBeatAnimation = keyframes`
   }
 `
 
-const HeartbeatLoader = styled('div')({
+const StyledContainer = styled(Box)({
    position: 'absolute',
    width: '10vmin',
    height: '10vmin',
@@ -69,7 +66,7 @@ const HeartbeatLoader = styled('div')({
    right: '0',
    bottom: '0',
 
-   '.svgdraw': {
+   '& .svgdraw': {
       top: '30%',
       left: '26%',
       position: 'absolute',

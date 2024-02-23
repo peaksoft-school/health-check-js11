@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosInstance } from '../../configs/axiosInstance'
+import { axiosInstance } from '../../../configs/axiosInstance'
 
 const getApplicationData = createAsyncThunk(
    'data/fetchData',

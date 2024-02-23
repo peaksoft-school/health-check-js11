@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
-import { DeleteIcon } from '../../../../assets/icons'
-import Modal from '../../Modal'
-import Button from '../../Button'
-import { deleteAppointmentById } from '../../../../store/thunks/appointmentThunk'
+import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
+import { DeleteIcon } from '../../assets/icons'
+import Modal from '../UI/Modal'
+import Button from '../UI/Button'
 
 const DeleteButton = ({ name, disabled, appointmentId }) => {
    const dispatch = useDispatch()
@@ -15,17 +15,13 @@ const DeleteButton = ({ name, disabled, appointmentId }) => {
       setIsButtonDisabled(!disabled)
    }, [disabled])
 
-   const openModal = () => {
-      setOpen(true)
-   }
+   const openModal = () => setOpen(true)
 
-   const handleClose = () => {
-      setOpen(false)
-   }
+   const handleClose = () => setOpen(false)
 
-   const handleDelete = async () => {
+   const handleDelete = () => {
       try {
-         dispatch(deleteAppointmentById(appointmentId))
+         dispatch(APPOINTMENTS_THUNK.deleteAppoinment(appointmentId))
       } catch (error) {
          console.error('Error deleting appointment:', error)
       } finally {
@@ -40,14 +36,14 @@ const DeleteButton = ({ name, disabled, appointmentId }) => {
          </StyledDeleteButton>
 
          <Modal handleClose={handleClose} open={open} isCloseIcon={false}>
-            <StyledContainer>
+            <StyledModalContent>
                <Typography className="description">
                   Вы уверены, что хотите удалить запись
                </Typography>
 
                <Typography className="name">{name}?</Typography>
 
-               <div className="buttonsContainer">
+               <Box className="buttons-container">
                   <Button
                      variant="grey"
                      className="button"
@@ -59,8 +55,8 @@ const DeleteButton = ({ name, disabled, appointmentId }) => {
                   <Button className="button" onClick={handleDelete}>
                      Удалить
                   </Button>
-               </div>
-            </StyledContainer>
+               </Box>
+            </StyledModalContent>
          </Modal>
       </>
    )
@@ -80,7 +76,7 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
    },
 }))
 
-const StyledContainer = styled(Box)(() => ({
+const StyledModalContent = styled(Box)(() => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
@@ -102,7 +98,7 @@ const StyledContainer = styled(Box)(() => ({
       lineHeight: '24.59px',
    },
 
-   '& .buttonsContainer': {
+   '& .buttons-container': {
       display: 'flex',
       gap: '18px',
    },

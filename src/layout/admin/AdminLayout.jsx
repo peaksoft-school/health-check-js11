@@ -1,17 +1,12 @@
-import { Outlet, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 import AdminHeader from './AdminHeader'
 
-const AdminLayout = () => {
-   // const navigate = useNavigate()
-   // useEffect(() => navigate('/admin/registration'), [])
+const AdminLayout = () => (
+   <>
+      <AdminHeader />
 
-   return (
-      <>
-         <AdminHeader />
-         <Outlet />
-      </>
-   )
-}
+      <Outlet />
+   </>
+)
 
 export default AdminLayout
