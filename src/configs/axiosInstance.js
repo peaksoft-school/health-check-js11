@@ -4,6 +4,7 @@ const BASE_URL = process.env.REACT_APP_API_URL
 
 export const axiosInstance = axios.create({
    baseURL: BASE_URL,
+
    headers: {
       'Content-Type': 'application/json',
    },
@@ -15,14 +16,13 @@ export const injectStore = (store) => {
    storre = store
 }
 
-const signOut = () => console.log('User signed out')
+const signOut = () => {}
 
 axiosInstance.interceptors.request.use(
-   (config) => {
+   function (config) {
       const updatedConfig = { ...config }
 
       const token = storre.getState().auth.accessToken
-
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }
@@ -36,7 +36,7 @@ axiosInstance.interceptors.request.use(
 )
 
 axiosInstance.interceptors.response.use(
-   (response) => {
+   function (response) {
       return Promise.resolve(response)
    },
 
