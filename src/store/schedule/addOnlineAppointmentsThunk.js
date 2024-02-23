@@ -22,7 +22,7 @@ const getDoctorsByDepartment = createAsyncThunk(
    }
 )
 
-const postNewSchedule = createAsyncThunk(
+const postNewAppoinment = createAsyncThunk(
    'newSchedule/postSchedule',
    async ({ doctorId, departmentName, schedule }, { rejectWithValue }) => {
       try {
@@ -47,4 +47,4 @@ const postNewSchedule = createAsyncThunk(
    }
 )
 
-export { getDoctorsByDepartment, postNewSchedule }
+export { getDoctorsByDepartment, postNewAppoinment }

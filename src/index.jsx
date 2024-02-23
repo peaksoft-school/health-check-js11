@@ -10,6 +10,9 @@ import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
 import AddOnlineAppointments from './pages/admin/online-appointments/AddOnlineAppointments'
+import { injectStore } from './configs/axiosInstance'
+
+injectStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -21,8 +24,7 @@ root.render(
                <Themes>
                   <Notification />
 
-                  {/* <App /> */}
-                  <AddOnlineAppointments />
+                  <App />
                </Themes>
             </PersistGate>
          </Provider>

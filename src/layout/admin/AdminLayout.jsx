@@ -4,6 +4,7 @@ import AdminHeader from './AdminHeader'
 const AdminLayout = () => (
    <>
       <AdminHeader />
+
       <Outlet />
    </>
 )

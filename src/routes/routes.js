@@ -4,8 +4,14 @@ import Doctors from '../pages/user/doctors/Doctors'
 import Contacts from '../pages/user/contacts/Contacts'
 import Prices from '../pages/user/prices/Prices'
 import Home from '../pages/home/Home'
+import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 
-const ADMIN_ROUTES = []
+const ADMIN_ROUTES = [
+   {
+      path: 'online-appointments',
+      element: <OnlineAppointments />,
+   },
+]
 
 const USER_ROUTES = [
    {

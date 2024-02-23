@@ -15,17 +15,16 @@ import {
    RUSSIAN_DAYS,
 } from '../../../utils/constants'
 import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
+import { appointmentsError } from '../../../utils/helpers'
 import {
    getDoctorsByDepartment,
-   postNewSchedule,
-} from '../../../store/schedule/scheduleThunk'
-import { appointmentsError } from '../../../utils/helpers'
+   postNewAppoinment,
+} from '../../../store/schedule/addOnlineAppointmentsThunk'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
-   const open1 = true
    const dispatch = useDispatch()
 
-   const { doctors } = useSelector((state) => state.schedule)
+   const { doctors } = useSelector((state) => state.addOnlineAppointments)
 
    const onSubmit = (values, { resetForm }) => {
       values.createStartDate = format(
@@ -62,7 +61,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
 
       const selectedDoctorId = selectedDoctor.id
       dispatch(
-         postNewSchedule(
+         postNewAppoinment(
             {
                doctorId: selectedDoctorId,
                departmentName: values.departmentName,
@@ -111,7 +110,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    const dateToday = dayjs()
 
    return (
-      <Modal open={open1}>
+      <Modal open={open} onClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
             <h2>Добавление записи</h2>
 
@@ -262,7 +261,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                </Typography>
             )}
             <Box className="button-group">
-               <StyledButton type="button" variant="grey">
+               <StyledButton onClick={onClose} type="button" variant="grey">
                   ОТМЕНИТЬ
                </StyledButton>
                <StyledButton type="submit">ОПУБЛИКОВАТЬ</StyledButton>

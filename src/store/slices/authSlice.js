@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ROLES, ROUTES } from '../routes/routes'
+import { ROLES, ROUTES } from '../../routes/routes'
 
 const initialState = {
    accessToken: null,
@@ -11,6 +11,7 @@ const initialState = {
 export const authSlice = createSlice({
    name: 'auth',
    initialState,
+
    reducers: {
       logIn: (state, { payload }) => {
          const { data, navigate } = payload
