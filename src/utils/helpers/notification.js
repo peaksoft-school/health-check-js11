@@ -1,18 +1,16 @@
 import { Typography, styled } from '@mui/material'
 import { toast } from 'react-toastify'
+import { CloseIcon } from '../../assets/icons'
 
 export const showToast = ({
    message = 'Success',
    status = 'success',
-   position,
-   duration,
-   autoClose,
+   duration = 2000,
 }) => {
    toast[status](<StyledMessage>{message}</StyledMessage>, {
-      autoClose,
       icon: false,
-      position,
-      duration,
+      position: 'top-right',
+      autoClose: duration,
 
       style: {
          borderLeft: '10px',

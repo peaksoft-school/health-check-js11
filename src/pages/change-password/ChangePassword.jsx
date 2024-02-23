@@ -6,32 +6,62 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
 import { VALIDATION_FORGOT_PASSWORD } from '../../utils/helpers/validate'
 import { passwordError } from '../../utils/helpers/index'
 import { CloseEyeIcon, OpenEyeIcon } from '../../assets/icons'
+import { changePassword } from '../../store/slices/auth/authThunk'
 
 const ChangePassword = () => {
+   const { isLoading } = useSelector((state) => state.auth)
+
    const [showNewPassword, setShowNewPassword] = useState(false)
-   const [showReplayPassword, setShowReplayPassword] = useState(false)
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-   const showPasswordHandle1 = () =>
-      setShowNewPassword((prevShowPassword) => !prevShowPassword)
+   const dispatch = useDispatch()
 
-   const showPasswordHandle2 = () =>
-      setShowReplayPassword((prevShowPassword) => !prevShowPassword)
+   const navigate = useNavigate()
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const toggleShowNewPassword = () =>
+      setShowNewPassword((prevShowNewPassword) => !prevShowNewPassword)
+
+   const toggleShowConfirmPassword = () =>
+      setShowConfirmPassword(
+         (prevShowConfirmPassword) => !prevShowConfirmPassword
+      )
+
+   const token = localStorage.getItem('changePasswordToken')
+
+   const onSubmit = async (values, { resetForm }) => {
+      try {
+         const response = await dispatch(
+            changePassword({
+               newPassword: values.newPassword,
+               token,
+            })
+         )
+
+         if (response.type === 'auth/changePassword/fulfilled') {
+            navigate('/')
+            resetForm()
+
+            localStorage.removeItem('changePasswordToken')
+         }
+      } catch (error) {
+         throw error.message
+      }
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          newPassword: '',
          confirmPassword: '',
       },
-
       validateOnChange: false,
       onSubmit,
       validationSchema: VALIDATION_FORGOT_PASSWORD,
@@ -40,13 +70,13 @@ const ChangePassword = () => {
    const open = true
 
    return (
-      <Modal open={open}>
+      <Modal open={open} isCloseIcon={false}>
          <StyledContainer>
             <Typography variant="h2" className="title">
                СМЕНА ПАРОЛЯ
             </Typography>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
@@ -56,12 +86,11 @@ const ChangePassword = () => {
                   value={values.newPassword}
                   placeholder="Введите новый пароль"
                   onChange={handleChange('newPassword')}
-                  autoComplete="on"
                   error={!!errors.newPassword}
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle1}>
+                           <IconButton onClick={toggleShowNewPassword}>
                               {showNewPassword ? (
                                  <OpenEyeIcon />
                               ) : (
@@ -74,17 +103,16 @@ const ChangePassword = () => {
                />
 
                <StyledInput
-                  type={showReplayPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Повторите пароль"
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   error={!!errors.confirmPassword}
-                  autoComplete="on"
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle2}>
-                              {showReplayPassword ? (
+                           <IconButton onClick={toggleShowConfirmPassword}>
+                              {showConfirmPassword ? (
                                  <OpenEyeIcon />
                               ) : (
                                  <CloseEyeIcon />
@@ -101,7 +129,13 @@ const ChangePassword = () => {
                   </Typography>
                )}
 
-               <StyledButton type="submit">ПОДТВЕРДИТЬ</StyledButton>
+               <StyledButton
+                  type="submit"
+                  colorLoading="secondary"
+                  isLoading={isLoading}
+               >
+                  ПОДТВЕРДИТЬ
+               </StyledButton>
             </form>
          </StyledContainer>
       </Modal>
@@ -117,6 +151,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    fontFamily: 'Manrope',
    gap: '1.5rem',
    alignItems: 'center',
+   paddingTop: '20px',
 
    '& > .title': {
       color: theme.palette.primary.lightBlack,
@@ -137,7 +172,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '6.563rem',
+         bottom: '4.3rem',
 
          '& > .input-box': {
             display: 'flex',
