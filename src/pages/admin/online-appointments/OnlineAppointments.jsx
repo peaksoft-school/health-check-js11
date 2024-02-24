@@ -8,9 +8,9 @@ import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
-
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
+import Schedule from '../schedule/Schedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -100,7 +100,7 @@ const OnlineAppointments = () => {
                   </TabPanel>
 
                   <TabPanel value="2" className="tables">
-                     Raspisanie
+                     <Schedule />
                   </TabPanel>
                </TabContext>
             </Box>

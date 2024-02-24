@@ -6,6 +6,21 @@ import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
 
+const SCHEDULE_COLUMN = [
+   {
+      Header: 'Специалисты',
+      accessor: 'name',
+
+      Cell: ({ row }) => (
+         <Box>
+            <img src={row.origindl.image} alt="doctorImage" />
+            <Typography>{row.origindl.surename}</Typography>
+            <Typography>{row.origindl.position}</Typography>
+         </Box>
+      ),
+   },
+]
+
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
       Header: <SelectAll />,
@@ -226,4 +241,4 @@ const COLUMNS = [
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS }
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, SCHEDULE_COLUMN }
