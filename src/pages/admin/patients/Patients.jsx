@@ -46,9 +46,15 @@ const StyledPatients = styled(Box)(() => ({
    '& .table-container': {
       width: '100%',
       borderRadius: '0.375rem',
-      bordeRradius: ' 0.375rem',
-      background: 'white',
+      background: '#FFF',
+      height: '100%',
       marginTop: '1.25rem',
+
+      '& .MuiTable-root': {
+         '& .MuiTableRow-root:nth-child(even)': {
+            backgroundColor: '#f4f3f3',
+         },
+      },
    },
 }))
 
