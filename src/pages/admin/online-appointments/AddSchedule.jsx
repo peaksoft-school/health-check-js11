@@ -160,7 +160,7 @@ const AddSchedule = ({ open, onClose }) => {
                   />
                </Box>
 
-               <span>-</span>
+               <Box component="span">-</Box>
 
                <Box>
                   <Typography>Дата окончания</Typography>
@@ -185,7 +185,7 @@ const AddSchedule = ({ open, onClose }) => {
                   />
                </Box>
 
-               <span>-</span>
+               <Box component="span">-</Box>
 
                <Box>
                   <Typography>Время до</Typography>
@@ -225,7 +225,7 @@ const AddSchedule = ({ open, onClose }) => {
                   />
                </Box>
 
-               <span>-</span>
+               <Box component="span">-</Box>
 
                <Box>
                   <Typography>Время до</Typography>
