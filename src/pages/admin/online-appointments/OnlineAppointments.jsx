@@ -11,7 +11,7 @@ import Loading from '../../../components/Loading'
 
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
-import AddOnlineAppointments from './AddOnlineAppointments'
+import AddSchedule from './AddSchedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -69,7 +69,7 @@ const OnlineAppointments = () => {
                )}
             </Box>
 
-            <AddOnlineAppointments open={openModal} onClose={toggleModal} />
+            <AddSchedule open={openModal} onClose={toggleModal} />
 
             <Box>
                <TabContext value={value}>

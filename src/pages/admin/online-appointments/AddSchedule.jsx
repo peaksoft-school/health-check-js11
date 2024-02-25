@@ -19,9 +19,9 @@ import { appointmentsError } from '../../../utils/helpers'
 import {
    getDoctorsByDepartment,
    postNewAppoinment,
-} from '../../../store/schedule/addOnlineAppointmentsThunk'
+} from '../../../store/schedule/addScheduleThunk'
 
-const AddOnlineAppointments = ({ open, onClose }) => {
+const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()
 
    const { doctors } = useSelector((state) => state.addOnlineAppointments)
@@ -113,7 +113,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    return (
       <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit}>
-            <h2>Добавление записи</h2>
+            <Typography variant="h2">Добавление записи</Typography>
 
             <Box>
                <Typography>Услуги</Typography>
@@ -241,26 +241,30 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                   <Typography>Выберите время для перерыва </Typography>
                </Box>
             </Box>
+
             <Typography>Дни повторения </Typography>
-            <Box className="asd">
+
+            <Box className="day-of-week-box">
                {DAYS.map((day, index) => (
                   <button
                      key={day.id}
                      onClick={() => handleDayButtonClick(day.label)}
                      type="button"
                      className={
-                        values.dayOfWeek[day.label] ? 'active' : 'bermet'
+                        values.dayOfWeek[day.label] ? 'day-of-week' : 'active'
                      }
                   >
                      {RUSSIAN_DAYS[index].label}
                   </button>
                ))}
             </Box>
+
             {appointmentsError(errors) && (
                <Typography className="error-message">
                   {appointmentsError(errors)}
                </Typography>
             )}
+
             <Box className="button-group">
                <StyledButton onClick={onClose} type="button" variant="grey">
                   ОТМЕНИТЬ
@@ -272,7 +276,7 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    )
 }
 
-export default AddOnlineAppointments
+export default AddSchedule
 
 const StyledForm = styled('form')(() => ({
    padding: '10px',
@@ -311,41 +315,42 @@ const StyledForm = styled('form')(() => ({
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
+
       span: {
          marginTop: '1rem',
       },
    },
 
-   '&  .asd': {
+   '&  .day-of-week-box': {
       display: 'flex',
       justifyContent: 'space-between',
       marginBottom: '2em',
-   },
 
-   '& .bermet': {
-      backgroundColor: '#fff',
-      padding: '10px 17px 10px 16px',
-      justifyContent: 'center',
-      alignItems: 'center',
+      '& > .active': {
+         backgroundColor: '#fff',
+         padding: '10px 17px 10px 16px',
+         justifyContent: 'center',
+         alignItems: 'center',
 
-      borderRadius: '10px',
-      border: '1px solid #d9d9d9',
-      fontSize: '16px',
-      fontWeight: '600',
-      color: '#959595',
-   },
+         borderRadius: '10px',
+         border: '1px solid #d9d9d9',
+         fontSize: '16px',
+         fontWeight: '600',
+         color: '#959595',
+      },
 
-   '&  .active': {
-      padding: '10px 17px 10px 16px',
-      justifyContent: 'center',
-      alignItems: 'center',
+      '& >.day-of-week': {
+         padding: '10px 17px 10px 16px',
+         justifyContent: 'center',
+         alignItems: 'center',
 
-      borderRadius: '10px',
-      fontSize: '16px',
-      fontWeight: '600',
-      backgroundColor: '#3977c0',
-      color: '#ffffff',
-      border: '0.3px solid #3977c0',
+         borderRadius: '10px',
+         fontSize: '16px',
+         fontWeight: '600',
+         backgroundColor: '#3977c0',
+         color: '#ffffff',
+         border: '0.3px solid #3977c0',
+      },
    },
 
    '& > .button-group': {

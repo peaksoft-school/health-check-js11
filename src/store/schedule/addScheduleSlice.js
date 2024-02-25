@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-   getDoctorsByDepartment,
-   postNewAppoinment,
-} from './addOnlineAppointmentsThunk'
+import { getDoctorsByDepartment, postNewAppoinment } from './addScheduleThunk'
 
 const initialState = {
    doctors: [],
@@ -10,7 +7,7 @@ const initialState = {
    error: null,
 }
 
-export const addOnlineAppointmentsSlice = createSlice({
+export const addScheduleSlice = createSlice({
    name: 'addOnlineAppointments',
    initialState,
    reducers: {},
