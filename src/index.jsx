@@ -15,14 +15,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
    <StrictMode>
-      <Provider store={store}>
-         <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading="loading.." persistor={persistor}>
+         <Provider store={store}>
             <Themes>
                <Notification />
 
                <App />
             </Themes>
-         </PersistGate>
-      </Provider>
+         </Provider>
+      </PersistGate>
    </StrictMode>
 )
