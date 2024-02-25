@@ -13,7 +13,7 @@ const ADMIN_ROUTES = [
       element: <OnlineAppointments />,
    },
    {
-      path: 'patients',
+      path: '/patients',
       element: <Patients />,
    },
 ]
