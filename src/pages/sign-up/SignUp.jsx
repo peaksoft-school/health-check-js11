@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import {
    Typography,
    styled,
@@ -8,7 +10,6 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
-
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import NumberInput from '../../components/UI/inputs/NumberInput'
@@ -16,24 +17,64 @@ import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
+import { authWithGoogle, signUp } from '../../store/slices/auth/authThunk'
+import { auth, provider } from '../../utils/constants/authWithGoogle'
+import SignIn from '../sign-in/SignIn'
 
-const SignUp = () => {
+const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
+   const { isLoading } = useSelector((state) => state.auth)
+
    const [showPassword, setShowPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+   const [toggleSignIn, setToggleSignIn] = useState(false)
+
+   const dispatch = useDispatch()
 
    const showPasswordHandle = () => setShowPassword((prev) => !prev)
+
+   const toggleSignInHandle = () => setToggleSignIn((prev) => !prev)
 
    const showConfirmPasswordHandle = () =>
       setShowConfirmPassword((prev) => !prev)
 
-   const onSubmit = (_, { resetForm }) => resetForm()
+   const onSubmit = async (values, { resetForm }) => {
+      const dataToSend = {
+         name: values.name,
+         lastName: values.lastName,
+         email: values.email,
+         number: values.number,
+         password: values.password,
+      }
+      closeMenu()
+      dispatch(signUp({ dataToSend, resetForm, onClose }))
+   }
+
+   const openSignIn = () => {
+      setToggleSignIn((prev) => !prev)
+      onClose()
+   }
+
+   const signUpWithGoogleHandler = async () => {
+      try {
+         await signInWithPopup(auth, provider).then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            onClose()
+         })
+      } catch (error) {
+         throw new Error(error)
+      }
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
          name: '',
-         surename: '',
+         lastName: '',
          email: '',
-         phoneNumber: '',
+         number: '',
          password: '',
          confirmPassword: '',
       },
@@ -43,49 +84,43 @@ const SignUp = () => {
       validationSchema: VALIDATION_SIGN_UP,
    })
 
-   const open = true
-
    return (
-      <Modal open={open}>
-         <StyledForm onSubmit={handleSubmit}>
+      <Modal open={open} handleClose={onClose}>
+         <StyledForm onSubmit={handleSubmit} autoComplete="off">
             <Typography>РЕГИСТРАЦИЯ</Typography>
-
             <Box className="input-box">
                <StyledInput
                   placeholder="Имя"
                   name="name"
-                  autoComplete="on"
                   value={values.name}
                   onChange={handleChange}
                   error={!!errors.name}
                />
 
                <StyledInput
-                  name="surename"
+                  name="lastName"
                   placeholder="Фамилия"
-                  autoComplete="on"
-                  value={values.surename}
+                  value={values.lastName}
                   onChange={handleChange}
-                  error={!!errors.surename}
+                  error={!!errors.lastName}
                />
 
                <NumberInput
                   variant="secondary"
+                  name="number"
                   id="number"
-                  name="phoneNumber"
                   autoComplete="on"
-                  value={values.phoneNumber}
-                  onChange={handleChange('phoneNumber')}
-                  error={errors.phoneNumber}
+                  value={values.number}
+                  onChange={handleChange('number')}
+                  error={errors.number}
                   mask="_"
-                  format="+996 (###) ##-##-##"
-                  placeholder="+996 (_ _ _) _ _-_ _-_ _"
+                  format="+996#########"
+                  placeholder="+996 (___) ___ ___"
                />
 
                <StyledInput
                   name="email"
                   placeholder="Email"
-                  autoComplete="on"
                   value={values.email}
                   onChange={handleChange}
                   error={!!errors.email}
@@ -94,7 +129,6 @@ const SignUp = () => {
                <StyledInput
                   name="password"
                   placeholder="Введите пароль"
-                  autoComplete="on"
                   value={values.password}
                   onChange={handleChange('password')}
                   error={!!errors.password}
@@ -117,7 +151,6 @@ const SignUp = () => {
                <StyledInput
                   name="confirmPassword"
                   placeholder="Повторите пароль"
-                  autoComplete="on"
                   value={values.confirmPassword}
                   onChange={handleChange('confirmPassword')}
                   error={!!errors.confirmPassword}
@@ -137,14 +170,25 @@ const SignUp = () => {
                   }}
                />
             </Box>
-
             {signUpError(errors) && (
                <Typography className="error-message">
                   {signUpError(errors)}
                </Typography>
             )}
 
-            <StyledButton type="submit">СОЗДАТЬ АККАУНТ</StyledButton>
+            <SignIn
+               open={toggleSignIn}
+               onClose={toggleSignInHandle}
+               closeSignUp={closeSignUp}
+            />
+
+            <StyledButton
+               type="submit"
+               colorLoading="secondary"
+               isLoading={isLoading}
+            >
+               СОЗДАТЬ АККАУНТ
+            </StyledButton>
 
             <StyledLine>
                <hr />
@@ -152,14 +196,21 @@ const SignUp = () => {
                <hr />
             </StyledLine>
 
-            <ButtonBase className="google" type="button">
+            <ButtonBase
+               onClick={signUpWithGoogleHandler}
+               className="google"
+               type="button"
+            >
                <GoogleIcon />
                Зарегистрироваться с Google
             </ButtonBase>
-
             <Typography>
                У вас уже есть аккаунт?
-               <Typography variant="span" className="navigate">
+               <Typography
+                  onClick={openSignIn}
+                  variant="span"
+                  className="navigate"
+               >
                   Войти
                </Typography>
             </Typography>

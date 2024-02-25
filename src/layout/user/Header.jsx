@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import SignUp from '../../pages/sign-up/SignUp'
+import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
@@ -16,15 +19,51 @@ import {
    LOCATION,
    NAVIGATIONS,
 } from '../../utils/constants/index'
+import { logOut } from '../../store/slices/auth/authSlice'
+import Modal from '../../components/UI/Modal'
 
 const Header = () => {
-   const [anchorEl, setAnchorEl] = useState(null)
+   const { role } = useSelector((state) => state.auth)
 
-   const open = Boolean(anchorEl)
+   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
+   const [openSignUpModal, setOpenSignUpModal] = useState(false)
+   const [openSignInModal, setOpenSignInModal] = useState(false)
+   const [toggleLogOutModal, setToggleLogOutModal] = useState(false)
 
-   const handleClick = (e) => setAnchorEl(e.currentTarget)
+   const dispatch = useDispatch()
 
-   const handleClose = () => setAnchorEl(null)
+   const navigate = useNavigate()
+
+   const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
+
+   const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
+
+   const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
+
+   const closeLogOutHandler = () => setToggleLogOutModal(false)
+
+   const openLogOutHandler = () => setToggleLogOutModal(true)
+
+   const isProfileMenuOpen = !!profileMenuAnchorEl
+
+   const handleProfileMenuOpen = (event) =>
+      setProfileMenuAnchorEl(event.currentTarget)
+
+   const handlelogOut = () => {
+      handleProfileMenuClose()
+      closeLogOutHandler()
+      dispatch(logOut({ navigate }))
+   }
+
+   const navigateToPprofile = () => {
+      navigate('profile')
+      handleProfileMenuClose()
+   }
+
+   const navigateToMyRecords = () => {
+      navigate('records')
+      handleProfileMenuClose()
+   }
 
    return (
       <StyledContainer>
@@ -86,21 +125,91 @@ const Header = () => {
                <Box>
                   <HeaderProfileIcon
                      className="profile"
-                     aria-controls={open ? 'basic-menu' : null}
-                     onClick={handleClick}
+                     aria-controls={isProfileMenuOpen ? 'basic-menu' : null}
+                     onClick={handleProfileMenuOpen}
                   />
 
                   <StyledMenu
-                     anchorEl={anchorEl}
-                     open={open}
-                     onClose={handleClose}
+                     anchorEl={profileMenuAnchorEl}
+                     open={isProfileMenuOpen}
+                     onClose={handleProfileMenuClose}
                      MenuListProps={{
                         'aria-labelledby': 'basic-button',
                      }}
                   >
-                     <StyledMenuItem>Войти</StyledMenuItem>
+                     {role === 'GUEST' ? (
+                        <StyledMenu
+                           anchorEl={profileMenuAnchorEl}
+                           open={isProfileMenuOpen}
+                           onClose={handleProfileMenuClose}
+                           MenuListProps={{
+                              'aria-labelledby': 'basic-button',
+                           }}
+                        >
+                           <StyledMenuItem onClick={toggleSignInModal}>
+                              Войти
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={toggleSignUpModal}>
+                              Регистрация
+                           </StyledMenuItem>
+                        </StyledMenu>
+                     ) : (
+                        <StyledMenu
+                           anchorEl={profileMenuAnchorEl}
+                           open={isProfileMenuOpen}
+                           onClose={handleProfileMenuClose}
+                           MenuListProps={{
+                              'aria-labelledby': 'basic-button',
+                           }}
+                        >
+                           <StyledMenuItem onClick={navigateToMyRecords}>
+                              Мои записи
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={navigateToPprofile}>
+                              Профиль
+                           </StyledMenuItem>
+                           <StyledMenuItem onClick={openLogOutHandler}>
+                              Выйти
+                           </StyledMenuItem>
+                           <Modal
+                              open={toggleLogOutModal}
+                              onClose={closeLogOutHandler}
+                              isCloseIcon={false}
+                           >
+                              <StyledModal>
+                                 Вы уврены, что хотите выйти?
+                                 <br />
+                                 <br />
+                                 <Box className="buttons-box">
+                                    <Button
+                                       className="closeButton"
+                                       onClick={closeLogOutHandler}
+                                       variant="grey"
+                                    >
+                                       Отменить
+                                    </Button>
+                                    <Button onClick={handlelogOut}>
+                                       Выйти
+                                    </Button>
+                                 </Box>
+                              </StyledModal>
+                           </Modal>
+                        </StyledMenu>
+                     )}
 
-                     <StyledMenuItem>Регистрация</StyledMenuItem>
+                     <SignUp
+                        open={openSignUpModal}
+                        closeSignUp={toggleSignUpModal}
+                        onClose={toggleSignUpModal}
+                        closeMenu={handleProfileMenuClose}
+                     />
+
+                     <SignIn
+                        closeMenu={handleProfileMenuClose}
+                        open={openSignInModal}
+                        onClose={toggleSignInModal}
+                        closeSignUp={toggleSignUpModal}
+                     />
                   </StyledMenu>
                </Box>
             </Box>
@@ -125,7 +234,9 @@ const Header = () => {
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
 
-                  <StyledButton className="button">ЗАПИСЬ ОНАЛЙН</StyledButton>
+                  <StyledButton className="button" onClick={toggleSignUpModal}>
+                     ЗАПИСЬ ОНАЛЙН
+                  </StyledButton>
                </Box>
             </Box>
          </Box>
@@ -263,6 +374,29 @@ const StyledButton = styled(Button)(() => ({
 
    '&:hover': {
       borderRadius: '1.5rem',
+   },
+   '& .modal': {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '7000px',
+   },
+}))
+
+const StyledModal = styled(Box)(() => ({
+   boxSizing: 'content-box',
+   padding: '10px  45px 10px 45px',
+   textAlign: 'center',
+
+   '& >.buttons-box': {
+      display: 'flex',
+      gap: '30px',
+
+      '& > .MuiButtonBase-root': {
+         padding: '5px 0',
+         width: '120px',
+         height: '40px',
+         fontSize: '12px',
+      },
    },
 }))
 

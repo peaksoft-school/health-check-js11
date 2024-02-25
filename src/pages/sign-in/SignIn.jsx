@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInWithPopup } from 'firebase/auth'
 import {
    styled,
    Typography,
@@ -14,18 +16,57 @@ import Modal from '../../components/UI/Modal'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
+import ForgotPassword from '../forgot-password/ForgotPassword'
+import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
+import { auth, provider } from '../../utils/constants/authWithGoogle'
 
-const SignIn = () => {
+const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
+   const { isLoading } = useSelector((state) => state.auth)
+
    const [showPassword, setShowPassword] = useState(false)
+   const [isForgotPasswordVisible, setIsForgotPasswordVisible] = useState(false)
 
-   const showPasswordHandle = () =>
+   const dispatch = useDispatch()
+
+   const openModalForgotPasswordHandler = () => {
+      setIsForgotPasswordVisible((prev) => !prev)
+      onClose()
+   }
+
+   const toggleForgotPassword = () =>
+      setIsForgotPasswordVisible((prev) => !prev)
+
+   const toggleShowPassword = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = ({ resetForm }) => resetForm()
+   const onSubmit = (values, { resetForm }) => {
+      closeMenu()
+      dispatch(signIn({ values, resetForm, onClose }))
+   }
+
+   const openSignUp = () => {
+      closeSignUp()
+      onClose()
+   }
+
+   const signInWithGoogleHandler = async () => {
+      try {
+         await signInWithPopup(auth, provider).then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            onClose()
+         })
+      } catch (error) {
+         throw new Error(error)
+      }
+   }
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
-         name: '',
+         email: '',
          password: '',
       },
 
@@ -34,25 +75,21 @@ const SignIn = () => {
       validationSchema: VALIDATION_SIGN_IN,
    })
 
-   const open = true
-
    return (
-      <Modal open={open}>
-         <StyledForm onSubmit={handleSubmit}>
+      <Modal open={open} handleClose={onClose}>
+         <StyledForm onSubmit={handleSubmit} autoComplete="off">
             <Typography> ВОЙТИ </Typography>
 
             <Box className="input-box">
                <StyledInput
                   placeholder="Логин"
-                  autoComplete="on"
-                  value={values.name}
-                  error={!!errors.name}
-                  onChange={handleChange('name')}
+                  value={values.email}
+                  error={!!errors.email}
+                  onChange={handleChange('email')}
                />
 
                <StyledInput
                   placeholder="Пароль"
-                  autoComplete="on"
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   error={!!errors.password}
@@ -60,7 +97,7 @@ const SignIn = () => {
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
-                           <IconButton onClick={showPasswordHandle}>
+                           <IconButton onClick={toggleShowPassword}>
                               {showPassword ? (
                                  <OpenEyeIcon />
                               ) : (
@@ -79,9 +116,25 @@ const SignIn = () => {
                </Typography>
             )}
 
-            <StyledButton type="submit">ВОЙТИ</StyledButton>
+            <StyledButton
+               type="submit"
+               colorLoading="secondary"
+               isLoading={isLoading}
+            >
+               ВОЙТИ
+            </StyledButton>
 
-            <Typography className="navigate">Забыли пароль?</Typography>
+            <Typography
+               className="navigate"
+               onClick={openModalForgotPasswordHandler}
+            >
+               Забыли пароль?
+            </Typography>
+
+            <ForgotPassword
+               open={isForgotPasswordVisible}
+               onClose={toggleForgotPassword}
+            />
 
             <StyledLine>
                <hr />
@@ -89,14 +142,22 @@ const SignIn = () => {
                <hr />
             </StyledLine>
 
-            <ButtonBase className="google" type="button">
+            <ButtonBase
+               onClick={signInWithGoogleHandler}
+               className="google"
+               type="button"
+            >
                <GoogleIcon />
                Продолжить с Google
             </ButtonBase>
 
             <Typography>
                Нет аккаунта?
-               <Typography variant="span" className="navigate">
+               <Typography
+                  onClick={openSignUp}
+                  variant="span"
+                  className="navigate"
+               >
                   Зарегистрироваться
                </Typography>
             </Typography>
@@ -115,6 +176,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    paddingRight: '15px',
 
    '& .navigate ': {
+      cursor: 'pointer',
       textDecoration: 'none',
       marginLeft: '0.625rem',
       color: theme.palette.tertiary.lightBlue,
@@ -147,7 +209,7 @@ const StyledForm = styled('form')(({ theme }) => ({
       color: 'red',
       fontSize: '0.8rem',
       position: 'absolute',
-      bottom: '18.438rem',
+      bottom: '16rem',
    },
 }))
 

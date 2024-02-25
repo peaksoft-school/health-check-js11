@@ -11,7 +11,6 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/authSlice'
-import { applicationSlice } from './slices/application-slice/aplicationSlice'
 import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
 
 const rootReducer = combineReducers({
@@ -21,7 +20,7 @@ const rootReducer = combineReducers({
 })
 
 const persistConfig = {
-   key: 'root',
+   key: 'HEALTH_CHECK',
    storage,
 }
 
