@@ -1,6 +1,6 @@
+import { useState } from 'react'
 import { TimePicker as MuiTimePicker } from '@mui/x-date-pickers'
 import { styled } from '@mui/material'
-import { useState } from 'react'
 
 const TimePicker = ({
    value,
@@ -23,12 +23,12 @@ const TimePicker = ({
          value={internalValue}
          onChange={handleChange}
          onBlur={onBlur}
-         {...rest}
          maxTime={maxTime}
          minTime={minTime}
          error={error}
          format="HH:mm"
          ampm={false}
+         {...rest}
       />
    )
 }

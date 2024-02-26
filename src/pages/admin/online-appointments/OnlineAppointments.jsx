@@ -58,7 +58,8 @@ const OnlineAppointments = () => {
 
                {showAddButton && (
                   <Button className="add-button" onClick={toggleModal}>
-                     <PlusIcon className="plus-icon" /> Добавить запись
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
                   </Button>
                )}
 
@@ -148,15 +149,16 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
             display: 'flex',
+            alignItems: 'center',
             height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            alignItems: 'center',
             gap: '0.625rem',
             width: '13.0625rem !important',
             flexShrink: '0',
 
             '& > .plus-icon': {
                width: '1.125rem',
+               padding: '0.625rem',
                height: '1.125rem',
             },
          },

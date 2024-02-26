@@ -26,7 +26,6 @@ const DatePicker = ({
          dayOfWeekFormatter={(_day, weekday) =>
             DAYS_OF_WEEK[weekday.format('dd')]
          }
-         {...rest}
          maxDate={maxDate}
          minDate={minDate}
          error={error}
@@ -39,6 +38,7 @@ const DatePicker = ({
                {day.format('MMMM')}
             </DayComponentProps>
          )}
+         {...rest}
          slotProps={{
             desktopPaper: {
                sx: {
