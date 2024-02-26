@@ -5,6 +5,8 @@ import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
+import DeletePatientsBtn from '../../components/UI/admin/DeletePatientsBtn'
+import LinkPatient from '../../components/UI/admin/LinkPatient'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -195,6 +197,112 @@ const ONLINE_APPOINTMENTS_COLUMN = [
    },
 ]
 
+const PATIENTS_COLUMN = [
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.08,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Имя Фамилия',
+      accessor: 'surname',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => {
+         return <LinkPatient row={row} />
+      },
+   },
+
+   {
+      Header: 'Номер телефона',
+      accessor: 'phoneNumber',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Почта',
+      accessor: 'email',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.25,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Дата сдачи',
+      accessor: 'resultDate',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px 10px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => {
+         return (
+            <DeletePatientsBtn
+               name={row.original.surname}
+               id={row.original.id}
+            />
+         )
+      },
+   },
+]
+
 const COLUMNS = [
    {
       Header: 'Id',
@@ -226,4 +334,4 @@ const COLUMNS = [
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS }
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, PATIENTS_COLUMN }

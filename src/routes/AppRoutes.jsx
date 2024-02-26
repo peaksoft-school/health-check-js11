@@ -6,36 +6,39 @@ import ProtectedRoute from './ProtectedRoute'
 import NotFound from '../pages/not-found/NotFound'
 
 const AppRoutes = () => {
-   const router = createBrowserRouter([
-      {
-         path: ROUTES.USER.index,
-         element: (
-            <ProtectedRoute
-               roles={[ROLES.USER, ROLES.GUEST]}
-               fallBackPath="/admin"
-               Component={<UserLayout />}
-            />
-         ),
-         children: USER_ROUTES,
-      },
+   const router = createBrowserRouter(
+      [
+         {
+            path: ROUTES.USER.index,
+            element: (
+               <ProtectedRoute
+                  roles={[ROLES.USER, ROLES.GUEST]}
+                  fallBackPath="/admin"
+                  Component={<UserLayout />}
+               />
+            ),
+            children: USER_ROUTES,
+         },
 
-      {
-         path: ROUTES.ADMIN.index,
-         element: (
-            <ProtectedRoute
-               roles={[ROLES.ADMIN]}
-               fallBackPath="/"
-               Component={<AdminLayout />}
-            />
-         ),
-         children: ADMIN_ROUTES,
-      },
+         {
+            path: ROUTES.ADMIN.index,
+            element: (
+               <ProtectedRoute
+                  roles={[ROLES.ADMIN]}
+                  fallBackPath="/"
+                  Component={<AdminLayout />}
+               />
+            ),
+            children: ADMIN_ROUTES,
+         },
 
-      {
-         path: '*',
-         element: <NotFound />,
-      },
-   ])
+         {
+            path: '*',
+            element: <NotFound />,
+         },
+      ],
+      { basename: '/' }
+   )
 
    return <RouterProvider router={router} />
 }

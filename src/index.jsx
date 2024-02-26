@@ -3,11 +3,12 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StrictMode } from 'react'
 import Notification from './components/Notification'
-import App from './App'
 import Themes from './components/Themes'
 import './index.css'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
+import Patients from './pages/admin/patients/Patients'
+import App from './App'
 
 injectStore(store)
 
@@ -21,6 +22,7 @@ root.render(
                <Notification />
 
                <App />
+               {/* <Patients /> */}
             </Themes>
          </Provider>
       </PersistGate>
