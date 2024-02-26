@@ -16,7 +16,6 @@ const SchedulePage = () => {
 
    return (
       <div>
-         <h1>Schedule Page</h1>
          <TableSchedule columns={SCHEDULE_COLUMN} rows={schedules} />
       </div>
    )
