@@ -241,9 +241,7 @@ const ONLINE_APPLICATIONS_COLUMN = [
          flex: 0.06,
       },
 
-      Cell: ({ row }) => {
-         return <SelectSeparatelyApplication {...row.original} />
-      },
+      Cell: ({ row }) => <SelectSeparatelyApplication {...row.original} />,
    },
 
    {

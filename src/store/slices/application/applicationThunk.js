@@ -18,10 +18,11 @@ const getApplicationData = createAsyncThunk(
 const searchApplications = createAsyncThunk(
    'applications/search',
 
-   async (searchText, { rejectWithValue }) => {
+   async ({ searchText }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
-            `/api/application/getApplication?word=${searchText}`
+            `/api/application/getApplication?word=${searchText}`,
+            { params: { searchText } }
          )
 
          return response.data

@@ -22,22 +22,33 @@ export const applicationSlice = createSlice({
    reducers: {
       handleIsChecked: (state, action) => {
          state.selectAll = !state.selectAll
-         state.selectAllApplications = action.payload
 
-         console.log(state.selectAllApplications)
-      },
+         state.items = state.items.map((item) => ({
+            ...item,
+            isSelected: state.selectAll,
+         }))
 
-      handleRemoveChecked: (state) => {
-         state.selectAll = !state.selectAll
-         state.selectAllApplications = []
+         state.selectAllApplications = state.items
+            .filter((item) => item.isSelected)
+            .map((item) => item.id)
+
+         console.log(state.selectAllApplications, 'dsf')
       },
 
       handleIsCheckedItem: (state, { payload }) => {
-         const idExists = state.selectAllApplications.includes(payload.id)
+         state.items = state.items.map((item) => {
+            if (item.id === payload.id) {
+               return {
+                  ...item,
+                  isSelected: !item.isSelected,
+               }
+            }
+            return item
+         })
 
-         state.selectAllApplications = idExists
-            ? state.selectAllApplications.filter((item) => item !== payload.id)
-            : [...state.selectAllApplications, payload.id]
+         state.selectAllApplications = state.items
+            .filter((item) => item.isSelected)
+            .map((item) => item.id)
 
          if (state.selectAllApplications.length === state.items.length) {
             state.selectAll = true
@@ -45,7 +56,15 @@ export const applicationSlice = createSlice({
             state.selectAll = false
          }
 
-         console.log(state.selectAllApplications)
+         localStorage.setItem(
+            'selectAllApplications',
+            JSON.stringify(state.selectAllApplications)
+         )
+      },
+
+      handleRemoveChecked: (state) => {
+         state.selectAllApplications = []
+         localStorage.removeItem('selectAllApplications')
       },
    },
 
@@ -99,6 +118,19 @@ export const applicationSlice = createSlice({
          })
 
          .addCase(searchApplications.fulfilled, (state, action) => {
+            if (action.payload && !action.payload.error) {
+               const updatedApplications = action.payload.map(
+                  (application) => ({
+                     ...application,
+                     isSelected: false,
+                  })
+               )
+
+               updatedApplications.sort((a, b) => a.id - b.id)
+
+               state.items = updatedApplications
+            }
+
             state.status = 'succeeded'
             state.searchItems = action.payload
          })

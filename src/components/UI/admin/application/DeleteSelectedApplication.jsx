@@ -15,7 +15,6 @@ const DeleteSelected = ({ disabled }) => {
    const { selectAllApplications } = useSelector((store) => store.applications)
 
    const openModal = () => setOpen(true)
-
    const handleClose = () => setOpen(false)
 
    const deleteAllFunction = () => {
@@ -25,7 +24,6 @@ const DeleteSelected = ({ disabled }) => {
          setOpen(false)
       }
    }
-
    return (
       <>
          <StyledDeleteButton

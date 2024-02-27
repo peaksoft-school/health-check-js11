@@ -18,38 +18,21 @@ const Applications = () => {
 
    const [searchText, setSearchText] = useState('')
 
-   const application = useSelector((state) => state.applications.items)
-
-   const searchResults = useSelector((state) => state.applications.searchItems)
-
-   const selectedItems = useSelector(
-      (state) => state.applications.selectAllApplications
+   const { selectAllApplications, items } = useSelector(
+      (state) => state.applications
    )
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
    useEffect(() => {
-      dispatch(getApplicationData())
-   }, [])
-
-   useEffect(() => {
-      if (debouncedSearchText.length !== '') {
-         dispatch(searchApplications(debouncedSearchText))
+      if (debouncedSearchText !== undefined) {
+         dispatch(searchApplications({ searchText: debouncedSearchText }))
       }
    }, [debouncedSearchText])
 
    const handleSearch = (e) => {
-      const newSearchText = e.target.value
-      setSearchText(newSearchText)
+      setSearchText(e.target.value)
    }
-
-   const filteredApplications = useMemo(() => {
-      const renderItem = !searchText.length ? application : searchResults
-
-      return renderItem?.filter((searchResult) =>
-         searchResult.username?.toLowerCase().includes(searchText.toLowerCase())
-      )
-   }, [application, searchResults])
 
    const handleUpdate = async ({ id, isActive }) =>
       dispatch(updateApplication({ id, isActive }))
@@ -57,7 +40,11 @@ const Applications = () => {
    const handleDelete = async ({ id }) =>
       dispatch(deleteApplicationById({ id }))
 
-   const preperadeArray = filteredApplications.map((item, index) => {
+   useEffect(() => {
+      dispatch(getApplicationData())
+   }, [])
+
+   const preperadeArray = items.map((item, index) => {
       return {
          ...item,
          index,
@@ -67,7 +54,7 @@ const Applications = () => {
          name: item.username,
          update: (id, isActive) => handleUpdate({ id, isActive }),
          delete: (id) => handleDelete(id),
-         isSelected: selectedItems.includes(item.id),
+         isSelected: selectAllApplications.includes(item.id),
       }
    })
 
