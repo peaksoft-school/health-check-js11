@@ -15,16 +15,16 @@ import {
    RUSSIAN_DAYS,
 } from '../../../utils/constants'
 import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
-import { appointmentsError } from '../../../utils/helpers'
+import { scheduleError } from '../../../utils/helpers'
 import {
    getDoctorsByDepartment,
-   postNewAppoinment,
-} from '../../../store/schedule/addScheduleThunk'
+   postNewSchedule,
+} from '../../../store/slices/schedule/addScheduleThunk'
 
 const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()
 
-   const { doctors } = useSelector((state) => state.addOnlineAppointments)
+   const { doctors } = useSelector((state) => state.addSchedule)
 
    const onSubmit = (values, { resetForm }) => {
       const createStartDate = format(
@@ -60,7 +60,7 @@ const AddSchedule = ({ open, onClose }) => {
       const selectedDoctorId = selectedDoctor.id
 
       dispatch(
-         postNewAppoinment({
+         postNewSchedule({
             doctorId: selectedDoctorId,
             departmentName: values.departmentName,
             schedule: dataToSend,
@@ -101,9 +101,8 @@ const AddSchedule = ({ open, onClose }) => {
       label: doctor.fullNameDoctor,
    }))
 
-   const handleDayButtonClick = (dayLabel) => {
+   const handleDayButtonClick = (dayLabel) =>
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
-   }
 
    const dateToday = dayjs()
 
@@ -256,9 +255,9 @@ const AddSchedule = ({ open, onClose }) => {
                ))}
             </Box>
 
-            {appointmentsError(errors) && (
+            {scheduleError(errors) && (
                <Typography className="error-message">
-                  {appointmentsError(errors)}
+                  {scheduleError(errors)}
                </Typography>
             )}
 

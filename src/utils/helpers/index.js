@@ -44,7 +44,7 @@ const signUpError = (errors) => {
    return errorMessage
 }
 
-const appointmentsError = (errors) => {
+const scheduleError = (errors) => {
    let errorMessage = null
 
    if (errors?.departmentName) {
@@ -70,4 +70,4 @@ const appointmentsError = (errors) => {
    return errorMessage
 }
 
-export { signInError, signUpError, passwordError, appointmentsError }
+export { signInError, signUpError, passwordError, scheduleError }

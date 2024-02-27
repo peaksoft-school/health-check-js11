@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosInstance } from '../../configs/axiosInstance'
-import { showToast } from '../../utils/helpers/notification'
+import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getDoctorsByDepartment = createAsyncThunk(
    'doctors/fetchDoctors',
@@ -13,7 +13,7 @@ const getDoctorsByDepartment = createAsyncThunk(
          return response.data
       } catch (error) {
          showToast({
-            message: 'error',
+            message: error.response.data.message,
             status: 'error',
          })
 
@@ -22,7 +22,7 @@ const getDoctorsByDepartment = createAsyncThunk(
    }
 )
 
-const postNewAppoinment = createAsyncThunk(
+const postNewSchedule = createAsyncThunk(
    'newSchedule/postSchedule',
    async (
       { doctorId, departmentName, schedule, resetForm, onClose },
@@ -53,4 +53,4 @@ const postNewAppoinment = createAsyncThunk(
    }
 )
 
-export { getDoctorsByDepartment, postNewAppoinment }
+export { getDoctorsByDepartment, postNewSchedule }

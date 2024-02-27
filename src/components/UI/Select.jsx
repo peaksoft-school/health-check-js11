@@ -1,3 +1,4 @@
+import { DisplaySettings } from '@mui/icons-material'
 import { forwardRef } from 'react'
 import Selector from 'react-select'
 
@@ -16,6 +17,10 @@ const customStyles = {
          border: `1px solid ${borderColor}`,
          borderRadius: '10px',
          boxShadow: 'none',
+
+         '& span': {
+            width: '0px',
+         },
 
          '&:hover': {
             borderColor: state.isFocused ? 'none' : '#c1b5b5',

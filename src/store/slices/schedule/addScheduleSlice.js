@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getDoctorsByDepartment, postNewAppoinment } from './addScheduleThunk'
+import { getDoctorsByDepartment, postNewSchedule } from './addScheduleThunk'
 
 const initialState = {
    doctors: [],
@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const addScheduleSlice = createSlice({
-   name: 'addOnlineAppointments',
+   name: 'addSchedule',
    initialState,
    reducers: {},
    extraReducers: (builder) => {
@@ -25,13 +25,13 @@ export const addScheduleSlice = createSlice({
             state.loading = false
             state.error = action.error.message
          })
-         .addCase(postNewAppoinment.pending, (state) => {
+         .addCase(postNewSchedule.pending, (state) => {
             state.loading = true
          })
-         .addCase(postNewAppoinment.fulfilled, (state, { payload }) => {
+         .addCase(postNewSchedule.fulfilled, (state) => {
             state.loading = false
          })
-         .addCase(postNewAppoinment.rejected, (state, action) => {
+         .addCase(postNewSchedule.rejected, (state) => {
             state.loading = false
          })
    },
