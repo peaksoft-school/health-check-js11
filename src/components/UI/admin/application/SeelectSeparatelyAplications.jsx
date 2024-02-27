@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import Checkbox from '../../Checkbox'
-import { handleIsCheckedItem } from '../../../../store/slices/application-slice/aplicationSlice'
+import { handleIsCheckedItem } from '../../../../store/slices/application/aplicationSlice'
 
 const SelectSeparately = ({ isSelected, id }) => {
    const dispatch = useDispatch()

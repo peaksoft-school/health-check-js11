@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
-import { deleteAllApplication } from '../../../../store/thunks/applicationThunk'
-import { handleRemoveChecked } from '../../../../store/slices/application-slice/aplicationSlice'
+import { deleteAllApplication } from '../../../../store/slices/application/applicationThunk'
+import { handleRemoveChecked } from '../../../../store/slices/application/aplicationSlice'
 
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
 
    const dispatch = useDispatch()
 
-   const { selectAllApplications } = useSelector((store) => store.data)
+   const { selectAllApplications } = useSelector((store) => store.applications)
 
    const openModal = () => setOpen(true)
 

@@ -5,11 +5,11 @@ import {
    getApplicationData,
    searchApplications,
    updateApplication,
-} from '../../thunks/applicationThunk'
+} from './applicationThunk'
 import { showToast } from '../../../utils/helpers/notification'
 
 export const applicationSlice = createSlice({
-   name: 'data',
+   name: 'applications',
    initialState: {
       items: [],
       searchItems: [],

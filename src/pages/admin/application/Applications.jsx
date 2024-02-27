@@ -5,25 +5,25 @@ import { useDebounce } from 'use-debounce'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
 
-import { ONLINE_APPLICATIONS_COLUMN } from '../../../utils/constants/index'
+import { ONLINE_APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
 import {
    deleteApplicationById,
    getApplicationData,
    updateApplication,
    searchApplications,
-} from '../../../store/thunks/applicationThunk'
+} from '../../../store/slices/application/applicationThunk'
 
 const Applications = () => {
    const dispatch = useDispatch()
 
    const [searchText, setSearchText] = useState('')
 
-   const application = useSelector((state) => state.data.items)
+   const application = useSelector((state) => state.applications.items)
 
-   const searchResults = useSelector((state) => state.data.searchItems)
+   const searchResults = useSelector((state) => state.applications.searchItems)
 
    const selectedItems = useSelector(
-      (state) => state.data.selectAllApplications
+      (state) => state.applications.selectAllApplications
    )
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)

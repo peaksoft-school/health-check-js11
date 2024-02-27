@@ -10,8 +10,9 @@ import {
    PERSIST,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { authSlice } from './slices/authSlice'
+import { authSlice } from './slices/auth/authSlice'
 import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
+import { applicationSlice } from './slices/application/aplicationSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,

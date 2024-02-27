@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Checkbox from '../../Checkbox'
-import { updateApplication } from '../../../../store/thunks/applicationThunk'
+import { updateApplication } from '../../../../store/slices/application/applicationThunk'
 
 const ApplicationCheckbox = ({ checked, id }) => {
    const [isChecked, setIsChecked] = useState(checked)

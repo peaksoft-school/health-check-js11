@@ -27,6 +27,7 @@ axiosInstance.interceptors.request.use(
       const updatedConfig = { ...config }
 
       const token = storre.getState().auth.accessToken
+
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }

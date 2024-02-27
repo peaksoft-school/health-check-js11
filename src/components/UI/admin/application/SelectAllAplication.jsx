@@ -4,13 +4,13 @@ import Checkbox from '../../Checkbox'
 import {
    handleIsChecked,
    handleRemoveChecked,
-} from '../../../../store/slices/application-slice/aplicationSlice'
+} from '../../../../store/slices/application/aplicationSlice'
 
 const SelectAllApplication = () => {
    const [status, setStatus] = useState(false)
 
    const { selectAllApplications, selectAll, items } = useSelector(
-      (state) => state.data
+      (state) => state.applications
    )
 
    const isSelectAll = selectAllApplications.length === items.length || status
