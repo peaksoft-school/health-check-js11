@@ -230,7 +230,7 @@ const COLUMNS = [
 const PATIENTS_COLUMN = [
    {
       Header: '№',
-      accessor: 'patientstId',
+      accessor: 'id',
 
       style: {
          padding: '17px 0 20px 17px',
@@ -245,7 +245,7 @@ const PATIENTS_COLUMN = [
 
    {
       Header: 'Имя и фамилия',
-      accessor: 'fullName',
+      accessor: 'surname',
 
       style: {
          padding: '17px 0 20px',
@@ -289,7 +289,7 @@ const PATIENTS_COLUMN = [
    },
    {
       Header: 'Дата сдачи',
-      accessor: 'time',
+      accessor: 'resultDate',
 
       style: {
          padding: '19px 0 20px',
@@ -300,13 +300,6 @@ const PATIENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
-
-      Cell: ({ row }) => (
-         <Box>
-            {/* <Typography variant="p">{row.original.localDate}</Typography>
-            <Typography variant="p">{row.original.localTime}</Typography> */}
-         </Box>
-      ),
    },
    {
       Header: 'Действия',
@@ -326,9 +319,8 @@ const PATIENTS_COLUMN = [
       Cell: ({ row }) => {
          return (
             <DeletePatients
-            // name={row.original.fullName}
-            // disabled={row.original.processed}
-            // appointmentId={row.original.appointmentId}
+               name={row.original.surname}
+               patientsId={row.original.patientsId}
             />
          )
       },

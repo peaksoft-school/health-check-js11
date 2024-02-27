@@ -4,8 +4,17 @@ import { Box, Typography, styled } from '@mui/material'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import { COLUMNS, PATIENTS_COLUMN } from '../../../utils/constants/columns'
+import { PATIENTS_THUNK } from '../../../store/slices/patients/patientsThunk'
 
 const Patients = () => {
+   const { patients } = useSelector((state) => state.Patients)
+
+   const dispatch = useDispatch()
+
+   useEffect(() => {
+      dispatch(PATIENTS_THUNK.getPatients())
+   }, [])
+
    return (
       <StyledPatients>
          <Box className="box">
@@ -16,7 +25,7 @@ const Patients = () => {
                </Box>
             </Box>
             <Box className="table-container">
-               <Table columns={PATIENTS_COLUMN} data={COLUMNS} />
+               <Table columns={PATIENTS_COLUMN} data={patients} />
             </Box>
          </Box>
       </StyledPatients>
