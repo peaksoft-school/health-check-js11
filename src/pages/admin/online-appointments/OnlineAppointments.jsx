@@ -61,7 +61,13 @@ const OnlineAppointments = () => {
                {isLoading && <Loading />}
 
                {!showAddButton && (
-                  <Button className="different-button">some</Button>
+                  <Box>
+                     <Button variant="secondary" className="export-btn">
+                        EXPORT TO EXCEL
+                     </Button>
+
+                     <Button className="save-btn">СОХРАНИТЬ</Button>
+                  </Box>
                )}
             </Box>
 
@@ -153,6 +159,20 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                width: '1.125rem',
                height: '1.125rem',
             },
+         },
+
+         '& .export-btn': {
+            borderRadius: '4px',
+            padding: '8px 20px 9px 20px',
+            height: '40px',
+         },
+
+         '& .save-btn': {
+            background: 'rgb(4, 135, 65)',
+            padding: '8px 20px 9px 20px',
+            borderRadius: '4px',
+            height: '40px',
+            marginLeft: '14px',
          },
       },
 

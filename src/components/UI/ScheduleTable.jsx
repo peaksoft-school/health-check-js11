@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Box, Typography, styled } from '@mui/material'
+import { Box, Button, Typography, styled } from '@mui/material'
 import { addDays, format } from 'date-fns'
 import { useSelector } from 'react-redux'
 
 const TableSchedule = () => {
    const { schedules } = useSelector((state) => state.schedule)
 
-   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
-
    const [startDate, setStartDate] = useState('')
    const [endDate, setEndDate] = useState('')
+
+   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
 
    const handleDateChange = (event, type) => {
       const selectedDate = event.target.value
@@ -23,7 +23,8 @@ const TableSchedule = () => {
 
    useEffect(() => {
       const today = new Date()
-      const defaultEndDate = addDays(today, 10)
+      const defaultEndDate = addDays(today, 11)
+
       setStartDate(format(today, 'yyyy-MM-dd'))
       setEndDate(format(defaultEndDate, 'yyyy-MM-dd'))
    }, [])
@@ -35,6 +36,7 @@ const TableSchedule = () => {
 
       const start = new Date(startDate)
       const end = new Date(endDate)
+
       const dateRange = []
 
       while (start <= end) {
@@ -51,20 +53,27 @@ const TableSchedule = () => {
 
    return (
       <StyledContainer>
-         <Box className="date-picker">
-            <input
-               type="date"
-               placeholder="От"
-               value={startDate}
-               onChange={(e) => handleDateChange(e, 'start')}
-            />
+         <Box className="action-container">
+            <Box>
+               <Button className="buttons">Изменить день</Button>
+               <Button className="buttons">Установить по шаблону</Button>
+            </Box>
 
-            <input
-               type="date"
-               placeholder="До"
-               value={endDate}
-               onChange={(e) => handleDateChange(e, 'end')}
-            />
+            <Box className="date-picker">
+               <input
+                  type="date"
+                  placeholder="От"
+                  value={startDate}
+                  onChange={(e) => handleDateChange(e, 'start')}
+               />
+               -
+               <input
+                  type="date"
+                  placeholder="До"
+                  value={endDate}
+                  onChange={(e) => handleDateChange(e, 'end')}
+               />
+            </Box>
          </Box>
 
          <table className="table">
@@ -87,6 +96,7 @@ const TableSchedule = () => {
                   <tr key={surname}>
                      <Box component="td" className="specialist">
                         <img src={image} alt="imag" className="image" />
+
                         <Typography className="surname">{surname}</Typography>
                         <Typography className="position">{position}</Typography>
                      </Box>
@@ -126,26 +136,45 @@ const StyledContainer = styled(Box)(() => ({
    backgroundColor: 'white',
    borderRadius: '6px',
    paddingBottom: '50px',
+   maxWidth: '1379px',
 
-   '& .date-picker': {
+   '& .action-container': {
+      display: 'flex',
+      justifyContent: 'space-between',
       padding: '20px',
+
+      '& .buttons': {
+         backgroundColor: 'rgb(224, 226, 231)',
+         padding: '8px 20px 9px 20px',
+         color: 'rgb(77, 78, 81)',
+         fontWeight: '400',
+         fontSize: '14px',
+         borderRadius: '4px',
+         marginRight: '10px',
+      },
    },
 
    '& .table': {
       border: '2px solid #D9D9D9',
       borderCollapse: 'collapse',
-      maxWidth: '86.188rem',
+      // maxWidth: '86.188rem',
+      // width: '1379px',
+
+      maxWidth: '100%',
       width: '100%',
       overflowX: 'auto',
 
       '& .header-specialist': {
-         border: '2px solid #D9D9D9',
+         display: 'flex',
+         justifyContent: 'flex-start',
+         alignItems: 'center',
          fontSize: '12px',
          fontWeight: '600',
          lineHeight: '16px',
          letterSpacing: '0.02em',
          height: '44px',
          paddingLeft: '12px',
+         width: '11.25rem',
       },
 
       '& .th': {
