@@ -5,7 +5,6 @@ import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
-import DeletePatients from '../../components/patients-columns/DeletePatients'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -227,104 +226,4 @@ const COLUMNS = [
    },
 ]
 
-const PATIENTS_COLUMN = [
-   {
-      Header: '№',
-      accessor: 'id',
-
-      style: {
-         padding: '17px 0 20px 17px',
-         fontWeight: '700',
-         flex: 0.09,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
-      },
-   },
-
-   {
-      Header: 'Имя и фамилия',
-      accessor: 'surname',
-
-      style: {
-         padding: '17px 0 20px',
-         fontWeight: '700',
-         flex: 0.5,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
-      },
-   },
-
-   {
-      Header: 'Номер телефона',
-      accessor: 'phoneNumber',
-
-      style: {
-         padding: '17px 0 20px',
-         fontWeight: '700',
-         flex: 0.3,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
-      },
-   },
-
-   {
-      Header: 'Почта',
-      accessor: 'email',
-
-      style: {
-         padding: '19px 0 20px',
-         fontWeight: '700',
-         flex: 0.29,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
-      },
-   },
-   {
-      Header: 'Дата сдачи',
-      accessor: 'resultDate',
-
-      style: {
-         padding: '19px 0 20px',
-         fontWeight: '700',
-         flex: 0.15,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
-      },
-   },
-   {
-      Header: 'Действия',
-      accessor: 'totalAction',
-
-      style: {
-         padding: '19px 10px 20px',
-         fontWeight: '700',
-         flex: 0.1,
-      },
-
-      tdStyle: {
-         display: 'flex',
-         justifyContent: 'center',
-      },
-
-      Cell: ({ row }) => {
-         return (
-            <DeletePatients
-               name={row.original.surname}
-               patientsId={row.original.patientsId}
-            />
-         )
-      },
-   },
-]
-
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, PATIENTS_COLUMN }
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS }
