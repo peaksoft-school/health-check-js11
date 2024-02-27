@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 import { showToast } from '../../../utils/helpers/notification'
 import { APPOINTMENTS_THUNK } from './appointmentThunk'
 

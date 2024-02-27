@@ -44,4 +44,30 @@ const signUpError = (errors) => {
    return errorMessage
 }
 
-export { signInError, signUpError, passwordError }
+const scheduleError = (errors) => {
+   let errorMessage = null
+
+   if (errors?.departmentName) {
+      errorMessage = errors.departmentName
+   } else if (errors?.doctor) {
+      errorMessage = errors.doctor
+   } else if (errors?.createStartDate) {
+      errorMessage = errors.createStartDate
+   } else if (errors?.createEndDate) {
+      errorMessage = errors.createEndDate
+   } else if (errors.startTime) {
+      errorMessage = errors.startTime
+   } else if (errors.interval) {
+      errorMessage = errors.interval
+   } else if (errors.dayOfWeek) {
+      errorMessage = errors.dayOfWeek
+   } else if (errors.startBreak) {
+      errorMessage = errors.startBreak
+   } else if (errors.endBreak) {
+      errorMessage = errors.endBreak
+   }
+
+   return errorMessage
+}
+
+export { signInError, signUpError, passwordError, scheduleError }
