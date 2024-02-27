@@ -61,9 +61,9 @@ export const applicationSlice = createSlice({
             state.status = 'loading'
          })
 
-         .addCase(deleteApplicationById.fulfilled, (state, action) => {
+         .addCase(deleteApplicationById.fulfilled, () => {
             showToast({
-               message: 'Успешно удалено',
+               message: 'запись удалена',
             })
          })
 
@@ -98,7 +98,8 @@ export const applicationSlice = createSlice({
             state.status = 'failed'
             state.error = action.error.message
          })
-         .addCase(deleteAllApplication.fulfilled, (state, action) => {
+
+         .addCase(deleteAllApplication.fulfilled, () => {
             showToast({
                message: 'Успешно удалено ',
             })

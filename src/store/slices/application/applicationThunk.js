@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
 
 const getApplicationData = createAsyncThunk(
-   'data/fetchData',
+   'applications/getApplications',
 
    async (_, { rejectWithValue }) => {
       try {
@@ -16,7 +16,7 @@ const getApplicationData = createAsyncThunk(
 )
 
 const searchApplications = createAsyncThunk(
-   'aplication/search',
+   'applications/search',
 
    async (searchText, { rejectWithValue }) => {
       try {
@@ -32,11 +32,13 @@ const searchApplications = createAsyncThunk(
 )
 
 const deleteApplicationById = createAsyncThunk(
-   'data/deleteData',
+   'applications/deleteApplications',
    async (id, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`/api/application/${id}`)
+
          dispatch(getApplicationData())
+
          return id
       } catch (error) {
          return rejectWithValue(error.response.data)
@@ -45,14 +47,16 @@ const deleteApplicationById = createAsyncThunk(
 )
 
 const updateApplication = createAsyncThunk(
-   'data/updateData',
+   'applications/updateApplications',
    async ({ id, isActive }, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.put('/api/application/update', {
             isActive,
             id,
          })
+
          dispatch(getApplicationData())
+
          return { isActive, id }
       } catch (error) {
          return rejectWithValue(error.response.data)
@@ -61,12 +65,13 @@ const updateApplication = createAsyncThunk(
 )
 
 const deleteAllApplication = createAsyncThunk(
-   'application/all',
+   'applications/all',
    async (ids, { dispatch }) => {
       try {
          await axiosInstance.delete('/api/application/all', {
             data: ids,
          })
+
          dispatch(getApplicationData())
       } catch (error) {
          throw new Error('Error', error)

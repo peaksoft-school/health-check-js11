@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 const AdminNavigations = ({ links }) => {
    const { pathname } = useLocation()
+
    return (
       <>
          {links.map(({ id, to, label }) => (
@@ -22,6 +23,7 @@ const StyledNavLink = styled(NavLink)(() => ({
    textDecoration: 'none',
    color: '#707070',
    position: 'relative',
+
    '&:before': {
       content: "''",
       width: '100%',
@@ -33,6 +35,7 @@ const StyledNavLink = styled(NavLink)(() => ({
       color: '#222222',
       fontWeight: 500,
    },
+
    '& .line': {
       width: '0px',
       height: '2px',
@@ -41,6 +44,7 @@ const StyledNavLink = styled(NavLink)(() => ({
       bottom: -36.5,
       transition: '0.5s width ease',
    },
+
    '& .line.tab': {
       width: '100%',
       color: '#222222',
