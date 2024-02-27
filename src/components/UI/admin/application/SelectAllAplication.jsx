@@ -7,16 +7,11 @@ import {
 } from '../../../../store/slices/application/aplicationSlice'
 
 const SelectAllApplication = () => {
-   const [status, setStatus] = useState(false)
-   const { selectAllApplications, selectAll, items } = useSelector(
-      (state) => state.applications
-   )
-   const isSelectAll = selectAllApplications.length === items.length || status
+   const { selectAll, items } = useSelector((state) => state.applications)
+
    const dispatch = useDispatch()
 
    const handleCheckboxChange = () => {
-      setStatus((prevState) => !prevState)
-
       if (!selectAll) {
          const selectedIds = items.map((item) => item.id)
 
@@ -26,7 +21,7 @@ const SelectAllApplication = () => {
       }
    }
 
-   return <Checkbox checked={isSelectAll} onClick={handleCheckboxChange} />
+   return <Checkbox checked={selectAll} onClick={handleCheckboxChange} />
 }
 
 export default SelectAllApplication

@@ -13,6 +13,7 @@ const SelectSeparately = ({ isSelected, id }) => {
          })
       )
    }
+
    return <Checkbox checked={isSelected} onChange={handleChange} />
 }
 

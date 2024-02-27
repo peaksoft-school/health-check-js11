@@ -17,13 +17,14 @@ export const applicationSlice = createSlice({
       error: null,
       selectAllApplications: [],
       selectAll: false,
-      deletedAppointmentsIds: [],
    },
 
    reducers: {
       handleIsChecked: (state, action) => {
          state.selectAll = !state.selectAll
          state.selectAllApplications = action.payload
+
+         console.log(state.selectAllApplications)
       },
 
       handleRemoveChecked: (state) => {
@@ -37,6 +38,14 @@ export const applicationSlice = createSlice({
          state.selectAllApplications = idExists
             ? state.selectAllApplications.filter((item) => item !== payload.id)
             : [...state.selectAllApplications, payload.id]
+
+         if (state.selectAllApplications.length === state.items.length) {
+            state.selectAll = true
+         } else {
+            state.selectAll = false
+         }
+
+         console.log(state.selectAllApplications)
       },
    },
 
