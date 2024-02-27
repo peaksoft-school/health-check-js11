@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Checkbox from '../../Checkbox'
 import {
    handleIsChecked,
@@ -8,28 +8,25 @@ import {
 
 const SelectAllApplication = () => {
    const [status, setStatus] = useState(false)
-
    const { selectAllApplications, selectAll, items } = useSelector(
       (state) => state.applications
    )
-
    const isSelectAll = selectAllApplications.length === items.length || status
-
    const dispatch = useDispatch()
 
    const handleCheckboxChange = () => {
       setStatus((prevState) => !prevState)
 
       if (!selectAll) {
-         const seletedIds = items.map((item) => item.id)
+         const selectedIds = items.map((item) => item.id)
 
-         dispatch(handleIsChecked(seletedIds))
+         dispatch(handleIsChecked(selectedIds))
       } else {
          dispatch(handleRemoveChecked())
       }
    }
 
-   return <Checkbox checked={isSelectAll} onChange={handleCheckboxChange} />
+   return <Checkbox checked={isSelectAll} onClick={handleCheckboxChange} />
 }
 
 export default SelectAllApplication
