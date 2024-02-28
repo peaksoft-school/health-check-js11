@@ -395,6 +395,16 @@ const DEPARTMENTS = [
    },
 ]
 
+const DAYS_OF_WEEK = {
+   Su: 'ПН',
+   Mo: 'ВТ',
+   Tu: 'СР',
+   We: 'ЧТ',
+   Th: 'ПТ',
+   Fr: 'СБ',
+   Sa: 'ВС',
+}
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -408,4 +418,5 @@ export {
    FAKE_DATA,
    HEADER_ADMIN,
    DEPARTMENTS,
+   DAYS_OF_WEEK,
 }

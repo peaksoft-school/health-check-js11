@@ -2,25 +2,31 @@ import { forwardRef } from 'react'
 import Selector from 'react-select'
 
 const customStyles = {
-   control: (provided, state) => ({
-      ...provided,
-      height: '38px',
-      width: '490px',
+   control: (provided, state) => {
+      let borderColor = state.isFocused ? 'rgba(4, 135, 65, 0.80)' : '#cccccc'
 
-      border: state.isFocused
-         ? '1px solid rgba(4, 135, 65, 0.80)'
-         : '1px solid #cccccc',
-      boxShadow: 'none',
+      if (state.selectProps.error) {
+         borderColor = 'red'
+      }
 
-      '&:hover': {
-         borderColor: state.isFocused ? 'none' : '#c1b5b5',
-      },
-   }),
+      return {
+         ...provided,
+         height: '45px',
+         width: '100%',
+         border: `1px solid ${borderColor}`,
+         borderRadius: '10px',
+         boxShadow: 'none',
 
-   menu: (provided) => ({
-      ...provided,
-      width: '490px',
-   }),
+         '& span': {
+            width: '0px',
+         },
+
+         '&:hover': {
+            borderColor: state.isFocused ? 'none' : '#c1b5b5',
+            width: '100%',
+         },
+      }
+   },
 }
 
 const Select = forwardRef(({ options, onChange, ...rest }, ref) => (

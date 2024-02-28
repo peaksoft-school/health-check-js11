@@ -2,23 +2,80 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { getPatient } from '../../../store/slices/patients/patientsThunk'
+import dayjs from 'dayjs'
+import {
+   getPatient,
+   postPatientResult,
+} from '../../../store/slices/patients/patientsThunk'
 import Button from '../../../components/UI/Button'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
+import Loading from '../../../components/Loading'
+import DatePicker from '../../../components/UI/DatePicker'
 import { DEPARTMENTS } from '../../../utils/constants'
 
 const PatientsInnerPage = () => {
    const [toggleModal, setToggleModal] = useState(false)
+   const [newData, setNewData] = useState({ service: '', date: '' })
+   const [isFormValid, setIsFormValid] = useState(false)
+   const [image, setImage] = useState('')
+   const [fileURL, setFileURL] = useState('')
+
    const { id } = useParams()
-   const { data } = useSelector((state) => state.patients)
+   const { data, isLoading } = useSelector((state) => state.patients)
 
    const toggleModalHandler = () => setToggleModal((prev) => !prev)
+
+   const validateForm = () => {
+      const isValid = newData.service !== '' && newData.date !== ''
+   }
+
+   useEffect(() => {
+      validateForm()
+   }, [newData])
 
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getPatient(id))
    }, [id])
+
+   const onServiceChange = (value) => {
+      setNewData((prev) => ({ ...prev, service: value }))
+      validateForm()
+   }
+
+   const onDateChange = (value) => {
+      setNewData((prev) => ({
+         ...prev,
+         date: value.toISOString().split('T')[0],
+      }))
+      validateForm()
+   }
+
+   const onAddResult = () => {
+      const formData = new FormData()
+      formData.append('dataOfDelivery', newData.date)
+      formData.append('patientId', data.id)
+
+      dispatch(
+         postPatientResult({
+            facility: newData.service,
+            dataOfDelivery: newData.date,
+            userId: data.id,
+         })
+      )
+      setToggleModal(false)
+   }
+
+   const handleChange = (e) => {
+      const file = e.target.files[0]
+
+      setImage(file)
+      const fileURL = URL.createObjectURL(file)
+      setFileURL(fileURL)
+
+      console.log(fileURL)
+   }
 
    return (
       <StyledContainer>
@@ -29,45 +86,131 @@ const PatientsInnerPage = () => {
                   {data.last_name}
                </Typography>
 
-               <Button onClick={toggleModalHandler}>
+               <Button className="button" onClick={toggleModalHandler}>
                   + Добавить Результат
                </Button>
             </Box>
 
             <Modal open={toggleModal} handleClose={toggleModalHandler}>
                <Box className="modal">
-                  <Select options={DEPARTMENTS} />
+                  <Typography variant="h5"> Добавление результата</Typography>
+
+                  <div className="select-asd">
+                     <Box className="select-box">
+                        <label htmlFor="department">Услуги</label>
+
+                        <div className="select">
+                           <Select
+                              id="department"
+                              placeholder="Выберите услугу"
+                              options={DEPARTMENTS}
+                              onChange={onServiceChange}
+                           />
+                        </div>
+                     </Box>
+
+                     <Box className="select-box">
+                        <label htmlFor="due-date">Дата сдачи</label>
+
+                        <DatePicker
+                           className="custom-date-picker"
+                           id="due-date"
+                           onChange={onDateChange}
+                           defaultValue={dayjs()}
+                           variant="custom"
+                        />
+                     </Box>
+                  </div>
+                  <div>
+                     <label htmlFor="file">Файлы</label>
+                     <Container onClick={(e) => e.stopPropagation()}>
+                        <label htmlFor="file">
+                           {/* {image ? (
+                              <div>
+                                 {image.type === 'application/pdf' && (
+                                    <GetPdfFileIcon className="insert-file" />
+                                 )}
+                              </div>
+                           ) : (
+                              <FileIcon className="insert-file" />
+                           )} */}
+
+                           <input
+                              id="file"
+                              type="file"
+                              onChange={handleChange}
+                           />
+                        </label>
+                        <div>
+                           <p>Нажмите или перетащите файл</p>
+                           <p>
+                              Минимальное <br /> разрешение 450x600
+                           </p>
+                        </div>
+                     </Container>
+                  </div>
+                  <Box className="button-group">
+                     <StyledButton
+                        onClick={toggleModalHandler}
+                        type="button"
+                        variant="grey"
+                     >
+                        ОТМЕНИТЬ
+                     </StyledButton>
+                     <StyledButton
+                        type="submit"
+                        onClick={onAddResult}
+                        disabled={!isFormValid}
+                     >
+                        ДОБАВИТЬ
+                     </StyledButton>
+                  </Box>
                </Box>
             </Modal>
 
-            <Box className="content-box">
-               <Box className="inner-box">
-                  <Typography className="full-name">
-                     {data.first_name} <span> </span>
-                     {data.last_name}
-                  </Typography>
+            {isLoading ? (
+               <Loading />
+            ) : (
+               <Box className="content-box">
+                  <Box className="inner-box">
+                     <Typography className="full-name">
+                        {data.first_name} <span> </span>
+                        {data.last_name}
+                     </Typography>
 
-                  <Box>
-                     <Typography className="asd">Имя</Typography>
-                     <Typography className="dsa">{data.first_name}</Typography>
-                  </Box>
+                     <Box>
+                        <Typography className="label">Имя</Typography>
 
-                  <Box>
-                     <Typography className="asd">Фамилия</Typography>
-                     <Typography className="dsa">{data.last_name}</Typography>
-                  </Box>
+                        <Typography className="value">
+                           {data.first_name}
+                        </Typography>
+                     </Box>
 
-                  <Box>
-                     <Typography className="asd">Email</Typography>
-                     <Typography className="dsa">{data.email}</Typography>
-                  </Box>
+                     <Box>
+                        <Typography className="label">Фамилия</Typography>
 
-                  <Box>
-                     <Typography className="asd">Номер телефона</Typography>
-                     <Typography className="dsa">{data.first_name}</Typography>
+                        <Typography className="value">
+                           {data.last_name}
+                        </Typography>
+                     </Box>
+
+                     <Box>
+                        <Typography className="label">Email</Typography>
+                        <Typography className="value">{data.email}</Typography>
+                     </Box>
+
+                     <Box>
+                        <Typography className="label">
+                           Номер телефона
+                        </Typography>
+
+                        <Typography className="value">
+                           {data.first_name}
+                        </Typography>
+                     </Box>
                   </Box>
                </Box>
-            </Box>
+            )}
          </Box>
       </StyledContainer>
    )
@@ -82,6 +225,26 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    '& .modal': {
       width: '100%',
       height: '100%',
+   },
+
+   '& .select-asd': {
+      display: 'flex',
+      flexDirection: 'row',
+   },
+
+   '& .select-box': {
+      display: 'flex',
+      flexDirection: 'column',
+   },
+
+   '& .insert-file': {
+      cursor: 'pointer',
+      width: '7rem',
+      height: '16vh',
+      borderRadius: '8px',
+      padding: '35px',
+      backgroundColor: '#e0e2e7',
+      marginTop: '5px',
    },
 
    '& > .box': {
@@ -110,16 +273,21 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             flexDirection: 'column',
             gap: '1rem',
 
-            '& .asd': {
+            '& .label': {
                color: '#4d4e51',
             },
-            '& .dsa': {
+            '& .value': {
                color: theme.palette.primary.lightBlack,
                fontFamily: 'Manrope',
                fontWeight: '500',
                fontSize: '16px',
             },
          },
+      },
+
+      '& > .button-group': {
+         display: 'flex',
+         justifyContent: 'space-between',
       },
 
       '& .full-name': {
@@ -131,6 +299,44 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          display: 'flex',
          justifyContent: 'space-between',
          alignItems: 'center',
+
+         '& > .button': {
+            padding: '0',
+            fontSize: '13px',
+            height: '40px',
+            width: '232px',
+         },
       },
+   },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   width: '14.3rem',
+   height: '2.5rem',
+}))
+
+const Container = styled(Box)(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   gap: '20px',
+
+   '& .insert-file': {
+      cursor: 'pointer',
+      width: ' 7rem',
+      height: ' 16vh',
+      borderRadius: '8px',
+      padding: '35px',
+      backgroundColor: '#e0e2e7',
+      marginTop: '5px',
+   },
+
+   '& p': {
+      margin: '10px 0',
+   },
+
+   '&  p:nth-of-type(2)': {
+      fontSize: '12px',
+      fontWeight: '400',
+      color: '#959595',
    },
 }))

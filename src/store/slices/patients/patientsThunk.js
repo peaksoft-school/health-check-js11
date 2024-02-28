@@ -53,7 +53,7 @@ const getPatient = createAsyncThunk(
    async (id, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(`/api/user/${id}`)
-         console.log(response, 'response')
+
          return response.data
       } catch (error) {
          return rejectWithValue(error)
@@ -61,4 +61,29 @@ const getPatient = createAsyncThunk(
    }
 )
 
-export { getAllPatients, deletePatients, searchPatients, getPatient }
+const postPatientResult = createAsyncThunk(
+   'patientsResult/addResult',
+   async (result, { rejectWithValue, dispatch }) => {
+      try {
+         const { data } = await axiosInstance.post('/api/results/add-result', {
+            result,
+         })
+
+         return data
+      } catch (error) {
+         const errorMessage = error.response.data.message.replace(
+            /^\[|\]$/g,
+            ''
+         )
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export {
+   getAllPatients,
+   deletePatients,
+   searchPatients,
+   getPatient,
+   postPatientResult,
+}

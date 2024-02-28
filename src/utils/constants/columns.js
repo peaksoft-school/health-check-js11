@@ -203,9 +203,9 @@ const PATIENTS_COLUMN = [
       accessor: 'id',
 
       style: {
-         padding: '19px 0 20px',
+         padding: '19px 24px 20px',
          fontWeight: '700',
-         flex: 0.08,
+         flex: 0.06,
       },
 
       tdStyle: {
@@ -224,6 +224,7 @@ const PATIENTS_COLUMN = [
       },
 
       tdStyle: {
+         color: 'black',
          fontWeight: '500',
       },
 

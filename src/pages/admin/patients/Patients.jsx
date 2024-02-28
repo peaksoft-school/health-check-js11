@@ -1,5 +1,4 @@
 import { Box, Typography, styled } from '@mui/material'
-import { TabContext, TabPanel } from '@mui/lab'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
@@ -13,7 +12,6 @@ import {
 import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 
 const Patients = () => {
-   const [value, setValue] = useState('1')
    const [searchName, setSearchName] = useState('')
 
    const dispatch = useDispatch()
@@ -46,21 +44,21 @@ const Patients = () => {
             </Box>
 
             <Box>
-               <TabContext value={value}>
-                  <TabPanel value="1" className="tables">
-                     <Box className="input-container">
-                        <StyledInput
-                           placeholder="Поиск"
-                           value={searchName}
-                           onChange={handleSearchChange}
-                        />
-                     </Box>
+               <Box className="input-container">
+                  <StyledInput
+                     placeholder="Поиск"
+                     value={searchName}
+                     onChange={handleSearchChange}
+                  />
+               </Box>
 
-                     <Box className="table-container">
-                        <Table columns={PATIENTS_COLUMN} data={patients} />
-                     </Box>
-                  </TabPanel>
-               </TabContext>
+               <Box className="table-container">
+                  {isLoading ? (
+                     <Loading />
+                  ) : (
+                     <Table columns={PATIENTS_COLUMN} data={patients} />
+                  )}
+               </Box>
             </Box>
          </Box>
       </StyledContainer>
