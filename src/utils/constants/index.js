@@ -273,6 +273,211 @@ const HEADER_ADMIN = [
    { id: 4, to: '/admin/patient', label: 'Пациенты' },
 ]
 
+const DAYS = [
+   {
+      id: 0,
+      label: 'MONDAY',
+   },
+   {
+      id: 1,
+      label: 'TUESDAY',
+   },
+   {
+      id: 2,
+      label: 'WEDNESDAY',
+   },
+   {
+      id: 3,
+      label: 'THURSDAY',
+   },
+   {
+      id: 4,
+      label: 'FRIDAY',
+   },
+   {
+      id: 5,
+      label: 'SATURDAY',
+   },
+   {
+      id: 6,
+      label: 'SUNDAY',
+   },
+]
+
+const DEPARTMENTS = [
+   {
+      id: 1,
+      label: 'Анестезиология',
+      value: 'анестезиология',
+   },
+
+   {
+      id: 2,
+      label: 'Онкология',
+      value: 'онкология',
+   },
+
+   {
+      id: 3,
+      label: 'Терапия',
+      value: 'терапия',
+   },
+
+   {
+      id: 4,
+      label: 'Ортопедия',
+      value: 'ортопедия',
+   },
+
+   {
+      id: 5,
+      label: 'Урология',
+      value: 'урология',
+   },
+
+   {
+      id: 6,
+      label: 'Вакцинация',
+      value: 'вакцинация',
+   },
+
+   {
+      id: 7,
+      label: 'Оториноларинология',
+      value: 'оториноларинология',
+   },
+
+   {
+      id: 8,
+      label: 'Флебология',
+      value: 'флебология',
+   },
+
+   {
+      id: 9,
+      label: 'Офтальмология',
+      value: 'офтальмология',
+   },
+
+   {
+      id: 10,
+      label: 'Гинекология',
+      value: 'гинекология',
+   },
+
+   {
+      id: 11,
+      label: 'Эндокринология',
+      value: 'эндокринология',
+   },
+
+   {
+      id: 12,
+      label: 'Дерматология',
+      value: 'дерматология',
+   },
+
+   {
+      id: 13,
+      title: 'Проктология',
+      value: 'проктология',
+   },
+
+   {
+      id: 14,
+      label: 'Физиотерапия',
+      value: 'физиотерапия',
+   },
+
+   {
+      id: 15,
+      label: 'Кардиология',
+      value: 'кардиология',
+   },
+
+   {
+      id: 16,
+      label: 'Психотерапия',
+      value: 'психотерапия',
+   },
+
+   {
+      id: 17,
+      label: 'Невропатия',
+      value: 'невропатия',
+   },
+
+   {
+      id: 18,
+      label: 'Пульмонология',
+      value: 'пульмонология',
+   },
+
+   {
+      id: 19,
+      label: 'Ревмотопатия',
+      value: 'ревмотопатия',
+   },
+
+   {
+      id: 20,
+      label: 'Нейрохирургия',
+      value: 'нейрохирургия',
+   },
+]
+
+const INTERVAL_TIME = [
+   {
+      id: 1,
+      label: '15 мин',
+      time: 'FIFTEEN',
+   },
+
+   {
+      id: 2,
+      label: '30 минут',
+      time: 'THIRTY',
+   },
+
+   {
+      id: 3,
+      label: '45 минут',
+      time: 'FOURTYFIVE',
+   },
+
+   {
+      id: 4,
+      label: ' 1 час',
+      time: 'SIXTY',
+   },
+
+   {
+      id: 5,
+      label: '1,5 часа',
+      time: 'NINETY',
+   },
+]
+
+const RUSSIAN_DAYS = [
+   { id: 0, label: 'Пн' },
+   { id: 1, label: 'Вт' },
+   { id: 2, label: 'Ср' },
+   { id: 3, label: 'Чт' },
+   { id: 4, label: 'Пт' },
+   { id: 5, label: 'Сб' },
+   { id: 6, label: 'Вс' },
+]
+
+const DAYS_OF_WEEK = {
+   Su: 'ПН',
+   Mo: 'ВТ',
+   Tu: 'СР',
+   We: 'ЧТ',
+   Th: 'ПТ',
+   Fr: 'СБ',
+   Sa: 'ВС',
+}
+
 export {
    HEADER_SOCIALS,
    REVIEWS,
@@ -285,4 +490,9 @@ export {
    BEST_DOCTORS,
    FAKE_DATA,
    HEADER_ADMIN,
+   DAYS,
+   DEPARTMENTS,
+   INTERVAL_TIME,
+   RUSSIAN_DAYS,
+   DAYS_OF_WEEK,
 }
