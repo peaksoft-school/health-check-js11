@@ -1,12 +1,18 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Typography, styled, Box } from '@mui/material'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import Button from '../../components/UI/Button'
+import { forgotPassword } from '../../store/slices/auth/authThunk'
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ open, onClose }) => {
+   const { isLoading } = useSelector((state) => state.auth)
+
    const [email, setEmail] = useState('')
    const [emailError, setEmailError] = useState(false)
+
+   const dispatch = useDispatch()
 
    const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
 
@@ -27,28 +33,33 @@ const ForgotPassword = () => {
       e.preventDefault()
 
       const error = validaionEmail(email)
-      if (error) {
-         setEmailError(true)
+
+      if (!error) {
+         dispatch(
+            forgotPassword({
+               email,
+               link: 'http://localhost:3000/change-password',
+               setEmail,
+               onClose,
+            })
+         )
       } else {
-         setEmail('')
+         setEmailError(true)
       }
    }
 
-   const open = true
-
    return (
-      <Modal open={open}>
+      <Modal open={open} handleClose={onClose}>
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                <Typography className="text">
                   Вам будет отправлена ссылка для сброса пароля
                </Typography>
 
                <StyledInput
                   value={email}
-                  autoComplete="on"
                   onChange={handleChange}
                   type="email"
                   placeholder="Email"
@@ -61,9 +72,21 @@ const ForgotPassword = () => {
                   </Typography>
                )}
 
-               <StyledButton type="submit">ОТПРАВИТЬ</StyledButton>
+               <StyledButton
+                  type="submit"
+                  colorLoading="secondary"
+                  isLoading={isLoading}
+               >
+                  ОТПРАВИТЬ
+               </StyledButton>
 
-               <Typography className="cancel">Отменить</Typography>
+               <StyledCloseButton
+                  variant="grey"
+                  className="cancel"
+                  onClick={onClose}
+               >
+                  Отменить
+               </StyledCloseButton>
             </form>
          </StyledContainer>
       </Modal>
@@ -99,11 +122,19 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          color: 'red',
          fontSize: '0.8rem',
          position: 'absolute',
-         bottom: '9.063rem',
+         bottom: '8rem',
       },
+   },
+}))
 
-      '& > .cancel': {
-         cursor: 'pointer',
+const StyledCloseButton = styled(Button)(({ theme }) => ({
+   width: '100%',
+   '&.MuiButtonBase-root': {
+      border: 'none',
+
+      '&:hover': {
+         backgroundColor: theme.palette.primary.main,
+         border: 'none',
       },
    },
 }))
@@ -137,12 +168,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
          backgroundColor:
             'linear-gradient(181deg, #087D 0.45%, #048950 82.76%)',
          border: 'none',
-      },
-
-      '&:disabled': {
-         border: 'none',
-         backgroundColor: theme.palette.secondary.lightGrey,
-         color: theme.palette.primary.main,
       },
    },
 }))

@@ -4,7 +4,7 @@ import { NotFoundImage } from '../../assets/images'
 
 const NotFound = () => (
    <StyledContainer>
-      <img src={NotFoundImage} alt="" />
+      <img src={NotFoundImage} alt="404 not found" />
 
       <Typography className="title" variant="h3">
          Cтраница не найдена

@@ -9,28 +9,25 @@ export const axiosInstance = axios.create({
       'Content-Type': 'application/json',
    },
 })
-
 let storre
-
 export const injectStore = (store) => {
    storre = store
 }
-
 const signOut = () => {}
 
 axiosInstance.interceptors.request.use(
    function (config) {
       const updatedConfig = { ...config }
 
-      const token =
-         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDkxODgxMTMsImlhdCI6MTcwODkyODkxMywiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.hNJt2sUjdrFd0uBUgnmtw7BbPbUdaxkJhK-EqdV8s_k'
+      const token = storre.getState().auth.accessToken
       if (token) {
          updatedConfig.headers.Authorization = `Bearer ${token}`
       }
+
       return config
    },
 
-   function (error) {
+   (error) => {
       return Promise.reject(error)
    }
 )
@@ -40,10 +37,11 @@ axiosInstance.interceptors.response.use(
       return Promise.resolve(response)
    },
 
-   function (error) {
+   (error) => {
       if (error.response && error.response.status === 401) {
          signOut()
       }
+
       return Promise.reject(error)
    }
 )
