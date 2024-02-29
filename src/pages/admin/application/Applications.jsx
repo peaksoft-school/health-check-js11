@@ -105,11 +105,8 @@ const StyledContainer = styled(Box)(() => ({
       background: '#FFF',
       height: '100%',
       marginTop: '1.25rem',
-
-      '& .MuiTableCell-root ': {},
-
       '& .MuiTable-root': {
-         '& .MuiTableRow-root:nth-child(even)': {
+         '& .MuiTableRow-root:nth-of-type(even)': {
             backgroundColor: '#f4f3f3',
          },
       },
