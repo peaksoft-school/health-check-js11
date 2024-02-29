@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
-import { HEADER_ADMIN } from '../../utils/constants/index'
+import { ADMIN_NAVIGATIONS } from '../../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
 import AdminNavigations from '../../components/UI/AdminNavigations'
 import { logOut } from '../../store/slices/auth/authSlice'
@@ -42,7 +42,7 @@ const AdminHeader = () => {
             </Box>
 
             <nav className="navigation">
-               <AdminNavigations links={HEADER_ADMIN} />
+               <AdminNavigations links={ADMIN_NAVIGATIONS} />
             </nav>
 
             <Box>

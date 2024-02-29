@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../Button'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
-import { deleteAllApplication } from '../../../../store/slices/application/applicationThunk'
+import { APPLICATION_THUNK } from '../../../../store/slices/application/applicationThunk'
 import { handleRemoveChecked } from '../../../../store/slices/application/aplicationSlice'
 
 const DeleteSelected = ({ disabled }) => {
@@ -19,7 +19,7 @@ const DeleteSelected = ({ disabled }) => {
 
    const deleteAllFunction = () => {
       if (selectAllApplications.length) {
-         dispatch(deleteAllApplication(selectAllApplications))
+         dispatch(APPLICATION_THUNK.deleteAllApplication(selectAllApplications))
          dispatch(handleRemoveChecked())
          setOpen(false)
       }

@@ -18,7 +18,7 @@ const getApplicationData = createAsyncThunk(
 const searchApplications = createAsyncThunk(
    'applications/search',
 
-   async ({ searchText }, { rejectWithValue }) => {
+   async ({ searchText, rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
             `/api/application/getApplication?word=${searchText}`,
@@ -32,15 +32,15 @@ const searchApplications = createAsyncThunk(
    }
 )
 
-const deleteApplicationById = createAsyncThunk(
+const deleteApplication = createAsyncThunk(
    'applications/deleteApplications',
    async (id, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`/api/application/${id}`)
+         const response = await axiosInstance.delete(`/api/application/${id}`)
 
          dispatch(getApplicationData())
 
-         return id
+         return response.data
       } catch (error) {
          return rejectWithValue(error.response.data)
       }
@@ -79,11 +79,10 @@ const deleteAllApplication = createAsyncThunk(
       }
    }
 )
-
-export {
+export const APPLICATION_THUNK = {
    getApplicationData,
    searchApplications,
-   deleteApplicationById,
+   deleteApplication,
    updateApplication,
    deleteAllApplication,
 }

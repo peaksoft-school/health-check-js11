@@ -8,7 +8,7 @@ const AdminNavigations = ({ links }) => {
    return (
       <>
          {links.map(({ id, to, label }) => (
-            <StyledNavLink key={id} to={to} className="active">
+            <StyledNavLink key={id} to={to}>
                {label}
                <div className={`line ${pathname === to && 'tab'}`} />
             </StyledNavLink>
@@ -21,8 +21,8 @@ export default AdminNavigations
 
 const StyledNavLink = styled(NavLink)(() => ({
    textDecoration: 'none',
-   color: '#707070',
    position: 'relative',
+   color: '#707070',
 
    '&:before': {
       content: "''",

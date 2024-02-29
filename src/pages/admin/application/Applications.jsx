@@ -1,17 +1,12 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Typography, styled, TableRow } from '@mui/material'
+import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
 
-import { ONLINE_APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
-import {
-   deleteApplicationById,
-   getApplicationData,
-   updateApplication,
-   searchApplications,
-} from '../../../store/slices/application/applicationThunk'
+import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
+import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
 
 const Applications = () => {
    const dispatch = useDispatch()
@@ -26,7 +21,11 @@ const Applications = () => {
 
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
-         dispatch(searchApplications({ searchText: debouncedSearchText }))
+         dispatch(
+            APPLICATION_THUNK.searchApplications({
+               searchText: debouncedSearchText,
+            })
+         )
       }
    }, [debouncedSearchText])
 
@@ -35,13 +34,13 @@ const Applications = () => {
    }
 
    const handleUpdate = async ({ id, isActive }) =>
-      dispatch(updateApplication({ id, isActive }))
+      dispatch(APPLICATION_THUNK.updateApplication({ id, isActive }))
 
    const handleDelete = async ({ id }) =>
-      dispatch(deleteApplicationById({ id }))
+      dispatch(APPLICATION_THUNK.deleteApplication({ id }))
 
    useEffect(() => {
-      dispatch(getApplicationData())
+      dispatch(APPLICATION_THUNK.getApplicationData())
    }, [])
 
    const preperadeArray = items.map((item, index) => {
@@ -74,7 +73,7 @@ const Applications = () => {
 
          <Box className="table-container">
             <Table
-               columns={ONLINE_APPLICATIONS_COLUMN}
+               columns={APPLICATIONS_COLUMN}
                data={preperadeArray}
                className="table"
             />
@@ -106,6 +105,8 @@ const StyledContainer = styled(Box)(() => ({
       background: '#FFF',
       height: '100%',
       marginTop: '1.25rem',
+
+      '& .MuiTableCell-root ': {},
 
       '& .MuiTable-root': {
          '& .MuiTableRow-root:nth-child(even)': {

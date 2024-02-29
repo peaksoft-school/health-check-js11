@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-   deleteApplicationById,
-   deleteAllApplication,
-   getApplicationData,
-   searchApplications,
-   updateApplication,
-} from './applicationThunk'
+import { APPLICATION_THUNK } from './applicationThunk'
 import { showToast } from '../../../utils/helpers/notification'
 
 export const applicationSlice = createSlice({
@@ -71,76 +65,94 @@ export const applicationSlice = createSlice({
    extraReducers: (builder) => {
       builder
 
-         .addCase(getApplicationData.pending, (state) => {
+         .addCase(APPLICATION_THUNK.getApplicationData.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(getApplicationData.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.items = action.payload
-         })
+         .addCase(
+            APPLICATION_THUNK.getApplicationData.fulfilled,
+            (state, action) => {
+               state.status = 'succeeded'
+               state.items = action.payload
+            }
+         )
 
-         .addCase(getApplicationData.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-         })
+         .addCase(
+            APPLICATION_THUNK.getApplicationData.rejected,
+            (state, action) => {
+               state.status = 'failed'
+               state.error = action.error.message
+            }
+         )
 
-         .addCase(deleteApplicationById.pending, (state) => {
+         .addCase(APPLICATION_THUNK.deleteApplication.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(deleteApplicationById.fulfilled, () => {
+         .addCase(APPLICATION_THUNK.deleteApplication.fulfilled, () => {
             showToast({
                message: 'запись удалена',
             })
          })
 
-         .addCase(deleteApplicationById.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-         })
+         .addCase(
+            APPLICATION_THUNK.deleteApplication.rejected,
+            (state, action) => {
+               state.status = 'failed'
+               state.error = action.error.message
+            }
+         )
 
-         .addCase(updateApplication.pending, (state) => {
+         .addCase(APPLICATION_THUNK.updateApplication.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(updateApplication.fulfilled, (state) => {
+         .addCase(APPLICATION_THUNK.updateApplication.fulfilled, (state) => {
             state.error = false
          })
 
-         .addCase(updateApplication.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-         })
+         .addCase(
+            APPLICATION_THUNK.updateApplication.rejected,
+            (state, action) => {
+               state.status = 'failed'
+               state.error = action.error.message
+            }
+         )
 
-         .addCase(searchApplications.pending, (state) => {
+         .addCase(APPLICATION_THUNK.searchApplications.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(searchApplications.fulfilled, (state, action) => {
-            if (action.payload && !action.payload.error) {
-               const updatedApplications = action.payload.map(
-                  (application) => ({
-                     ...application,
-                     isSelected: false,
-                  })
-               )
+         .addCase(
+            APPLICATION_THUNK.searchApplications.fulfilled,
+            (state, action) => {
+               if (action.payload && !action.payload.error) {
+                  const updatedApplications = action.payload.map(
+                     (application) => ({
+                        ...application,
+                        isSelected: false,
+                     })
+                  )
 
-               updatedApplications.sort((a, b) => a.id - b.id)
+                  updatedApplications.sort((a, b) => a.id - b.id)
 
-               state.items = updatedApplications
+                  state.items = updatedApplications
+               }
+
+               state.status = 'succeeded'
+               state.searchItems = action.payload
             }
+         )
 
-            state.status = 'succeeded'
-            state.searchItems = action.payload
-         })
+         .addCase(
+            APPLICATION_THUNK.searchApplications.rejected,
+            (state, action) => {
+               state.status = 'failed'
+               state.error = action.error.message
+            }
+         )
 
-         .addCase(searchApplications.rejected, (state, action) => {
-            state.status = 'failed'
-            state.error = action.error.message
-         })
-
-         .addCase(deleteAllApplication.fulfilled, () => {
+         .addCase(APPLICATION_THUNK.deleteAllApplication.fulfilled, () => {
             showToast({
                message: 'Успешно удалено ',
             })

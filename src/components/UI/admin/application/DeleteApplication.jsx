@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../../../assets/icons'
 import Modal from '../../Modal'
 import Button from '../../Button'
-import { deleteApplicationById } from '../../../../store/slices/application/applicationThunk'
+import { APPLICATION_THUNK } from '../../../../store/slices/application/applicationThunk'
 
 const DeleteButton = ({ id, name, disabled, checked }) => {
    const [open, setOpen] = useState(false)
@@ -22,7 +22,7 @@ const DeleteButton = ({ id, name, disabled, checked }) => {
 
    const handleDelete = () => {
       try {
-         dispatch(deleteApplicationById(id))
+         dispatch(APPLICATION_THUNK.deleteApplication(id))
       } catch (error) {
          console.error('Error deleting appointment', error)
       } finally {

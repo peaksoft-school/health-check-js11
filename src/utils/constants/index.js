@@ -266,7 +266,7 @@ const FAKE_DATA = [
    },
 ]
 
-const HEADER_ADMIN = [
+const ADMIN_NAVIGATIONS = [
    { id: 1, to: '/admin/registration', label: 'Онлайн-запись' },
    { id: 2, to: '/admin/applications', label: 'Заявки' },
    { id: 3, to: '/admin/specialists', label: 'Специалисты' },
@@ -489,7 +489,7 @@ export {
    SERVICES,
    BEST_DOCTORS,
    FAKE_DATA,
-   HEADER_ADMIN,
+   ADMIN_NAVIGATIONS,
    DAYS,
    DEPARTMENTS,
    INTERVAL_TIME,

@@ -231,7 +231,7 @@ const COLUMNS = [
    },
 ]
 
-const ONLINE_APPLICATIONS_COLUMN = [
+const APPLICATIONS_COLUMN = [
    {
       Header: <SelectAllApplication />,
       accessor: 'checkbox',
@@ -298,9 +298,9 @@ const ONLINE_APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => (
-         <div>
-            <p>{row.original.date}</p>
-         </div>
+         <Box>
+            <Typography variant="p">{row.original.date}</Typography>
+         </Box>
       ),
    },
    {
@@ -335,15 +335,14 @@ const ONLINE_APPLICATIONS_COLUMN = [
          alignItems: 'start',
       },
 
-      Cell: ({ row }) => {
-         return (
-            <ApplicationCheckbox
-               checked={row.original.processed}
-               id={row.original.id}
-            />
-         )
-      },
+      Cell: ({ row }) => (
+         <ApplicationCheckbox
+            checked={row.original.processed}
+            id={row.original.id}
+         />
+      ),
    },
+
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
@@ -359,16 +358,14 @@ const ONLINE_APPLICATIONS_COLUMN = [
          justifyContent: 'center',
       },
 
-      Cell: ({ row }) => {
-         return (
-            <DeleteApplication
-               id={row.original.id}
-               name={row.original.name}
-               disabled={row.original.processed}
-            />
-         )
-      },
+      Cell: ({ row }) => (
+         <DeleteApplication
+            id={row.original.id}
+            name={row.original.name}
+            disabled={row.original.processed}
+         />
+      ),
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, ONLINE_APPLICATIONS_COLUMN }
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, APPLICATIONS_COLUMN }
