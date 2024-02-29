@@ -11,17 +11,21 @@ import Loading from '../../../components/Loading'
 
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
+import AddSchedule from './AddSchedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
+   const [openModal, setOpenModal] = useState(false)
 
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
       (state) => state.Appointments
    )
+
+   const toggleModal = () => setOpenModal((prev) => !prev)
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -53,8 +57,9 @@ const OnlineAppointments = () => {
                <Typography className="title">Онлайн-запись</Typography>
 
                {showAddButton && (
-                  <Button className="add-button">
-                     <PlusIcon className="plus-icon" /> Добавить запись
+                  <Button className="add-button" onClick={toggleModal}>
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
                   </Button>
                )}
 
@@ -64,6 +69,8 @@ const OnlineAppointments = () => {
                   <Button className="different-button">some</Button>
                )}
             </Box>
+
+            <AddSchedule open={openModal} onClose={toggleModal} />
 
             <Box>
                <TabContext value={value}>
@@ -142,15 +149,16 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
             display: 'flex',
+            alignItems: 'center',
             height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            alignItems: 'center',
             gap: '0.625rem',
             width: '13.0625rem !important',
             flexShrink: '0',
 
             '& > .plus-icon': {
                width: '1.125rem',
+               padding: '0.625rem',
                height: '1.125rem',
             },
          },

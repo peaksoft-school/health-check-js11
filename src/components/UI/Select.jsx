@@ -1,3 +1,4 @@
+import { DisplaySettings } from '@mui/icons-material'
 import { forwardRef } from 'react'
 import Selector from 'react-select'
 
@@ -27,17 +28,25 @@ const customStyles = {
          },
       }
    },
-}
 
-const Select = forwardRef(({ options, onChange, ...rest }, ref) => (
-   <Selector
-      options={options}
-      onChange={onChange}
-      styles={customStyles}
-      ref={ref}
-      isSearchable={false}
-      {...rest}
-   />
-))
+   menu: (provided) => ({
+      ...provided,
+      width: '220px',
+   }),
+}
+const Select = forwardRef(
+   ({ options, onChange, placeholder, styles, error, ...rest }, ref) => (
+      <Selector
+         options={options}
+         onChange={onChange}
+         styles={{ ...customStyles, ...styles }}
+         placeholder={placeholder}
+         ref={ref}
+         isSearchable={false}
+         error={error}
+         {...rest}
+      />
+   )
+)
 
 export default Select

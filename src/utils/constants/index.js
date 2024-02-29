@@ -273,6 +273,37 @@ const HEADER_ADMIN = [
    { id: 4, text: 'Пациенты' },
 ]
 
+const DAYS = [
+   {
+      id: 0,
+      label: 'MONDAY',
+   },
+   {
+      id: 1,
+      label: 'TUESDAY',
+   },
+   {
+      id: 2,
+      label: 'WEDNESDAY',
+   },
+   {
+      id: 3,
+      label: 'THURSDAY',
+   },
+   {
+      id: 4,
+      label: 'FRIDAY',
+   },
+   {
+      id: 5,
+      label: 'SATURDAY',
+   },
+   {
+      id: 6,
+      label: 'SUNDAY',
+   },
+]
+
 const DEPARTMENTS = [
    {
       id: 1,
@@ -395,6 +426,48 @@ const DEPARTMENTS = [
    },
 ]
 
+const INTERVAL_TIME = [
+   {
+      id: 1,
+      label: '15 мин',
+      time: 'FIFTEEN',
+   },
+
+   {
+      id: 2,
+      label: '30 минут',
+      time: 'THIRTY',
+   },
+
+   {
+      id: 3,
+      label: '45 минут',
+      time: 'FOURTYFIVE',
+   },
+
+   {
+      id: 4,
+      label: ' 1 час',
+      time: 'SIXTY',
+   },
+
+   {
+      id: 5,
+      label: '1,5 часа',
+      time: 'NINETY',
+   },
+]
+
+const RUSSIAN_DAYS = [
+   { id: 0, label: 'Пн' },
+   { id: 1, label: 'Вт' },
+   { id: 2, label: 'Ср' },
+   { id: 3, label: 'Чт' },
+   { id: 4, label: 'Пт' },
+   { id: 5, label: 'Сб' },
+   { id: 6, label: 'Вс' },
+]
+
 const DAYS_OF_WEEK = {
    Su: 'ПН',
    Mo: 'ВТ',
@@ -417,6 +490,9 @@ export {
    BEST_DOCTORS,
    FAKE_DATA,
    HEADER_ADMIN,
+   DAYS,
    DEPARTMENTS,
+   INTERVAL_TIME,
+   RUSSIAN_DAYS,
    DAYS_OF_WEEK,
 }

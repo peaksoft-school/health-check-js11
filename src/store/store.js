@@ -14,9 +14,11 @@ import { authSlice } from './slices/auth/authSlice'
 import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
 import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
+import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
+   [addScheduleSlice.name]: addScheduleSlice.reducer,
    [appointmentsSlice.name]: appointmentsSlice.reducer,
    [patientsSlice.name]: patientsSlice.reducer,
    [patientSlice.name]: patientSlice.reducer,

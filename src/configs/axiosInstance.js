@@ -9,13 +9,10 @@ export const axiosInstance = axios.create({
       'Content-Type': 'application/json',
    },
 })
-
 let storre
-
 export const injectStore = (store) => {
    storre = store
 }
-
 const signOut = () => {}
 
 axiosInstance.interceptors.request.use(
@@ -45,6 +42,7 @@ axiosInstance.interceptors.response.use(
       if (error.response && error.response.status === 401) {
          signOut()
       }
+
       return Promise.reject(error)
    }
 )
