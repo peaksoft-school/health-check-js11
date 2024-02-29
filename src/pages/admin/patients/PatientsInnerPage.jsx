@@ -3,26 +3,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
-import {
-   getPatient,
-   postPatientResult,
-} from '../../../store/slices/patients/patientsThunk'
+import { useDropzone } from 'react-dropzone'
+import { postPatientResult } from '../../../store/slices/patients/patientsThunk'
 import Button from '../../../components/UI/Button'
 import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
 import Loading from '../../../components/Loading'
 import DatePicker from '../../../components/UI/DatePicker'
 import { DEPARTMENTS } from '../../../utils/constants'
+import { getPatient } from '../../../store/slices/patient/patientThunk'
+import { showToast } from '../../../utils/helpers/notification'
+import { FileIcon, GetPdfFileIcon } from '../../../assets/icons'
 
 const PatientsInnerPage = () => {
    const [toggleModal, setToggleModal] = useState(false)
    const [newData, setNewData] = useState({ service: '', date: '' })
-   const [isFormValid, setIsFormValid] = useState(false)
-   const [image, setImage] = useState('')
-   const [fileURL, setFileURL] = useState('')
+   const [file, setFile] = useState(null)
 
    const { id } = useParams()
-   const { data, isLoading } = useSelector((state) => state.patients)
+   const { data, isLoading } = useSelector((state) => state.patient)
 
    const toggleModalHandler = () => setToggleModal((prev) => !prev)
 
@@ -52,29 +51,47 @@ const PatientsInnerPage = () => {
       validateForm()
    }
 
-   const onAddResult = () => {
+   const handleDrop = (AcceptFiles) => {
+      const file = AcceptFiles[0]
+      if (file.type === 'application/pdf') {
+         setFile(file)
+      } else {
+         showToast({
+            status: 'error',
+            message: 'Должен быть PDF файл',
+         })
+      }
+   }
+
+   const { getRootProps, getInputProps } = useDropzone({
+      onDrop: handleDrop,
+      Accept: 'application/pdf',
+   })
+
+   const onAddResult = (e) => {
+      e.preventDefault()
+
       const formData = new FormData()
-      formData.append('dataOfDelivery', newData.date)
-      formData.append('patientId', data.id)
+      formData.append('file', file)
 
       dispatch(
          postPatientResult({
-            facility: newData.service,
+            facility: newData.service.label,
             dataOfDelivery: newData.date,
             userId: data.id,
+            url: formData,
+
+            setNewData,
+            setFile,
          })
       )
-      setToggleModal(false)
    }
 
    const handleChange = (e) => {
       const file = e.target.files[0]
-
-      setImage(file)
-      const fileURL = URL.createObjectURL(file)
-      setFileURL(fileURL)
-
-      console.log(fileURL)
+      if (file.type === 'application/pdf') {
+         setFile(file)
+      }
    }
 
    return (
@@ -92,7 +109,7 @@ const PatientsInnerPage = () => {
             </Box>
 
             <Modal open={toggleModal} handleClose={toggleModalHandler}>
-               <Box className="modal">
+               <form onSubmit={onAddResult} className="modal">
                   <Typography variant="h5"> Добавление результата</Typography>
 
                   <div className="select-asd">
@@ -123,22 +140,27 @@ const PatientsInnerPage = () => {
                   </div>
                   <div>
                      <label htmlFor="file">Файлы</label>
-                     <Container onClick={(e) => e.stopPropagation()}>
+                     <Container
+                        {...getRootProps()}
+                        onClick={(e) => e.stopPropagation()}
+                     >
                         <label htmlFor="file">
-                           {/* {image ? (
+                           {file ? (
                               <div>
-                                 {image.type === 'application/pdf' && (
-                                    <GetPdfFileIcon className="insert-file" />
+                                 {file.type === 'application/pdf' && (
+                                    <FileIcon className="insert-file" />
                                  )}
                               </div>
                            ) : (
-                              <FileIcon className="insert-file" />
-                           )} */}
+                              <GetPdfFileIcon className="insert-file" />
+                           )}
 
                            <input
                               id="file"
+                              style={{ display: 'none' }}
                               type="file"
                               onChange={handleChange}
+                              {...getInputProps()}
                            />
                         </label>
                         <div>
@@ -157,15 +179,9 @@ const PatientsInnerPage = () => {
                      >
                         ОТМЕНИТЬ
                      </StyledButton>
-                     <StyledButton
-                        type="submit"
-                        onClick={onAddResult}
-                        disabled={!isFormValid}
-                     >
-                        ДОБАВИТЬ
-                     </StyledButton>
+                     <StyledButton type="submit">ДОБАВИТЬ</StyledButton>
                   </Box>
-               </Box>
+               </form>
             </Modal>
 
             {isLoading ? (
@@ -229,7 +245,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& .select-asd': {
       display: 'flex',
-      flexDirection: 'row',
+      // flexDirection: 'row',
    },
 
    '& .select-box': {
@@ -334,9 +350,9 @@ const Container = styled(Box)(() => ({
       margin: '10px 0',
    },
 
-   '&  p:nth-of-type(2)': {
-      fontSize: '12px',
-      fontWeight: '400',
-      color: '#959595',
-   },
+   // '&  p:nth-of-type(2)': {
+   //    fontSize: '12px',
+   //    fontWeight: '400',
+   //    color: '#959595',
+   // },
 }))

@@ -10,8 +10,10 @@ import App from './App'
 import './index.css'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
+import { fileInjectStore } from './configs/axiosInstaseFile'
 
 injectStore(store)
+fileInjectStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 

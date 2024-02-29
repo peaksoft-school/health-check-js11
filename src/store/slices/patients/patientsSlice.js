@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllPatients, getPatient, searchPatients } from './patientsThunk'
+import { getAllPatients, searchPatients } from './patientsThunk'
 
 const initialState = {
    patients: [],
    data: {},
    isLoading: false,
+   fileUrl: '',
 }
 
 export const patientsSlice = createSlice({
@@ -35,17 +36,6 @@ export const patientsSlice = createSlice({
 
                state.patients = searchPatient
             }
-            state.isLoading = false
-         })
-
-         .addCase(getPatient.fulfilled, (state, { payload }) => {
-            state.isLoading = false
-            state.data = payload
-         })
-         .addCase(getPatient.pending, (state) => {
-            state.isLoading = true
-         })
-         .addCase(getPatient.rejected, (state) => {
             state.isLoading = false
          })
    },
