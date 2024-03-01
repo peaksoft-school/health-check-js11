@@ -56,7 +56,11 @@ const Patients = () => {
                   {isLoading ? (
                      <Loading />
                   ) : (
-                     <Table columns={PATIENTS_COLUMN} data={patients} />
+                     <Table
+                        empty={<h1>Пациенты отсутствуют</h1>}
+                        columns={PATIENTS_COLUMN}
+                        data={patients}
+                     />
                   )}
                </Box>
             </Box>
@@ -88,6 +92,7 @@ const StyledContainer = styled(Box)(() => ({
 
       '& .table-container': {
          width: '100%',
+         height: '100vh',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
          background: 'white',

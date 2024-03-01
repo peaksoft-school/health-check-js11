@@ -49,6 +49,11 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
       .required('Подтвердите пароль!'),
 })
 
+const VALIDATION_RESULT = Yup.object().shape({
+   date: Yup.date().required('Выберите дату начала!'),
+   service: Yup.string().required('Выберите Услугу!'),
+})
+
 const VALIDATION_SCHEDULE = Yup.object().shape({
    departmentName: Yup.string().required('Выберите Услугу!'),
    doctor: Yup.string().required('Выберите специалиста!'),
@@ -73,4 +78,5 @@ export {
    VALIDATION_FORGOT_PASSWORD,
    VALIDATION_SIGN_UP,
    VALIDATION_SCHEDULE,
+   VALIDATION_RESULT,
 }

@@ -69,8 +69,10 @@ const postPatientResult = createAsyncThunk(
             url: getFile.payload.link,
          })
 
-         result.setNewData({ service: '', date: '' })
+         result.resetForm()
          result.setFile(null)
+         result.onClose()
+
          return response.data
       } catch (error) {
          const errorMessage = error.response.data.message.replace(
