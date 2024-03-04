@@ -77,6 +77,8 @@ const resultsError = (errors) => {
       errorMessage = errors.service
    } else if (errors?.date) {
       errorMessage = errors.date
+   } else if (errors?.file) {
+      errorMessage = errors.file
    }
 
    return errorMessage

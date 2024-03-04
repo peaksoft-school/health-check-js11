@@ -379,7 +379,7 @@ const DEPARTMENTS = [
 
    {
       id: 13,
-      title: 'Проктология',
+      label: 'Проктология',
       value: 'проктология',
    },
 

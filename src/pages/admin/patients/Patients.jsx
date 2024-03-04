@@ -40,7 +40,7 @@ const Patients = () => {
       <StyledContainer>
          <Box className="box">
             <Box className="button-container">
-               <Typography className="title">Пациенты</Typography>
+               <Typography variant="h3">Пациенты</Typography>
             </Box>
 
             <Box>
@@ -52,16 +52,14 @@ const Patients = () => {
                   />
                </Box>
 
+               {isLoading && <Loading />}
+
                <Box className="table-container">
-                  {isLoading ? (
-                     <Loading />
-                  ) : (
-                     <Table
-                        empty={<h1>Пациенты отсутствуют</h1>}
-                        columns={PATIENTS_COLUMN}
-                        data={patients}
-                     />
-                  )}
+                  <Table
+                     empty={<h1>Пациенты отсутствуют</h1>}
+                     columns={PATIENTS_COLUMN}
+                     data={patients}
+                  />
                </Box>
             </Box>
          </Box>
@@ -81,6 +79,13 @@ const StyledContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
 
+      '& h3': {
+         marginTop: '15px',
+         marginBottom: '15px',
+         fontSize: '24px',
+         fontWeight: '500',
+      },
+
       '& .tables': {
          padding: '0rem',
       },
@@ -92,11 +97,25 @@ const StyledContainer = styled(Box)(() => ({
 
       '& .table-container': {
          width: '100%',
-         height: '100vh',
+         height: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
          background: 'white',
          marginTop: '1.25rem',
+
+         '& .MuiTable-root': {
+            '& .MuiTableCell-root': {
+               borderBottom: 'none',
+            },
+
+            '& .MuiTableCell-head': {
+               borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            },
+
+            '& .MuiTableRow-root:nth-of-type(even)': {
+               backgroundColor: '#F5F5F5',
+            },
+         },
       },
    },
 }))

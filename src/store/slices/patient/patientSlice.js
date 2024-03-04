@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getPatient } from './patientThunk'
+import { getPatient, getPatientResult, postPatientResult } from './patientThunk'
+import { showToast } from '../../../utils/helpers/notification'
 
 const initialState = {
    data: {},
+   results: [],
    isLoading: false,
 }
 
@@ -22,6 +24,30 @@ export const patientSlice = createSlice({
             state.isLoading = true
          })
          .addCase(getPatient.rejected, (state) => {
+            state.isLoading = false
+         })
+         .addCase(getPatientResult.fulfilled, (state, { payload }) => {
+            state.isLoading = false
+            state.results = payload
+         })
+
+         .addCase(getPatientResult.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(getPatientResult.rejected, (state) => {
+            state.isLoading = false
+         })
+
+         .addCase(postPatientResult.fulfilled, (state, { payload }) => {
+            state.isLoading = false
+         })
+
+         .addCase(postPatientResult.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(postPatientResult.rejected, (state) => {
             state.isLoading = false
          })
    },

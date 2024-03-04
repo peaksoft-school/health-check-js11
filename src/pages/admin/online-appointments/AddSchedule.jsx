@@ -4,10 +4,10 @@ import { format } from 'date-fns'
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../../components/UI/Modal'
-import Select from '../../../components/UI/Select'
 import DatePicker from '../../../components/UI/DatePicker'
 import TimePicker from '../../../components/UI/TimePicker'
 import Button from '../../../components/UI/Button'
+import Select from '../../../components/UI/Select'
 import {
    DAYS,
    DEPARTMENTS,
@@ -124,6 +124,7 @@ const AddSchedule = ({ open, onClose }) => {
                   error={!!errors.departmentName}
                   placeholder="Выберите услугу"
                   className="custom-select"
+                  variant="schedule"
                />
             </Box>
 
@@ -140,6 +141,7 @@ const AddSchedule = ({ open, onClose }) => {
                   }}
                   placeholder="Выберите специалиста"
                   error={!!errors.doctor}
+                  variant="schedule"
                />
             </Box>
 
@@ -207,6 +209,7 @@ const AddSchedule = ({ open, onClose }) => {
                      error={!!errors.interval}
                      placeholder="Выберите интервал часов"
                      className="custom-select"
+                     variant="schedule"
                   />
                </Box>
             </Box>

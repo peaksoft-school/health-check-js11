@@ -9,23 +9,23 @@ import DatePicker from '../../../components/UI/DatePicker'
 import { DEPARTMENTS } from '../../../utils/constants'
 import { showToast } from '../../../utils/helpers/notification'
 import { FileIcon, GetPdfFileIcon } from '../../../assets/icons'
-import { postPatientResult } from '../../../store/slices/patients/patientsThunk'
-import Modal from '../../../components/UI/Modal'
 import Select from '../../../components/UI/Select'
+import Modal from '../../../components/UI/Modal'
 import Button from '../../../components/UI/Button'
 import { VALIDATION_RESULT } from '../../../utils/helpers/validate'
 import { resultsError } from '../../../utils/helpers'
+import { postPatientResult } from '../../../store/slices/patient/patientThunk'
 
 const AddResult = ({ open, onClose }) => {
-   const [file, setFile] = useState(null)
+   const { data, isLoading } = useSelector((state) => state.patient)
 
-   const { data } = useSelector((state) => state.patient)
+   const handlerClose = () => onClose()
 
    const dispatch = useDispatch()
 
    const onAddResult = (values, { resetForm }) => {
       const formData = new FormData()
-      formData.append('file', file)
+      formData.append('file', values.file)
 
       const date = format(new Date(values.date), 'yyyy-MM-dd')
 
@@ -37,31 +37,30 @@ const AddResult = ({ open, onClose }) => {
             url: formData,
 
             resetForm,
-            setFile,
-            onClose,
+            handlerClose,
          })
       )
    }
 
-   const { values, handleChange, handleSubmit, errors, setFieldValue } =
-      useFormik({
-         initialValues: {
-            service: '',
-            date: '',
-         },
-         validateOnChange: false,
-         onSubmit: onAddResult,
-         validationSchema: VALIDATION_RESULT,
-      })
+   const { values, handleSubmit, errors, setFieldValue } = useFormik({
+      initialValues: {
+         service: '',
+         date: '',
+         file: '',
+      },
+      validateOnChange: false,
+      onSubmit: onAddResult,
+      validationSchema: VALIDATION_RESULT,
+   })
 
    const handleDrop = (AcceptFiles) => {
       const file = AcceptFiles[0]
       if (file.type === 'application/pdf') {
-         setFile(file)
+         setFieldValue('file', file)
       } else {
          showToast({
-            status: 'error',
-            message: 'Должен быть PDF файл',
+            status: 'warning',
+            message: 'Пожалуйста, выберите файл в формате PDF',
          })
       }
    }
@@ -71,15 +70,10 @@ const AddResult = ({ open, onClose }) => {
       Accept: 'application/pdf',
    })
 
-   const handlerClose = () => {
-      setFile(null)
-      onClose()
-   }
-
    const handleChangeFile = (e) => {
       const file = e.target.files[0]
       if (file.type === 'application/pdf') {
-         setFile(file)
+         setFieldValue('file', file)
       }
    }
 
@@ -100,12 +94,10 @@ const AddResult = ({ open, onClose }) => {
                         placeholder="Выберите услугу"
                         error={!!errors.service}
                         options={DEPARTMENTS}
-                        value={DEPARTMENTS.find(
-                           (option) => option.value === values.service
-                        )}
-                        onChange={(selectedOption) => {
-                           handleChange('service')(selectedOption.label)
-                        }}
+                        value={values.service}
+                        onChange={(service) =>
+                           setFieldValue('service', service)
+                        }
                      />
                   </div>
 
@@ -132,9 +124,9 @@ const AddResult = ({ open, onClose }) => {
                      onClick={(e) => e.stopPropagation()}
                   >
                      <label htmlFor="file">
-                        {file ? (
+                        {values.file ? (
                            <div>
-                              {file.type === 'application/pdf' && (
+                              {values.file.type === 'application/pdf' && (
                                  <FileIcon className="insert-file" />
                               )}
                            </div>
@@ -177,7 +169,9 @@ const AddResult = ({ open, onClose }) => {
                   ОТМЕНИТЬ
                </StyledButton>
 
-               <StyledButton type="submit">ДОБАВИТЬ</StyledButton>
+               <StyledButton disabled={isLoading} isLoading={isLoading}>
+                  ДОБАВИТЬ
+               </StyledButton>
             </Box>
          </StyledForm>
       </Modal>
@@ -216,15 +210,8 @@ const Container = styled(Box)(({ theme }) => ({
 }))
 
 const StyledSelect = styled(Select)(() => ({
-   '& > div': {
-      width: '312px',
-      height: '38px',
-   },
-
-   '& > div:hover': {
-      width: '312px',
-      height: '38px',
-   },
+   width: '312px',
+   height: '38px',
 }))
 
 const StyledForm = styled('form')(() => ({
@@ -252,7 +239,7 @@ const StyledForm = styled('form')(() => ({
 
    '& .error-message': {
       position: 'absolute',
-      top: '290px',
+      top: '310px',
       color: 'red',
    },
 
