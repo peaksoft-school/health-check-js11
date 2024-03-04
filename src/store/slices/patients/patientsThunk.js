@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getAllPatients = createAsyncThunk(
    'patients/getPatients',
@@ -19,7 +20,6 @@ const deletePatients = createAsyncThunk(
    async (id, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/user/${id}`)
-
          dispatch(getAllPatients())
 
          return id

@@ -4,8 +4,9 @@ import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
-import DeletePatientsBtn from '../../components/UI/admin/DeletePatientsBtn'
 import LinkPatient from '../../components/UI/admin/LinkPatient'
+import { deletePatients } from '../../store/slices/patients/patientsThunk'
+import Delete from '../../components/UI/admin/Delete'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -294,9 +295,10 @@ const PATIENTS_COLUMN = [
 
       Cell: ({ row }) => {
          return (
-            <DeletePatientsBtn
+            <Delete
                name={row.original.surname}
                id={row.original.id}
+               deleteFn={deletePatients}
             />
          )
       },

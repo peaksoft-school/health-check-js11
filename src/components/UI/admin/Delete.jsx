@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../../assets/icons'
 import Modal from '../Modal'
 import Button from '../Button'
-import { deletePatients } from '../../../store/slices/patients/patientsThunk'
 
-const DeletePatientsBtn = ({ name, id }) => {
-   const dispatch = useDispatch()
+const Delete = ({ name, id, deleteFn }) => {
    const [open, setOpen] = useState(false)
 
    const toggleModal = () => setOpen((prev) => !prev)
 
+   const dispatch = useDispatch()
+
    const handleDelete = () => {
       try {
-         dispatch(deletePatients(id))
+         dispatch(deleteFn(id))
       } catch (error) {
          console.error('Error deleting appointment:', error)
       } finally {
@@ -54,7 +54,7 @@ const DeletePatientsBtn = ({ name, id }) => {
    )
 }
 
-export default DeletePatientsBtn
+export default Delete
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',
