@@ -8,6 +8,7 @@ import ChangePassword from '../pages/change-password/ChangePassword'
 import MyProfile from '../pages/user/myProfile/MyProfile'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
+import Profile from '../layout/user/profile/Profile'
 
 const ADMIN_ROUTES = [
    {
@@ -25,6 +26,11 @@ const USER_ROUTES = [
    {
       path: '/about-clinic',
       element: <AboutClinic />,
+   },
+
+   {
+      path: '/profile',
+      element: <Profile />,
    },
 
    {

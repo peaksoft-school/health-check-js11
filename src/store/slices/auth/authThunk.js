@@ -4,6 +4,7 @@ import { showToast } from '../../../utils/helpers/notification'
 
 const signUp = createAsyncThunk(
    'auth/signUp',
+
    async ({ dataToSend, resetForm, onClose }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
