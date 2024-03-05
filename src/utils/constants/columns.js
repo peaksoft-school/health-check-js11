@@ -310,7 +310,7 @@ const APPLICATIONS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.7,
+         flex: 0.8,
          justifyContent: 'center',
       },
 
@@ -323,16 +323,14 @@ const APPLICATIONS_COLUMN = [
       accessor: 'processed',
 
       style: {
-         padding: '19px 0 20px',
-         flex: 0.5,
-         display: 'flex',
-         justifyContent: 'center',
-         fontWeight: '700',
+         padding: '19px 10px 20px',
+         flex: 0.2,
+         fontWeight: '600',
       },
 
       tdStyle: {
          display: 'flex',
-         alignItems: 'start',
+         justifyContent: 'center',
       },
 
       Cell: ({ row }) => (

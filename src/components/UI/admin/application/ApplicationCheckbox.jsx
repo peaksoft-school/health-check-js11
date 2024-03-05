@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import Checkbox from '../../Checkbox'
 import { APPLICATION_THUNK } from '../../../../store/slices/application/applicationThunk'
 
@@ -23,7 +24,15 @@ const ApplicationCheckbox = ({ checked, id }) => {
       }
    }
 
-   return <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+   return <StyledCheckBox checked={isChecked} onChange={handleCheckboxChange} />
 }
 
 export default ApplicationCheckbox
+
+const StyledCheckBox = styled(Checkbox)(() => ({
+   '& .MuiSvgIcon-root': {
+      '& .path': {
+         fill: 'red',
+      },
+   },
+}))
