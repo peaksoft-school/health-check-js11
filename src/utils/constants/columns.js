@@ -1,10 +1,12 @@
-import { Typography } from '@mui/material'
+import { Switch, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
+import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
+import Switcher from '../../components/UI/Switcher'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -226,4 +228,125 @@ const COLUMNS = [
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS }
+const SPECIALISTS_COLUMN = [
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: '0.2',
+      },
+
+      tdStyle: {
+         fontWeight: '600',
+      },
+   },
+   {
+      Header: 'Статус',
+      accessor: 'status',
+
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.38,
+         fontWeight: '600',
+         // display: 'flex',
+      },
+
+      tdStyle: {
+         // display: 'flex',
+         justifyContent: 'end',
+      },
+
+      Cell: ({ row }) => {
+         return <Switcher {...row.original} />
+      },
+   },
+
+   {
+      Header: 'Специалист',
+      accessor: 'surname',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         display: 'flex',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   {
+      Header: 'Отделение',
+      accessor: 'doctor',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Выбор специалиста',
+      accessor: 'specialist',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.5,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+
+   // {
+   //    Header: 'Расписание до',
+   //    accessor: 'dates',
+
+   //    style: {
+   //       padding: '19px 0 20px',
+   //       fontWeight: '700',
+   //       flex: 0.91,
+   //    },
+
+   //    tdStyle: {
+   //       fontWeight: '500',
+   //    },
+
+   //    Cell: ({ row }) => (
+   //       <Box>
+   //          <Typography variant="p">{row.original.localDate}</Typography>
+   //       </Box>
+   //    ),
+   // },
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px 10px',
+         fontWeight: '700',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => {
+         return <SpecialistsDelete {...row.original} />
+      },
+   },
+]
+
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, SPECIALISTS_COLUMN }

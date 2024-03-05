@@ -8,7 +8,7 @@ import ChangePassword from '../pages/change-password/ChangePassword'
 import MyProfile from '../pages/user/myProfile/MyProfile'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
-import Patients from '../pages/admin/patients/Patients'
+import Specialists from '../pages/admin/specialists/Specialists'
 
 const ADMIN_ROUTES = [
    {
@@ -16,8 +16,8 @@ const ADMIN_ROUTES = [
       element: <OnlineAppointments />,
    },
    {
-      path: 'patients',
-      element: <Patients />,
+      path: 'specialists',
+      element: <Specialists />,
    },
 ]
 
