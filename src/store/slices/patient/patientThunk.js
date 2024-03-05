@@ -31,6 +31,7 @@ const postPatientResult = createAsyncThunk(
    async (result, { rejectWithValue, dispatch }) => {
       try {
          const getFile = await dispatch(postFile(result.url))
+
          const response = await axiosInstance.post('/api/result/save', {
             ...result,
             url: getFile.payload.link,
@@ -75,4 +76,8 @@ const getPatientResult = createAsyncThunk(
    }
 )
 
-export { getPatient, getPatientResult, postPatientResult }
+export const PATIENT_THUNK = {
+   getPatient,
+   getPatientResult,
+   postPatientResult,
+}

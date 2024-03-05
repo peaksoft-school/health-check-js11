@@ -1,16 +1,22 @@
 import { Box, Typography, styled, ButtonBase } from '@mui/material'
-import SelectSeparately from '../../components/online-appointments/SelectSeparately'
-import DeleteButton from '../../components/online-appointments/DeleteButton'
-import DeleteSelected from '../../components/online-appointments/DeleteSelected'
-import SelectAll from '../../components/online-appointments/SelectAll'
-import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
 import LinkPatient from '../../components/UI/admin/LinkPatient'
-import { deletePatients } from '../../store/slices/patients/patientsThunk'
+import { PATIENTS_THUNK } from '../../store/slices/patients/patientsThunk'
 import Delete from '../../components/UI/admin/Delete'
+import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
+import DeleteSelected from '../../components/UI/admin/DeleteSelected'
+import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
+import SelectAll from '../../components/UI/admin/SelectAll'
+import SelectSeparately from '../../components/UI/admin/SelectSeparately'
+import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
-      Header: <SelectAll />,
+      Header: (
+         <SelectAll
+            variant="appointments"
+            selectFn={APPOINTMENTS_ACTIONS.handleIsChecked}
+         />
+      ),
       accessor: 'checkbox',
 
       style: {
@@ -18,11 +24,25 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          flex: 0.06,
       },
 
-      Cell: ({ row }) => <SelectSeparately {...row.original} />,
+      Cell: ({ row }) => (
+         <SelectSeparately
+            selectFn={APPOINTMENTS_ACTIONS.handleIsCheckedItem}
+            variant="appointments"
+            id={row.original.appointmentId}
+            isSelected={row.original.isSelected}
+         />
+      ),
    },
 
    {
-      Header: <DeleteSelected />,
+      Header: (
+         <DeleteSelected
+            variant="appointments"
+            clearFn={APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
+            deleteFn={APPOINTMENTS_THUNK.deleteAllAppointments}
+         />
+      ),
+
       accessor: 'action',
 
       style: {
@@ -164,7 +184,9 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          return (
             <ProcessedCheckbox
                checked={row.original.processed}
-               appointmentId={row.original.appointmentId}
+               id={row.original.appointmentId}
+               updateFn={APPOINTMENTS_THUNK.updateAppointment}
+               variant="appointments"
             />
          )
       },
@@ -187,10 +209,11 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => {
          return (
-            <DeleteButton
+            <Delete
                name={row.original.fullName}
                disabled={row.original.processed}
-               appointmentId={row.original.appointmentId}
+               deleteFn={APPOINTMENTS_THUNK.deleteAppoinment}
+               id={row.original.appointmentId}
             />
          )
       },
@@ -298,7 +321,8 @@ const PATIENTS_COLUMN = [
             <Delete
                name={row.original.surname}
                id={row.original.id}
-               deleteFn={deletePatients}
+               deleteFn={PATIENTS_THUNK.deletePatients}
+               variant="patients"
             />
          )
       },

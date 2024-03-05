@@ -1,101 +1,101 @@
-import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { DeleteIcon } from '../../../assets/icons'
 import Modal from '../Modal'
 import Button from '../Button'
 
-const Delete = ({ name, id, deleteFn, disabled, variant }) => {
-   const [open, setOpen] = useState(false)
-   const [isButtonDisabled, setIsButtonDisabled] = useState(!disabled)
+const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
+   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
+   const [toggleModal, setToggleModal] = useState(false)
 
-   useEffect(() => {
-      setIsButtonDisabled(!disabled)
-   }, [disabled])
-
-   const toggleModal = () => setOpen((prev) => !prev)
+   const getIds = () => {
+      if (variant === 'appointments') {
+         return deletedAppointmentsIds
+      }
+      return []
+   }
 
    const dispatch = useDispatch()
 
+   const toggleHandleModal = () => setToggleModal((prev) => !prev)
+
    const handleDelete = () => {
       try {
-         dispatch(deleteFn(id))
+         dispatch(deleteFn(getIds()))
+
+         dispatch(clearFn())
       } catch (error) {
-         console.error('Error deleting appointment:', error)
+         console.error('Error deleting appointments:', error)
       } finally {
-         toggleModal()
+         toggleHandleModal()
       }
    }
 
    return (
       <>
          <StyledDeleteButton
-            disabled={variant === 'patients' ? false : isButtonDisabled}
-            onClick={toggleModal}
+            onClick={toggleHandleModal}
+            disabled={disabled || getIds().length === 0}
          >
             <DeleteIcon />
          </StyledDeleteButton>
 
-         <Modal handleClose={toggleModal} open={open} isCloseIcon={false}>
-            <StyledModalContent>
+         <Modal
+            handleClose={toggleHandleModal}
+            open={toggleModal}
+            isCloseIcon={false}
+         >
+            <StyledContainer>
                <Typography className="description">
-                  Вы уверены, что хотите удалить запись
+                  Вы уверены, что хотите удалить выбранные записи?
                </Typography>
-
-               <Typography className="name">{name}?</Typography>
 
                <Box className="buttons-container">
                   <Button
                      variant="grey"
                      className="button"
-                     onClick={toggleModal}
+                     onClick={toggleHandleModal}
                   >
                      Отменить
                   </Button>
+
                   <Button className="button" onClick={handleDelete}>
                      Удалить
                   </Button>
                </Box>
-            </StyledModalContent>
+            </StyledContainer>
          </Modal>
       </>
    )
 }
 
-export default Delete
+export default DeleteSelected
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
-   cursor: 'pointer',
    width: '26px',
    height: '22px',
    transition: '0.3s ease-in-out',
 
    '&:disabled': {
-      cursor: 'not-allowed',
       opacity: 0.2,
+      cursor: 'not-allowed',
    },
 }))
 
-const StyledModalContent = styled(Box)(() => ({
+const StyledContainer = styled(Box)(() => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .name': {
-      fontFamily: 'Manrope',
-      fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '24.59px',
-      marginBottom: '1.25rem',
-   },
-
    '& .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
       lineHeight: '24.59px',
+      marginBottom: '40px',
    },
 
    '& .buttons-container': {

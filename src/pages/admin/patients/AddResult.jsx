@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +13,7 @@ import Modal from '../../../components/UI/Modal'
 import Button from '../../../components/UI/Button'
 import { VALIDATION_RESULT } from '../../../utils/helpers/validate'
 import { resultsError } from '../../../utils/helpers'
-import { postPatientResult } from '../../../store/slices/patient/patientThunk'
+import { PATIENT_THUNK } from '../../../store/slices/patient/patientThunk'
 
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
@@ -30,7 +29,7 @@ const AddResult = ({ open, onClose }) => {
       const date = format(new Date(values.date), 'yyyy-MM-dd')
 
       dispatch(
-         postPatientResult({
+         PATIENT_THUNK.postPatientResult({
             facility: values.service,
             dataOfDelivery: date,
             userId: data.id,
@@ -232,6 +231,7 @@ const StyledForm = styled('form')(() => ({
       margin: '30px 0 15px 0',
       gap: '30px',
    },
+
    '& .box': {
       display: 'flex',
       flexDirection: 'column',

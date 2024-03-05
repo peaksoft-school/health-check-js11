@@ -48,4 +48,4 @@ const searchPatients = createAsyncThunk(
    }
 )
 
-export { getAllPatients, deletePatients, searchPatients }
+export const PATIENTS_THUNK = { getAllPatients, deletePatients, searchPatients }

@@ -11,10 +11,10 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/auth/authSlice'
-import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
 import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
 import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
+import { appointmentsSlice } from './slices/online-appointments/appointmentsSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,

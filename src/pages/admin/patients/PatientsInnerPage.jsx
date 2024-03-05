@@ -4,10 +4,7 @@ import { Box, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
-import {
-   getPatient,
-   getPatientResult,
-} from '../../../store/slices/patient/patientThunk'
+import { PATIENT_THUNK } from '../../../store/slices/patient/patientThunk'
 import AddResult from './AddResult'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
 
@@ -22,8 +19,8 @@ const PatientsInnerPage = () => {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(getPatient(id))
-      dispatch(getPatientResult(id))
+      dispatch(PATIENT_THUNK.getPatient(id))
+      dispatch(PATIENT_THUNK.getPatientResult(id))
    }, [id])
 
    return (

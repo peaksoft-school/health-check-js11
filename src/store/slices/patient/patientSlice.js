@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getPatient, getPatientResult, postPatientResult } from './patientThunk'
-import { showToast } from '../../../utils/helpers/notification'
+import { PATIENT_THUNK } from './patientThunk'
 
 const initialState = {
    data: {},
@@ -16,38 +15,41 @@ export const patientSlice = createSlice({
    extraReducers: (builder) => {
       builder
 
-         .addCase(getPatient.fulfilled, (state, { payload }) => {
+         .addCase(PATIENT_THUNK.getPatient.fulfilled, (state, { payload }) => {
             state.isLoading = false
             state.data = payload
          })
-         .addCase(getPatient.pending, (state) => {
+         .addCase(PATIENT_THUNK.getPatient.pending, (state) => {
             state.isLoading = true
          })
-         .addCase(getPatient.rejected, (state) => {
+         .addCase(PATIENT_THUNK.getPatient.rejected, (state) => {
             state.isLoading = false
          })
-         .addCase(getPatientResult.fulfilled, (state, { payload }) => {
-            state.isLoading = false
-            state.results = payload
-         })
+         .addCase(
+            PATIENT_THUNK.getPatientResult.fulfilled,
+            (state, { payload }) => {
+               state.isLoading = false
+               state.results = payload
+            }
+         )
 
-         .addCase(getPatientResult.pending, (state) => {
-            state.isLoading = true
-         })
-
-         .addCase(getPatientResult.rejected, (state) => {
-            state.isLoading = false
-         })
-
-         .addCase(postPatientResult.fulfilled, (state, { payload }) => {
-            state.isLoading = false
-         })
-
-         .addCase(postPatientResult.pending, (state) => {
+         .addCase(PATIENT_THUNK.getPatientResult.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(postPatientResult.rejected, (state) => {
+         .addCase(PATIENT_THUNK.getPatientResult.rejected, (state) => {
+            state.isLoading = false
+         })
+
+         .addCase(PATIENT_THUNK.postPatientResult.fulfilled, (state) => {
+            state.isLoading = false
+         })
+
+         .addCase(PATIENT_THUNK.postPatientResult.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(PATIENT_THUNK.postPatientResult.rejected, (state) => {
             state.isLoading = false
          })
    },

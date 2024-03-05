@@ -1,22 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
-import Checkbox from '../UI/Checkbox'
+import Checkbox from '../Checkbox'
 
-const SelectSeparately = ({ isSelected, appointmentId }) => {
+const SelectSeparately = ({ isSelected, selectFn, id, variant }) => {
    const dispatch = useDispatch()
    const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
 
+   const getIds = () => {
+      if (variant === 'appointments') {
+         return deletedAppointmentsIds
+      }
+      return []
+   }
+
    const handleChange = () => {
       dispatch(
-         APPOINTMENTS_ACTIONS.handleIsCheckedItem({
-            appointmentId,
+         selectFn({
+            id,
             checked: isSelected,
          })
       )
    }
 
-   const isChecked =
-      isSelected || deletedAppointmentsIds.includes(appointmentId)
+   const isChecked = isSelected || getIds().includes(id)
 
    return <Checkbox checked={isChecked} onChange={handleChange} />
 }

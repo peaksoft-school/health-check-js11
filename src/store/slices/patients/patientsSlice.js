@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllPatients, searchPatients } from './patientsThunk'
+import { PATIENTS_THUNK } from './patientsThunk'
 
 const initialState = {
    patients: [],
@@ -15,28 +15,34 @@ export const patientsSlice = createSlice({
 
    extraReducers: (builder) => {
       builder
-         .addCase(getAllPatients.fulfilled, (state, { payload }) => {
-            state.patients = payload
-            state.isLoading = false
-         })
-         .addCase(getAllPatients.pending, (state) => {
+         .addCase(
+            PATIENTS_THUNK.getAllPatients.fulfilled,
+            (state, { payload }) => {
+               state.patients = payload
+               state.isLoading = false
+            }
+         )
+         .addCase(PATIENTS_THUNK.getAllPatients.pending, (state) => {
             state.isLoading = true
          })
-         .addCase(getAllPatients.rejected, (state) => {
+         .addCase(PATIENTS_THUNK.getAllPatients.rejected, (state) => {
             state.isLoading = false
          })
 
-         .addCase(searchPatients.fulfilled, (state, { payload }) => {
-            if (payload && !payload.error) {
-               const searchPatient = payload.map((patient) => ({
-                  ...patient,
-               }))
+         .addCase(
+            PATIENTS_THUNK.searchPatients.fulfilled,
+            (state, { payload }) => {
+               if (payload && !payload.error) {
+                  const searchPatient = payload.map((patient) => ({
+                     ...patient,
+                  }))
 
-               searchPatient.sort((a, b) => a.id - b.id)
+                  searchPatient.sort((a, b) => a.id - b.id)
 
-               state.patients = searchPatient
+                  state.patients = searchPatient
+               }
+               state.isLoading = false
             }
-            state.isLoading = false
-         })
+         )
    },
 })
