@@ -12,9 +12,9 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/auth/authSlice'
 import appointmentsSlice from './slices/online-appointments/appointmentsSlice'
-import specialistsSlice from './slices/specialists/specialistsSlice'
 import { applicationSlice } from './slices/application/aplicationSlice'
 import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
+import { specialistsSlice } from './slices/specialistsSlice/specialistsSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
    key: 'HEALTH_CHECK',
    storage,
-   whitelist: ['auth', 'Appointments'],
+   whitelist: ['auth', 'Appointments', 'specialists'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

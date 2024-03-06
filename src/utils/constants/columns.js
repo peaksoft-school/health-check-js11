@@ -1,5 +1,7 @@
-import { Switch, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import format from 'pretty-format'
+import { NavLink } from 'react-router-dom'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
@@ -7,6 +9,12 @@ import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
 import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
 import Switcher from '../../components/UI/Switcher'
+import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
+import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
+import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
+import ApplicationCheckbox from '../../components/UI/admin/application/ApplicationCheckbox'
+import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
+import { EditIcon } from '../../assets/icons'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -228,6 +236,117 @@ const COLUMNS = [
    },
 ]
 
+const APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAllApplication />,
+      accessor: 'checkbox',
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+      Cell: ({ row }) => <SelectSeparatelyApplication {...row.original} />,
+   },
+   {
+      Header: <DeleteSelectedApplication />,
+      accessor: 'action',
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+      },
+   },
+   {
+      Header: '№',
+      accessor: 'id',
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'original.date',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+      tdStyle: {
+         fontWeight: '500',
+      },
+      Cell: ({ row }) => (
+         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.8,
+         justifyContent: 'center',
+      },
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+      style: {
+         padding: '19px 10px 20px',
+         flex: 0.1,
+         fontWeight: '700',
+      },
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+      Cell: ({ row }) => (
+         <ApplicationCheckbox
+            checked={row.original.processed}
+            id={row.original.id}
+         />
+      ),
+   },
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'end',
+      },
+      Cell: ({ row }) => (
+         <DeleteApplication
+            id={row.original.id}
+            name={row.original.name}
+            disabled={row.original.processed}
+         />
+      ),
+   },
+]
+
 const SPECIALISTS_COLUMN = [
    {
       Header: '№',
@@ -245,17 +364,13 @@ const SPECIALISTS_COLUMN = [
    },
    {
       Header: 'Статус',
-      accessor: 'status',
-
       style: {
          padding: '19px 0 20px',
          flex: 0.38,
          fontWeight: '600',
-         // display: 'flex',
       },
 
       tdStyle: {
-         // display: 'flex',
          justifyContent: 'end',
       },
 
@@ -266,7 +381,7 @@ const SPECIALISTS_COLUMN = [
 
    {
       Header: 'Специалист',
-      accessor: 'surname',
+      accessor: 'specialists',
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
@@ -277,11 +392,34 @@ const SPECIALISTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => {
+         return (
+            <Box style={{ display: 'flex', alignItems: 'center' }}>
+               <img
+                  src={row.original.image}
+                  alt="doctor"
+                  style={{
+                     width: '40px',
+                     height: '40px',
+                     marginRight: '10px',
+                     borderRadius: '50%',
+                  }}
+               />
+
+               <div>
+                  <Typography variant="span">
+                     {row.original.firstName} {row.original.lastName}
+                  </Typography>
+               </div>
+            </Box>
+         )
+      },
    },
 
    {
       Header: 'Отделение',
-      accessor: 'doctor',
+      accessor: 'department',
 
       style: {
          padding: '19px 0 20px',
@@ -293,14 +431,15 @@ const SPECIALISTS_COLUMN = [
          fontWeight: '500',
       },
    },
+
    {
-      Header: 'Выбор специалиста',
-      accessor: 'specialist',
+      Header: 'Расписание до',
+      accessor: 'endDateWork',
 
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.5,
+         flex: 0.91,
       },
 
       tdStyle: {
@@ -308,26 +447,6 @@ const SPECIALISTS_COLUMN = [
       },
    },
 
-   // {
-   //    Header: 'Расписание до',
-   //    accessor: 'dates',
-
-   //    style: {
-   //       padding: '19px 0 20px',
-   //       fontWeight: '700',
-   //       flex: 0.91,
-   //    },
-
-   //    tdStyle: {
-   //       fontWeight: '500',
-   //    },
-
-   //    Cell: ({ row }) => (
-   //       <Box>
-   //          <Typography variant="p">{row.original.localDate}</Typography>
-   //       </Box>
-   //    ),
-   // },
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
@@ -344,9 +463,22 @@ const SPECIALISTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <SpecialistsDelete {...row.original} />
+         console.log(row.original)
+         return (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+               <NavLink>
+                  <EditIcon />
+               </NavLink>
+               <SpecialistsDelete {...row.original} />
+            </div>
+         )
       },
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, SPECIALISTS_COLUMN }
+export {
+   ONLINE_APPOINTMENTS_COLUMN,
+   COLUMNS,
+   APPLICATIONS_COLUMN,
+   SPECIALISTS_COLUMN,
+}

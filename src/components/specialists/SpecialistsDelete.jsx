@@ -1,14 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import { DeleteIcon } from '../../assets/icons'
 import Modal from '../UI/Modal'
 import Button from '../UI/Button'
+import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 
-const DeleteButton = ({ name }) => {
+const DeleteButton = ({ id, lastName, firstName }) => {
    const [open, setOpen] = useState(false)
+
+   const dispatch = useDispatch()
+
    const openModal = () => setOpen(true)
 
    const handleClose = () => setOpen(false)
+
+   const handleDelete = () => {
+      try {
+         dispatch(SPECIALISTS_THUNK.deleteSpecialists(id))
+      } catch (error) {
+         console.error('Error deleting appointment', error)
+      } finally {
+         handleClose()
+      }
+   }
 
    return (
       <>
@@ -17,14 +32,17 @@ const DeleteButton = ({ name }) => {
          </StyledDeleteButton>
 
          <Modal handleClose={handleClose} open={open} isCloseIcon={false}>
-            <StyledModalContent>
+            <StyledContainer>
                <Typography className="description">
                   Вы уверены, что хотите удалить запись
                </Typography>
 
-               <Typography className="name">{name}?</Typography>
+               <Typography className="name">
+                  {firstName} <span> </span>
+                  {lastName}?{' '}
+               </Typography>
 
-               <Box className="buttons-container">
+               <div className="buttonsContainer">
                   <Button
                      variant="grey"
                      className="button"
@@ -33,9 +51,11 @@ const DeleteButton = ({ name }) => {
                      Отменить
                   </Button>
 
-                  <Button className="button">Удалить</Button>
-               </Box>
-            </StyledModalContent>
+                  <Button className="button" onClick={handleDelete}>
+                     Удалить
+                  </Button>
+               </div>
+            </StyledContainer>
          </Modal>
       </>
    )
@@ -55,7 +75,7 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
    },
 }))
 
-const StyledModalContent = styled(Box)(() => ({
+const StyledContainer = styled(Box)(() => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
@@ -77,7 +97,7 @@ const StyledModalContent = styled(Box)(() => ({
       lineHeight: '24.59px',
    },
 
-   '& .buttons-container': {
+   '& .buttonsContainer': {
       display: 'flex',
       gap: '18px',
    },
