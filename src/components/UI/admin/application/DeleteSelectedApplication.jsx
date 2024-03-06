@@ -61,7 +61,6 @@ const DeleteSelected = ({ disabled }) => {
 export default DeleteSelected
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
-   cursor: 'pointer',
    width: '26px',
    height: '22px',
    transition: '0.3s ease-in-out',

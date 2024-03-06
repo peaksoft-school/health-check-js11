@@ -4,7 +4,6 @@ import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
-
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
 import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
 
@@ -72,11 +71,17 @@ const Applications = () => {
          </Box>
 
          <Box className="table-container">
-            <Table
-               columns={APPLICATIONS_COLUMN}
-               data={preperadeArray}
-               className="table"
-            />
+            {preperadeArray.length > 0 ? (
+               <Table
+                  columns={APPLICATIONS_COLUMN}
+                  data={preperadeArray}
+                  className="table"
+               />
+            ) : (
+               <Typography className="not-application" variant="h5">
+                  No Applications
+               </Typography>
+            )}
          </Box>
       </StyledContainer>
    )
@@ -94,8 +99,8 @@ const StyledContainer = styled(Box)(() => ({
    minHeight: '100vh',
 
    '& > .input-container': {
-      width: '37.5rem',
-      marginTop: '2.12rem',
+      width: '42.2rem',
+      marginTop: '2.15rem',
    },
 
    '& > .table-container': {
@@ -110,6 +115,11 @@ const StyledContainer = styled(Box)(() => ({
             backgroundColor: '#f4f3f3',
          },
       },
+   },
+   '& .not-application': {
+      textAlign: 'center',
+      color: 'green',
+      fontWeight: '10rem',
    },
 }))
 

@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { format } from 'date-fns'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
@@ -285,12 +286,12 @@ const APPLICATIONS_COLUMN = [
    },
    {
       Header: 'Дата',
-      accessor: 'time',
+      accessor: 'original.date',
 
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.5,
+         flex: 0.4,
       },
 
       tdStyle: {
@@ -298,9 +299,7 @@ const APPLICATIONS_COLUMN = [
       },
 
       Cell: ({ row }) => (
-         <Box>
-            <Typography variant="p">{row.original.date}</Typography>
-         </Box>
+         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
       ),
    },
    {
@@ -324,8 +323,8 @@ const APPLICATIONS_COLUMN = [
 
       style: {
          padding: '19px 10px 20px',
-         flex: 0.2,
-         fontWeight: '600',
+         flex: 0.1,
+         fontWeight: '700',
       },
 
       tdStyle: {
@@ -353,7 +352,7 @@ const APPLICATIONS_COLUMN = [
 
       tdStyle: {
          display: 'flex',
-         justifyContent: 'center',
+         justifyContent: 'end',
       },
 
       Cell: ({ row }) => (

@@ -49,7 +49,7 @@ const AdminHeader = () => {
                <Typography className="exit" onClick={handleClick}>
                   Администратор
                   {open ? (
-                     <ArrowUpIcon />
+                     <ArrowUpIcon className="cursor" />
                   ) : (
                      <ArrowDownIcon
                         aria-controls={open ? 'basic-menu' : null}
@@ -143,6 +143,9 @@ const StyledContainer = styled('header')(({ theme }) => ({
          color: '#222',
          gap: '0.625rem',
          fontSize: '1.10rem',
+      },
+      '& .cursor': {
+         cursor: 'pointer',
       },
    },
 }))
