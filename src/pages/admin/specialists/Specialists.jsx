@@ -5,13 +5,13 @@ import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
-import { SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
+import { COLUMNS, SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialists/specialictsThunk'
 
 const Specialists = () => {
    const dispatch = useDispatch()
-   const { specialists } = useSelector((state) => state.Specialists)
-   console.log(specialists)
+   const special = useSelector((state) => state.Specialists)
+   console.log(special)
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialists())
@@ -31,7 +31,7 @@ const Specialists = () => {
                <StyledInput placeholder="Поиск" />
             </Box>
             <Box className="table-container">
-               <Table columns={SPECIALISTS_COLUMN} data={specialists} />
+               <Table columns={SPECIALISTS_COLUMN} data={COLUMNS} />
             </Box>
          </Box>
       </StyledContainer>

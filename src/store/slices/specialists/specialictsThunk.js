@@ -13,7 +13,20 @@ const getSpecialists = createAsyncThunk(
       }
    }
 )
+const deleteSpecialists = createAsyncThunk(
+   'specialists/deleteSpecialists',
+   async (specialistsId, { dispatch, rejectWithValue }) => {
+      try {
+         await axiosInstance.delete(`/${specialistsId}`)
+         dispatch(getSpecialists())
+         return specialistsId
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
 
 export const SPECIALISTS_THUNK = {
    getSpecialists,
+   deleteSpecialists,
 }

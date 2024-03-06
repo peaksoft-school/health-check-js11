@@ -17,8 +17,8 @@ const specialistsSlice = createSlice({
          .addCase(
             SPECIALISTS_THUNK.getSpecialists.fulfilled,
             (state, action) => {
-               const updateSpecialists = action.payload.map((patient) => ({
-                  ...patient,
+               const updateSpecialists = action.payload.map((specialist) => ({
+                  ...specialist,
                   isSelected: false,
                }))
                state.specialists = updateSpecialists
