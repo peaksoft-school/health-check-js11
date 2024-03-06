@@ -9,15 +9,29 @@ import MyProfile from '../pages/user/myProfile/MyProfile'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 import Specialists from '../pages/admin/specialists/Specialists'
+import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {
-      path: 'online-appointments',
+      path: 'admin/online-appointments',
       element: <OnlineAppointments />,
    },
    {
       path: 'specialists',
       element: <Specialists />,
+   },
+
+   {
+      path: '/admin/applications',
+      element: <Applications />,
+   },
+   {
+      path: '/admin/specialists',
+      element: <div>specialist</div>,
+   },
+   {
+      path: '/admin/patients',
+      element: <div>patients</div>,
    },
 ]
 
