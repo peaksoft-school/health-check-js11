@@ -1,10 +1,16 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { format } from 'date-fns'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
+import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
+import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
+import ApplicationCheckbox from '../../components/UI/admin/application/ApplicationCheckbox'
+import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
+import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -226,4 +232,137 @@ const COLUMNS = [
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS }
+const APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAllApplication />,
+      accessor: 'checkbox',
+
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
+
+      Cell: ({ row }) => <SelectSeparatelyApplication {...row.original} />,
+   },
+
+   {
+      Header: <DeleteSelectedApplication />,
+      accessor: 'action',
+
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
+   },
+
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'original.date',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.8,
+         justifyContent: 'center',
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 10px 20px',
+         flex: 0.1,
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => (
+         <ApplicationCheckbox
+            checked={row.original.processed}
+            id={row.original.id}
+         />
+      ),
+   },
+
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'end',
+      },
+
+      Cell: ({ row }) => (
+         <DeleteApplication
+            id={row.original.id}
+            name={row.original.name}
+            disabled={row.original.processed}
+         />
+      ),
+   },
+]
+
+export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, APPLICATIONS_COLUMN }
