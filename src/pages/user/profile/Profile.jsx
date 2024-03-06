@@ -15,7 +15,7 @@ const Profile = () => {
       <StyledContainer>
          <Box className="box">
             <Box className="button-container">
-               <Typography className="title">Онлайн-запись</Typography>
+               <Typography className="title">Профиль</Typography>
             </Box>
 
             <Box>
@@ -26,12 +26,16 @@ const Profile = () => {
                         aria-label="lab API tabs example"
                      >
                         <Tab
-                           label="Онлайн-запись"
+                           label="ЛИЧНЫЕ ДАННЫЕ"
                            value="1"
                            className="route"
                         />
 
-                        <Tab label="Расписание" value="2" className="route" />
+                        <Tab
+                           label="СМЕНИТЬ ПАРОЛЬ"
+                           value="2"
+                           className="route"
+                        />
                      </TabList>
                   </Box>
 
@@ -59,7 +63,7 @@ const Profile = () => {
                   </TabPanel>
 
                   <TabPanel value="2" className="tables">
-                     Raspisanie
+                     пароль
                   </TabPanel>
                </TabContext>
             </Box>
@@ -106,7 +110,6 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
 
    '& > .box': {
       display: 'flex',
