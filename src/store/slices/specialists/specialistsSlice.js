@@ -25,6 +25,7 @@ const specialistsSlice = createSlice({
                state.isLoading = false
             }
          )
+
          .addCase(SPECIALISTS_THUNK.getSpecialists.pending, (state) => {
             state.isLoading = true
          })

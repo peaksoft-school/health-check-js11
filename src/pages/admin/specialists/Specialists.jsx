@@ -10,8 +10,7 @@ import { SPECIALISTS_THUNK } from '../../../store/slices/specialists/specialicts
 
 const Specialists = () => {
    const dispatch = useDispatch()
-   const special = useSelector((state) => state.Specialists)
-   console.log(special)
+   const specialists = useSelector((state) => state.Specialists)
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialists())
