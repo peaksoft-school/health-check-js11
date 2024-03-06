@@ -1,11 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useFormik } from 'formik'
+import { useSelector, useDispatch } from 'react-redux'
 import { styled, Box, Typography, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
+import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
+import NumberInput from '../../../components/UI/inputs/NumberInput'
+import ChangeUserPassword from './ChangeUserPassword'
+import { changeUserPasswordError } from '../../../utils/helpers'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
+
+   const { userData } = useSelector((state) => state.profile)
+   const { accessToken } = useSelector((state) => state.auth)
+
+   const dispatch = useDispatch()
+
+   const onSubmit = (values) => {
+      dispatch(ACTION_PROFILE.updateUserProfile(values))
+   }
+
+   const { values, handleChange, errors, handleSubmit } = useFormik({
+      initialValues: {
+         firstName: userData.firstName,
+         lastName: userData.lastName,
+         email: userData.email,
+         numberPhone: userData.number,
+      },
+
+      validateOnChange: false,
+      onSubmit,
+   })
+
+   useEffect(() => {
+      dispatch(ACTION_PROFILE.getUserProfile(accessToken))
+   }, [accessToken])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
@@ -40,30 +71,60 @@ const Profile = () => {
                   </Box>
 
                   <TabPanel value="1" className="tables">
-                     <Box className="table-container">
+                     <form onSubmit={handleSubmit} className="table-container">
                         <Box className="table-container">
                            <div className="first-box">
                               <Typography className="label">Имя</Typography>
-                              <Input className="input" />
+                              <Input
+                                 className="input"
+                                 value={values.firstName}
+                                 onChange={handleChange('firstName')}
+                              />
+
                               <Typography className="label">Email</Typography>
-                              <Input className="input" />
+                              <Input
+                                 className="input"
+                                 onChange={handleChange('email')}
+                                 value={values.email}
+                              />
                            </div>
+
                            <div className="first-box">
                               <Typography className="label">Фамилия</Typography>
-                              <Input className="input" />
+                              <Input
+                                 onChange={handleChange('lastName')}
+                                 className="input"
+                                 value={values.lastName}
+                              />
+
                               <Typography className="label">Телефон</Typography>
-                              <Input className="input" />
+                              <NumberInput
+                                 variant="secondary"
+                                 className="input"
+                                 onChange={handleChange('numberPhone')}
+                                 value={values.numberPhone}
+                                 mask="_"
+                                 format="+996#########"
+                                 placeholder="+996 (___) ___ ___"
+                              />
+
+                              {changeUserPasswordError(errors) && (
+                                 <Typography className="error-message">
+                                    {changeUserPasswordError(errors)}
+                                 </Typography>
+                              )}
+
                               <div>
                                  <Button>НАЗАД</Button>
-                                 <Button>РЕДАКТИРОВАТЬ</Button>
+                                 <Button type="submit">РЕДАКТИРОВАТЬ</Button>
                               </div>
                            </div>
                         </Box>
-                     </Box>
+                     </form>
                   </TabPanel>
 
                   <TabPanel value="2" className="tables">
-                     пароль
+                     <ChangeUserPassword />
                   </TabPanel>
                </TabContext>
             </Box>

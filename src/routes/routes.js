@@ -8,11 +8,21 @@ import ChangePassword from '../pages/change-password/ChangePassword'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 import Profile from '../pages/user/profile/Profile'
+import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {
-      path: 'online-appointments',
+      path: 'admin/online-appointments',
       element: <OnlineAppointments />,
+   },
+
+   {
+      path: '/admin/applications',
+      element: <Applications />,
+   },
+   {
+      path: '/admin/specialists',
+      element: <div>specialist</div>,
    },
 ]
 
