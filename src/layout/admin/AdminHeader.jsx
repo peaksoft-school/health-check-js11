@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
-import { HEADER_ADMIN } from '../../utils/constants/index'
+import { ADMIN_NAVIGATIONS } from '../../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
+import AdminNavigations from '../../components/UI/AdminNavigations'
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
@@ -40,17 +41,15 @@ const AdminHeader = () => {
                </Typography>
             </Box>
 
-            <Box className="navigation">
-               {HEADER_ADMIN.map(({ text, id }) => (
-                  <Typography key={id}>{text}</Typography>
-               ))}
-            </Box>
+            <nav className="navigation">
+               <AdminNavigations links={ADMIN_NAVIGATIONS} />
+            </nav>
 
             <Box>
                <Typography className="exit" onClick={handleClick}>
                   Администратор
                   {open ? (
-                     <ArrowUpIcon />
+                     <ArrowUpIcon className="cursor" />
                   ) : (
                      <ArrowDownIcon
                         aria-controls={open ? 'basic-menu' : null}
@@ -144,6 +143,9 @@ const StyledContainer = styled('header')(({ theme }) => ({
          color: '#222',
          gap: '0.625rem',
          fontSize: '1.10rem',
+      },
+      '& .cursor': {
+         cursor: 'pointer',
       },
    },
 }))

@@ -10,10 +10,11 @@ import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 import Patients from '../pages/admin/patients/Patients'
 import PatientsInnerPage from '../pages/admin/patients/PatientsInnerPage'
+import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {
-      path: 'online-appointments',
+      path: 'admin/online-appointments',
       element: <OnlineAppointments />,
    },
 
@@ -25,6 +26,16 @@ const ADMIN_ROUTES = [
    {
       path: 'patients/:id',
       element: <PatientsInnerPage />,
+   },
+
+   {
+      path: '/admin/applications',
+      element: <Applications />,
+   },
+
+   {
+      path: '/admin/specialists',
+      element: <div>specialist</div>,
    },
 ]
 

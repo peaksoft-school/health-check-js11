@@ -1,11 +1,13 @@
-import { Box, Typography, styled, ButtonBase } from '@mui/material'
-import LinkPatient from '../../components/UI/admin/LinkPatient'
-import { PATIENTS_THUNK } from '../../store/slices/patients/patientsThunk'
+import { Typography } from '@mui/material'
+import { Box } from '@mui/system'
+import { format } from 'date-fns'
 import Delete from '../../components/UI/admin/Delete'
+import { PATIENTS_THUNK } from '../../store/slices/patients/patientsThunk'
+import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
-import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
+import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 
@@ -360,49 +362,142 @@ const COLUMNS = [
    },
 ]
 
-export { ONLINE_APPOINTMENTS_COLUMN, COLUMNS, PATIENTS_COLUMN }
+const APPLICATIONS_COLUMN = [
+   {
+      Header: <SelectAll />,
+      accessor: 'checkbox',
 
-const StyledDeleteButton = styled(ButtonBase)(() => ({
-   cursor: 'pointer',
-   width: '26px',
-   height: '22px',
-   transition: '0.3s ease-in-out',
+      style: {
+         padding: '17px 0 20px 17px',
+         flex: 0.06,
+      },
 
-   '&:disabled': {
-      cursor: 'not-allowed',
-      opacity: 0.2,
-   },
-}))
-
-const StyledModalContent = styled(Box)(() => ({
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'center',
-   flexDirection: 'column',
-   margin: '0.63rem 1.38rem',
-
-   '& .name': {
-      fontFamily: 'Manrope',
-      fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '24.59px',
-      marginBottom: '1.25rem',
+      Cell: ({ row }) => <SelectSeparately {...row.original} />,
    },
 
-   '& .description': {
-      fontFamily: 'Manrope',
-      fontWeight: '400',
-      fontSize: '18px',
-      lineHeight: '24.59px',
+   {
+      Header: <DeleteSelected />,
+      accessor: 'action',
+
+      style: {
+         padding: '17px 0 20px',
+         flex: 0.06,
+         cursor: 'pointer',
+      },
    },
 
-   '& .buttons-container': {
-      display: 'flex',
-      gap: '18px',
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '17px 0 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Имя',
+      accessor: 'name',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Дата',
+      accessor: 'original.date',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.4,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => (
+         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
+      ),
+   },
+   {
+      Header: 'Номер телефона',
+      accessor: 'number',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.8,
+         justifyContent: 'center',
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+   },
+   {
+      Header: 'Обработан',
+      accessor: 'processed',
+
+      style: {
+         padding: '19px 10px 20px',
+         flex: 0.1,
+         fontWeight: '700',
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => (
+         <ProcessedCheckbox
+            checked={row.original.processed}
+            id={row.original.id}
+         />
+      ),
    },
 
-   '& > div > .button': {
-      height: '2.625rem',
-      padding: '0.625rem 1.25rem !important',
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px',
+         fontWeight: '700',
+         flex: 0.1,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'end',
+      },
+
+      Cell: ({ row }) => (
+         <Delete
+            id={row.original.id}
+            name={row.original.name}
+            disabled={row.original.processed}
+         />
+      ),
    },
-}))
+]
+
+export {
+   ONLINE_APPOINTMENTS_COLUMN,
+   PATIENTS_COLUMN,
+   COLUMNS,
+   APPLICATIONS_COLUMN,
+}
