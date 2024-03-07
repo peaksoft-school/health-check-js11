@@ -14,11 +14,6 @@ const getUserProfile = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
-
          return rejectWithValue(error)
       }
    }
@@ -40,10 +35,17 @@ const updateUserProfile = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error)
       }
@@ -53,12 +55,14 @@ const updateUserProfile = createAsyncThunk(
 const changeUserPassword = createAsyncThunk(
    'profile/changePassword',
 
-   async (passwords, { rejectWithValue }) => {
+   async ({ values, resetForm }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
             `/api/user/changeUserPassword`,
-            passwords
+            values
          )
+
+         resetForm()
 
          showToast({
             message: response.data.message,
@@ -66,10 +70,17 @@ const changeUserPassword = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error)
       }

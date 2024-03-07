@@ -8,7 +8,6 @@ import Input from '../../../components/UI/inputs/Input'
 import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
 import ChangeUserPassword from './ChangeUserPassword'
-import { changeUserPasswordError } from '../../../utils/helpers'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
@@ -22,7 +21,7 @@ const Profile = () => {
       dispatch(ACTION_PROFILE.updateUserProfile(values))
    }
 
-   const { values, handleChange, errors, handleSubmit } = useFormik({
+   const { values, handleChange, handleSubmit, dirty } = useFormik({
       initialValues: {
          firstName: userData.firstName,
          lastName: userData.lastName,
@@ -75,14 +74,14 @@ const Profile = () => {
                         <Box className="table-container">
                            <div className="first-box">
                               <Typography className="label">Имя</Typography>
-                              <Input
+                              <StyledInput
                                  className="input"
                                  value={values.firstName}
                                  onChange={handleChange('firstName')}
                               />
 
                               <Typography className="label">Email</Typography>
-                              <Input
+                              <StyledInput
                                  className="input"
                                  onChange={handleChange('email')}
                                  value={values.email}
@@ -91,7 +90,7 @@ const Profile = () => {
 
                            <div className="first-box">
                               <Typography className="label">Фамилия</Typography>
-                              <Input
+                              <StyledInput
                                  onChange={handleChange('lastName')}
                                  className="input"
                                  value={values.lastName}
@@ -108,16 +107,18 @@ const Profile = () => {
                                  placeholder="+996 (___) ___ ___"
                               />
 
-                              {changeUserPasswordError(errors) && (
-                                 <Typography className="error-message">
-                                    {changeUserPasswordError(errors)}
-                                 </Typography>
-                              )}
-
-                              <div>
-                                 <Button>НАЗАД</Button>
-                                 <Button type="submit">РЕДАКТИРОВАТЬ</Button>
-                              </div>
+                              <StyledButtonContainer>
+                                 <Button variant="grey" className="back-button">
+                                    НАЗАД
+                                 </Button>
+                                 <Button
+                                    className="confirm-button"
+                                    type="submit"
+                                    disabled={!dirty}
+                                 >
+                                    РЕДАКТИРОВАТЬ
+                                 </Button>
+                              </StyledButtonContainer>
                            </div>
                         </Box>
                      </form>
@@ -135,42 +136,8 @@ const Profile = () => {
 
 export default Profile
 
-const StyledBox = styled(Box)(({ theme }) => ({
-   display: 'flex',
-
-   '& .input': {
-      width: '490px',
-      height: '38px',
-   },
-
-   '& .tables': {
-      padding: '0rem',
-   },
-
-   '& .label': {
-      color: '#464444',
-      fontFamily: 'Manrope',
-   },
-
-   '& > .first-box': {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '20px',
-   },
-
-   '& .route': {
-      fontSize: '0.75rem',
-      lineHeight: 'normal',
-      marginRight: '1.87rem',
-      padding: '0rem',
-      transition: '0.3s',
-      fontWeight: '500',
-      color: theme.palette.secondary.LightGrey,
-   },
-}))
-
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
+   padding: '1.87rem 7.37rem 50px !important',
 
    '& > .box': {
       display: 'flex',
@@ -215,12 +182,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
+         margin: '0 auto',
          backgroundColor: '#048741 !important',
       },
 
       '& .route': {
          fontSize: '0.75rem',
-         lineHeight: 'normal',
          marginRight: '1.87rem',
          padding: '0rem',
          transition: '0.3s',
@@ -235,19 +202,52 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '& .tables': {
          padding: '0rem',
-      },
-
-      '& .input-container': {
-         width: '37.5rem',
-         marginTop: '2.12rem',
+         margin: '0px',
       },
 
       '& .table-container': {
+         display: 'flex',
+         gap: '1rem',
          width: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
          background: 'white',
          marginTop: '1.25rem',
       },
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '& .MuiOutlinedInput-root ': {
+      height: '2.625rem',
+      borderRadius: '0.5rem',
+   },
+
+   '& .MuiOutlinedInput-input': {
+      height: '0.4375em',
+      borderRadius: '0.5rem',
+   },
+}))
+
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
+   display: 'flex',
+   marginTop: '1.5rem',
+   height: '39px',
+   gap: '1rem',
+
+   '& .back-button': {
+      border: '1px solid',
+      width: '100%',
+      color: '#048741  !important',
+
+      '&:hover': {
+         maxHeight: '39px important',
+         border: 'none',
+         color: `#048741 !important`,
+      },
+   },
+
+   '& .confirm-button': {
+      width: '100%',
    },
 }))
