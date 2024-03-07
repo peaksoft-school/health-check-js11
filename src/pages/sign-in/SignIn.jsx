@@ -57,7 +57,7 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
                   tokenId: data.user.accessToken,
                })
             )
-            onClose()
+            // onClose()
          })
       } catch (error) {
          throw new Error(error)

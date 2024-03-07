@@ -12,18 +12,18 @@ import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
 const Profile = () => {
    const [value, setValue] = useState('1')
 
-   const { userData } = useSelector((state) => state.profile)
    const { accessToken } = useSelector((state) => state.auth)
+   const { userData } = useSelector((state) => state.profile)
 
    const dispatch = useDispatch()
-
-   const onSubmit = (values) => {
-      dispatch(ACTION_PROFILE.updateUserProfile(values))
-   }
 
    useEffect(() => {
       dispatch(ACTION_PROFILE.getUserProfile(accessToken))
    }, [accessToken])
+
+   const onSubmit = (values) => {
+      dispatch(ACTION_PROFILE.updateUserProfile(values))
+   }
 
    const { values, handleChange, handleSubmit, dirty } = useFormik({
       initialValues: {
