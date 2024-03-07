@@ -5,9 +5,9 @@ import { styled, Box, Typography, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
-import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
 import ChangeUserPassword from './ChangeUserPassword'
+import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
@@ -21,21 +21,21 @@ const Profile = () => {
       dispatch(ACTION_PROFILE.updateUserProfile(values))
    }
 
+   useEffect(() => {
+      dispatch(ACTION_PROFILE.getUserProfile(accessToken))
+   }, [accessToken])
+
    const { values, handleChange, handleSubmit, dirty } = useFormik({
       initialValues: {
-         firstName: userData.firstName,
-         lastName: userData.lastName,
-         email: userData.email,
-         numberPhone: userData.number,
+         firstName: userData?.firstName,
+         lastName: userData?.lastName,
+         email: userData?.email,
+         numberPhone: userData?.number,
       },
 
       validateOnChange: false,
       onSubmit,
    })
-
-   useEffect(() => {
-      dispatch(ACTION_PROFILE.getUserProfile(accessToken))
-   }, [accessToken])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
@@ -220,11 +220,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
+      color: 'black',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
       height: '0.4375em',
+      color: 'black',
       borderRadius: '0.5rem',
    },
 }))

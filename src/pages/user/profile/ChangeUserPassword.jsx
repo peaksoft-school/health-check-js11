@@ -9,9 +9,9 @@ import {
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
 import Input from '../../../components/UI/inputs/Input'
+import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
 import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
-import Button from '../../../components/UI/Button'
 import { showToast } from '../../../utils/helpers/notification'
 
 const ChangeUserPassword = () => {
@@ -155,18 +155,16 @@ const StyledContainer = styled(Box)(() => ({
    '& .old-password': {
       marginTop: '2rem',
       marginBottom: '0.3rem',
-      color: '#464444',
    },
 
    '& .new-password': {
       marginTop: '1rem',
       marginBottom: '0.3rem',
-      color: '#464444',
    },
+
    '& .confirm-password': {
       marginTop: '1rem',
       marginBottom: '0.3rem',
-      color: '#464444',
    },
 }))
 
@@ -177,18 +175,7 @@ const StyledInput = styled(Input)(() => ({
    },
 
    '& .MuiOutlinedInput-input': {
-      height: '0.4375em',
-      borderRadius: '0.5rem',
-   },
-}))
-
-const StyledButton = styled(Input)(() => ({
-   '& .MuiOutlinedInput-root ': {
-      height: '2.625rem',
-      borderRadius: '0.5rem',
-   },
-
-   '& .MuiOutlinedInput-input': {
+      color: 'black',
       height: '0.4375em',
       borderRadius: '0.5rem',
    },

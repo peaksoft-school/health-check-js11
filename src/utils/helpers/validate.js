@@ -8,7 +8,7 @@ const phoneNumberRegex =
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/
 
 const VALIDATION_SIGN_UP = Yup.object().shape({
-   name: Yup.string().required('Имя обязятельное!'),
+   firstName: Yup.string().required('Имя обязятельное!'),
    lastName: Yup.string().required('Фамилия обязятельное!'),
    email: Yup.string()
       .email()
