@@ -4,7 +4,7 @@ import Checkbox from '../UI/Checkbox'
 
 const SelectSeparately = ({ isSelected, appointmentId }) => {
    const dispatch = useDispatch()
-   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
+   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
 
    const handleChange = () => {
       dispatch(

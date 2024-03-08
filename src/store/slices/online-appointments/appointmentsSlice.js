@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const appointmentsSlice = createSlice({
-   name: 'Appointments',
+   name: 'appointments',
    initialState,
    reducers: {
       handleIsChecked: (state) => {
@@ -89,10 +89,10 @@ const appointmentsSlice = createSlice({
             (state, action) => {
                state.isLoading = false
 
-               showToast({
-                  message: (state.error = action.error.message),
-                  status: 'rejected',
-               })
+               // showToast({
+               //    message: (state.error = action.error.message),
+               //    status: 'rejected',
+               // })
             }
          )
 
@@ -126,9 +126,9 @@ const appointmentsSlice = createSlice({
             (state, action) => {
                state.isLoading = false
 
-               showToast({
-                  message: (state.error = action.error.message),
-               })
+               // showToast({
+               //    message: (state.error = action.error.message),
+               // })
             }
          )
 
@@ -142,9 +142,9 @@ const appointmentsSlice = createSlice({
             APPOINTMENTS_THUNK.deleteAllAppointments.fulfilled,
             (state) => {
                state.deletedAppointmentsIds = []
-               showToast({
-                  message: 'Выбранные записи успешно удалены',
-               })
+               // showToast({
+               //    message: 'Выбранные записи успешно удалены',
+               // })
             }
          )
    },

@@ -150,8 +150,11 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => (
          <Box>
-            <Typography variant="p">{row.original.localDate}</Typography>
-            <Typography variant="p">{row.original.localTime}</Typography>
+            <Typography>
+               {row.original.localDate.split('-').join('.')}
+            </Typography>
+
+            <Typography>{row.original.localTime.slice(0, -3)}</Typography>
          </Box>
       ),
    },

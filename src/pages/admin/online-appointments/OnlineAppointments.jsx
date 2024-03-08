@@ -12,6 +12,7 @@ import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 import Schedule from '../schedule/Schedule'
 import AddSchedule from './AddSchedule'
+import { NoData } from '../../../assets/images'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -22,7 +23,7 @@ const OnlineAppointments = () => {
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.Appointments
+      (state) => state.appointments
    )
 
    const toggleModal = () => setOpenModal((prev) => !prev)
@@ -105,10 +106,18 @@ const OnlineAppointments = () => {
                      </Box>
 
                      <Box className="table-container">
-                        <Table
-                           columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={appointments}
-                        />
+                        {appointments.length === 0 ? (
+                           <img
+                              src={NoData}
+                              alt="No Data"
+                              className="no-data-image"
+                           />
+                        ) : (
+                           <Table
+                              columns={ONLINE_APPOINTMENTS_COLUMN}
+                              data={appointments}
+                           />
+                        )}
                      </Box>
                   </TabPanel>
 
@@ -154,13 +163,17 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             lineHeight: 'normal',
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
-            display: 'flex',
-            alignItems: 'center',
             height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            gap: '0.625rem',
             width: '13.0625rem !important',
             flexShrink: '0',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'space-between',
+               width: '100%',
+            },
 
             '& > .plus-icon': {
                width: '1.125rem',
@@ -218,6 +231,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          bordeRradius: ' 0.375rem',
          background: 'white',
          marginTop: '1.25rem',
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center',
+
+         '& .no-data-image': {
+            width: '50%',
+            height: '30%',
+         },
       },
    },
 }))

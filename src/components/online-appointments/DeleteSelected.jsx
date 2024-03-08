@@ -10,7 +10,7 @@ import Button from '../UI/Button'
 const DeleteSelected = ({ disabled }) => {
    const [open, setOpen] = useState(false)
 
-   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
+   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
 
    const dispatch = useDispatch()
 

@@ -16,15 +16,12 @@ import {
 } from '../../../utils/constants'
 import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
 import { scheduleError } from '../../../utils/helpers'
-import {
-   getDoctorsByDepartment,
-   postNewSchedule,
-} from '../../../store/slices/schedule/addScheduleThunk'
+import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 
 const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()
 
-   const { doctors } = useSelector((state) => state.addSchedule)
+   const { doctors } = useSelector((state) => state.schedule)
 
    const onSubmit = (values, { resetForm }) => {
       const createStartDate = format(
@@ -60,7 +57,7 @@ const AddSchedule = ({ open, onClose }) => {
       const selectedDoctorId = selectedDoctor.id
 
       dispatch(
-         postNewSchedule({
+         SCHEDULE_THUNK.postNewSchedule({
             doctorId: selectedDoctorId,
             departmentName: values.departmentName,
             schedule: dataToSend,
@@ -93,7 +90,9 @@ const AddSchedule = ({ open, onClose }) => {
 
    const getDoctors = (selectedOption) => {
       handleChange('departmentName')(selectedOption.label)
-      dispatch(getDoctorsByDepartment({ params: selectedOption.label }))
+      dispatch(
+         SCHEDULE_THUNK.getDoctorsByDepartment({ params: selectedOption.label })
+      )
    }
 
    const doctorsFullname = doctors?.map((doctor) => ({

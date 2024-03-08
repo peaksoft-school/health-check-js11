@@ -3,7 +3,7 @@ import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/app
 import Checkbox from '../UI/Checkbox'
 
 const SelectAll = () => {
-   const { selectAll } = useSelector((state) => state.Appointments)
+   const { selectAll } = useSelector((state) => state.appointments)
 
    const dispatch = useDispatch()
 

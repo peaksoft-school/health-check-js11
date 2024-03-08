@@ -1,15 +1,93 @@
 import { useEffect, useState } from 'react'
-import { Box, Button, Typography, styled } from '@mui/material'
+import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { addDays, format } from 'date-fns'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Loading from '../Loading'
+import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
+import ChangeDay from '../schedule/ChangeDay'
 
 const TableSchedule = () => {
-   const { schedules } = useSelector((state) => state.schedule)
+   const { schedules, isLoading } = useSelector((state) => state.schedule)
 
-   const [startDate, setStartDate] = useState('')
-   const [endDate, setEndDate] = useState('')
+   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+   const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+   const [lastClicked, setLastClicked] = useState({ id: null, date: null })
+
+   const [open, setOpen] = useState(false)
+
+   const [timeRanges, setTimeRanges] = useState([
+      { startHour: 0, startMinute: 0, endHour: 0, endMinute: 0 },
+   ])
+
+   const [selectedDoctorId, setSelectedDoctorId] = useState(null)
+   const [clickedDate, setClickedDate] = useState(null)
+   const [intervals, setIntervals] = useState([{ id: 1 }])
+
+   const resetTimeRangesAndIntervals = () => {
+      setIntervals([{ id: 1 }])
+
+      setTimeRanges([
+         { startHour: 0, startMinute: 0, endHour: 0, endMinute: 0 },
+      ])
+
+      const inputElements = document.querySelectorAll('.time-picker')
+      inputElements.forEach((input) => {
+         input.value = ''
+      })
+   }
+
+   const updateIntervals = (newIntervals) => {
+      setIntervals(newIntervals)
+   }
+
+   const openModal = () => setOpen(true)
+
+   const handleClose = () => {
+      resetTimeRangesAndIntervals()
+      setOpen(false)
+   }
+
+   const handleHourChange = (value, index, type) => {
+      const paddedValue = value.toString().padStart(2, '0')
+      const updatedTimeRanges = [...timeRanges]
+
+      updatedTimeRanges[index][`${type}Hour`] = paddedValue
+
+      setTimeRanges(updatedTimeRanges)
+   }
+
+   const addInterval = () => {
+      if (intervals.length < 5) {
+         const newIntervalId = intervals.length + 1
+         setIntervals([...intervals, { id: newIntervalId }])
+
+         setTimeRanges([
+            ...timeRanges,
+            { startHour: 0, startMinute: 0, endHour: 0, endMinute: 0 },
+         ])
+      }
+   }
+
+   const removeInterval = (id) => {
+      const updatedIntervals = intervals.filter(
+         (interval) => interval.id !== id
+      )
+
+      setIntervals(updatedIntervals)
+   }
+
+   const handleMinuteChange = (value, index, type) => {
+      const paddedValue = value.toString().padStart(2, '0')
+      const updatedTimeRanges = [...timeRanges]
+
+      updatedTimeRanges[index][`${type}Minute`] = paddedValue
+
+      setTimeRanges(updatedTimeRanges)
+   }
 
    const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+
+   const dispatch = useDispatch()
 
    const handleDateChange = (event, type) => {
       const selectedDate = event.target.value
@@ -29,6 +107,25 @@ const TableSchedule = () => {
       setEndDate(format(defaultEndDate, 'yyyy-MM-dd'))
    }, [])
 
+   const getRussianMonthName = (monthNumber) => {
+      const russianMonthNames = [
+         'Январь',
+         'Февраль',
+         'Март',
+         'Апрель',
+         'Май',
+         'Июнь',
+         'Июль',
+         'Август',
+         'Сентябрь',
+         'Октябрь',
+         'Ноябрь',
+         'Декабрь',
+      ]
+
+      return russianMonthNames[monthNumber]
+   }
+
    const generateDateRange = () => {
       if (!startDate || !endDate) {
          return []
@@ -36,27 +133,113 @@ const TableSchedule = () => {
 
       const start = new Date(startDate)
       const end = new Date(endDate)
-
       const dateRange = []
 
       while (start <= end) {
          const dayOfWeek = daysOfWeek[start.getDay()]
-         const date = start.getDate()
-         const month = format(start, 'MMMM')
 
-         dateRange.push({ dayOfWeek, date, month })
+         const date = String(start.getDate()).padStart(2, '0')
+         const monthNumber = String(start.getMonth() + 1).padStart(2, '0')
+         const monthText = getRussianMonthName(start.getMonth())
+         const year = start.getFullYear()
+
+         dateRange.push({ dayOfWeek, date, monthNumber, monthText, year })
          start.setDate(start.getDate() + 1)
       }
 
       return dateRange
    }
 
+   const generateFreeTimes = (startTimeOfConsultation) => {
+      if (!startTimeOfConsultation || startTimeOfConsultation.length === 0) {
+         return []
+      }
+
+      const timeRanges = startTimeOfConsultation.map((timeRange) => {
+         const [startTime, endTime] = timeRange.split(' - ')
+         const trimmedStartTime = startTime.slice(0, -3)
+         const trimmedEndTime = endTime.replace(/-f$/, '').slice(0, -3)
+
+         return `${trimmedStartTime} - ${trimmedEndTime}`
+      })
+
+      return timeRanges.map((formattedTime) => (
+         <Typography key={formattedTime} className="free-time">
+            {formattedTime}
+         </Typography>
+      ))
+   }
+
+   const handleTdClick = (id, date) => {
+      setLastClicked({ id, date })
+      setSelectedDoctorId(id)
+      setClickedDate(date)
+   }
+
+   const savePatternTimeSheet = () => {
+      const { id, date } = lastClicked
+
+      if (id && date) {
+         dispatch(
+            SCHEDULE_THUNK.savePatternTimeSheet({
+               doctorId: id,
+               dateOfConsultation: date,
+            })
+         )
+
+         resetTimeRangesAndIntervals()
+      } else {
+         console.error('No td was clicked')
+      }
+   }
+
+   const isLastClicked = (currentId, currentDate) => {
+      return currentId === lastClicked.id && currentDate === lastClicked.date
+   }
+
+   const updateTimeSheetDoctor = () => {
+      const { id, date } = lastClicked
+
+      if (id && date) {
+         dispatch(
+            SCHEDULE_THUNK.updateTimeSheetDoctor({
+               doctorId: id,
+               date,
+               timeRanges,
+            })
+         )
+
+         resetTimeRangesAndIntervals()
+      } else {
+         console.error('No td was clicked')
+      }
+      handleClose()
+   }
+
    return (
       <StyledContainer>
          <Box className="action-container">
             <Box>
-               <Button className="buttons">Изменить день</Button>
-               <Button className="buttons">Установить по шаблону</Button>
+               <ChangeDay
+                  updateTimeSheetDoctor={updateTimeSheetDoctor}
+                  handleMinuteChange={handleMinuteChange}
+                  handleHourChange={handleHourChange}
+                  openModal={openModal}
+                  handleClose={handleClose}
+                  open={open}
+                  intervals={intervals}
+                  addInterval={addInterval}
+                  removeInterval={removeInterval}
+                  selectedDoctorId={selectedDoctorId}
+                  generateDateRange={generateDateRange}
+                  clickedDate={clickedDate}
+                  updateIntervals={updateIntervals}
+                  setIntervals={setIntervals}
+               />
+
+               <ButtonBase className="buttons" onClick={savePatternTimeSheet}>
+                  Установить по шаблону
+               </ButtonBase>
             </Box>
 
             <Box className="date-picker">
@@ -76,60 +259,100 @@ const TableSchedule = () => {
             </Box>
          </Box>
 
-         <table className="table">
-            <thead>
-               <tr>
-                  <th className="header-specialist">СПЕЦИАЛИСТЫ</th>
-
-                  {generateDateRange().map(({ dayOfWeek, date, month }) => (
-                     <th className="header-dates th">
-                        {dayOfWeek}
-                        <Box component="br" />
-                        {date} {month}
-                     </th>
-                  ))}
-               </tr>
-            </thead>
-
-            <tbody>
-               {schedules.map(({ image, surname, position }) => (
-                  <tr key={surname}>
-                     <Box component="td" className="specialist">
-                        <img src={image} alt="imag" className="image" />
-
-                        <Typography className="surname">{surname}</Typography>
-                        <Typography className="position">{position}</Typography>
-                     </Box>
-
-                     {generateDateRange().map(({ dayOfWeek, date, month }) => (
-                        <Box
-                           component="td"
-                           key={`${surname}-${dayOfWeek}-${date}-${month}`}
-                           className="td"
-                        >
-                           <Box className="free-time-container">
-                              <Typography variant="p" className="free-time">
-                                 11:00 - 13:00
-                              </Typography>
-
-                              <Typography variant="p" className="free-time">
-                                 15:00 - 16:00
-                              </Typography>
-
-                              <Typography variant="p" className="free-time">
-                                 17:00 - 17:30
-                              </Typography>
-                           </Box>
-                        </Box>
-                     ))}
+         <Box className="schedule-table-container">
+            <table className="table">
+               <thead>
+                  <tr>
+                     <th className="header-specialist">СПЕЦИАЛИСТЫ</th>
+                     {generateDateRange().map(
+                        ({ dayOfWeek, date, monthText }) => (
+                           <th
+                              className="header-dates th"
+                              key={(monthText, date)}
+                           >
+                              {dayOfWeek}
+                              <Box component="br" />
+                              {date} {monthText}
+                           </th>
+                        )
+                     )}
                   </tr>
-               ))}
-            </tbody>
-         </table>
+               </thead>
+
+               {isLoading && <Loading />}
+
+               <tbody>
+                  {schedules.map(({ image, surname, position, dates, id }) => (
+                     <Box component="tr" key={id}>
+                        <Box component="td" className="specialist">
+                           <img src={image} alt="imag" className="image" />
+
+                           <Typography className="surname">
+                              {surname}
+                           </Typography>
+
+                           <Typography className="position">
+                              {position}
+                           </Typography>
+                        </Box>
+
+                        {generateDateRange().map(
+                           ({ dayOfWeek, date, monthNumber, year }) => {
+                              const currentDate = `${year}-${monthNumber}-${date}`
+                              return (
+                                 <Box
+                                    component="td"
+                                    key={`${id}-${dayOfWeek}-${date}-${monthNumber}`}
+                                    className="td"
+                                    onClick={() =>
+                                       handleTdClick(id, currentDate)
+                                    }
+                                 >
+                                    <Box
+                                       className={`${
+                                          isLastClicked(id, currentDate)
+                                             ? 'highlighted'
+                                             : 'unHighlighted'
+                                       }`}
+                                    >
+                                       <Box className="free-time-container">
+                                          {dates.map(
+                                             ({
+                                                dateOfConsultation,
+                                                startTimeOfConsultation,
+                                             }) => {
+                                                const [cYear, cMonth, cDay] =
+                                                   dateOfConsultation.split('-')
+                                                if (
+                                                   parseInt(year, 10) ===
+                                                      parseInt(cYear, 10) &&
+                                                   parseInt(monthNumber, 10) ===
+                                                      parseInt(cMonth, 10) &&
+                                                   parseInt(date, 10) ===
+                                                      parseInt(cDay, 10)
+                                                ) {
+                                                   return generateFreeTimes(
+                                                      startTimeOfConsultation
+                                                   )
+                                                }
+
+                                                return null
+                                             }
+                                          )}
+                                       </Box>
+                                    </Box>
+                                 </Box>
+                              )
+                           }
+                        )}
+                     </Box>
+                  ))}
+               </tbody>
+            </table>
+         </Box>
       </StyledContainer>
    )
 }
-
 export default TableSchedule
 
 const StyledContainer = styled(Box)(() => ({
@@ -154,15 +377,15 @@ const StyledContainer = styled(Box)(() => ({
       },
    },
 
+   '& .schedule-table-container': {
+      overflowX: 'scroll',
+   },
+
    '& .table': {
       border: '2px solid #D9D9D9',
       borderCollapse: 'collapse',
-      // maxWidth: '86.188rem',
-      // width: '1379px',
-
-      maxWidth: '100%',
-      width: '100%',
-      overflowX: 'auto',
+      maxWidth: '86.188rem',
+      width: '1379px',
 
       '& .header-specialist': {
          display: 'flex',
@@ -227,16 +450,11 @@ const StyledContainer = styled(Box)(() => ({
 
       '& .td': {
          border: '2px solid #D9D9D9',
-         width: '6.625rem',
-         padding: '6px',
+         minWidth: '6.625rem',
 
          '& .free-time-container': {
-            padding: '6px',
             borderLeft: '3px solid #1F6ED4',
             backgroundColor: '#DBEBFF',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
 
             '& .free-time': {
                color: '#1F6ED4',
@@ -244,8 +462,24 @@ const StyledContainer = styled(Box)(() => ({
                fontStyle: 'italic',
                fontSize: '12px',
                width: '100%',
+               marginLeft: '6px',
             },
          },
+      },
+
+      '& .highlighted': {
+         transition: '0.2s',
+         width: '100%',
+         height: '9.875rem',
+         padding: '6px',
+         boxShadow: '0px 0px 5px 1px',
+      },
+
+      '& .unHighlighted': {
+         height: '9.875rem',
+         transition: '0.2s',
+         width: '100%',
+         padding: '6px',
       },
    },
 }))

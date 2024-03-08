@@ -1,6 +1,5 @@
 import { Typography, styled } from '@mui/material'
 import { toast } from 'react-toastify'
-import { CloseIcon } from '../../assets/icons'
 
 export const showToast = ({
    message = 'Success',
