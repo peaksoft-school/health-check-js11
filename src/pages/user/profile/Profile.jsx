@@ -15,6 +15,11 @@ const Profile = () => {
    const { accessToken } = useSelector((state) => state.auth)
    const { userData } = useSelector((state) => state.profile)
 
+   const data = {
+      ...userData,
+      numberPhone: userData.number,
+   }
+
    const dispatch = useDispatch()
 
    useEffect(() => {
@@ -25,17 +30,16 @@ const Profile = () => {
       dispatch(ACTION_PROFILE.updateUserProfile(values))
    }
 
-   const { values, handleChange, handleSubmit, dirty } = useFormik({
-      initialValues: {
-         firstName: userData?.firstName,
-         lastName: userData?.lastName,
-         email: userData?.email,
-         numberPhone: userData?.number,
-      },
+   const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
+      initialValues: data,
 
       validateOnChange: false,
       onSubmit,
    })
+
+   useEffect(() => {
+      setValues((prevState) => ({ ...prevState, ...data }))
+   }, [data])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
@@ -98,8 +102,8 @@ const Profile = () => {
 
                               <Typography className="label">Телефон</Typography>
                               <NumberInput
+                                 style={{ color: 'black' }}
                                  variant="secondary"
-                                 className="input"
                                  onChange={handleChange('numberPhone')}
                                  value={values.numberPhone}
                                  mask="_"
@@ -111,6 +115,7 @@ const Profile = () => {
                                  <Button variant="grey" className="back-button">
                                     НАЗАД
                                  </Button>
+
                                  <Button
                                     className="confirm-button"
                                     type="submit"
@@ -150,7 +155,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          display: 'flex',
          justifyContent: 'space-between',
 
-         '& .title': {
+         '& > .title': {
             fontSize: '1.375rem',
             fontWeight: '400',
             lineHeight: 'normal',
@@ -231,7 +236,7 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledButtonContainer = styled(Box)(({ theme }) => ({
+const StyledButtonContainer = styled(Box)(() => ({
    display: 'flex',
    marginTop: '1.5rem',
    height: '39px',
