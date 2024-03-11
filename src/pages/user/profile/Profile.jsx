@@ -3,11 +3,12 @@ import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
 import { styled, Box, Typography, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
+import { NavLink } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
 import ChangeUserPassword from './ChangeUserPassword'
-import { ACTION_PROFILE } from '../../../store/slices/profie/profileThunk'
+import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
@@ -23,11 +24,11 @@ const Profile = () => {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(ACTION_PROFILE.getUserProfile(accessToken))
+      dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
    }, [accessToken])
 
    const onSubmit = (values) => {
-      dispatch(ACTION_PROFILE.updateUserProfile(values))
+      dispatch(PROFILE_THUNKS.updateUserProfile(values))
    }
 
    const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
@@ -48,7 +49,7 @@ const Profile = () => {
    return (
       <StyledContainer>
          <Box className="box">
-            <Box className="button-container">
+            <Box className="title-container">
                <Typography className="title">Профиль</Typography>
             </Box>
 
@@ -78,6 +79,7 @@ const Profile = () => {
                         <Box className="table-container">
                            <div className="first-box">
                               <Typography className="label">Имя</Typography>
+
                               <StyledInput
                                  className="input"
                                  value={values.firstName}
@@ -85,6 +87,7 @@ const Profile = () => {
                               />
 
                               <Typography className="label">Email</Typography>
+
                               <StyledInput
                                  className="input"
                                  onChange={handleChange('email')}
@@ -94,6 +97,7 @@ const Profile = () => {
 
                            <div className="first-box">
                               <Typography className="label">Фамилия</Typography>
+
                               <StyledInput
                                  onChange={handleChange('lastName')}
                                  className="input"
@@ -101,6 +105,7 @@ const Profile = () => {
                               />
 
                               <Typography className="label">Телефон</Typography>
+
                               <NumberInput
                                  style={{ color: 'black' }}
                                  variant="secondary"
@@ -112,9 +117,14 @@ const Profile = () => {
                               />
 
                               <StyledButtonContainer>
-                                 <Button variant="grey" className="back-button">
-                                    НАЗАД
-                                 </Button>
+                                 <NavLink to="/">
+                                    <Button
+                                       variant="grey"
+                                       className="back-button"
+                                    >
+                                       НАЗАД
+                                    </Button>
+                                 </NavLink>
 
                                  <Button
                                     className="confirm-button"
@@ -151,7 +161,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       margin: '0 auto',
       paddingBottom: '30px',
 
-      '& .button-container': {
+      '& .title-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
@@ -236,25 +246,21 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledButtonContainer = styled(Box)(() => ({
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    marginTop: '1.5rem',
-   height: '39px',
    gap: '1rem',
 
    '& .back-button': {
-      border: '1px solid',
-      width: '100%',
-      color: '#048741  !important',
-
-      '&:hover': {
-         maxHeight: '39px important',
-         border: 'none',
-         color: `#048741 !important`,
-      },
+      border: `1px solid #048741`,
+      color: `#048741!important`,
+      width: '201px',
+      height: '39px',
    },
 
    '& .confirm-button': {
-      width: '100%',
+      borderRadius: '8px',
+      width: '201px',
+      height: '39px',
    },
 }))

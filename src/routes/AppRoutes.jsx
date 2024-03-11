@@ -4,7 +4,6 @@ import AdminLayout from '../layout/admin/AdminLayout'
 import UserLayout from '../layout/user/UserLayout'
 import ProtectedRoute from './ProtectedRoute'
 import NotFound from '../pages/not-found/NotFound'
-import Home from '../pages/home/Home'
 
 const AppRoutes = () => {
    const router = createBrowserRouter([
@@ -15,18 +14,6 @@ const AppRoutes = () => {
                roles={[ROLES.USER, ROLES.GUEST]}
                fallBackPath="/admin"
                Component={<UserLayout />}
-            />
-         ),
-         children: USER_ROUTES,
-      },
-
-      {
-         path: '/',
-         element: (
-            <ProtectedRoute
-               roles={[ROLES.GUEST]}
-               fallBackPath="/admin"
-               Component={<Home />}
             />
          ),
          children: USER_ROUTES,

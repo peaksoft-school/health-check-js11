@@ -87,7 +87,7 @@ const changeUserPassword = createAsyncThunk(
    }
 )
 
-export const ACTION_PROFILE = {
+export const PROFILE_THUNKS = {
    getUserProfile,
    updateUserProfile,
    changeUserPassword,

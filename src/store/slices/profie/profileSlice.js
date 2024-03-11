@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ACTION_PROFILE } from './profileThunk'
+import { PROFILE_THUNKS } from './profileThunk'
 
 const initialState = {
    isLoading: false,
@@ -14,31 +14,31 @@ export const profileSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(
-            ACTION_PROFILE.getUserProfile.fulfilled,
+            PROFILE_THUNKS.getUserProfile.fulfilled,
             (state, { payload }) => {
                state.userData = payload
             }
          )
-         .addCase(ACTION_PROFILE.getUserProfile.pending, (state) => {
+         .addCase(PROFILE_THUNKS.getUserProfile.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(ACTION_PROFILE.getUserProfile.rejected, (state) => {
+         .addCase(PROFILE_THUNKS.getUserProfile.rejected, (state) => {
             state.isLoading = false
          })
 
          .addCase(
-            ACTION_PROFILE.updateUserProfile.fulfilled,
+            PROFILE_THUNKS.updateUserProfile.fulfilled,
             (state, { payload }) => {
                state.userData = payload
             }
          )
 
-         .addCase(ACTION_PROFILE.updateUserProfile.pending, (state) => {
+         .addCase(PROFILE_THUNKS.updateUserProfile.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(ACTION_PROFILE.updateUserProfile.rejected, (state) => {
+         .addCase(PROFILE_THUNKS.updateUserProfile.rejected, (state) => {
             state.isLoading = false
          })
    },

@@ -1,48 +1,70 @@
 import { useState } from 'react'
-import { styled, Box, Typography } from '@mui/material'
+import {
+   styled,
+   Box,
+   Typography,
+   IconButton,
+   InputAdornment,
+} from '@mui/material'
+import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { forgotPassword } from '../../../store/slices/auth/authThunk'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
+import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
+import { showToast } from '../../../utils/helpers/notification'
+import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 
 const ChangeUserPassword = () => {
-   const [email, setEmail] = useState('')
-   const [emailError, setEmailError] = useState(false)
+   const [showOldPassword, setShowOldPassword] = useState(false)
+   const [showNewPassword, setShowNewPassword] = useState(false)
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
    const dispatch = useDispatch()
 
-   const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
+   const onSubmit = (values, { resetForm }) => {
+      const { email, oldPassword, newPassword, resetNewPassword } = values.email
 
-   const validaionEmail = (email) => {
-      if (!emailRegex.test(email)) {
-         return 'Неверный адрес электронной почты'
+      const paswords = {
+         oldPassword,
+         newPassword,
+         resetNewPassword,
       }
 
-      return ''
-   }
-
-   const handleSubmit = (e) => {
-      e.preventDefault()
-
-      const error = validaionEmail(email)
-
-      if (!error) {
-         dispatch(
-            forgotPassword({
-               email,
-               link: 'http://localhost:3000/change-password',
-               setEmail,
-               onClose: () => '',
-            })
-         )
+      if (!oldPassword || !newPassword || !resetNewPassword) {
+         showToast({
+            status: 'error',
+            message: 'Заполните все поля!',
+         })
       } else {
-         setEmailError(true)
+         dispatch(PROFILE_THUNKS.changeUserPassword({ paswords, resetForm }))
       }
+
+      dispatch(
+         forgotPassword({
+            email,
+            link: 'http://localhost:3000/change-password',
+            setEmail: () => '',
+            onClose: () => '',
+         })
+      )
    }
 
-   const handleChange = (e) => {
-      setEmail(e.target.value)
-      setEmailError(false)
-   }
+   const { values, handleChange, handleSubmit } = useFormik({
+      initialValues: {
+         email: '',
+         oldPassword: '',
+         newPassword: '',
+         resetNewPassword: '',
+      },
+      validateOnChange: false,
+      onSubmit,
+   })
+
+   const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
+   const showNewPasswordHandle = () => setShowNewPassword((prev) => !prev)
+   const showConfirmPasswordHandle = () =>
+      setShowConfirmPassword((prev) => !prev)
 
    return (
       <Box>
@@ -53,17 +75,93 @@ const ChangeUserPassword = () => {
                <Typography className="old-password">Введите email </Typography>
 
                <StyledInput
-                  value={email}
-                  onChange={handleChange}
+                  value={values.email}
+                  onChange={handleChange('email')}
                   type="email"
                   placeholder="Email"
-                  error={emailError}
+               />
+
+               <Typography className="confirm-password">
+                  Старый пароль
+               </Typography>
+
+               <StyledInput
+                  value={values.oldPassword}
+                  name="password"
+                  onChange={handleChange('oldPassword')}
+                  placeholder="Введите пароль"
+                  type={showOldPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={showOldPasswordHandle}>
+                              {showOldPassword ? (
+                                 <OpenEyeIcon />
+                              ) : (
+                                 <CloseEyeIcon />
+                              )}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+
+               <Typography className="confirm-password">
+                  Hовый пароль
+               </Typography>
+
+               <StyledInput
+                  value={values.newPassword}
+                  name="password"
+                  onChange={handleChange('newPassword')}
+                  placeholder="Введите пароль"
+                  type={showNewPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={showNewPasswordHandle}>
+                              {showNewPassword ? (
+                                 <OpenEyeIcon />
+                              ) : (
+                                 <CloseEyeIcon />
+                              )}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+
+               <Typography className="confirm-password">
+                  Подтвердите новый пароль
+               </Typography>
+
+               <StyledInput
+                  value={values.resetNewPassword}
+                  name="password"
+                  onChange={handleChange('resetNewPassword')}
+                  placeholder="Введите пароль"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={showConfirmPasswordHandle}>
+                              {showConfirmPassword ? (
+                                 <OpenEyeIcon />
+                              ) : (
+                                 <CloseEyeIcon />
+                              )}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
                />
 
                <StyledButtonContainer>
-                  <Button className="back-button" variant="grey">
-                     НАЗАД
-                  </Button>
+                  <NavLink to="/">
+                     <Button className="back-button" variant="grey">
+                        НАЗАД
+                     </Button>
+                  </NavLink>
 
                   <Button className="confirm-button" type="submit">
                      ПОДТВЕРДИТЬ
@@ -125,6 +223,7 @@ const StyledButtonContainer = styled(Box)(({ theme }) => ({
       width: '201px',
       height: '39px',
    },
+
    '& .confirm-button': {
       borderRadius: '8px',
       width: '201px',
