@@ -79,9 +79,7 @@ const ChangeUserPassword = () => {
                <Box className="change-password-box">
                   <h3 className="change-password">Смена пароля</h3>
 
-                  <Typography className="confirm-password">
-                     Старый пароль
-                  </Typography>
+                  <Typography className="label">Старый пароль</Typography>
 
                   <StyledInput
                      value={values.oldPassword}
@@ -104,9 +102,7 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="confirm-password">
-                     Hовый пароль
-                  </Typography>
+                  <Typography className="label">Hовый пароль</Typography>
 
                   <StyledInput
                      value={values.newPassword}
@@ -129,7 +125,7 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="confirm-password">
+                  <Typography className="label">
                      Подтвердите новый пароль
                   </Typography>
 
@@ -170,9 +166,7 @@ const ChangeUserPassword = () => {
                <Box className="reset-password-box">
                   <h3 className="change-password">Cброс пароля</h3>
 
-                  <Typography className="old-password">
-                     Введите email
-                  </Typography>
+                  <Typography className="label">Введите email</Typography>
 
                   <StyledInput
                      value={values.email}
@@ -193,7 +187,7 @@ const ChangeUserPassword = () => {
 
 export default ChangeUserPassword
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    '& .box': {
       display: 'flex',
       gap: '60px',
@@ -214,6 +208,12 @@ const StyledContainer = styled(Box)(() => ({
          display: 'flex',
          flexDirection: 'column',
       },
+
+      '& .label': {
+         marginTop: '1rem',
+         color: theme.palette.primary.lightBlack,
+         marginBottom: '0.3rem',
+      },
    },
 
    '& .change-password': {
@@ -225,11 +225,6 @@ const StyledContainer = styled(Box)(() => ({
    },
 
    '& .old-password': {
-      marginTop: '1rem',
-      marginBottom: '0.3rem',
-   },
-
-   '& .confirm-password': {
       marginTop: '1rem',
       marginBottom: '0.3rem',
    },
@@ -254,8 +249,8 @@ const StyledButtonContainer = styled(Box)(({ theme }) => ({
    gap: '1rem',
 
    '& .back-button': {
-      border: `1px solid #048741`,
-      color: `#048741!important`,
+      border: '1px solid #048741',
+      color: '#048741!important',
       width: '201px',
       height: '39px',
    },

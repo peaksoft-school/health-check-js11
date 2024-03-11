@@ -88,7 +88,7 @@ const Profile = () => {
                                  onChange={handleChange('firstName')}
                               />
 
-                              <Typography className="label">Email</Typography>
+                              <Typography className="label">E-mail</Typography>
 
                               <StyledInput
                                  className="input"
@@ -118,9 +118,14 @@ const Profile = () => {
                               />
 
                               <StyledButtonContainer>
-                                 <Button variant="grey" className="back-button">
-                                    <StyledNavLink to="/">НАЗАД</StyledNavLink>
-                                 </Button>
+                                 <NavLink to="/">
+                                    <Button
+                                       variant="grey"
+                                       className="back-button"
+                                    >
+                                       НАЗАД
+                                    </Button>
+                                 </NavLink>
 
                                  <Button
                                     className="confirm-button"
@@ -153,7 +158,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .box': {
       display: 'flex',
       flexDirection: 'column',
-      // maxWidth: '1600px',
       margin: '0 auto',
       paddingBottom: '1.875rem',
 
@@ -190,6 +194,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                height: '1.125rem',
             },
          },
+      },
+
+      '& .label': {
+         fontFamily: 'Manrope',
+         fontSize: '14px',
+         color: theme.palette.secondary.lightGrey,
       },
 
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
@@ -229,6 +239,8 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 }))
 
 const StyledInput = styled(Input)(() => ({
+   marginBottom: '1.5rem',
+
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
       color: 'black',
@@ -259,9 +271,4 @@ const StyledButtonContainer = styled(Box)(() => ({
       width: '12.563rem',
       height: '2.438rem',
    },
-}))
-
-const StyledNavLink = styled(NavLink)(() => ({
-   textDecoration: 'none',
-   color: '#048741',
 }))
