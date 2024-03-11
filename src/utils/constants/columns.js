@@ -10,6 +10,13 @@ import SelectAll from '../../components/UI/admin/SelectAll'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
+import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import {
+   handleIsChecked,
+   handleIsCheckedItem,
+   handleRemoveChecked,
+} from '../../store/slices/application/aplicationSlice'
+import { splitPhoneNumber } from '../helpers/splitNumbers'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -95,6 +102,11 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+      },
+
+      Cell: ({ row }) => {
+         const { phoneNumber } = row.original
+         return <Box>{splitPhoneNumber(phoneNumber)}</Box>
       },
    },
 
@@ -273,6 +285,11 @@ const PATIENTS_COLUMN = [
          color: 'black',
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => {
+         const { phoneNumber } = row.original
+         return <Box>{splitPhoneNumber(phoneNumber)}</Box>
+      },
    },
 
    {
@@ -376,7 +393,7 @@ const COLUMNS = [
 
 const APPLICATIONS_COLUMN = [
    {
-      Header: <SelectAll />,
+      Header: <SelectAll variant="applications" selectFn={handleIsChecked} />,
       accessor: 'checkbox',
 
       style: {
@@ -384,11 +401,23 @@ const APPLICATIONS_COLUMN = [
          flex: 0.06,
       },
 
-      Cell: ({ row }) => <SelectSeparately {...row.original} />,
+      Cell: ({ row }) => (
+         <SelectSeparately
+            {...row.original}
+            selectFn={handleIsCheckedItem}
+            variant="applications"
+         />
+      ),
    },
 
    {
-      Header: <DeleteSelected />,
+      Header: (
+         <DeleteSelected
+            deleteFn={APPLICATION_THUNK.deleteAllApplication}
+            clearFn={handleRemoveChecked}
+            variant="applications"
+         />
+      ),
       accessor: 'action',
 
       style: {
@@ -458,6 +487,11 @@ const APPLICATIONS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => {
+         const { number } = row.original
+         return <Box>{splitPhoneNumber(number)}</Box>
+      },
    },
    {
       Header: 'Обработан',
@@ -476,6 +510,8 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => (
          <ProcessedCheckbox
+            variant="applications"
+            updateFn={APPLICATION_THUNK.updateApplication}
             checked={row.original.processed}
             id={row.original.id}
          />
@@ -499,6 +535,7 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => (
          <Delete
+            deleteFn={APPLICATION_THUNK.deleteApplication}
             id={row.original.id}
             name={row.original.name}
             disabled={row.original.processed}

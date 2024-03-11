@@ -21,6 +21,8 @@ const ProcessedCheckbox = ({ checked, variant, id, updateFn }) => {
                   setIsChecked,
                })
             )
+         } else if (variant === 'applications') {
+            dispatch(updateFn({ id, isActive: !isChecked }))
          }
       } catch (error) {
          console.error('Error updating status:', error)

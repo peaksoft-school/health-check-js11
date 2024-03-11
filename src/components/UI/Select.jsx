@@ -1,6 +1,12 @@
-import React, { forwardRef, useState } from 'react'
-import MenuItem from '@mui/material/MenuItem'
-import { FormControl, Select as UISelect, styled } from '@mui/material'
+import { forwardRef, useState } from 'react'
+import {
+   FormControl,
+   Select as MuiSelect,
+   Typography,
+   styled,
+   Box,
+   MenuItem,
+} from '@mui/material'
 import Selector from 'react-select'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
@@ -55,19 +61,17 @@ const Select = forwardRef(
       ref
    ) => {
       const [selectVal, setSelectVal] = useState('')
-      const [selectOpen, setSelectOpen] = useState(false)
+      const [isVisible, setIsVisible] = useState(false)
 
-      const handleChange = (e) => {
+      const changeHandler = (e) => {
          onChange(e.target.value)
          setSelectVal(e.target.value)
       }
 
-      const openSelectHandler = () => {
-         setSelectOpen((prev) => !prev)
-      }
+      const toggleSelectHandler = () => setIsVisible((prev) => !prev)
 
       return (
-         <div>
+         <Box>
             {variant === 'schedule' ? (
                <Selector
                   options={options}
@@ -80,32 +84,34 @@ const Select = forwardRef(
                   {...rest}
                />
             ) : (
-               <StyledFormControl fullWidth isopen={selectOpen.toString()}>
-                  <Icon>{icon}</Icon>
-                  <SelectMui
-                     open={selectOpen}
+               <StyledFormControl fullWidth isopen={isVisible.toString()}>
+                  <Icon variant="span">{icon}</Icon>
+
+                  <StyledMuiSelect
+                     open={isVisible}
                      value={selectVal}
-                     onChange={handleChange}
+                     onChange={changeHandler}
                      IconComponent={KeyboardArrowDownIcon}
                      inputProps={{ 'aria-label': 'Without label' }}
                      MenuProps={menuProps}
                      displayEmpty
                      ref={ref}
                      error={error}
-                     onClick={openSelectHandler}
+                     onClick={toggleSelectHandler}
                      {...rest}
                   >
                      <StyledLabel value="">{placeholder}</StyledLabel>
+
                      {options &&
-                        options.map((item) => (
-                           <MenuItemStyle key={item.id} value={item.label}>
-                              {item.label}
+                        options.map(({ id, label }) => (
+                           <MenuItemStyle key={id} value={label}>
+                              {label}
                            </MenuItemStyle>
                         ))}
-                  </SelectMui>
+                  </StyledMuiSelect>
                </StyledFormControl>
             )}
-         </div>
+         </Box>
       )
    }
 )
@@ -122,9 +128,12 @@ const StyledLabel = styled(FormControl)(() => ({
    display: 'none',
 }))
 
-const SelectMui = styled(UISelect)(({ error }) => ({
+const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    maxWidth: '100%',
-   border: error ? `1px solid #d32f2f` : '1px solid #D9D9D9',
+   border: error
+      ? `1px solid #d32f2f`
+      : `1px solid  ${theme.palette.secondary.main}`,
+
    borderRadius: '10px',
    fontFamily: 'Manrope',
    fontWeight: 400,
@@ -134,40 +143,44 @@ const SelectMui = styled(UISelect)(({ error }) => ({
 
    '&:hover': {
       '& fieldset': {
-         border: '1px solid #959595',
+         border: `1px solid ${theme.palette.secondary.lightGrey}`,
          color: '#4D4E51',
       },
    },
+
    '&:active': {
       '& fieldset': {
          border: '1px solid rgba(4, 135, 65, 0.8)',
          color: '#4D4E51',
       },
    },
+
    '&:disabled': {
       '& fieldset': {
-         border: '1px solid #959595',
+         border: `1px solid ${theme.palette.secondary.lightGrey}`,
          color: '#4D4E51',
       },
    },
 }))
 
-const Icon = styled('span')(() => ({
+const Icon = styled(Typography)(() => ({
    position: 'absolute',
    top: 25,
    left: 15,
-   zIndex: '10',
+   zIndex: '100',
 }))
 
 const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
-   color: '#222222',
+   color: theme.palette.primary.lightBlack,
    fontFamily: 'Manrope',
    height: '3rem',
    marginLeft: '0.6rem',
+
    '&:hover': {
-      background: '#DBF0E5',
+      background: theme.palette.tertiary.main,
    },
+
    '&:active': {
-      background: '#DBF0E5',
+      background: theme.palette.tertiary.main,
    },
 }))

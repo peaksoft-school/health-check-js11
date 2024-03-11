@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { StrictMode } from 'react'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import ruLocale from 'date-fns/locale/ru'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import Notification from './components/Notification'
 import Themes from './components/Themes'
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
    <StrictMode>
-      <LocalizationProvider adapterLocale="ru" dateAdapter={AdapterDayjs}>
+      <LocalizationProvider locale={ruLocale} dateAdapter={AdapterDayjs}>
          <PersistGate loading="loading.." persistor={persistor}>
             <Provider store={store}>
                <Themes>

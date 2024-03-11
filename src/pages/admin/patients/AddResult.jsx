@@ -110,6 +110,7 @@ const AddResult = ({ open, onClose }) => {
                         onChange={(date) => setFieldValue('date', date)}
                         value={values.date}
                         variant="custom"
+                        format="DD/MM/YYYY"
                         minDate={dateToday}
                      />
                   </div>
@@ -187,7 +188,7 @@ const Container = styled(Box)(({ theme }) => ({
    '& .insert-file': {
       cursor: 'pointer',
       width: ' 6.5rem',
-      height: ' 14.5vh',
+      height: '6rem',
       borderRadius: '8px',
       padding: '35px',
       backgroundColor: '#e0e2e7',

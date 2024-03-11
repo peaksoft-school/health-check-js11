@@ -10,23 +10,21 @@ export const applicationSlice = createSlice({
       status: 'idle',
       error: null,
       selectAllApplications: [],
-      selectAll: false,
+      selectAllApp: false,
    },
 
    reducers: {
       handleIsChecked: (state, action) => {
-         state.selectAll = !state.selectAll
+         state.selectAllApp = !state.selectAllApp
 
          state.items = state.items.map((item) => ({
             ...item,
-            isSelected: state.selectAll,
+            isSelected: state.selectAllApp,
          }))
 
          state.selectAllApplications = state.items
             .filter((item) => item.isSelected)
             .map((item) => item.id)
-
-         console.log(state.selectAllApplications, 'dsf')
       },
 
       handleIsCheckedItem: (state, { payload }) => {
@@ -45,9 +43,9 @@ export const applicationSlice = createSlice({
             .map((item) => item.id)
 
          if (state.selectAllApplications.length === state.items.length) {
-            state.selectAll = true
+            state.selectAllApp = true
          } else {
-            state.selectAll = false
+            state.selectAllApp = false
          }
 
          localStorage.setItem(

@@ -9,10 +9,16 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
    const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
    const [toggleModal, setToggleModal] = useState(false)
 
+   const { selectAllApplications } = useSelector((store) => store.applications)
+
    const getIds = () => {
       if (variant === 'appointments') {
          return deletedAppointmentsIds
       }
+      if (variant === 'applications') {
+         return selectAllApplications
+      }
+
       return []
    }
 
@@ -22,6 +28,13 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
 
    const handleDelete = () => {
       try {
+         if (variant === 'application') {
+            if (selectAllApplications.length) {
+               dispatch(deleteFn(selectAllApplications))
+
+               dispatch(clearFn())
+            }
+         }
          dispatch(deleteFn(getIds()))
 
          dispatch(clearFn())
@@ -31,6 +44,8 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
          toggleHandleModal()
       }
    }
+
+   const deleteAllFunction = () => {}
 
    return (
       <>

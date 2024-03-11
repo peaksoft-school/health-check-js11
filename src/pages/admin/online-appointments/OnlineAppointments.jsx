@@ -161,6 +161,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                padding: '0.625rem',
                height: '1.125rem',
             },
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '4px',
+            },
          },
       },
 

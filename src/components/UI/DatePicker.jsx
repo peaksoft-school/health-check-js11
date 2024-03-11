@@ -8,7 +8,7 @@ const DatePicker = ({
    label,
    onChange,
    onBlur,
-   format,
+   format = 'YYYY/MM/DD',
    maxDate,
    minDate,
    variant,
@@ -29,7 +29,7 @@ const DatePicker = ({
          maxDate={maxDate}
          minDate={minDate}
          error={error}
-         format="YYYY/MM/DD"
+         format={format}
          renderDay={(day, _value, DayComponentProps) => (
             <DayComponentProps
                onFocus={DayComponentProps.onDayFocus}

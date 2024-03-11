@@ -33,7 +33,8 @@ const PatientsInnerPage = () => {
                </Typography>
 
                <Button className="button" onClick={toggleModalHandler}>
-                  <PlusIcon className="plus-icon" /> Добавить Результат
+                  <PlusIcon className="plus-icon" />
+                  Добавить Результат
                </Button>
             </Box>
             <AddResult open={toggleModal} onClose={toggleModalHandler} />
@@ -256,11 +257,17 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          display: 'flex',
          justifyContent: 'space-between',
 
-         '& > .button': {
+         '& .button': {
             padding: '0',
             fontSize: '13px',
             height: '40px',
             width: '232px',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '4px',
+            },
          },
       },
    },

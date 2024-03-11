@@ -14,6 +14,7 @@ const Table = ({ columns: headers, data, empty }) => {
    if (!data || data.length === 0) {
       return <StyledAbsence>{empty}</StyledAbsence>
    }
+
    const columns = useMemo(() => headers, [])
 
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
