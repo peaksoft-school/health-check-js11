@@ -11,14 +11,15 @@ export const axiosInstance = axios.create({
       'Content-Type': 'application/json',
    },
 })
+
 let storre
+
 export const injectStore = (store) => {
    storre = store
 }
-const signOut = () => {}
 
 axiosInstance.interceptors.request.use(
-   function (config) {
+   (config) => {
       const updatedConfig = { ...config }
 
       const token = storre.getState().auth.accessToken
@@ -36,15 +37,11 @@ axiosInstance.interceptors.request.use(
 )
 
 axiosInstance.interceptors.response.use(
-   function (response) {
+   (response) => {
       return Promise.resolve(response)
    },
 
    (error) => {
-      if (error.response && error.response.status === 401) {
-         signOut()
-      }
-
       return Promise.reject(error)
    }
 )
