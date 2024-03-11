@@ -20,10 +20,11 @@ const ChangeUserPassword = () => {
    const [showOldPassword, setShowOldPassword] = useState(false)
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
    const dispatch = useDispatch()
 
    const onSubmit = (values, { resetForm }) => {
-      const { email, oldPassword, newPassword, resetNewPassword } = values.email
+      const { oldPassword, newPassword, resetNewPassword } = values
 
       const paswords = {
          oldPassword,
@@ -39,15 +40,6 @@ const ChangeUserPassword = () => {
       } else {
          dispatch(PROFILE_THUNKS.changeUserPassword({ paswords, resetForm }))
       }
-
-      dispatch(
-         forgotPassword({
-            email,
-            link: 'http://localhost:3000/change-password',
-            setEmail: () => '',
-            onClose: () => '',
-         })
-      )
    }
 
    const { values, handleChange, handleSubmit } = useFormik({
@@ -61,6 +53,20 @@ const ChangeUserPassword = () => {
       onSubmit,
    })
 
+   const sentEmai = (e) => {
+      e.preventDefault()
+      const { email } = values
+
+      dispatch(
+         forgotPassword({
+            email,
+            link: 'http://localhost:3000/change-password',
+            setEmail: () => '',
+            onClose: () => '',
+         })
+      )
+   }
+
    const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
    const showNewPasswordHandle = () => setShowNewPassword((prev) => !prev)
    const showConfirmPasswordHandle = () =>
@@ -69,105 +75,117 @@ const ChangeUserPassword = () => {
    return (
       <Box>
          <StyledContainer>
-            <h3 className="change-password">Смена пароля</h3>
+            <Box className="box">
+               <Box className="change-password-box">
+                  <h3 className="change-password">Смена пароля</h3>
 
-            <form onSubmit={handleSubmit}>
-               <Typography className="old-password">Введите email </Typography>
+                  <Typography className="confirm-password">
+                     Старый пароль
+                  </Typography>
 
-               <StyledInput
-                  value={values.email}
-                  onChange={handleChange('email')}
-                  type="email"
-                  placeholder="Email"
-               />
+                  <StyledInput
+                     value={values.oldPassword}
+                     name="password"
+                     onChange={handleChange('oldPassword')}
+                     placeholder="Введите пароль"
+                     type={showOldPassword ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton onClick={showOldPasswordHandle}>
+                                 {showOldPassword ? (
+                                    <OpenEyeIcon />
+                                 ) : (
+                                    <CloseEyeIcon />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
 
-               <Typography className="confirm-password">
-                  Старый пароль
-               </Typography>
+                  <Typography className="confirm-password">
+                     Hовый пароль
+                  </Typography>
 
-               <StyledInput
-                  value={values.oldPassword}
-                  name="password"
-                  onChange={handleChange('oldPassword')}
-                  placeholder="Введите пароль"
-                  type={showOldPassword ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton onClick={showOldPasswordHandle}>
-                              {showOldPassword ? (
-                                 <OpenEyeIcon />
-                              ) : (
-                                 <CloseEyeIcon />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
+                  <StyledInput
+                     value={values.newPassword}
+                     name="password"
+                     onChange={handleChange('newPassword')}
+                     placeholder="Введите пароль"
+                     type={showNewPassword ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton onClick={showNewPasswordHandle}>
+                                 {showNewPassword ? (
+                                    <OpenEyeIcon />
+                                 ) : (
+                                    <CloseEyeIcon />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
 
-               <Typography className="confirm-password">
-                  Hовый пароль
-               </Typography>
+                  <Typography className="confirm-password">
+                     Подтвердите новый пароль
+                  </Typography>
 
-               <StyledInput
-                  value={values.newPassword}
-                  name="password"
-                  onChange={handleChange('newPassword')}
-                  placeholder="Введите пароль"
-                  type={showNewPassword ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton onClick={showNewPasswordHandle}>
-                              {showNewPassword ? (
-                                 <OpenEyeIcon />
-                              ) : (
-                                 <CloseEyeIcon />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
+                  <StyledInput
+                     value={values.resetNewPassword}
+                     name="password"
+                     onChange={handleChange('resetNewPassword')}
+                     placeholder="Введите пароль"
+                     type={showConfirmPassword ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton onClick={showConfirmPasswordHandle}>
+                                 {showConfirmPassword ? (
+                                    <OpenEyeIcon />
+                                 ) : (
+                                    <CloseEyeIcon />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
 
-               <Typography className="confirm-password">
-                  Подтвердите новый пароль
-               </Typography>
+                  <StyledButtonContainer>
+                     <NavLink to="/">
+                        <Button className="back-button" variant="grey">
+                           НАЗАД
+                        </Button>
+                     </NavLink>
 
-               <StyledInput
-                  value={values.resetNewPassword}
-                  name="password"
-                  onChange={handleChange('resetNewPassword')}
-                  placeholder="Введите пароль"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton onClick={showConfirmPasswordHandle}>
-                              {showConfirmPassword ? (
-                                 <OpenEyeIcon />
-                              ) : (
-                                 <CloseEyeIcon />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
-
-               <StyledButtonContainer>
-                  <NavLink to="/">
-                     <Button className="back-button" variant="grey">
-                        НАЗАД
+                     <Button className="confirm-button" onClick={handleSubmit}>
+                        ПОДТВЕРДИТЬ
                      </Button>
-                  </NavLink>
+                  </StyledButtonContainer>
+               </Box>
 
-                  <Button className="confirm-button" type="submit">
-                     ПОДТВЕРДИТЬ
+               <Box className="reset-password-box">
+                  <h3 className="change-password">Cброс пароля</h3>
+
+                  <Typography className="old-password">
+                     Введите email
+                  </Typography>
+
+                  <StyledInput
+                     value={values.email}
+                     onChange={handleChange('email')}
+                     type="email"
+                     placeholder="Email"
+                  />
+
+                  <Button className="email-button" onClick={sentEmai}>
+                     ОТПРАВИТЬ
                   </Button>
-               </StyledButtonContainer>
-            </form>
+               </Box>
+            </Box>
          </StyledContainer>
       </Box>
    )
@@ -176,6 +194,28 @@ const ChangeUserPassword = () => {
 export default ChangeUserPassword
 
 const StyledContainer = styled(Box)(() => ({
+   '& .box': {
+      display: 'flex',
+      gap: '60px',
+      alineItems: 'center',
+
+      '& > .reset-password-box': {
+         display: 'flex',
+         flexDirection: 'column',
+
+         '& > .email-button': {
+            borderRadius: '8px',
+            marginTop: '15px',
+            height: '39px',
+         },
+      },
+
+      '& > .change-password-box': {
+         display: 'flex',
+         flexDirection: 'column',
+      },
+   },
+
    '& .change-password': {
       color: 'black',
       marginTop: '0.5rem',
@@ -183,12 +223,8 @@ const StyledContainer = styled(Box)(() => ({
       fontWeight: '600',
       fontStyle: '18px',
    },
-   '& .old-password': {
-      marginTop: '2rem',
-      marginBottom: '0.3rem',
-   },
 
-   '& .new-password': {
+   '& .old-password': {
       marginTop: '1rem',
       marginBottom: '0.3rem',
    },

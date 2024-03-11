@@ -55,11 +55,11 @@ const updateUserProfile = createAsyncThunk(
 const changeUserPassword = createAsyncThunk(
    'profile/changePassword',
 
-   async ({ values, resetForm }, { rejectWithValue }) => {
+   async ({ paswords, resetForm }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
             `/api/user/changeUserPassword`,
-            values
+            paswords
          )
 
          resetForm()

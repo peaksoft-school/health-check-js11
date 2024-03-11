@@ -1,11 +1,17 @@
 import { Typography, styled, Box } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import { AboutClinicImage } from '../../../assets/images'
 import AboutUs from '../../../components/landing/AboutUs'
 
 const AboutClinic = () => {
    return (
       <StyledContainer>
-         <Typography>Главная {'>'} о клинике</Typography>
+         <NavigatePathTitle>
+            <p>
+               <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+               <span>О клинике</span>
+            </p>
+         </NavigatePathTitle>
 
          <Typography className="title" variant="h3">
             Здоровье — самое <span> </span>
@@ -18,7 +24,7 @@ const AboutClinic = () => {
             <img src={AboutClinicImage} alt="clinic-info" />
          </Box>
 
-         <AboutUs />
+         <AboutUs variant="component" />
       </StyledContainer>
    )
 }
@@ -27,16 +33,31 @@ export default AboutClinic
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .title': {
-      marginLeft: '100px',
-      marginTop: '100px',
+      marginLeft: '6.25rem',
+
       '& > .mark': {
          color: theme.palette.primary.darkGreen,
       },
    },
 
    '& .image-box': {
-      padding: '50px 0 0 180px',
+      padding: '3.125rem 0 0 11.25rem',
       display: 'flex',
       justifyContent: 'center',
    },
+}))
+
+const NavigatePathTitle = styled(Box)(() => ({
+   fontSize: '0.875rem',
+   fontWeight: 400,
+   padding: '3.125rem 0 2rem 6.5rem',
+   span: {
+      color: '#048741',
+      cursor: 'pointer',
+   },
+}))
+
+const NavLinkStyle = styled(NavLink)(() => ({
+   textDecoration: 'none',
+   color: '#959595',
 }))

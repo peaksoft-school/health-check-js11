@@ -375,6 +375,7 @@ const StyledButton = styled(Button)(() => ({
    '&:hover': {
       borderRadius: '1.5rem',
    },
+
    '& .modal': {
       display: 'flex',
       flexDirection: 'column',

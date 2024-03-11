@@ -39,8 +39,10 @@ const Profile = () => {
    })
 
    useEffect(() => {
-      setValues((prevState) => ({ ...prevState, ...data }))
-   }, [data])
+      setValues((prevState) => {
+         return { ...prevState, ...data }
+      })
+   }, [])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
@@ -107,8 +109,7 @@ const Profile = () => {
                               <Typography className="label">Телефон</Typography>
 
                               <NumberInput
-                                 style={{ color: 'black' }}
-                                 variant="secondary"
+                                 variant="black"
                                  onChange={handleChange('numberPhone')}
                                  value={values.numberPhone}
                                  mask="_"
@@ -117,14 +118,9 @@ const Profile = () => {
                               />
 
                               <StyledButtonContainer>
-                                 <NavLink to="/">
-                                    <Button
-                                       variant="grey"
-                                       className="back-button"
-                                    >
-                                       НАЗАД
-                                    </Button>
-                                 </NavLink>
+                                 <Button variant="grey" className="back-button">
+                                    <StyledNavLink to="/">НАЗАД</StyledNavLink>
+                                 </Button>
 
                                  <Button
                                     className="confirm-button"
@@ -152,14 +148,14 @@ const Profile = () => {
 export default Profile
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 7.37rem 50px !important',
+   padding: '1.87rem 7.37rem 3.125rem !important',
 
    '& > .box': {
       display: 'flex',
       flexDirection: 'column',
-      maxWidth: '1600px',
+      // maxWidth: '1600px',
       margin: '0 auto',
-      paddingBottom: '30px',
+      paddingBottom: '1.875rem',
 
       '& .title-container': {
          display: 'flex',
@@ -246,7 +242,7 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledButtonContainer = styled(Box)(({ theme }) => ({
+const StyledButtonContainer = styled(Box)(() => ({
    display: 'flex',
    marginTop: '1.5rem',
    gap: '1rem',
@@ -254,13 +250,18 @@ const StyledButtonContainer = styled(Box)(({ theme }) => ({
    '& .back-button': {
       border: `1px solid #048741`,
       color: `#048741!important`,
-      width: '201px',
-      height: '39px',
+      width: '12.563rem',
+      height: '2.438rem',
    },
 
    '& .confirm-button': {
       borderRadius: '8px',
-      width: '201px',
-      height: '39px',
+      width: '12.563rem',
+      height: '2.438rem',
    },
+}))
+
+const StyledNavLink = styled(NavLink)(() => ({
+   textDecoration: 'none',
+   color: '#048741',
 }))
