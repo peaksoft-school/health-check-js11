@@ -229,12 +229,12 @@ const PATIENTS_COLUMN = [
 
       style: {
          padding: '19px 24px 20px',
-         fontWeight: '700',
          flex: 0.06,
+         color: 'black',
       },
 
       tdStyle: {
-         fontWeight: '500',
+         color: 'black !important',
       },
    },
 
@@ -246,10 +246,10 @@ const PATIENTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          flex: 0.2,
+         color: 'black',
       },
 
       tdStyle: {
-         color: 'black',
          fontWeight: '500',
       },
 
@@ -266,9 +266,11 @@ const PATIENTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          flex: 0.2,
+         color: 'black',
       },
 
       tdStyle: {
+         color: 'black',
          fontWeight: '500',
       },
    },
@@ -281,9 +283,11 @@ const PATIENTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          flex: 0.25,
+         color: 'black',
       },
 
       tdStyle: {
+         color: 'black',
          fontWeight: '500',
       },
    },
@@ -296,9 +300,11 @@ const PATIENTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          flex: 0.2,
+         color: 'black',
       },
 
       tdStyle: {
+         color: 'black',
          fontWeight: '500',
       },
    },
@@ -311,9 +317,11 @@ const PATIENTS_COLUMN = [
          padding: '19px 10px 20px 10px',
          fontWeight: '700',
          flex: 0.1,
+         color: 'black',
       },
 
       tdStyle: {
+         color: 'black',
          display: 'flex',
          justifyContent: 'center',
       },

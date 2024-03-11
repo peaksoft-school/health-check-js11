@@ -51,7 +51,7 @@ const signIn = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'не верный пароль или email',
                status: 'error',
             })
          } else {
