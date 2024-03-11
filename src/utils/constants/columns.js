@@ -5,6 +5,7 @@ import DeleteButton from '../../components/online-appointments/DeleteButton'
 import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
+import LocalDate from '../../components/online-appointments/LocalDate'
 
 const SCHEDULE_COLUMN = [
    {
@@ -146,17 +147,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         fontSize: '5px',
       },
 
-      Cell: ({ row }) => (
-         <Box>
-            <Typography>
-               {row.original.localDate.split('-').join('.')}
-            </Typography>
-
-            <Typography>{row.original.localTime.slice(0, -3)}</Typography>
-         </Box>
-      ),
+      Cell: ({ row }) => <LocalDate row={row} />,
    },
 
    {

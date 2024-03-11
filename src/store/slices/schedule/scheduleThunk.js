@@ -107,10 +107,51 @@ const updateTimeSheetDoctor = createAsyncThunk(
    }
 )
 
+const deleteTimeSheets = createAsyncThunk(
+   'schedule/delete-time-sheets',
+   async ({ doctorId, date, timeRanges }, { rejectWithValue, dispatch }) => {
+      try {
+         const formatedFromTimes = timeRanges.map(({ startTime }) => ({
+            fromTime: `${startTime}`,
+         }))
+
+         const response = await axiosInstance.post(
+            `/api/schedule/delete-time-sheets?doctorId=${doctorId}&date=${date}`,
+            formatedFromTimes
+         )
+
+         dispatch(getAllSchedules())
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+const scheduleSearch = createAsyncThunk(
+   'schedule/scheduleSearch',
+   async ({ searchName }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/schedule/search?word=${searchName}`,
+            {
+               params: { searchName },
+            }
+         )
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
 export const SCHEDULE_THUNK = {
    getAllSchedules,
    postNewSchedule,
    getDoctorsByDepartment,
    savePatternTimeSheet,
    updateTimeSheetDoctor,
+   deleteTimeSheets,
+   scheduleSearch,
 }

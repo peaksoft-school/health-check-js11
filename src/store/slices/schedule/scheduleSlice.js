@@ -69,6 +69,22 @@ export const scheduleSlice = createSlice({
             state.isLoading = false
          })
 
+         .addCase(SCHEDULE_THUNK.scheduleSearch.fulfilled, (state, action) => {
+            if (action.payload && !action.payload.error) {
+               const updatedSchedules = action.payload.map((appointment) => ({
+                  ...appointment,
+                  isSelected: false,
+               }))
+
+               updatedSchedules.sort(
+                  (a, b) => a.appointmentId - b.appointmentId
+               )
+
+               state.schedules = updatedSchedules
+            }
+            state.isLoading = false
+         })
+
          .addCase(SCHEDULE_THUNK.updateTimeSheetDoctor.fulfilled, () => {
             showToast({
                message: 'Успешно',

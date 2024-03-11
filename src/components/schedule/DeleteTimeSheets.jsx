@@ -12,6 +12,7 @@ const DeleteTimeSheets = ({
    addInterval,
    handleHourChange,
    handleMinuteChange,
+   deleteTimeSheet,
    setIntervals,
 }) => {
    const { schedules } = useSelector((state) => state.schedule)
@@ -19,8 +20,6 @@ const DeleteTimeSheets = ({
    const selectedDoctor = schedules.find(
       (doctor) => doctor.id === selectedDoctorId
    )
-
-   setIntervals([{ id: 0 }])
 
    return (
       <Box>
@@ -33,7 +32,13 @@ const DeleteTimeSheets = ({
                            {startTimeOfConsultation.map((startTime) => (
                               <Box component="span" className="time-box">
                                  {startTime.slice(0, '5')}
-                                 <CloseIcon className="delete-icon" />
+
+                                 <CloseIcon
+                                    className="delete-icon"
+                                    onClick={() =>
+                                       deleteTimeSheet(startTime.slice(0, '5'))
+                                    }
+                                 />
                               </Box>
                            ))}
 

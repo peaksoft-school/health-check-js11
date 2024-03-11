@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../Loading'
 import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
 import ChangeDay from '../schedule/ChangeDay'
+import DatePicker from './DatePicker'
 
 const TableSchedule = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
@@ -22,6 +23,8 @@ const TableSchedule = () => {
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
    const [clickedDate, setClickedDate] = useState(null)
    const [intervals, setIntervals] = useState([{ id: 1 }])
+
+   const dispatch = useDispatch()
 
    const resetTimeRangesAndIntervals = () => {
       setIntervals([{ id: 1 }])
@@ -86,8 +89,6 @@ const TableSchedule = () => {
    }
 
    const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
-
-   const dispatch = useDispatch()
 
    const handleDateChange = (event, type) => {
       const selectedDate = event.target.value
@@ -208,12 +209,26 @@ const TableSchedule = () => {
                timeRanges,
             })
          )
-
-         resetTimeRangesAndIntervals()
       } else {
          console.error('No td was clicked')
       }
       handleClose()
+   }
+
+   const deleteTimeSheet = (startTime) => {
+      const { id, date } = lastClicked
+
+      if (id && date) {
+         dispatch(
+            SCHEDULE_THUNK.deleteTimeSheets({
+               doctorId: id,
+               date,
+               timeRanges: [{ startTime }],
+            })
+         )
+      } else {
+         console.error('No td was clicked')
+      }
    }
 
    return (
@@ -235,6 +250,7 @@ const TableSchedule = () => {
                   clickedDate={clickedDate}
                   updateIntervals={updateIntervals}
                   setIntervals={setIntervals}
+                  deleteTimeSheet={deleteTimeSheet}
                />
 
                <ButtonBase className="buttons" onClick={savePatternTimeSheet}>
@@ -260,32 +276,41 @@ const TableSchedule = () => {
          </Box>
 
          <Box className="schedule-table-container">
-            <table className="table">
-               <thead>
-                  <tr>
-                     <th className="header-specialist">СПЕЦИАЛИСТЫ</th>
+            <Box component="table" className="table">
+               <Box component="thead">
+                  <Box component="tr">
+                     <Box component="th" className="header-specialist">
+                        СПЕЦИАЛИСТЫ
+                     </Box>
+
                      {generateDateRange().map(
                         ({ dayOfWeek, date, monthText }) => (
-                           <th
+                           <Box
+                              component="th"
                               className="header-dates th"
                               key={(monthText, date)}
                            >
                               {dayOfWeek}
                               <Box component="br" />
                               {date} {monthText}
-                           </th>
+                           </Box>
                         )
                      )}
-                  </tr>
-               </thead>
+                  </Box>
+               </Box>
 
                {isLoading && <Loading />}
 
-               <tbody>
+               <Box component="tbody">
                   {schedules.map(({ image, surname, position, dates, id }) => (
                      <Box component="tr" key={id}>
                         <Box component="td" className="specialist">
-                           <img src={image} alt="imag" className="image" />
+                           <Box
+                              component="img"
+                              src={image}
+                              alt="imag"
+                              className="image"
+                           />
 
                            <Typography className="surname">
                               {surname}
@@ -303,7 +328,7 @@ const TableSchedule = () => {
                                  <Box
                                     component="td"
                                     key={`${id}-${dayOfWeek}-${date}-${monthNumber}`}
-                                    className="td"
+                                    className="schedule-cell"
                                     onClick={() =>
                                        handleTdClick(id, currentDate)
                                     }
@@ -347,8 +372,8 @@ const TableSchedule = () => {
                         )}
                      </Box>
                   ))}
-               </tbody>
-            </table>
+               </Box>
+            </Box>
          </Box>
       </StyledContainer>
    )
@@ -378,7 +403,12 @@ const StyledContainer = styled(Box)(() => ({
    },
 
    '& .schedule-table-container': {
-      overflowX: 'scroll',
+      overflowX: 'auto',
+
+      '& ::-webkit-scrollbar-thumb': {
+         borderRadius: '5px',
+         backgroundColor: '#843465',
+      },
    },
 
    '& .table': {
@@ -448,9 +478,10 @@ const StyledContainer = styled(Box)(() => ({
          },
       },
 
-      '& .td': {
+      '& .schedule-cell': {
          border: '2px solid #D9D9D9',
          minWidth: '6.625rem',
+         cursor: 'pointer',
 
          '& .free-time-container': {
             borderLeft: '3px solid #1F6ED4',

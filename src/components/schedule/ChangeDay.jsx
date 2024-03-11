@@ -18,7 +18,7 @@ const ChangeDay = ({
    selectedDoctorId,
    generateDateRange,
    clickedDate,
-   updateIntervals,
+   deleteTimeSheet,
    setIntervals,
 }) => {
    const { schedules } = useSelector((state) => state.schedule)
@@ -44,7 +44,6 @@ const ChangeDay = ({
             startTimeOfConsultation &&
             startTimeOfConsultation.length > 0
       )
-   console.log(isTimePickerBoxVisible)
 
    return (
       <>
@@ -104,6 +103,8 @@ const ChangeDay = ({
                               handleMinuteChange={handleMinuteChange}
                               handleHourChange={handleHourChange}
                               setIntervals={setIntervals}
+                              removeInterval={removeInterval}
+                              deleteTimeSheet={deleteTimeSheet}
                            />
                         ) : (
                            <>
@@ -320,9 +321,9 @@ const StyledModalContainer = styled(Box)(() => ({
          },
 
          '& .add-interval': {
-            marginTop: '14px',
             fontSize: '14px',
             fontWeight: '500',
+            marginTop: '10px',
             color: 'rgb(4, 135, 65)',
             cursor: 'pointer',
          },
@@ -346,7 +347,6 @@ const StyledModalContainer = styled(Box)(() => ({
          '& .time-picker-box': {
             display: 'flex',
             alignItems: 'center',
-            marginBottom: '14px',
          },
 
          '& .time-pickers': {
