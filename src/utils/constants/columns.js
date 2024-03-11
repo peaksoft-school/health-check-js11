@@ -307,6 +307,10 @@ const PATIENTS_COLUMN = [
          color: 'black',
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Box>{format(new Date(row.original.resultDate), 'dd.MM.yyyy')}</Box>
+      ),
    },
 
    {

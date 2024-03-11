@@ -39,10 +39,8 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
    const toggleShowPassword = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = (values, { resetForm }) => {
-      closeMenu()
+   const onSubmit = (values, { resetForm }) =>
       dispatch(signIn({ values, resetForm, onClose }))
-   }
 
    const openSignUp = () => {
       closeSignUp()

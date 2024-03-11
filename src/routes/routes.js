@@ -14,12 +14,12 @@ import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
    {
-      path: 'admin/online-appointments',
+      path: '/admin',
       element: <OnlineAppointments />,
    },
 
    {
-      path: 'patients',
+      path: '/admin/patients',
       element: <Patients />,
    },
 
