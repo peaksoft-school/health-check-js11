@@ -13,8 +13,9 @@ import { forgotPassword } from '../../../store/slices/auth/authThunk'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
-import { showToast } from '../../../utils/helpers/notification'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
+import { VALIDATION_FORGOT_PASSWORD } from '../../../utils/helpers/validate'
+import { passwordError } from '../../../utils/helpers'
 
 const ChangeUserPassword = () => {
    const [showOldPassword, setShowOldPassword] = useState(false)
@@ -24,7 +25,8 @@ const ChangeUserPassword = () => {
    const dispatch = useDispatch()
 
    const onSubmit = (values, { resetForm }) => {
-      const { oldPassword, newPassword, resetNewPassword } = values
+      const { oldPassword, newPassword, confirmPassword } = values
+      const resetNewPassword = confirmPassword
 
       const paswords = {
          oldPassword,
@@ -32,25 +34,19 @@ const ChangeUserPassword = () => {
          resetNewPassword,
       }
 
-      if (!oldPassword || !newPassword || !resetNewPassword) {
-         showToast({
-            status: 'error',
-            message: 'Заполните все поля!',
-         })
-      } else {
-         dispatch(PROFILE_THUNKS.changeUserPassword({ paswords, resetForm }))
-      }
+      dispatch(PROFILE_THUNKS.changeUserPassword({ paswords, resetForm }))
    }
 
-   const { values, handleChange, handleSubmit } = useFormik({
+   const { values, handleChange, errors, handleSubmit } = useFormik({
       initialValues: {
          email: '',
          oldPassword: '',
          newPassword: '',
-         resetNewPassword: '',
+         confirmPassword: '',
       },
       validateOnChange: false,
       onSubmit,
+      validationSchema: VALIDATION_FORGOT_PASSWORD,
    })
 
    const sentEmai = (e) => {
@@ -108,6 +104,7 @@ const ChangeUserPassword = () => {
                      value={values.newPassword}
                      name="password"
                      onChange={handleChange('newPassword')}
+                     error={!!errors.newPassword}
                      placeholder="Введите пароль"
                      type={showNewPassword ? 'text' : 'password'}
                      InputProps={{
@@ -130,11 +127,12 @@ const ChangeUserPassword = () => {
                   </Typography>
 
                   <StyledInput
-                     value={values.resetNewPassword}
+                     value={values.confirmPassword}
                      name="password"
-                     onChange={handleChange('resetNewPassword')}
+                     onChange={handleChange('confirmPassword')}
                      placeholder="Введите пароль"
                      type={showConfirmPassword ? 'text' : 'password'}
+                     error={!!errors.confirmPassword}
                      InputProps={{
                         endAdornment: (
                            <InputAdornment position="end">
@@ -149,6 +147,14 @@ const ChangeUserPassword = () => {
                         ),
                      }}
                   />
+
+                  <div>
+                     {passwordError(errors) && (
+                        <Typography className="error-message">
+                           {passwordError(errors)}
+                        </Typography>
+                     )}
+                  </div>
 
                   <StyledButtonContainer>
                      <NavLink to="/">
@@ -216,6 +222,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
    },
 
+   '& .error-message': {
+      color: 'red',
+      fontSize: '0.8rem',
+      position: 'absolute',
+   },
+
    '& .change-password': {
       color: 'black',
       marginTop: '0.5rem',
@@ -245,7 +257,7 @@ const StyledInput = styled(Input)(() => ({
 
 const StyledButtonContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
-   marginTop: '1.5rem',
+   marginTop: '2.5rem',
    gap: '1rem',
 
    '& .back-button': {

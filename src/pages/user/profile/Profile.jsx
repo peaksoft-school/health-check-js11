@@ -49,111 +49,132 @@ const Profile = () => {
    }
 
    return (
-      <StyledContainer>
-         <Box className="box">
-            <Box className="title-container">
-               <Typography className="title">Профиль</Typography>
-            </Box>
+      <Box>
+         <StyledLine className="line"> </StyledLine>
+         <StyledContainer>
+            <Box className="box">
+               <NavigatePathTitle>
+                  <p>
+                     <NavLink className="navigate" to="/">
+                        Главная {' > '}
+                     </NavLink>
+                     <span>Профиль</span>
+                  </p>
+               </NavigatePathTitle>
 
-            <Box>
-               <TabContext value={value}>
-                  <Box className="tabs-container">
-                     <TabList
-                        onChange={tabsChange}
-                        aria-label="lab API tabs example"
-                     >
-                        <Tab
-                           label="ЛИЧНЫЕ ДАННЫЕ"
-                           value="1"
-                           className="route"
-                        />
+               <Box className="title-container">
+                  <Typography className="title">Профиль</Typography>
+               </Box>
 
-                        <Tab
-                           label="СМЕНИТЬ ПАРОЛЬ"
-                           value="2"
-                           className="route"
-                        />
-                     </TabList>
-                  </Box>
+               <Box>
+                  <TabContext value={value}>
+                     <Box className="tabs-container">
+                        <TabList
+                           onChange={tabsChange}
+                           aria-label="lab API tabs example"
+                        >
+                           <Tab
+                              label="ЛИЧНЫЕ ДАННЫЕ"
+                              value="1"
+                              className="route"
+                           />
 
-                  <TabPanel value="1" className="tables">
-                     <form onSubmit={handleSubmit} className="table-container">
-                        <Box className="table-container">
-                           <div className="first-box">
-                              <Typography className="label">Имя</Typography>
+                           <Tab
+                              label="СМЕНИТЬ ПАРОЛЬ"
+                              value="2"
+                              className="route"
+                           />
+                        </TabList>
+                     </Box>
 
-                              <StyledInput
-                                 className="input"
-                                 value={values.firstName}
-                                 onChange={handleChange('firstName')}
-                              />
+                     <TabPanel value="1" className="tables">
+                        <form
+                           onSubmit={handleSubmit}
+                           className="table-container"
+                        >
+                           <Box className="table-container">
+                              <div className="first-box">
+                                 <Typography className="label">Имя</Typography>
 
-                              <Typography className="label">E-mail</Typography>
+                                 <StyledInput
+                                    className="input"
+                                    value={values.firstName}
+                                    onChange={handleChange('firstName')}
+                                 />
 
-                              <StyledInput
-                                 className="input"
-                                 onChange={handleChange('email')}
-                                 value={values.email}
-                              />
-                           </div>
+                                 <Typography className="label">
+                                    E-mail
+                                 </Typography>
 
-                           <div className="first-box">
-                              <Typography className="label">Фамилия</Typography>
+                                 <StyledInput
+                                    className="input"
+                                    onChange={handleChange('email')}
+                                    value={values.email}
+                                 />
+                              </div>
 
-                              <StyledInput
-                                 onChange={handleChange('lastName')}
-                                 className="input"
-                                 value={values.lastName}
-                              />
+                              <div className="first-box">
+                                 <Typography className="label">
+                                    Фамилия
+                                 </Typography>
 
-                              <Typography className="label">Телефон</Typography>
+                                 <StyledInput
+                                    onChange={handleChange('lastName')}
+                                    className="input"
+                                    value={values.lastName}
+                                 />
 
-                              <NumberInput
-                                 variant="black"
-                                 onChange={handleChange('numberPhone')}
-                                 value={values.numberPhone}
-                                 mask="_"
-                                 format="+996#########"
-                                 placeholder="+996 (___) ___ ___"
-                              />
+                                 <Typography className="label">
+                                    Телефон
+                                 </Typography>
 
-                              <StyledButtonContainer>
-                                 <NavLink to="/">
+                                 <NumberInput
+                                    variant="black"
+                                    onChange={handleChange('numberPhone')}
+                                    value={values.numberPhone}
+                                    mask="_"
+                                    format="+996#########"
+                                    placeholder="+996 (___) ___ ___"
+                                 />
+
+                                 <StyledButtonContainer>
+                                    <NavLink to="/">
+                                       <Button
+                                          variant="grey"
+                                          className="back-button"
+                                       >
+                                          НАЗАД
+                                       </Button>
+                                    </NavLink>
+
                                     <Button
-                                       variant="grey"
-                                       className="back-button"
+                                       className="confirm-button"
+                                       type="submit"
+                                       disabled={!dirty}
                                     >
-                                       НАЗАД
+                                       РЕДАКТИРОВАТЬ
                                     </Button>
-                                 </NavLink>
+                                 </StyledButtonContainer>
+                              </div>
+                           </Box>
+                        </form>
+                     </TabPanel>
 
-                                 <Button
-                                    className="confirm-button"
-                                    type="submit"
-                                    disabled={!dirty}
-                                 >
-                                    РЕДАКТИРОВАТЬ
-                                 </Button>
-                              </StyledButtonContainer>
-                           </div>
-                        </Box>
-                     </form>
-                  </TabPanel>
-
-                  <TabPanel value="2" className="tables">
-                     <ChangeUserPassword />
-                  </TabPanel>
-               </TabContext>
+                     <TabPanel value="2" className="tables">
+                        <ChangeUserPassword />
+                     </TabPanel>
+                  </TabContext>
+               </Box>
             </Box>
-         </Box>
-      </StyledContainer>
+         </StyledContainer>
+      </Box>
    )
 }
 
 export default Profile
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 7.37rem 3.125rem !important',
+   padding: '0 7.37rem 3.125rem !important',
 
    '& > .box': {
       display: 'flex',
@@ -271,4 +292,26 @@ const StyledButtonContainer = styled(Box)(() => ({
       width: '12.563rem',
       height: '2.438rem',
    },
+}))
+
+const NavigatePathTitle = styled(Box)(() => ({
+   fontSize: '0.875rem',
+   fontWeight: 400,
+   margin: '1.5rem 0',
+
+   span: {
+      color: '#048741',
+      cursor: 'pointer',
+   },
+
+   '& .navigate': {
+      textDecoration: 'none',
+      color: '#959595',
+   },
+}))
+
+const StyledLine = styled(Box)(() => ({
+   // width: '100r%',
+   // height: '1.3rem',
+   // backgroundColor: '#cce9da',
 }))
