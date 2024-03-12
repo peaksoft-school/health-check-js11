@@ -44,6 +44,7 @@ const ChangeUserPassword = () => {
          newPassword: '',
          confirmPassword: '',
       },
+
       validateOnChange: false,
       onSubmit,
       validationSchema: VALIDATION_FORGOT_PASSWORD,
