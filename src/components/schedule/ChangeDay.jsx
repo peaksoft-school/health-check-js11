@@ -20,6 +20,7 @@ const ChangeDay = ({
    clickedDate,
    deleteTimeSheet,
    setIntervals,
+   lastClicked,
 }) => {
    const { schedules } = useSelector((state) => state.schedule)
 
@@ -46,8 +47,18 @@ const ChangeDay = ({
       )
 
    return (
-      <>
-         <StyledButton onClick={openModal}>Изменить шаблон</StyledButton>
+      <StyledContainer>
+         <StyledButton
+            onClick={openModal}
+            disabled={lastClicked.id === null || lastClicked.date === null}
+            className={
+               lastClicked.id === null || lastClicked.date === null
+                  ? 'disabled-button'
+                  : ''
+            }
+         >
+            Изменить шаблон
+         </StyledButton>
 
          <Modal handleClose={handleClose} open={open}>
             <StyledModalContainer className="modal-container">
@@ -228,10 +239,23 @@ const ChangeDay = ({
                </Box>
             </StyledModalContainer>
          </Modal>
-      </>
+      </StyledContainer>
    )
 }
 export default ChangeDay
+
+const StyledContainer = styled(Box)(() => ({
+   '& .disabled-button': {
+      cursor: 'not-allowed',
+      backgroundColor: 'rgb(224, 226, 231)',
+      padding: '8px 20px 9px 20px',
+      color: 'rgba(149, 151, 159, 0.695)',
+      fontWeight: '400',
+      fontSize: '14px',
+      borderRadius: '4px',
+      transition: '0.2s',
+   },
+}))
 
 const StyledButton = styled(ButtonBase)(() => ({
    backgroundColor: 'rgb(224, 226, 231)',
@@ -241,6 +265,7 @@ const StyledButton = styled(ButtonBase)(() => ({
    fontSize: '14px',
    borderRadius: '4px',
    marginRight: '10px',
+   height: '100%',
 }))
 
 const StyledModalContainer = styled(Box)(() => ({

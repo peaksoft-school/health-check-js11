@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Box, ButtonBase, Typography, styled } from '@mui/material'
+import { Box, Button, ButtonBase, Typography, styled } from '@mui/material'
 import { addDays, format } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../Loading'
 import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
 import ChangeDay from '../schedule/ChangeDay'
-import DatePicker from './DatePicker'
 
 const TableSchedule = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
@@ -172,9 +171,13 @@ const TableSchedule = () => {
    }
 
    const handleTdClick = (id, date) => {
-      setLastClicked({ id, date })
-      setSelectedDoctorId(id)
-      setClickedDate(date)
+      if (id === lastClicked.id && date === lastClicked.date) {
+         setLastClicked({ id: null, date: null })
+      } else {
+         setLastClicked({ id, date })
+         setSelectedDoctorId(id)
+         setClickedDate(date)
+      }
    }
 
    const savePatternTimeSheet = () => {
@@ -234,7 +237,7 @@ const TableSchedule = () => {
    return (
       <StyledContainer>
          <Box className="action-container">
-            <Box>
+            <Box className="action-container-box">
                <ChangeDay
                   updateTimeSheetDoctor={updateTimeSheetDoctor}
                   handleMinuteChange={handleMinuteChange}
@@ -251,15 +254,27 @@ const TableSchedule = () => {
                   updateIntervals={updateIntervals}
                   setIntervals={setIntervals}
                   deleteTimeSheet={deleteTimeSheet}
+                  lastClicked={lastClicked}
                />
 
-               <ButtonBase className="buttons" onClick={savePatternTimeSheet}>
+               <ButtonBase
+                  className={
+                     lastClicked.id === null || lastClicked.date === null
+                        ? 'button-disabled'
+                        : 'buttons'
+                  }
+                  onClick={savePatternTimeSheet}
+                  disabled={
+                     lastClicked.id === null || lastClicked.date === null
+                  }
+               >
                   Установить по шаблону
                </ButtonBase>
             </Box>
 
-            <Box className="date-picker">
+            <Box className="date-picker-box">
                <input
+                  className="date-picker"
                   type="date"
                   placeholder="От"
                   value={startDate}
@@ -267,6 +282,7 @@ const TableSchedule = () => {
                />
                -
                <input
+                  className="date-picker"
                   type="date"
                   placeholder="До"
                   value={endDate}
@@ -360,7 +376,6 @@ const TableSchedule = () => {
                                                       startTimeOfConsultation
                                                    )
                                                 }
-
                                                 return null
                                              }
                                           )}
@@ -378,6 +393,7 @@ const TableSchedule = () => {
       </StyledContainer>
    )
 }
+
 export default TableSchedule
 
 const StyledContainer = styled(Box)(() => ({
@@ -391,6 +407,10 @@ const StyledContainer = styled(Box)(() => ({
       justifyContent: 'space-between',
       padding: '20px',
 
+      '& .action-container-box': {
+         display: 'flex',
+      },
+
       '& .buttons': {
          backgroundColor: 'rgb(224, 226, 231)',
          padding: '8px 20px 9px 20px',
@@ -398,12 +418,38 @@ const StyledContainer = styled(Box)(() => ({
          fontWeight: '400',
          fontSize: '14px',
          borderRadius: '4px',
-         marginRight: '10px',
+         transition: '0.2s',
+      },
+
+      '& .button-disabled': {
+         cursor: 'not-allowed',
+         backgroundColor: 'rgb(224, 226, 231)',
+         padding: '8px 20px 9px 20px',
+         color: 'rgba(149, 151, 159, 0.695)',
+         fontWeight: '400',
+         fontSize: '14px',
+         borderRadius: '4px',
+         transition: '0.2s',
+      },
+
+      '& .date-picker-box': {
+         display: 'flex',
+         gap: '8px',
+         alignItems: 'center',
+
+         '& .date-picker': {
+            padding: '8px 18px',
+            borderRadius: '6px',
+            border: '1px solid rgb(189, 189, 189)',
+            fontSize: '14px',
+            fontWeight: '500',
+         },
       },
    },
 
    '& .schedule-table-container': {
       overflowX: 'auto',
+      boxShadow: '0px 0px 12px 0.1px#7a7a7a',
 
       '& ::-webkit-scrollbar-thumb': {
          borderRadius: '5px',
