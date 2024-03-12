@@ -8,13 +8,13 @@ import DeleteSelected from '../../components/online-appointments/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/online-appointments/ProcessedCheckbox'
 import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
-import Switcher from '../../components/UI/Switcher'
 import SelectAllApplication from '../../components/UI/admin/application/SelectAllAplication'
 import SelectSeparatelyApplication from '../../components/UI/admin/application/SeelectSeparatelyAplications'
 import DeleteSelectedApplication from '../../components/UI/admin/application/DeleteSelectedApplication'
 import ApplicationCheckbox from '../../components/UI/admin/application/ApplicationCheckbox'
 import DeleteApplication from '../../components/UI/admin/application/DeleteApplication'
 import { EditIcon } from '../../assets/icons'
+import SpocialistSwicher from '../../components/specialists/SpecialistSwicher'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -375,7 +375,7 @@ const SPECIALISTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <Switcher {...row.original} />
+         return <SpocialistSwicher {...row.original} />
       },
    },
 
@@ -386,7 +386,7 @@ const SPECIALISTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          display: 'flex',
-         flex: 0.4,
+         flex: 0.6,
       },
 
       tdStyle: {
@@ -400,16 +400,29 @@ const SPECIALISTS_COLUMN = [
                   src={row.original.image}
                   alt="doctor"
                   style={{
-                     width: '40px',
-                     height: '40px',
-                     marginRight: '10px',
+                     width: '38px',
+                     height: '38px',
+                     marginRight: '13px',
                      borderRadius: '50%',
                   }}
                />
 
                <div>
                   <Typography variant="span">
-                     {row.original.firstName} {row.original.lastName}
+                     <span
+                        style={{
+                           color: '#222222',
+                           fontSize: '16px',
+                        }}
+                     >
+                        {' '}
+                        {row.original.firstName} {row.original.lastName}
+                     </span>
+                     <br />
+                     <span style={{ color: '#959595', fontSize: '14px' }}>
+                        {' '}
+                        {row.original.position}
+                     </span>
                   </Typography>
                </div>
             </Box>
@@ -427,33 +440,58 @@ const SPECIALISTS_COLUMN = [
          flex: 0.4,
       },
 
-      tdStyle: {
-         fontWeight: '500',
-      },
+      Cell: ({ value }) => (
+         <span style={{ fontWeight: '500', fontSize: '16px', color: 'black' }}>
+            {value}
+         </span>
+      ),
    },
 
    {
       Header: 'Расписание до',
       accessor: 'endDateWork',
+      Cell: ({ value }) => {
+         const date = new Date(value)
 
+         const months = [
+            'января',
+            'февраля',
+            'марта',
+            'апреля',
+            'мая',
+            'июня',
+            'июля',
+            'августа',
+            'сентября',
+            'октября',
+            'ноября',
+            'декабря',
+         ]
+
+         const day = date.getDate()
+
+         const month = months[date.getMonth()]
+
+         const year = date.getFullYear()
+
+         const formattedDate = `${day} ${month} ${year} г.`
+
+         return <span style={{ color: 'black' }}>{formattedDate}</span>
+      },
       style: {
          padding: '19px 0 20px',
-         fontWeight: '700',
+         fontWeight: '600',
          flex: 0.91,
-      },
-
-      tdStyle: {
-         fontWeight: '500',
+         fontSize: '16px',
       },
    },
-
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
 
       style: {
          padding: '19px 10px 20px 10px',
-         fontWeight: '700',
+         fontWeight: '600',
          flex: 0.2,
       },
 
@@ -462,17 +500,20 @@ const SPECIALISTS_COLUMN = [
          justifyContent: 'center',
       },
 
-      Cell: ({ row }) => {
-         console.log(row.original)
-         return (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-               <NavLink>
-                  <EditIcon />
-               </NavLink>
-               <SpecialistsDelete {...row.original} />
-            </div>
-         )
-      },
+      Cell: ({ row }) => (
+         <div
+            style={{
+               display: 'flex',
+               alignItems: 'center',
+               gap: '30px',
+            }}
+         >
+            <NavLink to={row.original.id.toString()}>
+               <EditIcon />
+            </NavLink>
+            <SpecialistsDelete {...row.original} />
+         </div>
+      ),
    },
 ]
 

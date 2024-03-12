@@ -20,26 +20,27 @@ const Specialists = () => {
    }, [])
 
    const { isLoading, specialists } = useSelector((state) => state.specialists)
+   console.log(specialists)
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
-   // const [debouncedSearchText] = useDebounce(searchName, 1000)
+   const [debouncedSearchText] = useDebounce(searchName, 1000)
 
-   // useEffect(() => {
-   //    if (debouncedSearchText !== undefined) {
-   //       dispatch(
-   //          SPECIALISTS_THUNK.searchAppointment({
-   //             searchName: debouncedSearchText,
-   //          })
-   //       )
-   //    }
-   // }, [debouncedSearchText])
+   useEffect(() => {
+      if (debouncedSearchText !== undefined) {
+         dispatch(
+            SPECIALISTS_THUNK.serachSpecilaist({
+               searchName: debouncedSearchText,
+            })
+         )
+      }
+   }, [debouncedSearchText])
 
    return (
       <StyledContainer>
          <Box className="box">
             <Box className="button-container">
-               <Typography className="title">Специалиста</Typography>
+               <Typography className="title">Специалисты</Typography>
 
                <Button className="add-button">
                   <PlusIcon className="plus-icon" />
@@ -81,36 +82,36 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& .button-container': {
          display: 'flex',
          justifyContent: 'space-between',
+      },
 
-         '& .title': {
-            fontSize: '1.375rem',
-            fontWeight: '400',
-            lineHeight: 'normal',
-            marginBottom: '1.87rem',
+      '& > .add-button': {
+         fontFamily: 'Manrope',
+         fontSize: '0.875rem',
+         fontStyle: 'normal',
+         fontWeight: '600',
+         lineHeight: 'normal',
+         letterSpacing: '0.02625rem',
+         textTransform: 'uppercase',
+         display: 'flex',
+         gap: '1rem',
+         alignItems: 'center',
+         height: '2.75rem',
+         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+         width: '13.0625rem !important',
+         flexShrink: '0',
+
+         '& .plus-icon': {
+            width: '1.125rem',
+            padding: '0.625rem',
+            height: '1.125rem',
          },
+      },
 
-         '& > .add-button': {
-            fontFamily: 'Manrope',
-            fontSize: '0.875rem',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: 'normal',
-            letterSpacing: '0.02625rem',
-            textTransform: 'uppercase',
-            display: 'flex',
-            alignItems: 'center',
-            height: '2.75rem',
-            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            gap: '0.625rem',
-            width: '13.0625rem !important',
-            flexShrink: '0',
-
-            '& > .plus-icon': {
-               width: '1.125rem',
-               padding: '0.625rem',
-               height: '1.125rem',
-            },
-         },
+      '& .title': {
+         fontSize: '1.375rem',
+         fontWeight: '400',
+         lineHeight: 'normal',
+         marginBottom: '1.87rem',
       },
 
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
