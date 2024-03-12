@@ -62,7 +62,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
    {
       Header: '№',
-      accessor: 'appointmentId',
+      accessor: 'index',
 
       style: {
          padding: '19px 0 20px',
@@ -73,6 +73,8 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => row.index + 1,
    },
 
    {
@@ -237,7 +239,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 const PATIENTS_COLUMN = [
    {
       Header: '№',
-      accessor: 'id',
+      accessor: 'index',
 
       style: {
          padding: '19px 24px 20px',
@@ -248,6 +250,8 @@ const PATIENTS_COLUMN = [
       tdStyle: {
          color: 'black !important',
       },
+
+      Cell: ({ row }) => row.index + 1,
    },
 
    {
@@ -429,7 +433,7 @@ const APPLICATIONS_COLUMN = [
 
    {
       Header: '№',
-      accessor: 'id',
+      accessor: 'index',
 
       style: {
          padding: '17px 0 20px',
@@ -440,6 +444,8 @@ const APPLICATIONS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => row.index + 1,
    },
    {
       Header: 'Имя',

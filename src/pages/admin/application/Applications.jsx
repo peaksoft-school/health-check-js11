@@ -110,12 +110,22 @@ const StyledContainer = styled(Box)(() => ({
       background: '#FFF',
       height: '100%',
       marginTop: '1.25rem',
+
       '& .MuiTable-root': {
+         '& .MuiTableCell-root': {
+            borderBottom: 'none',
+         },
+
+         '& .MuiTableCell-head': {
+            borderBottom: '1px solid rgba(224, 224, 224, 1)',
+         },
+
          '& .MuiTableRow-root:nth-of-type(even)': {
-            backgroundColor: '#f4f3f3',
+            backgroundColor: '#F5F5F5',
          },
       },
    },
+
    '& .not-application': {
       textAlign: 'center',
       color: 'green',

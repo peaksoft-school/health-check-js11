@@ -70,9 +70,6 @@ const Table = ({ columns: headers, data, empty }) => {
                                  style: {
                                     ...cell.column.style,
                                     ...cell.column.tdStyle,
-                                    color: row.original.processed
-                                       ? '#000000'
-                                       : '#5f5c5c',
                                  },
                               })}
                               key={cell.column.id}

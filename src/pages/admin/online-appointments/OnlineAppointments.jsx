@@ -8,7 +8,6 @@ import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
-
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 import AddSchedule from './AddSchedule'

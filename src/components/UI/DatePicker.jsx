@@ -5,7 +5,6 @@ import { DAYS_OF_WEEK } from '../../utils/constants'
 
 const DatePicker = ({
    value,
-   label,
    onChange,
    onBlur,
    format = 'YYYY/MM/DD',
@@ -20,7 +19,6 @@ const DatePicker = ({
    return (
       <StyledDatePicker
          value={parsedValue}
-         label={label}
          onChange={(date) => onChange(date)}
          onBlur={onBlur}
          dayOfWeekFormatter={(_day, weekday) =>
@@ -104,6 +102,7 @@ const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    fontWeight: '400',
    fontSize: '14px',
    border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',
