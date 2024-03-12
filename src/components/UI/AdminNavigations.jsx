@@ -42,7 +42,6 @@ const StyledNavLink = styled(NavLink)(() => ({
       background: 'none',
       position: 'absolute',
       bottom: -36.5,
-      transition: '0.5s width ease',
    },
 
    '& .line.tab': {

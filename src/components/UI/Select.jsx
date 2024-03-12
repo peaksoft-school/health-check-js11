@@ -141,6 +141,12 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    lineHeight: '21.86px',
    color: '#4D4E51',
 
+   '& > div': {
+      '& > div': {
+         marginLeft: '20rem',
+      },
+   },
+
    '&:hover': {
       '& fieldset': {
          border: `1px solid ${theme.palette.secondary.lightGrey}`,

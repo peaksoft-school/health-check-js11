@@ -56,7 +56,6 @@ const DatePicker = ({
                      fontFamily: 'Manrope',
                      fontSize: '14px',
                      fontWeight: '500',
-                     textTransform: 'uppercase',
                   },
 
                   '.MuiPickersCalendarHeader-label': {

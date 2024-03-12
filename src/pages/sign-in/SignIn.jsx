@@ -49,14 +49,18 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const signInWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider).then((data) => {
-            dispatch(
-               authWithGoogle({
-                  tokenId: data.user.accessToken,
-               })
-            )
-            onClose()
-         })
+         await signInWithPopup(auth, provider)
+            .then((data) => {
+               dispatch(
+                  authWithGoogle({
+                     tokenId: data.user.accessToken,
+                  })
+               )
+               onClose()
+            })
+            .catch((error) => {
+               console.log('Caught error Popup closed')
+            })
       } catch (error) {
          throw new Error(error)
       }
@@ -208,6 +212,10 @@ const StyledForm = styled('form')(({ theme }) => ({
       fontSize: '0.8rem',
       position: 'absolute',
       bottom: '16rem',
+   },
+
+   '& .naigate': {
+      cursor: 'pointer',
    },
 }))
 

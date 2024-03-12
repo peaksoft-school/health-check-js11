@@ -144,7 +144,11 @@ const AddResult = ({ open, onClose }) => {
                      </label>
 
                      <div>
-                        <p className="text">Нажмите или перетащите файл</p>
+                        {values.file ? (
+                           <p>{values.file.name}</p>
+                        ) : (
+                           <p className="text">Нажмите или перетащите файл</p>
+                        )}
 
                         <p className="permission">
                            Минимальное <br /> разрешение 450x600

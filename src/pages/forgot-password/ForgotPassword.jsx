@@ -48,8 +48,13 @@ const ForgotPassword = ({ open, onClose }) => {
       }
    }
 
+   const handlerClose = () => {
+      onClose()
+      setEmail('')
+   }
+
    return (
-      <Modal open={open} handleClose={onClose}>
+      <Modal open={open} handleClose={handlerClose}>
          <StyledContainer>
             <Typography className="title">ЗАБЫЛИ ПАРОЛЬ?</Typography>
 
