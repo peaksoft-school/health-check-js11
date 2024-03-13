@@ -142,6 +142,13 @@ const StyledButton = styled(Button)(({ theme }) => ({
       width: '13.5625rem',
       marginTop: '40px',
 
+      '& > div': {
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'space-between',
+         width: '100%',
+      },
+
       '&:hover': {
          padding: '0.5rem 0.75rem 0.5rem 1.5rem',
          background: theme.palette.primary.linearGradient,

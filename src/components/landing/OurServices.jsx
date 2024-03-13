@@ -1,49 +1,60 @@
 import { styled, Box, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Button'
 import { SERVICES } from '../../utils/constants/index'
 
-const OurServices = () => (
-   <StyledContainer>
-      <Box className="box">
-         <Typography className="title" variant="h2">
-            Наши &nbsp;
-            <Typography variant="span" className="services">
-               услуги
+const OurServices = () => {
+   const navigate = useNavigate()
+
+   const handleNavigate = () => {
+      navigate('/services')
+   }
+
+   return (
+      <StyledContainer>
+         <Box className="box">
+            <Typography className="title" variant="h2">
+               Наши &nbsp;
+               <Typography variant="span" className="services">
+                  услуги
+               </Typography>
             </Typography>
-         </Typography>
 
-         <Typography className="description">
-            За все время работы клиника приняла более 1 млн. пациентов.
-         </Typography>
+            <Typography className="description">
+               За все время работы клиника приняла более 1 млн. пациентов.
+            </Typography>
 
-         <Box className="services-box">
-            {SERVICES.map(({ id, name, icon }) => (
-               <Box className="service" key={id}>
-                  <StyledServiceIcon>{icon}</StyledServiceIcon>
+            <Box className="services-box">
+               {SERVICES.slice(0, 9).map(({ id, name, icon }) => (
+                  <Box className="service" key={id}>
+                     <StyledServiceIcon>{icon}</StyledServiceIcon>
+                     <Typography className="name">{name}</Typography>
+                  </Box>
+               ))}
+            </Box>
 
-                  <Typography className="name">{name}</Typography>
-               </Box>
-            ))}
+            <Box className="button-box">
+               <Button
+                  className="button"
+                  variant="secondary"
+                  onClick={handleNavigate}
+               >
+                  Смотреть все
+               </Button>
+            </Box>
          </Box>
-
-         <Box className="button-box">
-            <Button className="button" variant="secondary">
-               Смотреть все
-            </Button>
-         </Box>
-      </Box>
-   </StyledContainer>
-)
+      </StyledContainer>
+   )
+}
 
 export default OurServices
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '0 120px',
+   padding: ' 0 120px',
 
    '& > .box': {
       margin: '0 auto',
       maxWidth: '1600px',
-      padding: '120px 0',
 
       '& > .title': {
          fontSize: '2.25rem',
