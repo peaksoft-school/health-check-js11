@@ -3,15 +3,17 @@ import Checkbox from '../Checkbox'
 
 const SelectAll = ({ variant, selectFn }) => {
    const { selectAll } = useSelector((state) => state.Appointments)
-   const { selectAllApp } = useSelector((state) => state.applications)
+   const { isSelectAllApplications } = useSelector(
+      (state) => state.applications
+   )
 
-   const select = () => {
+   const checkedHandler = () => {
       if (variant === 'appointments') {
          return selectAll
       }
 
       if (variant === 'applications') {
-         return selectAllApp
+         return isSelectAllApplications
       }
       return false
    }
@@ -22,7 +24,7 @@ const SelectAll = ({ variant, selectFn }) => {
       dispatch(selectFn())
    }
 
-   return <Checkbox checked={select()} onChange={changeCheckbox} />
+   return <Checkbox checked={checkedHandler()} onChange={changeCheckbox} />
 }
 
 export default SelectAll

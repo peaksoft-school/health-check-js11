@@ -14,7 +14,7 @@ const menuProps = {
    PaperProps: {
       style: {
          minWidth: '20rem',
-         maxHeight: 292,
+         maxHeight: '292',
          boxShadow: '0px 5px 44px 0px rgba(0, 0, 0, 0.06)',
          marginLeft: '0.7rem',
          borderRadius: '16px 8px 8px 16px ',
@@ -103,7 +103,7 @@ const Select = forwardRef(
                      <StyledLabel value="">{placeholder}</StyledLabel>
 
                      {options &&
-                        options.map(({ id, label }) => (
+                        options?.map(({ id, label }) => (
                            <MenuItemStyle key={id} value={label}>
                               {label}
                            </MenuItemStyle>

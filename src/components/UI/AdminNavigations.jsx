@@ -39,7 +39,7 @@ const StyledNavLink = styled(NavLink)(() => ({
       fontWeight: 500,
    },
 
-   '& .line': {
+   '& > .line': {
       width: '0px',
       height: '2px',
       background: 'none',

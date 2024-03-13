@@ -15,7 +15,7 @@ const Patients = () => {
 
    const { isLoading, patients } = useSelector((state) => state.patients)
 
-   const handleSearchChange = (e) => setSearchName(e.target.value)
+   const searchChange = (e) => setSearchName(e.target.value)
 
    const [debouncedSearchText] = useDebounce(searchName, 1000)
 
@@ -45,7 +45,7 @@ const Patients = () => {
                   <StyledInput
                      placeholder="Поиск"
                      value={searchName}
-                     onChange={handleSearchChange}
+                     onChange={searchChange}
                   />
                </Box>
 
@@ -83,7 +83,7 @@ const StyledContainer = styled(Box)(() => ({
          fontWeight: '500',
       },
 
-      '& .tables': {
+      '&  .tables': {
          padding: '0rem',
       },
 
@@ -92,7 +92,7 @@ const StyledContainer = styled(Box)(() => ({
          marginTop: '2.12rem',
       },
 
-      '& .table-container': {
+      '&  .table-container': {
          width: '100%',
          height: '100%',
          borderRadius: '0.375rem',

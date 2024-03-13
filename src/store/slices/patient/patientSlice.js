@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { PATIENT_THUNK } from './patientThunk'
+import { PATIENT_THUNKS } from './patientThunk'
 
 const initialState = {
    data: {},
@@ -15,41 +15,41 @@ export const patientSlice = createSlice({
    extraReducers: (builder) => {
       builder
 
-         .addCase(PATIENT_THUNK.getPatient.fulfilled, (state, { payload }) => {
+         .addCase(PATIENT_THUNKS.getPatient.fulfilled, (state, { payload }) => {
             state.isLoading = false
             state.data = payload
          })
-         .addCase(PATIENT_THUNK.getPatient.pending, (state) => {
+         .addCase(PATIENT_THUNKS.getPatient.pending, (state) => {
             state.isLoading = true
          })
-         .addCase(PATIENT_THUNK.getPatient.rejected, (state) => {
+         .addCase(PATIENT_THUNKS.getPatient.rejected, (state) => {
             state.isLoading = false
          })
          .addCase(
-            PATIENT_THUNK.getPatientResult.fulfilled,
+            PATIENT_THUNKS.getPatientResult.fulfilled,
             (state, { payload }) => {
                state.isLoading = false
                state.results = payload
             }
          )
 
-         .addCase(PATIENT_THUNK.getPatientResult.pending, (state) => {
+         .addCase(PATIENT_THUNKS.getPatientResult.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(PATIENT_THUNK.getPatientResult.rejected, (state) => {
+         .addCase(PATIENT_THUNKS.getPatientResult.rejected, (state) => {
             state.isLoading = false
          })
 
-         .addCase(PATIENT_THUNK.postPatientResult.fulfilled, (state) => {
+         .addCase(PATIENT_THUNKS.addPatientResult.fulfilled, (state) => {
             state.isLoading = false
          })
 
-         .addCase(PATIENT_THUNK.postPatientResult.pending, (state) => {
+         .addCase(PATIENT_THUNKS.addPatientResult.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(PATIENT_THUNK.postPatientResult.rejected, (state) => {
+         .addCase(PATIENT_THUNKS.addPatientResult.rejected, (state) => {
             state.isLoading = false
          })
    },

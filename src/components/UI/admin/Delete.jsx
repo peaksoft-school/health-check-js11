@@ -83,7 +83,7 @@ const StyledModalContent = styled(Box)(() => ({
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .name': {
+   '& > .name': {
       fontFamily: 'Manrope',
       fontWeight: '600',
       fontSize: '18px',
@@ -91,14 +91,14 @@ const StyledModalContent = styled(Box)(() => ({
       marginBottom: '1.25rem',
    },
 
-   '& .description': {
+   '& > .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
       lineHeight: '24.59px',
    },
 
-   '& .buttons-container': {
+   '& > .buttons-container': {
       display: 'flex',
       gap: '18px',
    },

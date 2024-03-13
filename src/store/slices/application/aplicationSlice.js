@@ -10,16 +10,16 @@ export const applicationSlice = createSlice({
       status: 'idle',
       error: null,
       selectAllApplications: [],
-      selectAllApp: false,
+      isSelectAllApplications: false,
    },
 
    reducers: {
       handleIsChecked: (state, action) => {
-         state.selectAllApp = !state.selectAllApp
+         state.isSelectAllApplications = !state.isSelectAllApplications
 
          state.items = state.items.map((item) => ({
             ...item,
-            isSelected: state.selectAllApp,
+            isSelected: state.isSelectAllApplications,
          }))
 
          state.selectAllApplications = state.items

@@ -30,7 +30,6 @@ root.render(
                   <Notification />
 
                   <App />
-                  {/* <AddResult open={open} /> */}
                </Themes>
             </Provider>
          </PersistGate>

@@ -70,7 +70,7 @@ const scheduleError = (errors) => {
    return errorMessage
 }
 
-const resultsError = (errors) => {
+const showResultError = (errors) => {
    let errorMessage = null
 
    if (errors?.service) {
@@ -84,4 +84,10 @@ const resultsError = (errors) => {
    return errorMessage
 }
 
-export { signInError, signUpError, passwordError, scheduleError, resultsError }
+export {
+   signInError,
+   signUpError,
+   passwordError,
+   scheduleError,
+   showResultError,
+}

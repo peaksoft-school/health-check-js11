@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { format } from 'date-fns'
 import { Box, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
-import { PATIENT_THUNK } from '../../../store/slices/patient/patientThunk'
+import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import AddResult from './AddResult'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
+import { splitPhoneNumber } from '../../../utils/helpers/splitNumbers'
 
 const PatientsInnerPage = () => {
    const [toggleModal, setToggleModal] = useState(false)
@@ -19,8 +21,8 @@ const PatientsInnerPage = () => {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(PATIENT_THUNK.getPatient(id))
-      dispatch(PATIENT_THUNK.getPatientResult(id))
+      dispatch(PATIENT_THUNKS.getPatient(id))
+      dispatch(PATIENT_THUNKS.getPatientResult(id))
    }, [id])
 
    return (
@@ -107,7 +109,7 @@ const PatientsInnerPage = () => {
 
                                     <Box>
                                        <Typography variant="span">
-                                          {date}
+                                          {format(new Date(date), 'dd.MM.yyyy')}
                                        </Typography>
 
                                        <Typography variant="span">
@@ -164,7 +166,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginTop: '1.25rem',
          borderRadius: '0.375rem',
 
-         '& .content-box': {
+         '& > .content-box': {
             display: 'flex',
             width: '100%',
             gap: '90px',
@@ -203,7 +205,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          borderRadius: '8px',
          padding: ' 2vh 2vh 7vh 2vh',
 
-         '& .results-inner-container': {
+         '& > .results-inner-container': {
             display: 'flex',
             width: '100%',
             height: '100%',
@@ -213,7 +215,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             padding: ' 2vh 2vh 7vh 2vh',
          },
 
-         '& .result-label': {
+         '& > .result-label': {
             fontWeight: '500',
             fontSize: '18px',
          },
@@ -225,7 +227,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             },
          },
 
-         '& .file': {
+         '&  .file': {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -253,11 +255,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& .button-container': {
+      '& > .button-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
-         '& .button': {
+         '& > .button': {
             padding: '0',
             fontSize: '13px',
             height: '40px',

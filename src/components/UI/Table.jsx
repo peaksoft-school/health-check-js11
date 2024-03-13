@@ -7,6 +7,7 @@ import {
    TableBody,
    Table as MuiTable,
    styled,
+   Box,
 } from '@mui/material'
 import { memo, useMemo } from 'react'
 
@@ -98,7 +99,7 @@ const StyledTableContainer = styled(TableContainer)({
    },
 })
 
-const StyledAbsence = styled('div')(() => ({
+const StyledAbsence = styled(Box)(() => ({
    textAlign: 'center',
    padding: '20vh 0',
    opacity: '20%',
