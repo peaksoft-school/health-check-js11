@@ -19,9 +19,3 @@
       background-color: #f5f5f5;
    }
 }
-
-.MuiPopover-root div:nth-child(3) {
-   top: 290px !important;
-   left: 415px !important;
-   height: 350px;
-}

@@ -1,6 +1,9 @@
+/* eslint-disable react/no-this-in-sfc */
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { PDFDocument } from 'pdf-lib'
 import dayjs from 'dayjs'
 import { format } from 'date-fns'
 import { useFormik } from 'formik'
@@ -17,9 +20,7 @@ import Button from '../UI/Button'
 
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
-
-   const MIN_WIDTH = 450
-   const MIN_HEIGHT = 600
+   const [pageSize, setPageSize] = useState(null)
 
    const closeHandler = () => onClose()
 
@@ -55,60 +56,28 @@ const AddResult = ({ open, onClose }) => {
       validationSchema: VALIDATION_RESULT,
    })
 
-   const handleDrop = (AcceptFiles) => {
-      const file = AcceptFiles[0]
+   const handleDrop = async (acceptedFiles) => {
+      const file = acceptedFiles[0]
 
-      if (file.type === 'application/pdf') setFieldValue('file', file)
-      else
-         showToast({
-            status: 'warning',
-            message: 'Пожалуйста, выберите файл в формате PDF',
-         })
+      if (file) {
+         try {
+            const arrayBuffer = await file.arrayBuffer()
+            const pdfDoc = await PDFDocument.load(arrayBuffer)
+            const firstPage = pdfDoc.getPage(0)
+            const { width, height } = firstPage.getSize()
+            setPageSize({ width, height })
+
+            if (width > 450 && height > 600) setFieldValue('file', file)
+            else
+               showToast({
+                  message: 'не допустимый размер файла',
+               })
+         } catch (error) {
+            console.error('Error reading PDF: ', error)
+            setPageSize(null)
+         }
+      }
    }
-
-   // const handleDrop = (acceptedFiles) => {
-   //    const file = acceptedFiles[0]
-
-   //    if (file.type === 'application/pdf') {
-   //       const fileReader = new FileReader()
-   //       fileReader.onload = () => {
-   //          const pdf = new Uint8Array(fileReader.result)
-   //          const blob = new Blob([pdf], { type: 'application/pdf' })
-
-   //          const fileObject = new File([blob], file.name, {
-   //             lastModified: file.lastModified,
-   //             type: 'application/pdf',
-   //          })
-
-   //          const img = new Image()
-   //          img.src = URL.createObjectURL(fileObject)
-
-   //          img.onload = () => {
-   //             const { width } = img
-   //             const { height } = img
-
-   //             if (width < MIN_WIDTH || height < MIN_HEIGHT) {
-   //                showToast({
-   //                   status: 'warning',
-   //                   message:
-   //                      'Пожалуйста, выберите файл с минимальным разрешением 450x600',
-   //                })
-   //             } else {
-   //                setFieldValue('file', fileObject)
-   //             }
-   //          }
-   //       }
-
-   //       fileReader.readAsArrayBuffer(file)
-   //    } else {
-   //       showToast({
-   //          status: 'warning',
-   //          message: 'Пожалуйста, выберите файл в формате PDF',
-   //       })
-   //    }
-   // }
-
-   console.log(values.file, ';ashfa')
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop: handleDrop,
@@ -117,33 +86,11 @@ const AddResult = ({ open, onClose }) => {
 
    const handleChangeFile = (e) => {
       const file = e.target.files[0]
+
       if (file.type === 'application/pdf') {
          setFieldValue('file', file)
       }
    }
-
-   // const handleChangeFile = (e) => {
-   //    const file = e.target.files[0]
-   //    if (file.type === 'application/pdf') {
-   //       const img = new Image()
-   //       img.src = URL.createObjectURL(file)
-
-   //       img.onload = () => {
-   //          const { width } = img
-   //          const { height } = img
-
-   //          if (width < MIN_WIDTH || height < MIN_HEIGHT) {
-   //             showToast({
-   //                status: 'warning',
-   //                message:
-   //                   'Пожалуйста, выберите файл с минимальным разрешением 450x600',
-   //             })
-   //          } else {
-   //             setFieldValue('file', file)
-   //          }
-   //       }
-   //    }
-   // }
 
    const stopPropagationHandler = (e) => e.stopPropagation()
 

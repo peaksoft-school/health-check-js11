@@ -16,7 +16,8 @@ const menuProps = {
          minWidth: '20rem',
          maxHeight: '292',
          boxShadow: '0px 5px 44px 0px rgba(0, 0, 0, 0.06)',
-         marginLeft: '0.7rem',
+         marginTop: '13.2rem',
+
          borderRadius: '16px 8px 8px 16px ',
       },
    },
@@ -94,6 +95,7 @@ const Select = forwardRef(
                      IconComponent={KeyboardArrowDownIcon}
                      inputProps={{ 'aria-label': 'Without label' }}
                      MenuProps={menuProps}
+                     className="select"
                      displayEmpty
                      ref={ref}
                      error={error}
@@ -102,12 +104,14 @@ const Select = forwardRef(
                   >
                      <StyledLabel value="">{placeholder}</StyledLabel>
 
+                     {/* <div className="ALISHER"> */}
                      {options &&
                         options.map(({ id, label }) => (
                            <MenuItemStyle key={id} value={label}>
                               {label}
                            </MenuItemStyle>
                         ))}
+                     {/* </div> */}
                   </StyledMuiSelect>
                </StyledFormControl>
             )}
@@ -182,6 +186,7 @@ const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
    fontFamily: 'Manrope',
    height: '3rem',
    marginLeft: '0.6rem',
+   // height: '3rem',
 
    '&:hover': {
       background: theme.palette.tertiary.main,
