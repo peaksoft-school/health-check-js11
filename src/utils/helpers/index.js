@@ -27,8 +27,8 @@ const passwordError = (errors) => {
 const signUpError = (errors) => {
    let errorMessage = null
 
-   if (errors?.name) {
-      errorMessage = errors.name
+   if (errors?.firstName) {
+      errorMessage = errors.firstName
    } else if (errors?.lastName) {
       errorMessage = errors.lastName
    } else if (errors?.email) {

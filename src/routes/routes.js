@@ -5,11 +5,11 @@ import Contacts from '../pages/user/contacts/Contacts'
 import Prices from '../pages/user/prices/Prices'
 import Home from '../pages/home/Home'
 import ChangePassword from '../pages/change-password/ChangePassword'
-import MyProfile from '../pages/user/myProfile/MyProfile'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 import Patients from '../pages/admin/patients/Patients'
 import PatientsInnerPage from '../pages/admin/patients/PatientsInnerPage'
+import Profile from '../pages/user/profile/Profile'
 import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
@@ -51,6 +51,11 @@ const USER_ROUTES = [
    },
 
    {
+      path: '/profile',
+      element: <Profile />,
+   },
+
+   {
       path: '/services',
       element: <Services />,
    },
@@ -73,11 +78,6 @@ const USER_ROUTES = [
    {
       path: '/change-password',
       element: <ChangePassword />,
-   },
-
-   {
-      path: '/profile',
-      element: <MyProfile />,
    },
 
    {

@@ -69,7 +69,29 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
          border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
 
          '& input': {
-            color: `${theme.palette.secondary.lightGrey} !important`,
+            color: `${theme.palette.secondary.lightGrey} `,
+         },
+
+         '& input::placeholder': {
+            color: `${theme.palette.secondary.main}`,
+         },
+
+         '&:hover': {
+            border: `1px solid ${
+               error ? 'red' : theme.palette.secondary.lightGrey
+            }`,
+         },
+      }
+   }
+
+   if (variant === 'black') {
+      return {
+         ...defaultStyles,
+         borderRadius: '0.5225rem',
+         border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
+
+         '& input': {
+            color: 'black',
          },
 
          '& input::placeholder': {
