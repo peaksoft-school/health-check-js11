@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
 import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
-import AddResult from './AddResult'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
+import AddResult from '../../../components/patients/AddResult'
 
-const PatientsInnerPage = () => {
+const Patient = () => {
    const [toggleModal, setToggleModal] = useState(false)
 
    const { id } = useParams()
@@ -146,7 +146,7 @@ const PatientsInnerPage = () => {
    )
 }
 
-export default PatientsInnerPage
+export default Patient
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',

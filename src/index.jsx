@@ -12,7 +12,6 @@ import './index.css'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
 import { fileInjectStore } from './configs/axiosInstaseFile'
-import AddResult from './pages/admin/patients/AddResult'
 
 injectStore(store)
 fileInjectStore(store)
