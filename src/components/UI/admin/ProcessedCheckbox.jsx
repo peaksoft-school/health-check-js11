@@ -12,21 +12,16 @@ const ProcessedCheckbox = ({ checked, variant, id, updateFn }) => {
    }, [checked])
 
    const changeCheckbox = () => {
-      try {
-         if (variant === 'appointments') {
-            dispatch(
-               updateFn({
-                  appointmentId: id,
-                  active: !isChecked,
-                  setIsChecked,
-               })
-            )
-         } else if (variant === 'applications') {
-            dispatch(updateFn({ id, isActive: !isChecked }))
-         }
-      } catch (error) {
-         console.error('Error updating status:', error)
-      }
+      if (variant === 'appointments')
+         dispatch(
+            updateFn({
+               appointmentId: id,
+               active: !isChecked,
+               setIsChecked,
+            })
+         )
+      else if (variant === 'applications')
+         dispatch(updateFn({ id, isActive: !isChecked }))
    }
 
    return <Checkbox checked={isChecked} onChange={changeCheckbox} />

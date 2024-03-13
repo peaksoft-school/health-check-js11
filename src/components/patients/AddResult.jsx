@@ -18,6 +18,9 @@ import Button from '../UI/Button'
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
 
+   const MIN_WIDTH = 450
+   const MIN_HEIGHT = 600
+
    const closeHandler = () => onClose()
 
    const dispatch = useDispatch()
@@ -56,12 +59,56 @@ const AddResult = ({ open, onClose }) => {
       const file = AcceptFiles[0]
 
       if (file.type === 'application/pdf') setFieldValue('file', file)
-
-      return showToast({
-         status: 'warning',
-         message: 'Пожалуйста, выберите файл в формате PDF',
-      })
+      else
+         showToast({
+            status: 'warning',
+            message: 'Пожалуйста, выберите файл в формате PDF',
+         })
    }
+
+   // const handleDrop = (acceptedFiles) => {
+   //    const file = acceptedFiles[0]
+
+   //    if (file.type === 'application/pdf') {
+   //       const fileReader = new FileReader()
+   //       fileReader.onload = () => {
+   //          const pdf = new Uint8Array(fileReader.result)
+   //          const blob = new Blob([pdf], { type: 'application/pdf' })
+
+   //          const fileObject = new File([blob], file.name, {
+   //             lastModified: file.lastModified,
+   //             type: 'application/pdf',
+   //          })
+
+   //          const img = new Image()
+   //          img.src = URL.createObjectURL(fileObject)
+
+   //          img.onload = () => {
+   //             const { width } = img
+   //             const { height } = img
+
+   //             if (width < MIN_WIDTH || height < MIN_HEIGHT) {
+   //                showToast({
+   //                   status: 'warning',
+   //                   message:
+   //                      'Пожалуйста, выберите файл с минимальным разрешением 450x600',
+   //                })
+   //             } else {
+   //                setFieldValue('file', fileObject)
+   //             }
+   //          }
+   //       }
+
+   //       fileReader.readAsArrayBuffer(file)
+   //    } else {
+   //       showToast({
+   //          status: 'warning',
+   //          message: 'Пожалуйста, выберите файл в формате PDF',
+   //       })
+   //    }
+   // }
+
+   console.log(values.file, ';ashfa')
 
    const { getRootProps, getInputProps } = useDropzone({
       onDrop: handleDrop,
@@ -74,6 +121,29 @@ const AddResult = ({ open, onClose }) => {
          setFieldValue('file', file)
       }
    }
+
+   // const handleChangeFile = (e) => {
+   //    const file = e.target.files[0]
+   //    if (file.type === 'application/pdf') {
+   //       const img = new Image()
+   //       img.src = URL.createObjectURL(file)
+
+   //       img.onload = () => {
+   //          const { width } = img
+   //          const { height } = img
+
+   //          if (width < MIN_WIDTH || height < MIN_HEIGHT) {
+   //             showToast({
+   //                status: 'warning',
+   //                message:
+   //                   'Пожалуйста, выберите файл с минимальным разрешением 450x600',
+   //             })
+   //          } else {
+   //             setFieldValue('file', file)
+   //          }
+   //       }
+   //    }
+   // }
 
    const stopPropagationHandler = (e) => e.stopPropagation()
 

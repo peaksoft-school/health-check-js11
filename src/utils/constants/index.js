@@ -36,19 +36,19 @@ import { ROUTES } from '../../routes/routes'
 const NAVIGATIONS = [
    {
       id: 1,
-      to: `${ROUTES.USER.index}${ROUTES.USER.aboutClinic}`,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.ABOUT_CLINICK}`,
       label: 'О клинике',
    },
    {
       id: 2,
-      to: `${ROUTES.USER.index}${ROUTES.USER.services}`,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
       label: 'Услуги',
    },
-   { id: 3, to: `${ROUTES.USER.index}${ROUTES.USER.doctors}`, label: 'Врачи' },
-   { id: 4, to: `${ROUTES.USER.index}${ROUTES.USER.prices}`, label: 'Цены' },
+   { id: 3, to: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}`, label: 'Врачи' },
+   { id: 4, to: `${ROUTES.USER.INDEX}${ROUTES.USER.PRICES}`, label: 'Цены' },
    {
       id: 5,
-      to: `${ROUTES.USER.index}${ROUTES.USER.contacts}`,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.CONTACTS}`,
       label: 'Контакты',
    },
 ]
@@ -280,23 +280,23 @@ const FAKE_DATA = [
 ]
 
 const ADMIN_NAVIGATIONS = [
-   { id: 1, to: ROUTES.ADMIN.index, label: 'Онлайн-запись' },
+   { id: 1, to: ROUTES.ADMIN.INDEX, label: 'Онлайн-запись' },
 
    {
       id: 2,
-      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.applications}`,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.APPLICATIONS}`,
       label: 'Заявки',
    },
 
    {
       id: 3,
-      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.specialists}`,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`,
       label: 'Специалисты',
    },
 
    {
       id: 4,
-      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.patients}`,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}`,
       label: 'Пациенты',
    },
 ]

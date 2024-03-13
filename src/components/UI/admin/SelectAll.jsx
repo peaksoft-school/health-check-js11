@@ -8,13 +8,10 @@ const SelectAll = ({ variant, selectFn }) => {
    )
 
    const checkedHandler = () => {
-      if (variant === 'appointments') {
-         return selectAll
-      }
+      if (variant === 'appointments') return selectAll
 
-      if (variant === 'applications') {
-         return isSelectAllApplications
-      }
+      if (variant === 'applications') return isSelectAllApplications
+
       return false
    }
 

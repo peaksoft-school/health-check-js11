@@ -103,7 +103,7 @@ const Select = forwardRef(
                      <StyledLabel value="">{placeholder}</StyledLabel>
 
                      {options &&
-                        options?.map(({ id, label }) => (
+                        options.map(({ id, label }) => (
                            <MenuItemStyle key={id} value={label}>
                               {label}
                            </MenuItemStyle>
@@ -130,6 +130,7 @@ const StyledLabel = styled(FormControl)(() => ({
 
 const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    maxWidth: '100%',
+
    border: error
       ? `1px solid #d32f2f`
       : `1px solid  ${theme.palette.secondary.main}`,

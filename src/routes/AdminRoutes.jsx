@@ -1,32 +1,32 @@
 import Applications from '../pages/admin/application/Applications'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
-import Patient from '../pages/admin/patient/Patient'
 import Patients from '../pages/admin/patients/Patients'
+import Patient from '../pages/admin/patient/Patient'
 import { ROUTES } from './routes'
 
 export const ADMIN_ROUTES = [
    {
-      path: ROUTES.ADMIN.index,
+      path: ROUTES.ADMIN.INDEX,
       element: <OnlineAppointments />,
    },
 
    {
-      path: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.patients}`,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}`,
       element: <Patients />,
    },
 
    {
-      path: `${ROUTES.ADMIN.index}:${ROUTES.ADMIN.id}`,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}/:${ROUTES.ADMIN.ID}`,
       element: <Patient />,
    },
 
    {
-      path: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.applications}`,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.APPLICATIONS}`,
       element: <Applications />,
    },
 
    {
-      path: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.specialists}`,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`,
       element: <div>specialist</div>,
    },
 ]

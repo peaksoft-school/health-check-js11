@@ -8,6 +8,7 @@ import Loading from '../../../components/Loading'
 import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
 import AddResult from '../../../components/patients/AddResult'
+import { formatPhoneNumberWithSpaces } from '../../../utils/helpers'
 
 const Patient = () => {
    const [toggleModal, setToggleModal] = useState(false)
@@ -78,7 +79,7 @@ const Patient = () => {
                         </Typography>
 
                         <Typography className="value">
-                           {data.phone_number}
+                           {formatPhoneNumberWithSpaces(data.phone_number)}
                         </Typography>
                      </Box>
                   </Box>
@@ -235,6 +236,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                cursor: 'pointer',
                boxSizing: 'content-box',
                width: '2rem',
+               transition: '1s',
                height: '5vh',
                padding: '0.5rem',
                borderRadius: '6px',

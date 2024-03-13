@@ -11,47 +11,47 @@ import { ROUTES } from './routes'
 
 export const USER_ROUTES = [
    {
-      path: ROUTES.USER.index,
+      path: ROUTES.USER.INDEX,
       element: <Home />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.aboutClinic}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.ABOUT_CLINICK}`,
       element: <AboutClinic />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.profile}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.PROFILE}`,
       element: <Profile />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.services}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
       element: <Services />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.doctors}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}`,
       element: <Doctors />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.contacts}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.CONTACTS}`,
       element: <Contacts />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.prices}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.PRICES}`,
       element: <Prices />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.changePassword}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.CHANGE_PASSWORD}`,
       element: <ChangePassword />,
    },
 
    {
-      path: `${ROUTES.USER.index}${ROUTES.USER.records}`,
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.RECORDS}`,
       element: <Records />,
    },
 ]

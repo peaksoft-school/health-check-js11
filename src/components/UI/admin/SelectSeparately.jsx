@@ -6,9 +6,8 @@ const SelectSeparately = ({ isSelected, selectFn, id, variant }) => {
    const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
 
    const getIds = () => {
-      if (variant === 'appointments') {
-         return deletedAppointmentsIds
-      }
+      if (variant === 'appointments') return deletedAppointmentsIds
+
       return []
    }
 

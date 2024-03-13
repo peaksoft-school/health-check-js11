@@ -16,7 +16,7 @@ import {
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
-import { formatPhoneNumberWithSpaces } from '../helpers/splitNumbers'
+import { formatPhoneNumberWithSpaces } from '../helpers'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {

@@ -6,23 +6,23 @@ const ROLES = {
 
 const ROUTES = {
    USER: {
-      index: '/',
-      aboutClinic: 'about-clinic',
-      profile: 'profile',
-      services: 'services',
-      doctors: 'doctors',
-      contacts: 'contacts',
-      prices: 'prices',
-      changePassword: 'change-password',
-      records: 'records',
+      INDEX: '/',
+      ABOUT_CLINICK: 'about-clinic',
+      PROFILE: 'profile',
+      SERVICES: 'services',
+      DOCTORS: 'doctors',
+      CONTACTS: 'contacts',
+      PRICES: 'prices',
+      CHANGE_PASSWORD: 'change-password',
+      RECORDS: 'records',
    },
 
    ADMIN: {
-      index: '/admin',
-      patients: 'patients',
-      id: 'id',
-      applications: 'applications',
-      specialists: 'specialists',
+      INDEX: '/admin',
+      PATIENTS: 'patients',
+      ID: 'id',
+      APPLICATIONS: 'applications',
+      SPECIALISTS: 'specialists',
    },
 }
 
