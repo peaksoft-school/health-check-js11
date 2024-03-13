@@ -3,23 +3,23 @@ import { useFormik } from 'formik'
 import { format } from 'date-fns'
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
-import Modal from '../../../components/UI/Modal'
-import DatePicker from '../../../components/UI/DatePicker'
-import TimePicker from '../../../components/UI/TimePicker'
-import Button from '../../../components/UI/Button'
-import Select from '../../../components/UI/Select'
 import {
    DAYS,
    DEPARTMENTS,
    INTERVAL_TIME,
    RUSSIAN_DAYS,
-} from '../../../utils/constants'
-import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
-import { scheduleError } from '../../../utils/helpers'
+} from '../../utils/constants/index'
+import Modal from '../UI/Modal'
+import Select from '../UI/Select'
+import DatePicker from '../UI/DatePicker'
+import TimePicker from '../UI/TimePicker'
+import { scheduleError } from '../../utils/helpers'
+import { VALIDATION_SCHEDULE } from '../../utils/helpers/validate'
 import {
    getDoctorsByDepartment,
    postNewSchedule,
-} from '../../../store/slices/schedule/addScheduleThunk'
+} from '../../store/slices/schedule/addScheduleThunk'
+import Button from '../UI/Button'
 
 const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()

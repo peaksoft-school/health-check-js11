@@ -10,7 +10,7 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
-import AddSchedule from './AddSchedule'
+import AddSchedule from '../../../components/schedule/AddSchedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
