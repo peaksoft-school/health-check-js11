@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
    key: 'HEALTH_CHECK',
    storage,
-   whitelist: ['auth', 'appointments', 'applications', 'profile'],
+   whitelist: ['auth', 'appointments', 'applications', 'patients', 'profile'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

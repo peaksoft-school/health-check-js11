@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
-import { PATIENTS_THUNK } from '../../../store/slices/patients/patientsThunk'
+import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
 import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 
 const Patients = () => {
@@ -22,7 +22,7 @@ const Patients = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            PATIENTS_THUNK.searchPatients({
+            PATIENTS_THUNKS.searchPatients({
                searchName: debouncedSearchText,
             })
          )
@@ -30,7 +30,7 @@ const Patients = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(PATIENTS_THUNK.getAllPatients())
+      dispatch(PATIENTS_THUNKS.getPatients())
    }, [])
 
    return (

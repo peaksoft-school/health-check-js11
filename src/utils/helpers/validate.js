@@ -40,7 +40,7 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
    newPassword: Yup.string()
       .required('Введите новый пароль!')
       .min(8, 'Минимальная длина пароля 8 символов!')
-      .matches(passwordRegex, 'Пароль требует заглавную букву!'),
+      .matches(passwordRegex, 'Не вылидный пароль!'),
    confirmPassword: Yup.string()
       .oneOf([Yup.ref('newPassword'), null], 'Пароли не совпадают!')
       .required('Подтвердите пароль!'),

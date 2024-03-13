@@ -78,6 +78,7 @@ const AddResult = ({ open, onClose }) => {
    const stopPropagationHandler = (e) => e.stopPropagation()
 
    const changeSelectHandler = (service) => setFieldValue('service', service)
+
    const changeDateHandler = (date) => setFieldValue('date', date)
 
    const dateToday = dayjs()
@@ -149,12 +150,16 @@ const AddResult = ({ open, onClose }) => {
                         {values.file ? (
                            <p>{values.file.name}</p>
                         ) : (
-                           <p className="text">Нажмите или перетащите файл</p>
-                        )}
+                           <>
+                              <p className="text">
+                                 Нажмите или перетащите файл
+                              </p>
 
-                        <p className="permission">
-                           Минимальное <br /> разрешение 450x600
-                        </p>
+                              <p className="permission">
+                                 Минимальное <br /> разрешение 450x600
+                              </p>
+                           </>
+                        )}
                      </Box>
                   </Container>
                </Box>

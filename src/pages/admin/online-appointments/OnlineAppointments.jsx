@@ -21,7 +21,7 @@ const OnlineAppointments = () => {
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.Appointments
+      (state) => state.appointments
    )
 
    const toggleModal = () => setOpenModal((prev) => !prev)

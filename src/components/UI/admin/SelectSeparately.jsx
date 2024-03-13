@@ -3,7 +3,7 @@ import Checkbox from '../Checkbox'
 
 const SelectSeparately = ({ isSelected, selectFn, id, variant }) => {
    const dispatch = useDispatch()
-   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
+   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
 
    const getIds = () => {
       if (variant === 'appointments') {

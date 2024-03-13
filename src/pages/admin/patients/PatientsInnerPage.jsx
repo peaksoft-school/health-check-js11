@@ -8,7 +8,6 @@ import Loading from '../../../components/Loading'
 import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import AddResult from './AddResult'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
-import { splitPhoneNumber } from '../../../utils/helpers/splitNumbers'
 
 const PatientsInnerPage = () => {
    const [toggleModal, setToggleModal] = useState(false)

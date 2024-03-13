@@ -31,13 +31,26 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
+import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
-   { id: 1, to: '/about-clinic', label: 'О клинике' },
-   { id: 2, to: '/services', label: 'Услуги' },
-   { id: 3, to: '/doctors', label: 'Врачи' },
-   { id: 4, to: '/prices', label: 'Цены' },
-   { id: 5, to: '/contacts', label: 'Контакты' },
+   {
+      id: 1,
+      to: `${ROUTES.USER.index}${ROUTES.USER.aboutClinic}`,
+      label: 'О клинике',
+   },
+   {
+      id: 2,
+      to: `${ROUTES.USER.index}${ROUTES.USER.services}`,
+      label: 'Услуги',
+   },
+   { id: 3, to: `${ROUTES.USER.index}${ROUTES.USER.doctors}`, label: 'Врачи' },
+   { id: 4, to: `${ROUTES.USER.index}${ROUTES.USER.prices}`, label: 'Цены' },
+   {
+      id: 5,
+      to: `${ROUTES.USER.index}${ROUTES.USER.contacts}`,
+      label: 'Контакты',
+   },
 ]
 
 const HEADER_SOCIALS = [
@@ -267,10 +280,25 @@ const FAKE_DATA = [
 ]
 
 const ADMIN_NAVIGATIONS = [
-   { id: 1, to: '/admin', label: 'Онлайн-запись' },
-   { id: 2, to: '/admin/applications', label: 'Заявки' },
-   { id: 3, to: '/admin/specialists', label: 'Специалисты' },
-   { id: 4, to: '/admin/patients', label: 'Пациенты' },
+   { id: 1, to: ROUTES.ADMIN.index, label: 'Онлайн-запись' },
+
+   {
+      id: 2,
+      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.applications}`,
+      label: 'Заявки',
+   },
+
+   {
+      id: 3,
+      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.specialists}`,
+      label: 'Специалисты',
+   },
+
+   {
+      id: 4,
+      to: `${ROUTES.ADMIN.index}/${ROUTES.ADMIN.patients}`,
+      label: 'Пациенты',
+   },
 ]
 
 const DAYS = [

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Checkbox from '../Checkbox'
 
 const SelectAll = ({ variant, selectFn }) => {
-   const { selectAll } = useSelector((state) => state.Appointments)
+   const { selectAll } = useSelector((state) => state.appointments)
    const { isSelectAllApplications } = useSelector(
       (state) => state.applications
    )
