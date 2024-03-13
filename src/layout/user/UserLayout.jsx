@@ -1,10 +1,27 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Header from './Header'
 import Footer from './Footer'
 
 const UserLayout = () => {
    const location = useLocation()
    const isChangePassword = location.pathname === '/change-password'
+   const { role } = useSelector((state) => state.auth)
+
+   // if (role === 'GUEST' && location.pathname === '/profile') {
+   //    return <Navigate to="/" replace />
+   // }
+
+   // if (role === 'GUEST' && location.pathname === '/records') {
+   //    return <Navigate to="/" replace />
+   // }
+
+   if (
+      role === 'GUEST' &&
+      (location.pathname === '/profile' || location.pathname === '/records')
+   ) {
+      return <Navigate to="/" replace />
+   }
 
    return (
       <>

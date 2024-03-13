@@ -5,9 +5,9 @@ import Contacts from '../pages/user/contacts/Contacts'
 import Prices from '../pages/user/prices/Prices'
 import Home from '../pages/home/Home'
 import ChangePassword from '../pages/change-password/ChangePassword'
-import MyProfile from '../pages/user/myProfile/MyProfile'
 import Records from '../pages/user/records/Records'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
+import Profile from '../pages/user/profile/Profile'
 import Applications from '../pages/admin/application/Applications'
 
 const ADMIN_ROUTES = [
@@ -24,10 +24,6 @@ const ADMIN_ROUTES = [
       path: '/admin/specialists',
       element: <div>specialist</div>,
    },
-   {
-      path: '/admin/patients',
-      element: <div>patients</div>,
-   },
 ]
 
 const USER_ROUTES = [
@@ -39,6 +35,11 @@ const USER_ROUTES = [
    {
       path: '/about-clinic',
       element: <AboutClinic />,
+   },
+
+   {
+      path: '/profile',
+      element: <Profile />,
    },
 
    {
@@ -64,11 +65,6 @@ const USER_ROUTES = [
    {
       path: '/change-password',
       element: <ChangePassword />,
-   },
-
-   {
-      path: '/profile',
-      element: <MyProfile />,
    },
 
    {

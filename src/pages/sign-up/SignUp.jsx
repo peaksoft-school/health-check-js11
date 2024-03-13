@@ -39,7 +39,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const onSubmit = async (values, { resetForm }) => {
       const dataToSend = {
-         name: values.name,
+         firstName: values.firstName,
          lastName: values.lastName,
          email: values.email,
          number: values.number,
@@ -62,6 +62,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
                   tokenId: data.user.accessToken,
                })
             )
+
             onClose()
          })
       } catch (error) {
@@ -71,7 +72,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
-         name: '',
+         firstName: '',
          lastName: '',
          email: '',
          number: '',
@@ -91,10 +92,10 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
             <Box className="input-box">
                <StyledInput
                   placeholder="Имя"
-                  name="name"
-                  value={values.name}
+                  name="firstName"
+                  value={values.firstName}
                   onChange={handleChange}
-                  error={!!errors.name}
+                  error={!!errors.firstName}
                />
 
                <StyledInput

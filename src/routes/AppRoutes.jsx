@@ -11,7 +11,7 @@ const AppRoutes = () => {
          path: ROUTES.USER.index,
          element: (
             <ProtectedRoute
-               roles={[ROLES.USER, ROLES.GUEST]}
+               roles={[ROLES.GUEST, ROLES.USER]}
                fallBackPath="/admin"
                Component={<UserLayout />}
             />

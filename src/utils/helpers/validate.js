@@ -8,7 +8,7 @@ const phoneNumberRegex =
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/
 
 const VALIDATION_SIGN_UP = Yup.object().shape({
-   name: Yup.string().required('Имя обязятельное!'),
+   firstName: Yup.string().required('Имя обязятельное!'),
    lastName: Yup.string().required('Фамилия обязятельное!'),
    email: Yup.string()
       .email()
@@ -33,10 +33,7 @@ const VALIDATION_SIGN_IN = Yup.object().shape({
       .email()
       .matches(emailRegex, 'email должен быть в формате ...@gmail.com!')
       .required('Почта обязятельное!'),
-   password: Yup.string()
-      .required('Введите пароль!')
-      .min(8, 'Минимальная длина пароля 8 символов!')
-      .matches(passwordRegex, 'Пароль требует заглавную букву!'),
+   password: Yup.string().required('Введите пароль!'),
 })
 
 const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
