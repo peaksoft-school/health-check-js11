@@ -7,6 +7,7 @@ import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
+import AddOnlineAppointments from '../../components/appointments/AddOnlineAppointments'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
@@ -23,12 +24,13 @@ import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
 
 const Header = () => {
-   const { role } = useSelector((state) => state.auth)
+   const { role, isAuth } = useSelector((state) => state.auth)
 
    const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
    const [openSignUpModal, setOpenSignUpModal] = useState(false)
    const [openSignInModal, setOpenSignInModal] = useState(false)
    const [toggleLogOutModal, setToggleLogOutModal] = useState(false)
+   const [toggleDrawerModal, setToggleDrawerModal] = useState(false)
 
    const dispatch = useDispatch()
 
@@ -37,6 +39,15 @@ const Header = () => {
    const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
 
    const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
+
+   const toggleDrawerHandler = () => {
+      // if (isAuth) {
+      setToggleDrawerModal((prev) => !prev)
+      // }
+      // return setOpenSignUpModal(true)
+   }
+
+   console.log(openSignUpModal)
 
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
 
@@ -234,9 +245,17 @@ const Header = () => {
                      ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
                   </StyledButton>
 
-                  <StyledButton className="button" onClick={toggleSignUpModal}>
+                  <StyledButton
+                     className="button"
+                     onClick={toggleDrawerHandler}
+                  >
                      ЗАПИСЬ ОНАЛЙН
                   </StyledButton>
+
+                  <AddOnlineAppointments
+                     open={toggleDrawerModal}
+                     onClose={toggleDrawerHandler}
+                  />
                </Box>
             </Box>
          </Box>

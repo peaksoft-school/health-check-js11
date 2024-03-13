@@ -64,7 +64,6 @@ const Select = forwardRef(
       const [isVisible, setIsVisible] = useState(false)
 
       const changeHandler = (e) => {
-         onChange(e.target.value)
          setSelectVal(e.target.value)
       }
 
@@ -171,7 +170,7 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
 
 const Icon = styled(Typography)(() => ({
    position: 'absolute',
-   top: 25,
+   top: 16,
    left: 15,
    zIndex: '100',
 }))

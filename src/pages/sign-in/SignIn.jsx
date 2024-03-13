@@ -20,7 +20,7 @@ import ForgotPassword from '../forgot-password/ForgotPassword'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
 import { auth, provider } from '../../utils/constants/authWithGoogle'
 
-const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
+const SignIn = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)
 
    const [showPassword, setShowPassword] = useState(false)
