@@ -38,6 +38,7 @@ export const authSlice = createSlice({
             state.isLoading = false
             state.role = payload.role
             state.isAuth = true
+            state.accessToken = payload.token
             state.email = payload.email
          })
 
@@ -53,6 +54,7 @@ export const authSlice = createSlice({
             state.isLoading = false
             state.accessToken = payload.token
             state.role = payload.role
+            state.isAuth = true
             state.email = payload.email
          })
 

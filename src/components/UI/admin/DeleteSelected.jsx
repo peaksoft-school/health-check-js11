@@ -6,27 +6,25 @@ import Modal from '../Modal'
 import Button from '../Button'
 
 const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
-   const { deletedAppointmentsIds } = useSelector((state) => state.Appointments)
-   const [toggleModal, setToggleModal] = useState(false)
+   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
 
    const { selectAllApplications } = useSelector((store) => store.applications)
 
+   const [toggleModal, setToggleModal] = useState(false)
+
+   const dispatch = useDispatch()
+
    const getIds = () => {
-      if (variant === 'appointments') {
-         return deletedAppointmentsIds
-      }
-      if (variant === 'applications') {
-         return selectAllApplications
-      }
+      if (variant === 'appointments') return deletedAppointmentsIds
+
+      if (variant === 'applications') return selectAllApplications
 
       return []
    }
 
-   const dispatch = useDispatch()
+   const toggleModalHandler = () => setToggleModal((prev) => !prev)
 
-   const toggleHandleModal = () => setToggleModal((prev) => !prev)
-
-   const handleDelete = () => {
+   const deleteHandler = () => {
       try {
          if (variant === 'application') {
             if (selectAllApplications.length) {
@@ -41,23 +39,21 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
       } catch (error) {
          console.error('Error deleting appointments:', error)
       } finally {
-         toggleHandleModal()
+         toggleModalHandler()
       }
    }
-
-   const deleteAllFunction = () => {}
 
    return (
       <>
          <StyledDeleteButton
-            onClick={toggleHandleModal}
+            onClick={toggleModalHandler}
             disabled={disabled || getIds().length === 0}
          >
             <DeleteIcon />
          </StyledDeleteButton>
 
          <Modal
-            handleClose={toggleHandleModal}
+            handleClose={toggleModalHandler}
             open={toggleModal}
             isCloseIcon={false}
          >
@@ -70,12 +66,12 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
                   <Button
                      variant="grey"
                      className="button"
-                     onClick={toggleHandleModal}
+                     onClick={toggleModalHandler}
                   >
                      Отменить
                   </Button>
 
-                  <Button className="button" onClick={handleDelete}>
+                  <Button className="button" onClick={deleteHandler}>
                      Удалить
                   </Button>
                </Box>
@@ -105,7 +101,7 @@ const StyledContainer = styled(Box)(() => ({
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .description': {
+   '& > .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
@@ -113,7 +109,7 @@ const StyledContainer = styled(Box)(() => ({
       marginBottom: '40px',
    },
 
-   '& .buttons-container': {
+   '& > .buttons-container': {
       display: 'flex',
       gap: '18px',
    },

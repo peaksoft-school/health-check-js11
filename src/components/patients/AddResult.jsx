@@ -1,42 +1,46 @@
+/* eslint-disable react/no-this-in-sfc */
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { PDFDocument } from 'pdf-lib'
 import dayjs from 'dayjs'
 import { format } from 'date-fns'
 import { useFormik } from 'formik'
-import DatePicker from '../../../components/UI/DatePicker'
-import { DEPARTMENTS } from '../../../utils/constants'
-import { showToast } from '../../../utils/helpers/notification'
-import { FileIcon, GetPdfFileIcon } from '../../../assets/icons'
-import Select from '../../../components/UI/Select'
-import Modal from '../../../components/UI/Modal'
-import Button from '../../../components/UI/Button'
-import { VALIDATION_RESULT } from '../../../utils/helpers/validate'
-import { resultsError } from '../../../utils/helpers'
-import { PATIENT_THUNK } from '../../../store/slices/patient/patientThunk'
+import { PATIENT_THUNKS } from '../../store/slices/patient/patientThunk'
+import { VALIDATION_RESULT } from '../../utils/helpers/validate'
+import { DEPARTMENTS } from '../../utils/constants'
+import DatePicker from '../UI/DatePicker'
+import { FileIcon, GetPdfFileIcon } from '../../assets/icons'
+import { showResultError } from '../../utils/helpers'
+import { showToast } from '../../utils/helpers/notification'
+import Modal from '../UI/Modal'
+import Select from '../UI/Select'
+import Button from '../UI/Button'
 
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
+   const [pageSize, setPageSize] = useState(null)
 
-   const handlerClose = () => onClose()
+   const closeHandler = () => onClose()
 
    const dispatch = useDispatch()
 
-   const onAddResult = (values, { resetForm }) => {
+   const onSubmit = (values, { resetForm }) => {
       const formData = new FormData()
       formData.append('file', values.file)
 
       const date = format(new Date(values.date), 'yyyy-MM-dd')
 
       dispatch(
-         PATIENT_THUNK.postPatientResult({
+         PATIENT_THUNKS.addPatientResult({
             facility: values.service,
             dataOfDelivery: date,
             userId: data.id,
             url: formData,
 
             resetForm,
-            handlerClose,
+            closeHandler,
          })
       )
    }
@@ -48,19 +52,30 @@ const AddResult = ({ open, onClose }) => {
          file: '',
       },
       validateOnChange: false,
-      onSubmit: onAddResult,
+      onSubmit,
       validationSchema: VALIDATION_RESULT,
    })
 
-   const handleDrop = (AcceptFiles) => {
-      const file = AcceptFiles[0]
-      if (file.type === 'application/pdf') {
-         setFieldValue('file', file)
-      } else {
-         showToast({
-            status: 'warning',
-            message: 'Пожалуйста, выберите файл в формате PDF',
-         })
+   const handleDrop = async (acceptedFiles) => {
+      const file = acceptedFiles[0]
+
+      if (file) {
+         try {
+            const arrayBuffer = await file.arrayBuffer()
+            const pdfDoc = await PDFDocument.load(arrayBuffer)
+            const firstPage = pdfDoc.getPage(0)
+            const { width, height } = firstPage.getSize()
+            setPageSize({ width, height })
+
+            if (width > 450 && height > 600) setFieldValue('file', file)
+            else
+               showToast({
+                  message: 'не допустимый размер файла',
+               })
+         } catch (error) {
+            console.error('Error reading PDF: ', error)
+            setPageSize(null)
+         }
       }
    }
 
@@ -71,10 +86,17 @@ const AddResult = ({ open, onClose }) => {
 
    const handleChangeFile = (e) => {
       const file = e.target.files[0]
+
       if (file.type === 'application/pdf') {
          setFieldValue('file', file)
       }
    }
+
+   const stopPropagationHandler = (e) => e.stopPropagation()
+
+   const changeSelectHandler = (service) => setFieldValue('service', service)
+
+   const changeDateHandler = (date) => setFieldValue('date', date)
 
    const dateToday = dayjs()
 
@@ -83,9 +105,9 @@ const AddResult = ({ open, onClose }) => {
          <StyledForm onSubmit={handleSubmit}>
             <Typography variant="h5"> Добавление результата</Typography>
 
-            <div className="content-box">
-               <div className="select-asd">
-                  <div className="select-box">
+            <Box className="content-box">
+               <Box className="select">
+                  <Box className="select-box">
                      <label htmlFor="department">Услуги</label>
 
                      <StyledSelect
@@ -94,79 +116,81 @@ const AddResult = ({ open, onClose }) => {
                         error={!!errors.service}
                         options={DEPARTMENTS}
                         value={values.service}
-                        onChange={(service) =>
-                           setFieldValue('service', service)
-                        }
+                        onChange={changeSelectHandler}
                      />
-                  </div>
+                  </Box>
 
-                  <div className="box">
+                  <Box className="box">
                      <label htmlFor="dataOfDelivery">Дата сдачи</label>
 
                      <DatePicker
                         className="custom-date-picker"
                         id="dataOfDelivery"
                         error={!!errors.date}
-                        onChange={(date) => setFieldValue('date', date)}
+                        onChange={changeDateHandler}
                         value={values.date}
                         variant="custom"
                         format="DD/MM/YYYY"
                         minDate={dateToday}
                      />
-                  </div>
-               </div>
+                  </Box>
+               </Box>
 
-               <div>
+               <Box>
                   <label htmlFor="file">Файлы</label>
 
                   <Container
                      {...getRootProps()}
-                     onClick={(e) => e.stopPropagation()}
+                     onClick={stopPropagationHandler}
                   >
                      <label htmlFor="file">
                         {values.file ? (
-                           <div>
+                           <Box>
                               {values.file.type === 'application/pdf' && (
                                  <FileIcon className="insert-file" />
                               )}
-                           </div>
+                           </Box>
                         ) : (
                            <GetPdfFileIcon className="insert-file" />
                         )}
 
                         <input
                            id="file"
-                           style={{ display: 'none' }}
+                           className="input-file"
                            type="file"
                            onChange={handleChangeFile}
                            {...getInputProps()}
                         />
                      </label>
 
-                     <div>
+                     <Box>
                         {values.file ? (
                            <p>{values.file.name}</p>
                         ) : (
-                           <p className="text">Нажмите или перетащите файл</p>
+                           <>
+                              <p className="text">
+                                 Нажмите или перетащите файл
+                              </p>
+
+                              <p className="permission">
+                                 Минимальное <br /> разрешение 450x600
+                              </p>
+                           </>
                         )}
-
-                        <p className="permission">
-                           Минимальное <br /> разрешение 450x600
-                        </p>
-                     </div>
+                     </Box>
                   </Container>
-               </div>
-            </div>
+               </Box>
+            </Box>
 
-            {resultsError(errors) && (
+            {showResultError(errors) && (
                <Typography className="error-message">
-                  {resultsError(errors)}
+                  {showResultError(errors)}
                </Typography>
             )}
 
             <Box className="button-group">
                <StyledButton
-                  onClick={handlerClose}
+                  onClick={closeHandler}
                   type="button"
                   variant="grey"
                >
@@ -199,7 +223,7 @@ const Container = styled(Box)(({ theme }) => ({
       marginTop: '5px',
    },
 
-   '& .text': {
+   '&  .text': {
       fontSize: '14px',
    },
 
@@ -208,7 +232,7 @@ const Container = styled(Box)(({ theme }) => ({
       color: theme.palette.secondary.lightGrey,
    },
 
-   '& p': {
+   '&  p': {
       margin: '10px 0',
    },
 }))
@@ -231,10 +255,14 @@ const StyledForm = styled('form')(() => ({
       marginBottom: '30px',
    },
 
-   '& .select-asd': {
+   '& .select': {
       display: 'flex',
       margin: '30px 0 15px 0',
       gap: '30px',
+   },
+
+   '& .input-file': {
+      display: 'none',
    },
 
    '& .box': {
@@ -242,13 +270,13 @@ const StyledForm = styled('form')(() => ({
       flexDirection: 'column',
    },
 
-   '& .error-message': {
+   '&  .error-message': {
       position: 'absolute',
       top: '310px',
       color: 'red',
    },
 
-   '& .button-group': {
+   '& > .button-group': {
       display: 'flex',
       gap: '30px',
    },

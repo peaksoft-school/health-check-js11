@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { axiosInstance } from '../../../configs/axiosInstance'
 import { showToast } from '../../../utils/helpers/notification'
 
 const signUp = createAsyncThunk(
    'auth/signUp',
+
    async ({ dataToSend, resetForm, onClose }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
@@ -24,10 +26,17 @@ const signUp = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'ошибка на стороне сервера',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error)
       }
@@ -70,8 +79,8 @@ const forgotPassword = createAsyncThunk(
    'auth/forgotPassword',
    async ({ email, link, onClose, setEmail }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post(
-            `/api/auth/send-email?email=${email}&link=${link}`
+         const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}api/auth/send-email?email=${email}&link=${link}`
          )
 
          showToast({
@@ -83,10 +92,17 @@ const forgotPassword = createAsyncThunk(
 
          return response
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'ошибка на стороне сервера',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error.response.data)
       }
@@ -97,19 +113,27 @@ const changePassword = createAsyncThunk(
    'auth/changePassword',
    async (payload, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post(
-            `/api/auth/forgot-password?token=${payload.token}&newPassword=${payload.newPassword}`
+         const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}api/auth/forgot-password?token=${payload.token}&newPassword=${payload.newPassword}`
          )
+
          showToast({
             message: 'пароль успешно изменен!',
          })
 
          return response
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'ошибка на стороне сервера',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error.response.data)
       }

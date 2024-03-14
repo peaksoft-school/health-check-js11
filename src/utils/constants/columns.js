@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { format } from 'date-fns'
 import Delete from '../../components/UI/admin/Delete'
-import { PATIENTS_THUNK } from '../../store/slices/patients/patientsThunk'
+import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
 import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
 import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
@@ -16,7 +16,7 @@ import {
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
-import { splitPhoneNumber } from '../helpers/splitNumbers'
+import { formatPhoneNumberWithSpaces } from '../helpers'
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -108,7 +108,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => {
          const { phoneNumber } = row.original
-         return <Box>{splitPhoneNumber(phoneNumber)}</Box>
+         return <Box>{formatPhoneNumberWithSpaces(phoneNumber)}</Box>
       },
    },
 
@@ -292,7 +292,7 @@ const PATIENTS_COLUMN = [
 
       Cell: ({ row }) => {
          const { phoneNumber } = row.original
-         return <Box>{splitPhoneNumber(phoneNumber)}</Box>
+         return <Box>{formatPhoneNumberWithSpaces(phoneNumber)}</Box>
       },
    },
 
@@ -356,7 +356,7 @@ const PATIENTS_COLUMN = [
             <Delete
                name={row.original.surname}
                id={row.original.id}
-               deleteFn={PATIENTS_THUNK.deletePatients}
+               deleteFn={PATIENTS_THUNKS.deletePatients}
                variant="patients"
             />
          )
@@ -496,7 +496,7 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => {
          const { number } = row.original
-         return <Box>{splitPhoneNumber(number)}</Box>
+         return <Box>{formatPhoneNumberWithSpaces(number)}</Box>
       },
    },
    {

@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-import { showToast } from '../../../utils/helpers/notification'
 
-const getAllPatients = createAsyncThunk(
+const getPatients = createAsyncThunk(
    'patients/getPatients',
    async (_, { rejectWithValue }) => {
       try {
@@ -20,7 +19,7 @@ const deletePatients = createAsyncThunk(
    async (id, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/user/${id}`)
-         dispatch(getAllPatients())
+         dispatch(getPatients())
 
          return id
       } catch (error) {
@@ -48,4 +47,4 @@ const searchPatients = createAsyncThunk(
    }
 )
 
-export const PATIENTS_THUNK = { getAllPatients, deletePatients, searchPatients }
+export const PATIENTS_THUNKS = { getPatients, deletePatients, searchPatients }

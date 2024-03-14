@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { ROUTES, ROLES, USER_ROUTES, ADMIN_ROUTES } from './routes'
+import { ROUTES, ROLES } from './routes'
 import AdminLayout from '../layout/admin/AdminLayout'
 import UserLayout from '../layout/user/UserLayout'
 import ProtectedRoute from './ProtectedRoute'
 import NotFound from '../pages/not-found/NotFound'
+import { USER_ROUTES } from './UserRoutes'
+import { ADMIN_ROUTES } from './AdminRoutes'
 
 const AppRoutes = () => {
    const router = createBrowserRouter(

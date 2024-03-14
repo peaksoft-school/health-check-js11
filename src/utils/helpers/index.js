@@ -27,8 +27,8 @@ const passwordError = (errors) => {
 const signUpError = (errors) => {
    let errorMessage = null
 
-   if (errors?.name) {
-      errorMessage = errors.name
+   if (errors?.firstName) {
+      errorMessage = errors.firstName
    } else if (errors?.lastName) {
       errorMessage = errors.lastName
    } else if (errors?.email) {
@@ -70,7 +70,7 @@ const scheduleError = (errors) => {
    return errorMessage
 }
 
-const resultsError = (errors) => {
+const showResultError = (errors) => {
    let errorMessage = null
 
    if (errors?.service) {
@@ -84,4 +84,20 @@ const resultsError = (errors) => {
    return errorMessage
 }
 
-export { signInError, signUpError, passwordError, scheduleError, resultsError }
+const formatPhoneNumberWithSpaces = (phoneNumber = '') => {
+   const countryCode = phoneNumber.slice(0, 4)
+   const firstPart = phoneNumber.slice(4, 7)
+   const secondPart = phoneNumber.slice(7, 10)
+   const thirdPart = phoneNumber.slice(10)
+
+   return [countryCode, firstPart, secondPart, thirdPart].join(' ')
+}
+
+export {
+   signInError,
+   signUpError,
+   passwordError,
+   scheduleError,
+   showResultError,
+   formatPhoneNumberWithSpaces,
+}

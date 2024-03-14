@@ -26,7 +26,7 @@ const postFile = createAsyncThunk('patients/postFile', async (data) => {
    }
 })
 
-const postPatientResult = createAsyncThunk(
+const addPatientResult = createAsyncThunk(
    'patientsResult/addResult',
    async (result, { rejectWithValue, dispatch }) => {
       try {
@@ -76,8 +76,8 @@ const getPatientResult = createAsyncThunk(
    }
 )
 
-export const PATIENT_THUNK = {
+export const PATIENT_THUNKS = {
    getPatient,
    getPatientResult,
-   postPatientResult,
+   addPatientResult,
 }

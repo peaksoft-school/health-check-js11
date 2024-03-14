@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { format } from 'date-fns'
 import { Box, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
-import { PATIENT_THUNK } from '../../../store/slices/patient/patientThunk'
-import AddResult from './AddResult'
+import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
+import AddResult from '../../../components/patients/AddResult'
+import { formatPhoneNumberWithSpaces } from '../../../utils/helpers'
 
-const PatientsInnerPage = () => {
+const Patient = () => {
    const [toggleModal, setToggleModal] = useState(false)
 
    const { id } = useParams()
@@ -19,8 +21,8 @@ const PatientsInnerPage = () => {
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(PATIENT_THUNK.getPatient(id))
-      dispatch(PATIENT_THUNK.getPatientResult(id))
+      dispatch(PATIENT_THUNKS.getPatient(id))
+      dispatch(PATIENT_THUNKS.getPatientResult(id))
    }, [id])
 
    return (
@@ -77,7 +79,7 @@ const PatientsInnerPage = () => {
                         </Typography>
 
                         <Typography className="value">
-                           {data.phone_number}
+                           {formatPhoneNumberWithSpaces(data.phone_number)}
                         </Typography>
                      </Box>
                   </Box>
@@ -107,7 +109,7 @@ const PatientsInnerPage = () => {
 
                                     <Box>
                                        <Typography variant="span">
-                                          {date}
+                                          {format(new Date(date), 'dd.MM.yyyy')}
                                        </Typography>
 
                                        <Typography variant="span">
@@ -145,7 +147,7 @@ const PatientsInnerPage = () => {
    )
 }
 
-export default PatientsInnerPage
+export default Patient
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
@@ -164,7 +166,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginTop: '1.25rem',
          borderRadius: '0.375rem',
 
-         '& .content-box': {
+         '& > .content-box': {
             display: 'flex',
             width: '100%',
             gap: '90px',
@@ -203,7 +205,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          borderRadius: '8px',
          padding: ' 2vh 2vh 7vh 2vh',
 
-         '& .results-inner-container': {
+         '& > .results-inner-container': {
             display: 'flex',
             width: '100%',
             height: '100%',
@@ -213,7 +215,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             padding: ' 2vh 2vh 7vh 2vh',
          },
 
-         '& .result-label': {
+         '& > .result-label': {
             fontWeight: '500',
             fontSize: '18px',
          },
@@ -225,7 +227,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             },
          },
 
-         '& .file': {
+         '&  .file': {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -234,6 +236,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                cursor: 'pointer',
                boxSizing: 'content-box',
                width: '2rem',
+               transition: '1s',
                height: '5vh',
                padding: '0.5rem',
                borderRadius: '6px',
@@ -253,11 +256,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& .button-container': {
+      '& > .button-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
-         '& .button': {
+         '& > .button': {
             padding: '0',
             fontSize: '13px',
             height: '40px',

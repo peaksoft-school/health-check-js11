@@ -18,8 +18,6 @@ fileInjectStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-const open = true
-
 root.render(
    <StrictMode>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={ru}>

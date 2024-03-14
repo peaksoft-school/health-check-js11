@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
-import { PATIENTS_THUNK } from '../../../store/slices/patients/patientsThunk'
+import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
 import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 
 const Patients = () => {
@@ -15,14 +15,14 @@ const Patients = () => {
 
    const { isLoading, patients } = useSelector((state) => state.patients)
 
-   const handleSearchChange = (e) => setSearchName(e.target.value)
+   const searchChange = (e) => setSearchName(e.target.value)
 
    const [debouncedSearchText] = useDebounce(searchName, 1000)
 
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            PATIENTS_THUNK.searchPatients({
+            PATIENTS_THUNKS.searchPatients({
                searchName: debouncedSearchText,
             })
          )
@@ -30,7 +30,7 @@ const Patients = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(PATIENTS_THUNK.getAllPatients())
+      dispatch(PATIENTS_THUNKS.getPatients())
    }, [])
 
    return (
@@ -45,7 +45,7 @@ const Patients = () => {
                   <StyledInput
                      placeholder="Поиск"
                      value={searchName}
-                     onChange={handleSearchChange}
+                     onChange={searchChange}
                   />
                </Box>
 
@@ -83,7 +83,7 @@ const StyledContainer = styled(Box)(() => ({
          fontWeight: '500',
       },
 
-      '& .tables': {
+      '&  .tables': {
          padding: '0rem',
       },
 
@@ -92,7 +92,7 @@ const StyledContainer = styled(Box)(() => ({
          marginTop: '2.12rem',
       },
 
-      '& .table-container': {
+      '&  .table-container': {
          width: '100%',
          height: '100%',
          borderRadius: '0.375rem',

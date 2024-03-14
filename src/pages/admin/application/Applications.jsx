@@ -126,7 +126,7 @@ const StyledContainer = styled(Box)(() => ({
       },
    },
 
-   '& .not-application': {
+   '& > .not-application': {
       textAlign: 'center',
       color: 'green',
       fontWeight: '10rem',

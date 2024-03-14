@@ -12,7 +12,7 @@ const initialState = {
 }
 
 export const appointmentsSlice = createSlice({
-   name: 'Appointments',
+   name: 'appointments',
    initialState,
    reducers: {
       handleIsChecked: (state) => {
