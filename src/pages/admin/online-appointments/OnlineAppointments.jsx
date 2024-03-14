@@ -12,8 +12,8 @@ import Loading from '../../../components/Loading'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 import Schedule from '../schedule/Schedule'
-import AddSchedule from './AddSchedule'
 import { NoData } from '../../../assets/images'
+import AddSchedule from '../../../components/schedule/AddSchedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -237,6 +237,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                alignItems: 'center',
                justifyContent: 'space-between',
                width: '100%',
+               gap: '4px',
             },
 
             '& > .plus-icon': {

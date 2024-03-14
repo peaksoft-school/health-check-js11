@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
-import Checkbox from '../UI/Checkbox'
+import Checkbox from '../Checkbox'
 
-const ProcessedCheckbox = ({ checked, appointmentId }) => {
+const ProcessedCheckbox = ({ checked, variant, id, updateFn }) => {
    const [isChecked, setIsChecked] = useState(checked)
 
    const dispatch = useDispatch()
@@ -13,17 +12,16 @@ const ProcessedCheckbox = ({ checked, appointmentId }) => {
    }, [checked])
 
    const changeCheckbox = () => {
-      try {
+      if (variant === 'appointments')
          dispatch(
-            APPOINTMENTS_THUNK.updateAppointment({
-               appointmentId,
+            updateFn({
+               appointmentId: id,
                active: !isChecked,
                setIsChecked,
             })
          )
-      } catch (error) {
-         console.error('Error updating status:', error)
-      }
+      else if (variant === 'applications')
+         dispatch(updateFn({ id, isActive: !isChecked }))
    }
 
    return <Checkbox checked={isChecked} onChange={changeCheckbox} />

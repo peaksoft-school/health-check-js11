@@ -9,7 +9,7 @@ const initialState = {
    deletedAppointmentsIds: [],
 }
 
-const appointmentsSlice = createSlice({
+export const appointmentsSlice = createSlice({
    name: 'appointments',
    initialState,
    reducers: {
@@ -28,7 +28,7 @@ const appointmentsSlice = createSlice({
 
       handleIsCheckedItem: (state, { payload }) => {
          state.appointments = state.appointments.map((appointment) => {
-            if (appointment.appointmentId === payload.appointmentId) {
+            if (appointment.appointmentId === payload.id) {
                return {
                   ...appointment,
                   isSelected: !appointment.isSelected,
@@ -119,4 +119,3 @@ const appointmentsSlice = createSlice({
 })
 
 export const APPOINTMENTS_ACTIONS = appointmentsSlice.actions
-export default appointmentsSlice

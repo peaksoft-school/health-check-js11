@@ -3,20 +3,20 @@ import { useFormik } from 'formik'
 import { format } from 'date-fns'
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from 'react-redux'
-import Modal from '../../../components/UI/Modal'
-import Select from '../../../components/UI/Select'
-import DatePicker from '../../../components/UI/DatePicker'
-import TimePicker from '../../../components/UI/TimePicker'
-import Button from '../../../components/UI/Button'
 import {
    DAYS,
    DEPARTMENTS,
    INTERVAL_TIME,
    RUSSIAN_DAYS,
-} from '../../../utils/constants'
-import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
-import { scheduleError } from '../../../utils/helpers'
-import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
+} from '../../utils/constants/index'
+import Modal from '../UI/Modal'
+import Select from '../UI/Select'
+import DatePicker from '../UI/DatePicker'
+import TimePicker from '../UI/TimePicker'
+import { scheduleError } from '../../utils/helpers'
+import { VALIDATION_SCHEDULE } from '../../utils/helpers/validate'
+import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
+import Button from '../UI/Button'
 
 const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()
@@ -123,6 +123,7 @@ const AddSchedule = ({ open, onClose }) => {
                   error={!!errors.departmentName}
                   placeholder="Выберите услугу"
                   className="custom-select"
+                  variant="schedule"
                />
             </Box>
 
@@ -139,6 +140,7 @@ const AddSchedule = ({ open, onClose }) => {
                   }}
                   placeholder="Выберите специалиста"
                   error={!!errors.doctor}
+                  variant="schedule"
                />
             </Box>
 
@@ -206,6 +208,7 @@ const AddSchedule = ({ open, onClose }) => {
                      error={!!errors.interval}
                      placeholder="Выберите интервал часов"
                      className="custom-select"
+                     variant="schedule"
                   />
                </Box>
             </Box>

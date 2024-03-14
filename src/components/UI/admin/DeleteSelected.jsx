@@ -1,47 +1,62 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
-import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
-import { DeleteIcon } from '../../assets/icons'
-import Modal from '../UI/Modal'
-import Button from '../UI/Button'
+import { DeleteIcon } from '../../../assets/icons'
+import Modal from '../Modal'
+import Button from '../Button'
 
-const DeleteSelected = ({ disabled }) => {
-   const [open, setOpen] = useState(false)
-
+const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
    const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
+
+   const { selectAllApplications } = useSelector((store) => store.applications)
+
+   const [toggleModal, setToggleModal] = useState(false)
 
    const dispatch = useDispatch()
 
-   const openModal = () => setOpen(true)
+   const getIds = () => {
+      if (variant === 'appointments') return deletedAppointmentsIds
 
-   const handleClose = () => setOpen(false)
+      if (variant === 'applications') return selectAllApplications
 
-   const handleDelete = () => {
+      return []
+   }
+
+   const toggleModalHandler = () => setToggleModal((prev) => !prev)
+
+   const deleteHandler = () => {
       try {
-         dispatch(
-            APPOINTMENTS_THUNK.deleteAllAppointments(deletedAppointmentsIds)
-         )
+         if (variant === 'application') {
+            if (selectAllApplications.length) {
+               dispatch(deleteFn(selectAllApplications))
 
-         dispatch(APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds())
+               dispatch(clearFn())
+            }
+         }
+         dispatch(deleteFn(getIds()))
+
+         dispatch(clearFn())
       } catch (error) {
          console.error('Error deleting appointments:', error)
       } finally {
-         handleClose()
+         toggleModalHandler()
       }
    }
 
    return (
       <>
          <StyledDeleteButton
-            onClick={openModal}
-            disabled={disabled || deletedAppointmentsIds.length === 0}
+            onClick={toggleModalHandler}
+            disabled={disabled || getIds().length === 0}
          >
             <DeleteIcon />
          </StyledDeleteButton>
 
-         <Modal handleClose={handleClose} open={open} isCloseIcon={false}>
+         <Modal
+            handleClose={toggleModalHandler}
+            open={toggleModal}
+            isCloseIcon={false}
+         >
             <StyledContainer>
                <Typography className="description">
                   Вы уверены, что хотите удалить выбранные записи?
@@ -51,12 +66,12 @@ const DeleteSelected = ({ disabled }) => {
                   <Button
                      variant="grey"
                      className="button"
-                     onClick={handleClose}
+                     onClick={toggleModalHandler}
                   >
                      Отменить
                   </Button>
 
-                  <Button className="button" onClick={handleDelete}>
+                  <Button className="button" onClick={deleteHandler}>
                      Удалить
                   </Button>
                </Box>
@@ -86,7 +101,7 @@ const StyledContainer = styled(Box)(() => ({
    flexDirection: 'column',
    margin: '0.63rem 1.38rem',
 
-   '& .description': {
+   '& > .description': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '18px',
@@ -94,7 +109,7 @@ const StyledContainer = styled(Box)(() => ({
       marginBottom: '40px',
    },
 
-   '& .buttons-container': {
+   '& > .buttons-container': {
       display: 'flex',
       gap: '18px',
    },
