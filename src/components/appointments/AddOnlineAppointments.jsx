@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Drawer from '../UI/Drawer'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
 import OnlineAppointmentsContent from './OnlineAppointmentsContent'
+import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { DEPARTMENTS } from '../../utils/constants'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
    const [mainPage, setMainPage] = useState(true)
@@ -12,6 +15,50 @@ const AddOnlineAppointments = ({ open, onClose }) => {
    const [formPage, setFormPage] = useState(false)
    const [registeredPage, setRegisteredPage] = useState(false)
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
+   const [service, setService] = useState('')
+   const [selectedService, setSelectedService] = useState('')
+
+   const dispatch = useDispatch()
+
+   const openChooseSpecialist = () => {
+      if (service) {
+         setMainPage(false)
+         setSpecialistPage(true)
+      } else {
+         // showToast('Для начала выберите услугу', 'error')
+      }
+   }
+
+   const serviceChangeHandler = (e) => {
+      const selectedService = e.target.value
+      setService(selectedService)
+      const selectedServiceObject = DEPARTMENTS.find(
+         (service) => service.id === selectedService
+      )
+
+      console.log(selectedServiceObject, 'e')
+
+      setSelectedService(selectedServiceObject.title)
+      if (selectedServiceObject) {
+         const departmentId = selectedServiceObject.id
+         dispatch(
+            ONLINE_APPOINTMENTS_THUNKS.getDoctorsByFacility({ departmentId })
+         )
+      } else {
+         console.log('hello')
+      }
+   }
+
+   const openChooseSpecialistTime = ({ id }) => {
+      setSpecialistPage(false)
+      dispatch(
+         ONLINE_APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet({
+            doctorId: id,
+         })
+      )
+      setSpecialistTimePage(true)
+      setSelectedDoctorId(id)
+   }
 
    return (
       <Drawer open={open} onClose={onClose}>
@@ -38,7 +85,14 @@ const AddOnlineAppointments = ({ open, onClose }) => {
             </div>
 
             <StyledContainer>
-               <OnlineAppointmentsContent />
+               {mainPage && (
+                  <OnlineAppointmentsContent
+                     service={service}
+                     // specialist={specialist}
+                     openChooseSpecialist={openChooseSpecialist}
+                     serviceChangeHandler={serviceChangeHandler}
+                  />
+               )}
             </StyledContainer>
          </StyledDrawer>
       </Drawer>

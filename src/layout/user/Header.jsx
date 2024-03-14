@@ -47,8 +47,6 @@ const Header = () => {
       // return setOpenSignUpModal(true)
    }
 
-   console.log(openSignUpModal)
-
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
 
    const closeLogOutHandler = () => setToggleLogOutModal(false)

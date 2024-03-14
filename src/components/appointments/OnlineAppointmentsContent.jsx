@@ -8,10 +8,12 @@ import { DEPARTMENTS } from '../../utils/constants'
 import Select from '../UI/Select'
 import Button from '../UI/Button'
 
-const OnlineAppointmentsContent = () => {
+const OnlineAppointmentsContent = ({ serviceChangeHandler, service }) => {
    return (
       <StyledContainer>
          <StyledSelect
+            value={service}
+            onChange={serviceChangeHandler}
             icon={<ChooseServiceIcon className="icon" />}
             placeholder="Выбрать услуги"
             options={DEPARTMENTS}
