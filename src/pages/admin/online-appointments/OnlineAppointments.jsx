@@ -1,7 +1,8 @@
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
@@ -19,6 +20,8 @@ const OnlineAppointments = () => {
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
    const [openModal, setOpenModal] = useState(false)
+
+   const { schedules } = useSelector((state) => state.schedule)
 
    const dispatch = useDispatch()
 
@@ -51,6 +54,65 @@ const OnlineAppointments = () => {
       setShowAddButton(newValue === '1')
    }
 
+   const generateExcel = useCallback(() => {
+      const workbook = new Workbook()
+      const worksheet = workbook.addWorksheet('Schedule')
+
+      const headerRow = ['ID', 'Full Name', 'Position']
+
+      schedules.forEach((schedule) => {
+         schedule.dates.forEach((_, index) => {
+            headerRow.push(`Date of Consultation ${index + 1}`)
+            headerRow.push(`Day of Week ${index + 1}`)
+            headerRow.push(`Time Sheet ${index + 1}`)
+         })
+      })
+
+      worksheet.addRow(headerRow)
+
+      schedules.forEach((schedule) => {
+         const { id, surname, position, dates } = schedule
+
+         const rowData = [id.toString(), surname, position]
+
+         dates.forEach((date) => {
+            rowData.push(date.dateOfConsultation)
+            rowData.push(date.dayOfWeek)
+            rowData.push(date.startTimeOfConsultation.join(', '))
+         })
+
+         worksheet.addRow(rowData)
+      })
+
+      worksheet.columns.forEach((column) => {
+         let maxWidth = 0
+         column.eachCell((cell) => {
+            const cellWidth = cell.value
+               ? cell.value.toString().length * 1.2
+               : 10
+            maxWidth = Math.max(maxWidth, cellWidth)
+         })
+         column.width = maxWidth < 10 ? 10 : maxWidth
+      })
+
+      workbook.xlsx.writeBuffer().then((buffer) => {
+         const blob = new Blob([buffer], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+         })
+
+         const url = window.URL.createObjectURL(blob)
+         const a = document.createElement('a')
+
+         a.href = url
+         a.download = 'Schedule.xlsx'
+         document.body.appendChild(a)
+         a.click()
+
+         window.URL.revokeObjectURL(url)
+         document.body.removeChild(a)
+      })
+   }, [schedules])
+
    return (
       <StyledContainer>
          <Box className="box">
@@ -68,11 +130,13 @@ const OnlineAppointments = () => {
 
                {!showAddButton && (
                   <Box>
-                     <Button variant="secondary" className="export-btn">
+                     <Button
+                        variant="secondary"
+                        className="export-btn"
+                        onClick={generateExcel}
+                     >
                         EXPORT TO EXCEL
                      </Button>
-
-                     <Button className="save-btn">СОХРАНИТЬ</Button>
                   </Box>
                )}
             </Box>

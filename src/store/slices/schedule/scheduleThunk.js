@@ -76,8 +76,10 @@ const savePatternTimeSheet = createAsyncThunk(
          )
 
          dispatch(getAllSchedules())
+         showToast({ message: response.data.message })
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -99,9 +101,11 @@ const updateTimeSheetDoctor = createAsyncThunk(
             formattedTimeRanges
          )
 
+         showToast({ message: response.data.message })
          dispatch(getAllSchedules())
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -120,9 +124,11 @@ const deleteTimeSheets = createAsyncThunk(
             formatedFromTimes
          )
 
+         showToast({ message: response.data.message })
          dispatch(getAllSchedules())
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -141,6 +147,7 @@ const scheduleSearch = createAsyncThunk(
 
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }

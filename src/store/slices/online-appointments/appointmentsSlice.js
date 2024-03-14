@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { showToast } from '../../../utils/helpers/notification'
 import { APPOINTMENTS_THUNK } from './appointmentThunk'
 
 const initialState = {
@@ -7,8 +6,7 @@ const initialState = {
    isLoading: false,
    error: null,
    selectAll: false,
-   deletedAppointmentsIds:
-      JSON.parse(localStorage.getItem('deletedAppointmentsIds')) || [],
+   deletedAppointmentsIds: [],
 }
 
 const appointmentsSlice = createSlice({
@@ -50,17 +48,11 @@ const appointmentsSlice = createSlice({
          } else {
             state.selectAll = false
          }
-
-         localStorage.setItem(
-            'deletedAppointmentsIds',
-            JSON.stringify(state.deletedAppointmentsIds)
-         )
       },
    },
 
    clearDeletedAppointmentsIds: (state) => {
       state.deletedAppointmentsIds = []
-      localStorage.removeItem('deletedAppointmentsIds')
    },
 
    extraReducers: (builder) => {
@@ -84,17 +76,9 @@ const appointmentsSlice = createSlice({
             state.isLoading = true
          })
 
-         .addCase(
-            APPOINTMENTS_THUNK.getAppointments.rejected,
-            (state, action) => {
-               state.isLoading = false
-
-               // showToast({
-               //    message: (state.error = action.error.message),
-               //    status: 'rejected',
-               // })
-            }
-         )
+         .addCase(APPOINTMENTS_THUNK.getAppointments.rejected, (state) => {
+            state.isLoading = false
+         })
 
          .addCase(
             APPOINTMENTS_THUNK.searchAppointment.fulfilled,
@@ -121,30 +105,14 @@ const appointmentsSlice = createSlice({
             state.isLoading = false
          })
 
-         .addCase(
-            APPOINTMENTS_THUNK.updateAppointment.rejected,
-            (state, action) => {
-               state.isLoading = false
-
-               // showToast({
-               //    message: (state.error = action.error.message),
-               // })
-            }
-         )
-
-         .addCase(APPOINTMENTS_THUNK.deleteAppoinment.fulfilled, () => {
-            showToast({
-               message: 'Запись успешно удалено',
-            })
+         .addCase(APPOINTMENTS_THUNK.updateAppointment.rejected, (state) => {
+            state.isLoading = false
          })
 
          .addCase(
             APPOINTMENTS_THUNK.deleteAllAppointments.fulfilled,
             (state) => {
                state.deletedAppointmentsIds = []
-               // showToast({
-               //    message: 'Выбранные записи успешно удалены',
-               // })
             }
          )
    },

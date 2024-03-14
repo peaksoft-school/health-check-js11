@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Button, ButtonBase, Typography, styled } from '@mui/material'
+import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { addDays, format } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import Loading from '../Loading'
@@ -149,7 +149,6 @@ const TableSchedule = () => {
 
       return dateRange
    }
-
    const generateFreeTimes = (startTimeOfConsultation) => {
       if (!startTimeOfConsultation || startTimeOfConsultation.length === 0) {
          return []
@@ -158,14 +157,20 @@ const TableSchedule = () => {
       const timeRanges = startTimeOfConsultation.map((timeRange) => {
          const [startTime, endTime] = timeRange.split(' - ')
          const trimmedStartTime = startTime.slice(0, -3)
-         const trimmedEndTime = endTime.replace(/-f$/, '').slice(0, -3)
-
-         return `${trimmedStartTime} - ${trimmedEndTime}`
+         const trimmedEndTime = endTime
+            .replace(/-f$/, '')
+            .replace(/-t$/, '')
+            .slice(0, -3)
+         const isFreeTime = endTime.endsWith('-f')
+         return { time: `${trimmedStartTime} - ${trimmedEndTime}`, isFreeTime }
       })
 
-      return timeRanges.map((formattedTime) => (
-         <Typography key={formattedTime} className="free-time">
-            {formattedTime}
+      return timeRanges.map(({ time, isFreeTime }) => (
+         <Typography
+            key={time}
+            className={isFreeTime ? 'free-time' : 'not-free-time'}
+         >
+            {time}
          </Typography>
       ))
    }
@@ -279,6 +284,7 @@ const TableSchedule = () => {
                   placeholder="От"
                   value={startDate}
                   onChange={(e) => handleDateChange(e, 'start')}
+                  min={format(new Date(), 'yyyy-MM-dd')}
                />
                -
                <input
@@ -286,6 +292,7 @@ const TableSchedule = () => {
                   type="date"
                   placeholder="До"
                   value={endDate}
+                  min={format(new Date(), 'yyyy-MM-dd')}
                   onChange={(e) => handleDateChange(e, 'end')}
                />
             </Box>
@@ -449,12 +456,6 @@ const StyledContainer = styled(Box)(() => ({
 
    '& .schedule-table-container': {
       overflowX: 'auto',
-      boxShadow: '0px 0px 12px 0.1px#7a7a7a',
-
-      '& ::-webkit-scrollbar-thumb': {
-         borderRadius: '5px',
-         backgroundColor: '#843465',
-      },
    },
 
    '& .table': {
@@ -530,8 +531,12 @@ const StyledContainer = styled(Box)(() => ({
          cursor: 'pointer',
 
          '& .free-time-container': {
-            borderLeft: '3px solid #1F6ED4',
             backgroundColor: '#DBEBFF',
+            borderRadius: '5px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingLeft: '8px',
 
             '& .free-time': {
                color: '#1F6ED4',
@@ -539,7 +544,15 @@ const StyledContainer = styled(Box)(() => ({
                fontStyle: 'italic',
                fontSize: '12px',
                width: '100%',
-               marginLeft: '6px',
+            },
+
+            '& .not-free-time': {
+               color: '#1f6dd486',
+               fontWeight: '400',
+               fontStyle: 'italic',
+               fontSize: '12px',
+               width: '100%',
+               textDecorationLine: 'line-through',
             },
          },
       },
@@ -548,14 +561,16 @@ const StyledContainer = styled(Box)(() => ({
          transition: '0.2s',
          width: '100%',
          height: '9.875rem',
-         padding: '6px',
          boxShadow: '0px 0px 5px 1px',
+         overflow: 'auto',
+         padding: '3px',
       },
 
       '& .unHighlighted': {
          height: '9.875rem',
          transition: '0.2s',
          width: '100%',
+         overflow: 'hidden',
          padding: '6px',
       },
    },

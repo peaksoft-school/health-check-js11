@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { SCHEDULE_THUNK } from './scheduleThunk'
-import { showToast } from '../../../utils/helpers/notification'
 
 const initialState = {
    doctors: [],
@@ -28,12 +27,6 @@ export const scheduleSlice = createSlice({
 
          .addCase(SCHEDULE_THUNK.getAllSchedules.rejected, (state) => {
             state.isLoading = false
-         })
-
-         .addCase(SCHEDULE_THUNK.savePatternTimeSheet.fulfilled, () => {
-            showToast({
-               message: 'Успешно',
-            })
          })
 
          .addCase(SCHEDULE_THUNK.getDoctorsByDepartment.pending, (state) => {
@@ -71,24 +64,15 @@ export const scheduleSlice = createSlice({
 
          .addCase(SCHEDULE_THUNK.scheduleSearch.fulfilled, (state, action) => {
             if (action.payload && !action.payload.error) {
-               const updatedSchedules = action.payload.map((appointment) => ({
-                  ...appointment,
-                  isSelected: false,
+               const updatedSchedules = action.payload.map((schedule) => ({
+                  ...schedule,
                }))
 
-               updatedSchedules.sort(
-                  (a, b) => a.appointmentId - b.appointmentId
-               )
+               updatedSchedules.sort((a, b) => a.id - b.id)
 
                state.schedules = updatedSchedules
             }
             state.isLoading = false
-         })
-
-         .addCase(SCHEDULE_THUNK.updateTimeSheetDoctor.fulfilled, () => {
-            showToast({
-               message: 'Успешно',
-            })
          })
    },
 })
