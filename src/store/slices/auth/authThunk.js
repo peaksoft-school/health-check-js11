@@ -60,7 +60,7 @@ const signIn = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'не верный пароль или email',
                status: 'error',
             })
          } else {
@@ -74,33 +74,6 @@ const signIn = createAsyncThunk(
       }
    }
 )
-
-// const forgotPassword = createAsyncThunk(
-//    'auth/forgotPassword',
-//    async ({ email, link, onClose, setEmail }, { rejectWithValue }) => {
-//       try {
-//          const response = await axiosInstance.post(
-//             `/api/auth/send-email?email=${email}&link=${link}`
-//          )
-
-//          showToast({
-//             message: 'Вам отправлено ссылка для сброса пароля',
-//          })
-
-//          onClose()
-//          setEmail('')
-
-//          return response
-//       } catch (error) {
-//          showToast({
-//             message: error.response.data.message,
-//             status: 'error',
-//          })
-
-//          return rejectWithValue(error.response.data)
-//       }
-//    }
-// )
 
 const forgotPassword = createAsyncThunk(
    'auth/forgotPassword',
@@ -135,29 +108,6 @@ const forgotPassword = createAsyncThunk(
       }
    }
 )
-
-// const changePassword = createAsyncThunk(
-//    'auth/changePassword',
-//    async (payload, { rejectWithValue }) => {
-//       try {
-//          const response = await axiosInstance.post(
-//             `/api/auth/forgot-password?token=${payload.token}&newPassword=${payload.newPassword}`
-//          )
-//          showToast({
-//             message: 'пароль успешно изменен!',
-//          })
-
-//          return response
-//       } catch (error) {
-//          showToast({
-//             message: error.response.data.message,
-//             status: 'error',
-//          })
-
-//          return rejectWithValue(error.response.data)
-//       }
-//    }
-// )
 
 const changePassword = createAsyncThunk(
    'auth/changePassword',

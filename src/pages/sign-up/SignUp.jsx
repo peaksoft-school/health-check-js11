@@ -56,15 +56,18 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const signUpWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider).then((data) => {
-            dispatch(
-               authWithGoogle({
-                  tokenId: data.user.accessToken,
-               })
-            )
-
-            onClose()
-         })
+         await signInWithPopup(auth, provider)
+            .then((data) => {
+               dispatch(
+                  authWithGoogle({
+                     tokenId: data.user.accessToken,
+                  })
+               )
+               onClose()
+            })
+            .catch((error) => {
+               console.log('Caught error Popup closed')
+            })
       } catch (error) {
          throw new Error(error)
       }
@@ -205,7 +208,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
                <GoogleIcon />
                Зарегистрироваться с Google
             </ButtonBase>
-            <Typography>
+            <Typography className="naigate">
                У вас уже есть аккаунт?
                <Typography
                   onClick={openSignIn}
@@ -261,6 +264,10 @@ const StyledForm = styled('form')(({ theme }) => ({
          display: 'flex',
          gap: '0.875rem',
       },
+   },
+
+   '& .naigate': {
+      cursor: 'pointer',
    },
 }))
 

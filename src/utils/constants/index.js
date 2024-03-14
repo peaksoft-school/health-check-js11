@@ -31,13 +31,26 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
+import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
-   { id: 1, to: '/about-clinic', label: 'О клинике' },
-   { id: 2, to: '/services', label: 'Услуги' },
-   { id: 3, to: '/doctors', label: 'Врачи' },
-   { id: 4, to: '/prices', label: 'Цены' },
-   { id: 5, to: '/contacts', label: 'Контакты' },
+   {
+      id: 1,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.ABOUT_CLINICK}`,
+      label: 'О клинике',
+   },
+   {
+      id: 2,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
+      label: 'Услуги',
+   },
+   { id: 3, to: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}`, label: 'Врачи' },
+   { id: 4, to: `${ROUTES.USER.INDEX}${ROUTES.USER.PRICES}`, label: 'Цены' },
+   {
+      id: 5,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.CONTACTS}`,
+      label: 'Контакты',
+   },
 ]
 
 const HEADER_SOCIALS = [
@@ -267,10 +280,25 @@ const FAKE_DATA = [
 ]
 
 const ADMIN_NAVIGATIONS = [
-   { id: 1, to: '/admin/registration', label: 'Онлайн-запись' },
-   { id: 2, to: '/admin/applications', label: 'Заявки' },
-   { id: 3, to: '/admin/specialists', label: 'Специалисты' },
-   { id: 4, to: '/admin/patient', label: 'Пациенты' },
+   { id: 1, to: ROUTES.ADMIN.INDEX, label: 'Онлайн-запись' },
+
+   {
+      id: 2,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.APPLICATIONS}`,
+      label: 'Заявки',
+   },
+
+   {
+      id: 3,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`,
+      label: 'Специалисты',
+   },
+
+   {
+      id: 4,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}`,
+      label: 'Пациенты',
+   },
 ]
 
 const DAYS = [
@@ -379,7 +407,7 @@ const DEPARTMENTS = [
 
    {
       id: 13,
-      title: 'Проктология',
+      label: 'Проктология',
       value: 'проктология',
    },
 
@@ -469,13 +497,13 @@ const RUSSIAN_DAYS = [
 ]
 
 const DAYS_OF_WEEK = {
-   Su: 'ПН',
-   Mo: 'ВТ',
-   Tu: 'СР',
-   We: 'ЧТ',
-   Th: 'ПТ',
-   Fr: 'СБ',
-   Sa: 'ВС',
+   Su: 'Пн',
+   Mo: 'Вт',
+   Tu: 'Ср',
+   We: 'Чт',
+   Th: 'Пт',
+   Fr: 'Сб',
+   Sa: 'Вс',
 }
 
 export {

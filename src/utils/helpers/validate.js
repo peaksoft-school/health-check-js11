@@ -40,10 +40,19 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
    newPassword: Yup.string()
       .required('Введите новый пароль!')
       .min(8, 'Минимальная длина пароля 8 символов!')
-      .matches(passwordRegex, 'Пароль требует заглавную букву!'),
+      .matches(passwordRegex, 'Не вылидный пароль!'),
    confirmPassword: Yup.string()
       .oneOf([Yup.ref('newPassword'), null], 'Пароли не совпадают!')
       .required('Подтвердите пароль!'),
+})
+
+const VALIDATION_RESULT = Yup.object().shape({
+   date: Yup.date().required('Выберите дату начала!'),
+   service: Yup.string().required('Выберите Услугу!'),
+
+   file: Yup.mixed().test('file', 'Загрузите файл!', (value) => {
+      return value instanceof File
+   }),
 })
 
 const VALIDATION_SCHEDULE = Yup.object().shape({
@@ -70,4 +79,5 @@ export {
    VALIDATION_FORGOT_PASSWORD,
    VALIDATION_SIGN_UP,
    VALIDATION_SCHEDULE,
+   VALIDATION_RESULT,
 }

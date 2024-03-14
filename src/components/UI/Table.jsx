@@ -7,10 +7,15 @@ import {
    TableBody,
    Table as MuiTable,
    styled,
+   Box,
 } from '@mui/material'
 import { memo, useMemo } from 'react'
 
-const Table = ({ columns: headers, data }) => {
+const Table = ({ columns: headers, data, empty }) => {
+   if (!data || data.length === 0) {
+      return <StyledAbsence>{empty}</StyledAbsence>
+   }
+
    const columns = useMemo(() => headers, [])
 
    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -66,9 +71,6 @@ const Table = ({ columns: headers, data }) => {
                                  style: {
                                     ...cell.column.style,
                                     ...cell.column.tdStyle,
-                                    color: row.original.processed
-                                       ? '#000000'
-                                       : '#5f5c5c',
                                  },
                               })}
                               key={cell.column.id}
@@ -96,3 +98,9 @@ const StyledTableContainer = styled(TableContainer)({
       height: '3.688rem',
    },
 })
+
+const StyledAbsence = styled(Box)(() => ({
+   textAlign: 'center',
+   padding: '20vh 0',
+   opacity: '20%',
+}))

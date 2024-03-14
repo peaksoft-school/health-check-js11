@@ -5,10 +5,9 @@ import { DAYS_OF_WEEK } from '../../utils/constants'
 
 const DatePicker = ({
    value,
-   label,
    onChange,
    onBlur,
-   format,
+   format = 'YYYY/MM/DD',
    maxDate,
    minDate,
    variant,
@@ -20,7 +19,6 @@ const DatePicker = ({
    return (
       <StyledDatePicker
          value={parsedValue}
-         label={label}
          onChange={(date) => onChange(date)}
          onBlur={onBlur}
          dayOfWeekFormatter={(_day, weekday) =>
@@ -29,7 +27,7 @@ const DatePicker = ({
          maxDate={maxDate}
          minDate={minDate}
          error={error}
-         format="YYYY/MM/DD"
+         format={format}
          renderDay={(day, _value, DayComponentProps) => (
             <DayComponentProps
                onFocus={DayComponentProps.onDayFocus}
@@ -56,7 +54,6 @@ const DatePicker = ({
                      fontFamily: 'Manrope',
                      fontSize: '14px',
                      fontWeight: '500',
-                     textTransform: 'uppercase',
                   },
 
                   '.MuiPickersCalendarHeader-label': {
@@ -105,6 +102,7 @@ const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    fontWeight: '400',
    fontSize: '14px',
    border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',
