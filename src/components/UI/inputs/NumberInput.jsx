@@ -106,5 +106,28 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
       }
    }
 
+   if (variant === 'drawer') {
+      return {
+         ...defaultStyles,
+         borderRadius: '0.225rem',
+         width: '84%',
+         border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
+
+         '& input': {
+            color: 'black',
+         },
+
+         '& input::placeholder': {
+            color: `${theme.palette.secondary.main}`,
+         },
+
+         '&:hover': {
+            border: `1px solid ${
+               error ? 'red' : theme.palette.secondary.lightGrey
+            }`,
+         },
+      }
+   }
+
    return defaultStyles
 })

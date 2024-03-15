@@ -7,8 +7,9 @@ import {
    Box,
    MenuItem,
 } from '@mui/material'
-import Selector from 'react-select'
+import Selector, { components } from 'react-select'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { ChooseServiceIcon } from '../../assets/icons'
 
 const menuProps = {
    PaperProps: {
@@ -17,11 +18,19 @@ const menuProps = {
          maxHeight: '292',
          boxShadow: '0px 5px 44px 0px rgba(0, 0, 0, 0.06)',
          marginTop: '13.2rem',
-
          borderRadius: '16px 8px 8px 16px ',
       },
    },
 }
+
+const { Control } = components
+
+const CustomControl = ({ children, ...props }) => (
+   <Control {...props}>
+      <ChooseServiceIcon />
+      {children}
+   </Control>
+)
 
 const customStyles = {
    control: (provided, state) => {
@@ -56,6 +65,29 @@ const customStyles = {
    }),
 }
 
+const customStylesAppointments = {
+   control: (provided) => {
+      return {
+         ...provided,
+         height: '65px',
+         paddingLeft: '20px',
+         width: '100%',
+         border: 'none',
+         borderRadius: '10px',
+         boxShadow: 'none',
+
+         '& span': {
+            width: '0px',
+         },
+      }
+   },
+
+   menu: (provided) => ({
+      ...provided,
+      width: '320px',
+   }),
+}
+
 const Select = forwardRef(
    (
       { options, value, onChange, placeholder, error, variant, icon, ...rest },
@@ -72,7 +104,21 @@ const Select = forwardRef(
 
       return (
          <Box>
-            {variant === 'schedule' ? (
+            {variant === 'appointments' && (
+               <Selector
+                  options={options}
+                  onChange={onChange}
+                  isSearchable={false}
+                  styles={{ ...customStylesAppointments }}
+                  placeholder={placeholder}
+                  error={error}
+                  ref={ref}
+                  components={{ Control: CustomControl }}
+                  {...rest}
+               />
+            )}
+
+            {variant === 'schedule' && (
                <Selector
                   options={options}
                   onChange={onChange}
@@ -83,7 +129,9 @@ const Select = forwardRef(
                   ref={ref}
                   {...rest}
                />
-            ) : (
+            )}
+
+            {variant !== 'appointments' && variant !== 'schedule' && (
                <StyledFormControl fullWidth isopen={isVisible.toString()}>
                   <Icon variant="span">{icon}</Icon>
 
@@ -103,14 +151,11 @@ const Select = forwardRef(
                   >
                      <StyledLabel value="">{placeholder}</StyledLabel>
 
-                     {/* <div className="ALISHER"> */}
-                     {options &&
-                        options.map(({ id, label }) => (
-                           <MenuItemStyle key={id} value={label}>
-                              {label}
-                           </MenuItemStyle>
-                        ))}
-                     {/* </div> */}
+                     {options?.map(({ id, label }) => (
+                        <MenuItemStyle key={id} value={label}>
+                           {label}
+                        </MenuItemStyle>
+                     ))}
                   </StyledMuiSelect>
                </StyledFormControl>
             )}
@@ -123,7 +168,7 @@ export default Select
 
 const StyledFormControl = styled(FormControl)(() => ({
    '& .MuiOutlinedInput-notchedOutline': {
-      border: 'none !important',
+      border: 'none',
    },
 }))
 
@@ -185,7 +230,6 @@ const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
    fontFamily: 'Manrope',
    height: '3rem',
    marginLeft: '0.6rem',
-   // height: '3rem',
 
    '&:hover': {
       background: theme.palette.tertiary.main,

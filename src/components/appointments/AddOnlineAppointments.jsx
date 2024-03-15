@@ -1,63 +1,69 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Drawer from '../UI/Drawer'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
 import OnlineAppointmentsContent from './OnlineAppointmentsContent'
 import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
-import { DEPARTMENTS } from '../../utils/constants'
+import ChoseSpecialist from './ChoseSpecialist'
+import ChooseDatePage from './ChooseDatePage'
+import { showToast } from '../../utils/helpers/notification'
+import Form from './Form'
 
 const AddOnlineAppointments = ({ open, onClose }) => {
    const [mainPage, setMainPage] = useState(true)
-   const [specialistTimePage, setSpecialistTimePage] = useState(false)
    const [specialistPage, setSpecialistPage] = useState(false)
+   const [doctorInfo, setDoctorInfo] = useState('')
    const [datePage, setDatePage] = useState(false)
    const [formPage, setFormPage] = useState(false)
-   const [registeredPage, setRegisteredPage] = useState(false)
-   const [selectedDoctorId, setSelectedDoctorId] = useState(null)
-   const [service, setService] = useState('')
-   const [selectedService, setSelectedService] = useState('')
+   const [facility, setFacility] = useState('')
+   const [selectedDate, setSelectedDate] = useState(null)
+   const [time, setTime] = useState('')
 
    const dispatch = useDispatch()
 
-   const openChooseSpecialist = () => {
-      if (service) {
-         setMainPage(false)
-         setSpecialistPage(true)
-      } else {
-         // showToast('Для начала выберите услугу', 'error')
-      }
-   }
+   const validate = facility && doctorInfo && time
 
-   const serviceChangeHandler = (e) => {
-      const selectedService = e.target.value
-      setService(selectedService)
-      const selectedServiceObject = DEPARTMENTS.find(
-         (service) => service.id === selectedService
-      )
+   const changeFacilityHandler = (selectedOption) => {
+      setFacility(selectedOption)
 
-      console.log(selectedServiceObject, 'e')
-
-      setSelectedService(selectedServiceObject.title)
-      if (selectedServiceObject) {
-         const departmentId = selectedServiceObject.id
+      if (selectedOption) {
          dispatch(
-            ONLINE_APPOINTMENTS_THUNKS.getDoctorsByFacility({ departmentId })
+            ONLINE_APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet(
+               selectedOption.label
+            )
          )
       } else {
-         console.log('hello')
+         showToast({ message: 'выбурите услугу!', status: 'error' })
       }
    }
 
-   const openChooseSpecialistTime = ({ id }) => {
+   const specialistPafwHandler = () => {
+      if (facility) {
+         setMainPage((prev) => !prev)
+         setSpecialistPage((prev) => !prev)
+      } else {
+         showToast({ message: 'выбурите услугу!', status: 'error' })
+      }
+   }
+
+   const datePageHandler = () => {
+      setMainPage(false)
+      setFormPage(false)
+      setDatePage(true)
+   }
+
+   const formPageHandler = () => {
+      setDatePage(false)
+      setMainPage(false)
+      setFormPage(true)
+   }
+
+   const goBack = () => {
       setSpecialistPage(false)
-      dispatch(
-         ONLINE_APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet({
-            doctorId: id,
-         })
-      )
-      setSpecialistTimePage(true)
-      setSelectedDoctorId(id)
+      setFormPage(false)
+      setDatePage(false)
+      setMainPage(true)
    }
 
    return (
@@ -67,19 +73,15 @@ const AddOnlineAppointments = ({ open, onClose }) => {
                {mainPage ? (
                   <CloseIcon onClick={onClose} />
                ) : (
-                  <GoBackIcon
-                  //    onClick={specialistTimePage ? goBackInSpecialists : goBack}
-                  />
+                  <GoBackIcon onClick={goBack} />
                )}
 
                <div className="header">
                   <Typography className="title">
                      {mainPage && 'Онлайн Запись'}
                      {specialistPage && 'Выбрать специалиста'}
-                     {specialistTimePage && 'Выбрать дату и время'}
                      {datePage && 'Выбрать дату и время'}
                      {formPage && 'Запись'}
-                     {registeredPage && 'Онлайн Запись'}
                   </Typography>
                </div>
             </div>
@@ -87,10 +89,43 @@ const AddOnlineAppointments = ({ open, onClose }) => {
             <StyledContainer>
                {mainPage && (
                   <OnlineAppointmentsContent
-                     service={service}
-                     // specialist={specialist}
-                     openChooseSpecialist={openChooseSpecialist}
-                     serviceChangeHandler={serviceChangeHandler}
+                     value={facility.label}
+                     doctorName={doctorInfo}
+                     date={time}
+                     selectHandler={changeFacilityHandler}
+                     toggleSpecialist={specialistPafwHandler}
+                     toggleDate={datePageHandler}
+                     setDoctorName={setDoctorInfo}
+                     setDat={setTime}
+                     validate={!!validate}
+                     openForm={formPageHandler}
+                  />
+               )}
+
+               {specialistPage && (
+                  <ChoseSpecialist
+                     setDoctorName={setDoctorInfo}
+                     goBack={goBack}
+                     setTime={setTime}
+                  />
+               )}
+
+               {datePage && (
+                  <ChooseDatePage
+                     selectedDate={selectedDate}
+                     setTime={setTime}
+                     setSelectedDate={setSelectedDate}
+                     selectedTime={time}
+                     setSelectedTime={setTime}
+                     formPageHandler={formPageHandler}
+                  />
+               )}
+               {formPage && (
+                  <Form
+                     doctorInfo={doctorInfo}
+                     facility={facility.label}
+                     time={time}
+                     date={selectedDate}
                   />
                )}
             </StyledContainer>

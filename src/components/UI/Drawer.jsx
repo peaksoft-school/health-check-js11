@@ -10,7 +10,7 @@ const Drawer = ({ open, onClose, anchor = 'right', children }) => {
 export default Drawer
 
 const StyledDrawer = styled(MuiDrawer)(() => ({
-   '.css-1160xiw-MuiPaper-root-MuiDrawer-paper': {
-      // maxWidth: '26%',
+   '.MuiDrawer-paper': {
+      overflowX: 'clip !important',
    },
 }))

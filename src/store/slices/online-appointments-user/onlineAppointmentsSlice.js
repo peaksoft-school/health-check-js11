@@ -2,13 +2,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import { ONLINE_APPOINTMENTS_THUNKS } from './onlineAppointmentsThunk'
 
 const initialState = {
-   doctorsTimesheet: {},
+   doctorsTimesheet: [],
    doctors: {},
+   date: [],
+   facilityArray: [],
    isLoading: false,
+   appoinmentId: null,
+   code: null,
 }
 
-export const appointmentsSlice = createSlice({
-   name: 'online-appointments',
+export const onlineAppointmentsSlice = createSlice({
+   name: 'onlineAppointments',
    initialState,
    reducers: {},
 
@@ -42,27 +46,72 @@ export const appointmentsSlice = createSlice({
          )
 
          .addCase(
-            ONLINE_APPOINTMENTS_THUNKS.getDoctorsByFacility.fulfilled,
+            ONLINE_APPOINTMENTS_THUNKS.getAllFacility.fulfilled,
             (state, { payload }) => {
-               state.doctors = payload
+               state.facilityArray = payload
                state.isLoading = false
             }
          )
 
          .addCase(
-            ONLINE_APPOINTMENTS_THUNKS.getDoctorsByFacility.pending,
+            ONLINE_APPOINTMENTS_THUNKS.getAllFacility.pending,
             (state) => {
                state.isLoading = true
             }
          )
 
          .addCase(
-            ONLINE_APPOINTMENTS_THUNKS.getDoctorsByFacility.rejected,
+            ONLINE_APPOINTMENTS_THUNKS.getAllFacility.rejected,
+            (state) => {
+               state.isLoading = false
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule.fulfilled,
+            (state, { payload }) => {
+               state.date = payload
+               state.isLoading = false
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule.pending,
+            (state) => {
+               state.isLoading = true
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule.rejected,
+            (state) => {
+               state.isLoading = false
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.addAppointment.fulfilled,
+            (state, { payload }) => {
+               state.isLoading = false
+               const [code, id] = payload.message.split(' ')
+               state.code = code
+               state.appoinmentId = id
+               console.log(payload.message)
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.addAppointment.pending,
+            (state) => {
+               state.isLoading = true
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.addAppointment.rejected,
             (state) => {
                state.isLoading = false
             }
          )
    },
 })
-
-export const APPOINTMENTS_ACTIONS = appointmentsSlice.actions

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -22,6 +22,7 @@ import {
 } from '../../utils/constants/index'
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
+import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
 
 const Header = () => {
    const { role, isAuth } = useSelector((state) => state.auth)
@@ -43,6 +44,7 @@ const Header = () => {
    const toggleDrawerHandler = () => {
       // if (isAuth) {
       setToggleDrawerModal((prev) => !prev)
+      dispatch(ONLINE_APPOINTMENTS_THUNKS.getAllFacility())
       // }
       // return setOpenSignUpModal(true)
    }
@@ -57,6 +59,8 @@ const Header = () => {
 
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
+
+   // const getFacility = () =>
 
    const handlelogOut = () => {
       handleProfileMenuClose()

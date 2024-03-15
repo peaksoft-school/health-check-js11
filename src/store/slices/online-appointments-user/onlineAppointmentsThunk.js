@@ -1,13 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
 
-const getDoctorsByFacility = createAsyncThunk(
-   'online-appointments/getDoctors',
+const getDoctorsAvailableTimesheet = createAsyncThunk(
+   'online-appointments/getTimesheet',
 
-   async (id, { rejectWithValue }) => {
+   async (facility, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
-            `/api/appointment/getDoctor?id=${id}`
+            `/api/appointment/getTimesheet?facility=${facility}`
+         )
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+const getAllFacility = createAsyncThunk(
+   'online-appointments/facility',
+
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/department/getAllFacility`
          )
 
          return response.data
@@ -17,12 +32,14 @@ const getDoctorsByFacility = createAsyncThunk(
    }
 )
 
-const getDoctorsAvailableTimesheet = createAsyncThunk(
-   'online-appointments/getTimesheet',
+const getDoctorSchedule = createAsyncThunk(
+   'online-appointments/getDoctorSchedule',
 
-   async (id, { rejectWithValue }) => {
+   async ({ id, startDate, endDate }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`/api/appointment/${id}`)
+         const response = await axiosInstance.get(
+            `/api/appointment/${id}/getDoctorSchedule?startDate=${startDate}&endDate=${endDate}`
+         )
 
          return response.data
       } catch (error) {
@@ -31,7 +48,56 @@ const getDoctorsAvailableTimesheet = createAsyncThunk(
    }
 )
 
+const addAppointment = createAsyncThunk(
+   'online-appointments/addAppointment',
+
+   async ({ facility, data, setCode }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.post(
+            `/api/appointment/add?facility=${facility}`,
+            data
+         )
+         setCode(true)
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+const checkVerificationCode = createAsyncThunk(
+   'online-appointments/code',
+
+   async ({ code, id }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.patch(
+            `/api/appointment?appointmentId=${id}&code=${code}`
+         )
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+const deleteAppoinment = createAsyncThunk(
+   'appointments/deleteById',
+   async (id, { dispatch, rejectWithValue }) => {
+      try {
+         await axiosInstance.delete(`/api/appointment/${id}`)
+         return id
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
 export const ONLINE_APPOINTMENTS_THUNKS = {
-   getDoctorsByFacility,
+   getDoctorSchedule,
+   getAllFacility,
    getDoctorsAvailableTimesheet,
+   addAppointment,
+   checkVerificationCode,
+   deleteAppoinment,
 }

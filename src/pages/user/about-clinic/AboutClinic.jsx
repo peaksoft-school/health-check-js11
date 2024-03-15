@@ -34,6 +34,10 @@ export default AboutClinic
 const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .title': {
       marginLeft: '6.25rem',
+      fontFamily: 'Manrope',
+      fontSize: '2.25rem',
+      fontWeight: '600',
+      lineHeight: 'normal',
 
       '& > .mark': {
          color: theme.palette.primary.darkGreen,
