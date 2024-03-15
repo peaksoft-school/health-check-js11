@@ -4,11 +4,11 @@ import { showToast } from '../../../utils/helpers/notification'
 
 const createApplication = createAsyncThunk(
    'application/createApplication',
-   async ({ userName, phoneNumber }, { rejectWithValue }) => {
+   async ({ username, phoneNumber }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
             '/api/application/createApplication',
-            { userName, phoneNumber }
+            { username, phoneNumber }
          )
 
          showToast({

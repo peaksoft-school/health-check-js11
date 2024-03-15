@@ -13,7 +13,15 @@ const Leave = () => {
    const [phoneNumber, setPhoneNumber] = useState('')
 
    const handleCreateApplication = async () => {
-      dispatch(APPLICATION_THUNK.createApplication({ userName, phoneNumber }))
+      dispatch(
+         APPLICATION_THUNK.createApplication({
+            username: userName,
+            phoneNumber,
+         })
+      )
+
+      setUserName('')
+      setPhoneNumber('')
    }
 
    return (

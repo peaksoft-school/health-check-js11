@@ -15,17 +15,17 @@ import { PROSEDURA, SERVICES } from '../../../utils/constants'
 import Leave from '../../../components/landing/Leave'
 
 const Services = () => {
-   const [open, setOpen] = useState(false)
-   const [secons, setSecond] = useState(false)
-   const [third, setThird] = useState(false)
-   const [fourth, setFourth] = useState(false)
-   const [fifth, setFifth] = useState(false)
+   const [procedure, setProcedure] = useState(false)
+   const [indications, setIndications] = useState(false)
+   const [contraindications, setContraindications] = useState(false)
+   const [zoom4, setZoom4] = useState(false)
+   const [result, setResult] = useState(false)
 
-   const handleClick = () => setOpen(!open)
-   const handleClickSecond = () => setSecond(!secons)
-   const handleClickThird = () => setThird(!third)
-   const handleClickFouth = () => setFourth(!fourth)
-   const handleClickFifth = () => setFifth(!fifth)
+   const handleClick = () => setProcedure(!procedure)
+   const handleClickSecond = () => setIndications(!indications)
+   const handleClickThird = () => setContraindications(!contraindications)
+   const handleClickFouth = () => setZoom4(!zoom4)
+   const handleClickFifth = () => setResult(!result)
 
    return (
       <StyledContainer>
@@ -70,14 +70,14 @@ const Services = () => {
                <StyledDropdown onClick={handleClick}>
                   <ListItemText primary="Как проходит процедура?" />
 
-                  {open ? (
+                  {procedure ? (
                      <ExpandLess className="open-icon" />
                   ) : (
                      <ExpandMore className="open-icon" />
                   )}
                </StyledDropdown>
 
-               <Collapse in={open} timeout="auto" unmountOnExit>
+               <Collapse in={procedure} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                      <ListItemButton sx={{ pl: 4 }} className="listItem">
                         <ListItemText primary={PROSEDURA} />
@@ -88,14 +88,14 @@ const Services = () => {
                <StyledSecondDropDown onClick={handleClickSecond}>
                   <ListItemText primary="Показания" />
 
-                  {secons ? (
+                  {indications ? (
                      <ExpandLess className="open-icon" />
                   ) : (
                      <ExpandMore className="open-icon" />
                   )}
                </StyledSecondDropDown>
 
-               <Collapse in={secons} timeout="auto" unmountOnExit>
+               <Collapse in={indications} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                      <ListItemButton sx={{ pl: 4 }} className="listItem">
                         <ListItemText primary={PROSEDURA} />
@@ -106,14 +106,14 @@ const Services = () => {
                <StyledSecondDropDown onClick={handleClickThird}>
                   <ListItemText primary="Противопоказания" />
 
-                  {third ? (
+                  {contraindications ? (
                      <ExpandLess className="open-icon" />
                   ) : (
                      <ExpandMore className="open-icon" />
                   )}
                </StyledSecondDropDown>
 
-               <Collapse in={third} timeout="auto" unmountOnExit>
+               <Collapse in={contraindications} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                      <ListItemButton sx={{ pl: 4 }} className="listItem">
                         <ListItemText primary={PROSEDURA} />
@@ -124,14 +124,14 @@ const Services = () => {
                <StyledSecondDropDown onClick={handleClickFouth}>
                   <ListItemText primary="Насколько безопасно отбеливание Zoom 4?" />
 
-                  {fourth ? (
+                  {zoom4 ? (
                      <ExpandLess className="open-icon" />
                   ) : (
                      <ExpandMore className="open-icon" />
                   )}
                </StyledSecondDropDown>
 
-               <Collapse in={fourth} timeout="auto" unmountOnExit>
+               <Collapse in={zoom4} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                      <ListItemButton sx={{ pl: 4 }} className="listItem">
                         <ListItemText primary={PROSEDURA} />
@@ -142,14 +142,14 @@ const Services = () => {
                <StyledSecondDropDown onClick={handleClickFifth}>
                   <ListItemText primary="Сколько держится результат?" />
 
-                  {fifth ? (
+                  {result ? (
                      <ExpandLess className="open-icon" />
                   ) : (
                      <ExpandMore className="open-icon" />
                   )}
                </StyledSecondDropDown>
 
-               <Collapse in={fifth} timeout="auto" unmountOnExit>
+               <Collapse in={result} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                      <ListItemButton sx={{ pl: 4 }} className="listItem">
                         <ListItemText primary={PROSEDURA} />
