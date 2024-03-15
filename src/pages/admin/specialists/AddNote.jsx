@@ -1,89 +1,93 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Typography, Box, styled, Card } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router'
-import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { DEPARTMENTS } from '../../../utils/constants'
+import { ADD_NOTE } from '../../../store/slices/addNote/AddNoteThunk'
+import MyEditor from './Editor'
+import PhotoSvg from '../../../assets/icons/svgs/зhoto.svg'
 
-const SpecialistInnerPage = () => {
-   const { id } = useParams()
-
-   const { specialist, isLoading } = useSelector((state) => state.specialists)
+const AddNote = () => {
+   const doctors = useSelector((state) => state.addNote)
 
    const dispatch = useDispatch()
 
    const data = {
-      ...specialist,
+      ...doctors,
+      imageSrc: '',
    }
 
-   useEffect(() => {
-      dispatch(SPECIALISTS_THUNK.getSpecialistById(id))
-   }, [id])
-
    const onSubmit = (values) => {
-      const formData = new FormData()
-      formData.append('file', values.file)
-      dispatch(SPECIALISTS_THUNK.updateButton({ id, values }))
+      if (
+         !values.firstName ||
+         !values.lastName ||
+         !values.position ||
+         !values.departmentId
+      ) {
+         return
+      }
+
+      dispatch(ADD_NOTE.postAddNote({ values }))
    }
 
    const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
-      initialValues: {
-         data,
-         file: null,
-      },
-
+      initialValues: data,
       validateOnChange: false,
       onSubmit,
    })
 
    const handleFileChange = (event) => {
-      const { name, files } = event.target
-      const file = files[0]
-      const imageUrl = URL.createObjectURL(file)
-      setValues((prevValues) => ({
-         ...prevValues,
-         [name]: file,
-         image: imageUrl,
-      }))
-   }
+      const file = event.target.files[0]
+      const reader = new FileReader()
 
-   const changeSelectHandler = (selectedOption) => {
-      handleChange('department')(selectedOption.label)
+      reader.onload = (e) => {
+         const imageSrc = e.target.result
+         setValues((prevValues) => ({
+            ...prevValues,
+            imageSrc,
+         }))
+      }
+
+      if (file) {
+         reader.readAsDataURL(file)
+      }
    }
 
    useEffect(() => {
       setValues((prevState) => {
          return { ...prevState, ...data }
       })
-   }, [data])
+   }, [])
+
+   const changeSelectHandler = (selectedOption) => {
+      setValues((prevValues) => ({
+         ...prevValues,
+         departmentId: selectedOption.id,
+      }))
+   }
 
    return (
       <StyledMainContainer>
          <Box className="box">
             <StyledSpecialistRow>
                Специалисты
-               <span className="doctor-name">
-                  &gt; {specialist.firstName} {specialist.lastName}
-               </span>
+               <span className="doctor-name">&gt; Добавление специалиста</span>
             </StyledSpecialistRow>
 
-            <Typography className="title">
-               {specialist.firstName} {specialist.lastName}
-            </Typography>
+            <Typography className="title">Добавление специалиста</Typography>
 
             <form onSubmit={handleSubmit} className="table-container">
                <StyledImage>
                   <img
                      className="image"
-                     src={values.image}
+                     src={values.imageSrc || PhotoSvg}
                      alt="Фото специалиста"
                   />
                   <label htmlFor="fileInput" className="change-photo">
-                     Сменить фото
+                     Нажмите для добавления фотографии
                   </label>
                   <input
                      id="fileInput"
@@ -96,7 +100,7 @@ const SpecialistInnerPage = () => {
 
                <Box className="depatment-container">
                   <Typography className="personal-data">
-                     Личные данные
+                     Добавление специалиста
                   </Typography>
 
                   <Box className="input-container">
@@ -114,7 +118,7 @@ const SpecialistInnerPage = () => {
                            options={DEPARTMENTS}
                            onChange={changeSelectHandler}
                            className="custom-select"
-                           placeholder={values.department}
+                           placeholder={values.departmentId}
                         />
                      </Box>
                      <Box className="two-row">
@@ -133,15 +137,16 @@ const SpecialistInnerPage = () => {
 
                   <StyledDescription>Описание</StyledDescription>
 
-                  <StyledTextInput
-                     onChange={handleChange('description')}
+                  <MyEditor
                      value={values.description}
+                     onChange={handleChange('description')}
                   />
+
                   <Box className="button-group">
                      <StyledButton type="button" variant="grey">
-                        НАЗАД
+                        ОТМЕНИТЬ
                      </StyledButton>
-                     <StyledButton type="submit">РЕДАКТИРОВАТЬ</StyledButton>
+                     <StyledButton type="submit">ДОБАВИТЬ</StyledButton>
                   </Box>
                </Box>
             </form>
@@ -150,7 +155,7 @@ const SpecialistInnerPage = () => {
    )
 }
 
-export default SpecialistInnerPage
+export default AddNote
 
 const StyledMainContainer = styled(Box)(() => ({
    padding: '1.87rem 4.37rem 0',
@@ -175,9 +180,6 @@ const StyledMainContainer = styled(Box)(() => ({
       bordeRradius: ' 0.375rem',
       background: 'white',
       padding: '1.90rem 15rem 1rem',
-      '& .css-1jo93l0-MuiFormControl-root-MuiTextField-root': {
-         border: 'none',
-      },
    },
    '& .personal-data': {
       fontSize: '22px',
@@ -198,6 +200,40 @@ const StyledMainContainer = styled(Box)(() => ({
    },
    '& .depatment-container': {
       marginTop: '-10.10rem',
+      '& > .Alisher': {
+         border: '1px solid #D9D9D9',
+         borderRadius: '4px',
+         width: '1060px',
+         height: '274px',
+
+         '& .ToolBar': {
+            border: '1px solid #D9D9D9',
+            height: '50px',
+            '& > .rdw-inline-wrapper': {
+               justifyContent: 'flex-start',
+               marginLeft: '1.50rem',
+               gap: '1rem',
+               '& .rdw-option-wrapper': {
+                  fontSize: '50rem',
+                  width: '80px',
+                  height: '40px',
+                  border: 'none',
+               },
+            },
+            '& > .rdw-list-wrapper': {
+               gap: '1rem',
+               '& .rdw-option-wrapper': {
+                  fontSize: '50rem',
+                  width: '80px',
+                  height: '40px',
+                  border: 'none',
+               },
+            },
+         },
+         '& .Muslima': {
+            overflow: 'hidden',
+         },
+      },
    },
    '& .button-group': {
       display: 'flex',
@@ -230,13 +266,6 @@ const StyledDescription = styled(Typography)(() => ({
    color: '#464444',
 }))
 
-const StyledTextInput = styled(Input)(() => ({
-   marginTop: '0.2rem',
-   borderRadius: '0.375rem',
-   color: '#464444',
-   width: '1060px',
-}))
-
 const StyledButton = styled(Button)(() => ({
    width: '14.3rem',
    height: '2.5rem',
@@ -255,17 +284,24 @@ const StyledSpecialistRow = styled(Typography)(() => ({
 
 const StyledImage = styled(Box)(() => ({
    display: 'flex',
+   alignItems: 'center',
    marginLeft: '-12rem',
    marginTop: '1rem',
+   borderRadius: '50%',
+   border: '1px solid #E0E2E7',
+   width: '150px',
+   height: '140px',
+   backgroundColor: '#E0E2E7',
    '& .image': {
-      width: '135px',
-      height: '135px',
-      borderRadius: '50%',
+      width: '35px',
+      height: '35px',
+      marginLeft: '3.50rem',
    },
    '& .change-photo': {
-      marginLeft: '-6.80rem',
-      marginTop: '8.90rem',
-      color: '#346EFB',
+      width: '100%',
+      marginLeft: '-3rem',
+      marginTop: '12rem',
+      color: '#909CB5',
       fontSize: '12px',
    },
 }))

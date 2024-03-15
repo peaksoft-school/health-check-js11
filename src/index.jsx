@@ -23,7 +23,7 @@ root.render(
                <Themes>
                   <Notification />
 
-                  <App />
+                  {/* <App /> */}
                </Themes>
             </Provider>
          </PersistGate>

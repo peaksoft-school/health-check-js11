@@ -11,6 +11,7 @@ import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppoint
 import Specialists from '../pages/admin/specialists/Specialists'
 import Applications from '../pages/admin/application/Applications'
 import SpecialistInnerPage from '../pages/admin/specialists/SpecialistInnerPage'
+import AddNote from '../pages/admin/specialists/AddNote'
 
 const ADMIN_ROUTES = [
    {
@@ -25,6 +26,10 @@ const ADMIN_ROUTES = [
    {
       path: 'specialists/:id',
       element: <SpecialistInnerPage />,
+   },
+   {
+      path: '/admin/specialists/add-note',
+      element: <AddNote />,
    },
 
    {

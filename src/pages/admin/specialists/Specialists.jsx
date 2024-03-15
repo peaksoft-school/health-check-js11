@@ -1,5 +1,6 @@
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
@@ -42,25 +43,27 @@ const Specialists = () => {
             <Box className="button-container">
                <Typography className="title">Специалисты</Typography>
 
-               <Button className="add-button">
-                  <PlusIcon className="plus-icon" />
-                  Добавить специалиста
-               </Button>
+               <NavLink to="/admin/specialists/add-note">
+                  <Button className="add-button">
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
+                  </Button>
+               </NavLink>
 
                {isLoading && <Loading />}
             </Box>
+         </Box>
 
-            <Box className="input-container">
-               <StyledInput
-                  placeholder="Поиск"
-                  value={searchName}
-                  onChange={handleSearchChange}
-               />
-            </Box>
+         <Box className="input-container">
+            <StyledInput
+               placeholder="Поиск"
+               value={searchName}
+               onChange={handleSearchChange}
+            />
+         </Box>
 
-            <Box className="table-container">
-               <Table columns={SPECIALISTS_COLUMN} data={specialists} />
-            </Box>
+         <Box className="table-container">
+            <Table columns={SPECIALISTS_COLUMN} data={specialists} />
          </Box>
       </StyledContainer>
    )

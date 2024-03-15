@@ -6,6 +6,7 @@ const initialState = {
    specialist: {},
    isLoading: false,
    error: null,
+   searchItems: [],
 }
 
 export const specialistsSlice = createSlice({
@@ -56,24 +57,29 @@ export const specialistsSlice = createSlice({
          .addCase(SPECIALISTS_THUNK.getSpecialistById.rejected, (state) => {
             state.isLoading = false
          })
+         .addCase(SPECIALISTS_THUNK.serachSpecilaist.pending, (state) => {
+            state.status = 'loading'
+         })
+
          .addCase(
             SPECIALISTS_THUNK.serachSpecilaist.fulfilled,
             (state, action) => {
                if (action.payload && !action.payload.error) {
-                  const updateSpecialist = action.payload.map((specialist) => ({
+                  const updateSpecilaist = action.payload.map((specialist) => ({
                      ...specialist,
                      isSelected: false,
                   }))
 
-                  updateSpecialist.sort((a, b) => a.id - b.id)
+                  updateSpecilaist.sort((a, b) => a.id - b.id)
 
-                  state.specialist = updateSpecialist
+                  state.specialists = updateSpecilaist
                }
 
                state.status = 'succeeded'
                state.searchItems = action.payload
             }
          )
+
          .addCase(
             SPECIALISTS_THUNK.serachSpecilaist.rejected,
             (state, action) => {
@@ -81,10 +87,12 @@ export const specialistsSlice = createSlice({
                state.error = action.error.message
             }
          )
+
          .addCase(SPECIALISTS_THUNK.getDepartment.pending, (state) => {
             state.isLoading = true
             state.error = null
          })
+
          .addCase(
             SPECIALISTS_THUNK.getDepartment.fulfilled,
             (state, action) => {
@@ -92,9 +100,25 @@ export const specialistsSlice = createSlice({
                state.data = action.payload
             }
          )
+
          .addCase(SPECIALISTS_THUNK.getDepartment.rejected, (state, action) => {
             state.isLoading = false
             state.error = action.payload
+         })
+
+         .addCase(SPECIALISTS_THUNK.updateButton.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(SPECIALISTS_THUNK.updateButton.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.successMessage = 'Doctor successfully updated'
+            state.updatedFirstName = action.payload.firstName
+         })
+
+         .addCase(SPECIALISTS_THUNK.updateButton.rejected, (state, action) => {
+            state.isLoading = false
+            state.errorMessage = action.payload
          })
    },
 })

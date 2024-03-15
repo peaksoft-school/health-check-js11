@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { APPLICATION_THUNK } from './applicationThunk'
 import { showToast } from '../../../utils/helpers/notification'
-import { SPECIALISTS_THUNK } from '../specialistsSlice/specialictsThunk'
 
 export const applicationSlice = createSlice({
    name: 'applications',
@@ -125,17 +124,19 @@ export const applicationSlice = createSlice({
          })
 
          .addCase(
-            SPECIALISTS_THUNK.serachSpecilaist.fulfilled,
+            APPLICATION_THUNK.searchApplications.fulfilled,
             (state, action) => {
                if (action.payload && !action.payload.error) {
-                  const updateSpecialist = action.payload.map((specialist) => ({
-                     ...specialist,
-                     isSelected: false,
-                  }))
+                  const updatedApplications = action.payload.map(
+                     (application) => ({
+                        ...application,
+                        isSelected: false,
+                     })
+                  )
 
-                  updateSpecialist.sort((a, b) => a.id - b.id)
+                  updatedApplications.sort((a, b) => a.id - b.id)
 
-                  state.specialist = updateSpecialist
+                  state.items = updatedApplications
                }
 
                state.status = 'succeeded'

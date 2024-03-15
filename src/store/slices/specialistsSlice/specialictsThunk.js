@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getSpecialists = createAsyncThunk(
    'specialists/getSpecialists',
@@ -89,12 +90,15 @@ const getDepartment = createAsyncThunk(
 
 const updateButton = createAsyncThunk(
    'specialists/updateButton',
-   async ({ firstName, active }, { dispatch, rejectWithValue }) => {
+   async ({ id, values }, { dispatch, rejectWithValue }) => {
       try {
-         await axiosInstance.patch(`api/doctor?facility=${firstName}`)
+         const { data } = await axiosInstance.patch(
+            `api/doctor?facility=${values.department}&id=${id}`,
+            values
+         )
 
          dispatch(getSpecialists())
-         return { active }
+         return data
       } catch (error) {
          return rejectWithValue(error.response.data)
       }
