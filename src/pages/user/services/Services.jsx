@@ -55,105 +55,107 @@ const Services = () => {
                      </StyledService>
                   ))}
                </Box>
+            </Box>
 
-               <Box>
-                  <Typography variant="h3">Часто задаваемые вопросы</Typography>
+            <Box className="questions-box">
+               <Typography variant="h3" className="questions-title">
+                  Часто задаваемые вопросы
+               </Typography>
 
-                  <Typography>
-                     Специалисты нашей клиники с удовольствием ответят на все
-                     ваши вопросы. Ниже представленны наиболее популярные.
-                  </Typography>
+               <Typography className="questions-description">
+                  Специалисты нашей клиники с удовольствием ответят на все ваши
+                  вопросы. Ниже представленны наиболее популярные.
+               </Typography>
 
-                  <StyledDropdown onClick={handleClick}>
-                     <ListItemText primary="Как проходит процедура?" />
+               <StyledDropdown onClick={handleClick}>
+                  <ListItemText primary="Как проходит процедура?" />
 
-                     {open ? (
-                        <ExpandLess className="open-icon" />
-                     ) : (
-                        <ExpandMore className="open-icon" />
-                     )}
-                  </StyledDropdown>
+                  {open ? (
+                     <ExpandLess className="open-icon" />
+                  ) : (
+                     <ExpandMore className="open-icon" />
+                  )}
+               </StyledDropdown>
 
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                           <ListItemText primary={PROSEDURA} />
-                        </ListItemButton>
-                     </List>
-                  </Collapse>
+               <Collapse in={open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                     <ListItemButton sx={{ pl: 4 }} className="listItem">
+                        <ListItemText primary={PROSEDURA} />
+                     </ListItemButton>
+                  </List>
+               </Collapse>
 
-                  <StyledSecondDropDown onClick={handleClickSecond}>
-                     <ListItemText primary="Показания" />
+               <StyledSecondDropDown onClick={handleClickSecond}>
+                  <ListItemText primary="Показания" />
 
-                     {secons ? (
-                        <ExpandLess className="open-icon" />
-                     ) : (
-                        <ExpandMore className="open-icon" />
-                     )}
-                  </StyledSecondDropDown>
+                  {secons ? (
+                     <ExpandLess className="open-icon" />
+                  ) : (
+                     <ExpandMore className="open-icon" />
+                  )}
+               </StyledSecondDropDown>
 
-                  <Collapse in={secons} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                           <ListItemText primary={PROSEDURA} />
-                        </ListItemButton>
-                     </List>
-                  </Collapse>
+               <Collapse in={secons} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                     <ListItemButton sx={{ pl: 4 }} className="listItem">
+                        <ListItemText primary={PROSEDURA} />
+                     </ListItemButton>
+                  </List>
+               </Collapse>
 
-                  <StyledSecondDropDown onClick={handleClickThird}>
-                     <ListItemText primary="Противопоказания" />
+               <StyledSecondDropDown onClick={handleClickThird}>
+                  <ListItemText primary="Противопоказания" />
 
-                     {third ? (
-                        <ExpandLess className="open-icon" />
-                     ) : (
-                        <ExpandMore className="open-icon" />
-                     )}
-                  </StyledSecondDropDown>
+                  {third ? (
+                     <ExpandLess className="open-icon" />
+                  ) : (
+                     <ExpandMore className="open-icon" />
+                  )}
+               </StyledSecondDropDown>
 
-                  <Collapse in={third} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                           <ListItemText primary={PROSEDURA} />
-                        </ListItemButton>
-                     </List>
-                  </Collapse>
+               <Collapse in={third} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                     <ListItemButton sx={{ pl: 4 }} className="listItem">
+                        <ListItemText primary={PROSEDURA} />
+                     </ListItemButton>
+                  </List>
+               </Collapse>
 
-                  <StyledSecondDropDown onClick={handleClickFouth}>
-                     <ListItemText primary="Насколько безопасно отбеливание Zoom 4?" />
+               <StyledSecondDropDown onClick={handleClickFouth}>
+                  <ListItemText primary="Насколько безопасно отбеливание Zoom 4?" />
 
-                     {fourth ? (
-                        <ExpandLess className="open-icon" />
-                     ) : (
-                        <ExpandMore className="open-icon" />
-                     )}
-                  </StyledSecondDropDown>
+                  {fourth ? (
+                     <ExpandLess className="open-icon" />
+                  ) : (
+                     <ExpandMore className="open-icon" />
+                  )}
+               </StyledSecondDropDown>
 
-                  <Collapse in={fourth} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                           <ListItemText primary={PROSEDURA} />
-                        </ListItemButton>
-                     </List>
-                  </Collapse>
+               <Collapse in={fourth} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                     <ListItemButton sx={{ pl: 4 }} className="listItem">
+                        <ListItemText primary={PROSEDURA} />
+                     </ListItemButton>
+                  </List>
+               </Collapse>
 
-                  <StyledSecondDropDown onClick={handleClickFifth}>
-                     <ListItemText primary="Сколько держится результат?" />
+               <StyledSecondDropDown onClick={handleClickFifth}>
+                  <ListItemText primary="Сколько держится результат?" />
 
-                     {fifth ? (
-                        <ExpandLess className="open-icon" />
-                     ) : (
-                        <ExpandMore className="open-icon" />
-                     )}
-                  </StyledSecondDropDown>
+                  {fifth ? (
+                     <ExpandLess className="open-icon" />
+                  ) : (
+                     <ExpandMore className="open-icon" />
+                  )}
+               </StyledSecondDropDown>
 
-                  <Collapse in={fifth} timeout="auto" unmountOnExit>
-                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                           <ListItemText primary={PROSEDURA} />
-                        </ListItemButton>
-                     </List>
-                  </Collapse>
-               </Box>
+               <Collapse in={fifth} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                     <ListItemButton sx={{ pl: 4 }} className="listItem">
+                        <ListItemText primary={PROSEDURA} />
+                     </ListItemButton>
+                  </List>
+               </Collapse>
             </Box>
          </Box>
          <Leave />
@@ -164,7 +166,7 @@ const Services = () => {
 export default Services
 
 const StyledContainer = styled(Box)(() => ({
-   padding: '30px 0 120px 120px',
+   padding: '30px 0 0 120px',
 
    '& .box': {
       maxWidth: '1600px',
@@ -213,6 +215,33 @@ const StyledContainer = styled(Box)(() => ({
             gap: '26px',
             flexWrap: 'wrap',
             width: '62.5rem',
+         },
+      },
+
+      '& .questions-box': {
+         marginTop: '120px',
+
+         '& .questions-title': {
+            fontWeight: '400',
+            fontSize: '36px',
+            marginBottom: '36px',
+         },
+
+         '& .questions-description': {
+            fontWeight: '400',
+            fontSize: '18px',
+            width: '43.75rem',
+            marginBottom: '16px',
+         },
+
+         '& .listItem': {
+            padding: '0px',
+            marginBottom: '40px',
+
+            '&:hover': {
+               backgroundColor: 'white',
+               cursor: 'auto',
+            },
          },
       },
    },
@@ -269,6 +298,7 @@ const StyledSecondDropDown = styled(ListItemButton)(() => ({
    color: '#4D4E51',
    borderLeftColor: 'red',
    marginBottom: '15px',
+   borderLeft: '8px solid rgb(4, 135, 65) !important',
 
    '&:hover': {
       width: '52.625rem',

@@ -1,65 +1,80 @@
+import React, { useState } from 'react'
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import Button from '../UI/Button'
 import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
 import { DoctorLeaveImage } from '../../assets/images'
 import NumberInput from '../UI/inputs/NumberInput'
+import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
 
-const Leave = () => (
-   <StyledContainer>
-      <Box className="box">
-         <Typography className="title">Оставьте заявку</Typography>
+const Leave = () => {
+   const dispatch = useDispatch()
+   const [userName, setUserName] = useState('')
+   const [phoneNumber, setPhoneNumber] = useState('')
 
-         <Typography className="description">
-            Оставьте свой номер и наши специалисты свяжутся с Вами в ближайшее
-            время
-         </Typography>
+   const handleCreateApplication = async () => {
+      dispatch(APPLICATION_THUNK.createApplication({ userName, phoneNumber }))
+   }
 
-         <Box className="inputs-box">
-            <StyledInputContainer>
-               <label htmlFor="name" className="input-label">
-                  Как к Вам обратиться?
-               </label>
+   return (
+      <StyledContainer>
+         <Box className="leave-box">
+            <Typography className="title">Оставьте заявку</Typography>
 
-               <StyledInputBox>
-                  <UserIcon className="input-icons" />
+            <Typography className="description">
+               Оставьте свой номер и наши специалисты свяжутся с Вами в
+               ближайшее время
+            </Typography>
 
-                  <InputBase
-                     className="name-input"
-                     id="name"
-                     type="text"
-                     placeholder="
-                     Введите
-                     имя"
-                  />
-               </StyledInputBox>
-            </StyledInputContainer>
+            <Box className="inputs-box">
+               <StyledInputContainer>
+                  <label htmlFor="name" className="input-label">
+                     Как к Вам обратиться?
+                  </label>
 
-            <StyledInputContainer>
-               <label htmlFor="number" className="input-label">
-                  Номер мобильного телефона
-               </label>
+                  <StyledInputBox>
+                     <UserIcon className="input-icons" />
 
-               <Box className="number-input-container">
-                  <NumberInput
-                     id="number"
-                     mask="_"
-                     format="+996 (###) ##-##-##"
-                     placeholder="+996 (___) __-__-__"
-                  >
-                     <ActivePhoneIcon className="input-icons" />
-                  </NumberInput>
-               </Box>
-            </StyledInputContainer>
+                     <InputBase
+                        className="name-input"
+                        id="name"
+                        type="text"
+                        placeholder="Введите имя"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                     />
+                  </StyledInputBox>
+               </StyledInputContainer>
+
+               <StyledInputContainer>
+                  <label htmlFor="number" className="input-label">
+                     Номер мобильного телефона
+                  </label>
+
+                  <Box className="number-input-container">
+                     <NumberInput
+                        id="number"
+                        mask="_"
+                        format="+996#########"
+                        placeholder="+996 (___) __-__-__"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                     >
+                        <ActivePhoneIcon className="input-icons" />
+                     </NumberInput>
+                  </Box>
+               </StyledInputContainer>
+            </Box>
+
+            <StyledButton onClick={handleCreateApplication}>
+               ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
+            </StyledButton>
          </Box>
 
-         <StyledButton>
-            ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
-         </StyledButton>
-      </Box>
-
-      <img src={DoctorLeaveImage} alt="доктор" className="doctor" />
-   </StyledContainer>
-)
+         <img src={DoctorLeaveImage} alt="доктор" className="doctor" />
+      </StyledContainer>
+   )
+}
 
 export default Leave
 
@@ -73,7 +88,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
       margin: '0.625rem',
    },
 
-   '& > .box': {
+   '& > .leave-box': {
       display: 'flex',
       width: '41.1875rem',
       height: '28.75rem',
