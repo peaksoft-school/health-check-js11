@@ -6,9 +6,11 @@ import {
    ConferenceImage,
 } from '../../assets/images/index'
 import { ArrowRightIcon } from '../../assets/icons/index'
-import { ABOUT_US } from '../../utils/constants'
+// eslint-disable-next-line import/no-cycle
+import ABOUT_US from '../../utils/constants'
+import Button from '../UI/Button'
 
-const AboutUs = () => (
+const AboutUs = ({ variant }) => (
    <StyledContainer>
       <Box className="box">
          <Typography className="title" variant="h2">
@@ -20,9 +22,15 @@ const AboutUs = () => (
             <Box className="texts">
                {ABOUT_US}
 
-               <Typography className="read-more">
-                  Читать подробнее о клинике <ArrowRightIcon />
-               </Typography>
+               {variant === 'component' ? (
+                  <Button className="consultation" variant="secondary">
+                     Записаться на консультацию
+                  </Button>
+               ) : (
+                  <Typography className="read-more">
+                     Читать подробнее о клинике <ArrowRightIcon />
+                  </Typography>
+               )}
             </Box>
 
             <Box className="images">
@@ -45,6 +53,15 @@ export default AboutUs
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '120px',
+
+   '& .consultation': {
+      marginTop: '15px',
+      height: '2.5rem',
+
+      '&:hover': {
+         border: '1px solid #048741',
+      },
+   },
 
    '& .box': {
       margin: '0 auto',

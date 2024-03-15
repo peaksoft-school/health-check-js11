@@ -110,9 +110,6 @@ const StyledContainer = styled('header')(({ theme }) => ({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      position: 'sticky',
-      top: '0px',
-      zIndex: '1000',
       backgroundColor: theme.palette.primary.main,
       padding: '10px 0',
       color: '#048741',
@@ -144,6 +141,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
          gap: '0.625rem',
          fontSize: '1.10rem',
       },
+
       '& .cursor': {
          cursor: 'pointer',
       },

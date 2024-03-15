@@ -20,7 +20,7 @@ import ForgotPassword from '../forgot-password/ForgotPassword'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
 import { auth, provider } from '../../utils/constants/authWithGoogle'
 
-const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
+const SignIn = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)
 
    const [showPassword, setShowPassword] = useState(false)
@@ -39,10 +39,8 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
    const toggleShowPassword = () =>
       setShowPassword((prevShowPassword) => !prevShowPassword)
 
-   const onSubmit = (values, { resetForm }) => {
-      closeMenu()
+   const onSubmit = (values, { resetForm }) =>
       dispatch(signIn({ values, resetForm, onClose }))
-   }
 
    const openSignUp = () => {
       closeSignUp()
@@ -51,14 +49,18 @@ const SignIn = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const signInWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider).then((data) => {
-            dispatch(
-               authWithGoogle({
-                  tokenId: data.user.accessToken,
-               })
-            )
-            onClose()
-         })
+         await signInWithPopup(auth, provider)
+            .then((data) => {
+               dispatch(
+                  authWithGoogle({
+                     tokenId: data.user.accessToken,
+                  })
+               )
+               onClose()
+            })
+            .catch((error) => {
+               console.log('Caught error Popup closed')
+            })
       } catch (error) {
          throw new Error(error)
       }
@@ -210,6 +212,10 @@ const StyledForm = styled('form')(({ theme }) => ({
       fontSize: '0.8rem',
       position: 'absolute',
       bottom: '16rem',
+   },
+
+   '& .naigate': {
+      cursor: 'pointer',
    },
 }))
 

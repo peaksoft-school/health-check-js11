@@ -8,10 +8,9 @@ import Button from '../../../components/UI/Button'
 import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
-
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
-import AddSchedule from './AddSchedule'
+import AddSchedule from '../../../components/schedule/AddSchedule'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -22,7 +21,7 @@ const OnlineAppointments = () => {
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.Appointments
+      (state) => state.appointments
    )
 
    const toggleModal = () => setOpenModal((prev) => !prev)
@@ -160,6 +159,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                width: '1.125rem',
                padding: '0.625rem',
                height: '1.125rem',
+            },
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '4px',
             },
          },
       },

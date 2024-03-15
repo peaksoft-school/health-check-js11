@@ -39,7 +39,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const onSubmit = async (values, { resetForm }) => {
       const dataToSend = {
-         name: values.name,
+         firstName: values.firstName,
          lastName: values.lastName,
          email: values.email,
          number: values.number,
@@ -56,14 +56,18 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const signUpWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider).then((data) => {
-            dispatch(
-               authWithGoogle({
-                  tokenId: data.user.accessToken,
-               })
-            )
-            onClose()
-         })
+         await signInWithPopup(auth, provider)
+            .then((data) => {
+               dispatch(
+                  authWithGoogle({
+                     tokenId: data.user.accessToken,
+                  })
+               )
+               onClose()
+            })
+            .catch((error) => {
+               console.log('Caught error Popup closed')
+            })
       } catch (error) {
          throw new Error(error)
       }
@@ -71,7 +75,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const { values, handleChange, handleSubmit, errors } = useFormik({
       initialValues: {
-         name: '',
+         firstName: '',
          lastName: '',
          email: '',
          number: '',
@@ -91,10 +95,10 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
             <Box className="input-box">
                <StyledInput
                   placeholder="Имя"
-                  name="name"
-                  value={values.name}
+                  name="firstName"
+                  value={values.firstName}
                   onChange={handleChange}
-                  error={!!errors.name}
+                  error={!!errors.firstName}
                />
 
                <StyledInput
@@ -204,7 +208,7 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
                <GoogleIcon />
                Зарегистрироваться с Google
             </ButtonBase>
-            <Typography>
+            <Typography className="naigate">
                У вас уже есть аккаунт?
                <Typography
                   onClick={openSignIn}
@@ -260,6 +264,10 @@ const StyledForm = styled('form')(({ theme }) => ({
          display: 'flex',
          gap: '0.875rem',
       },
+   },
+
+   '& .naigate': {
+      cursor: 'pointer',
    },
 }))
 
