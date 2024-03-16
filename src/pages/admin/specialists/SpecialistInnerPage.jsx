@@ -19,6 +19,7 @@ const SpecialistInnerPage = () => {
    const data = {
       ...specialist,
    }
+   console.log(data)
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialistById(id))
@@ -56,11 +57,11 @@ const SpecialistInnerPage = () => {
    }
 
    useEffect(() => {
-      setValues((prevState) => {
-         return { ...prevState, ...data }
-      })
-   }, [data])
-
+      setValues((prevState) => ({
+         ...prevState,
+         ...specialist,
+      }))
+   }, [specialist])
    return (
       <StyledMainContainer>
          <Box className="box">
@@ -112,8 +113,14 @@ const SpecialistInnerPage = () => {
 
                         <Select
                            options={DEPARTMENTS}
-                           onChange={changeSelectHandler}
+                           onChange={(selectedOption) =>
+                              changeSelectHandler(selectedOption)
+                           }
                            className="custom-select"
+                           variant="schedule"
+                           value={DEPARTMENTS.find(
+                              (option) => option.value === values.departmentName
+                           )}
                            placeholder={values.department}
                         />
                      </Box>
@@ -141,7 +148,9 @@ const SpecialistInnerPage = () => {
                      <StyledButton type="button" variant="grey">
                         НАЗАД
                      </StyledButton>
-                     <StyledButton type="submit">РЕДАКТИРОВАТЬ</StyledButton>
+                     <StyledButton type="submit" disabled={!dirty}>
+                        РЕДАКТИРОВАТЬ
+                     </StyledButton>
                   </Box>
                </Box>
             </form>

@@ -11,6 +11,7 @@ import {
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 
+import { ROUTES } from '../../routes/routes'
 import {
    FooterInstagramIcon,
    FooterTelegramIcon,
@@ -31,8 +32,6 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-// eslint-disable-next-line import/no-cycle
-import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
    {

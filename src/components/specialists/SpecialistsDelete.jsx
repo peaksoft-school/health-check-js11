@@ -16,13 +16,7 @@ const DeleteButton = ({ id, lastName, firstName }) => {
    const handleClose = () => setOpen(false)
 
    const handleDelete = () => {
-      try {
-         dispatch(SPECIALISTS_THUNK.deleteSpecialists(id))
-      } catch (error) {
-         console.error('Error deleting appointment', error)
-      } finally {
-         handleClose()
-      }
+      dispatch(SPECIALISTS_THUNK.deleteSpecialists({ id, handleClose }))
    }
 
    return (

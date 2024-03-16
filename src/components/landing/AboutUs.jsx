@@ -6,8 +6,7 @@ import {
    ConferenceImage,
 } from '../../assets/images/index'
 import { ArrowRightIcon } from '../../assets/icons/index'
-// eslint-disable-next-line import/no-cycle
-import ABOUT_US from '../../utils/constants'
+import { ABOUT_US } from '../../utils/constants'
 import Button from '../UI/Button'
 
 const AboutUs = ({ variant }) => (

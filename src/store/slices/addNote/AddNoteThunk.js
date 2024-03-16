@@ -3,10 +3,11 @@ import { axiosInstance } from '../../../configs/axiosInstance'
 import { showToast } from '../../../utils/helpers/notification'
 
 const postAddNote = createAsyncThunk(
-   'postAdd/postAddNote',
+   'addNote/postAddNote',
    async ({ values }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(`api/doctor`, values)
+
          showToast({
             message: 'запись успешно добавлена ',
          })

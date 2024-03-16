@@ -11,18 +11,20 @@ export const addNoteSlice = createSlice({
    name: 'addNote',
    initialState,
    reducers: {},
+
    extraReducers: (builder) => {
       builder
-         .addCase(ADD_NOTE.postAddNotepending, (state) => {
+
+         .addCase(ADD_NOTE.postAddNote.pending, (state) => {
             state.loading = true
          })
-         .addCase(ADD_NOTE.postAddNotepending, (state) => {
+
+         .addCase(ADD_NOTE.postAddNote.fulfilled, (state) => {
             state.loading = false
          })
-         .addCase(ADD_NOTE.postAddNotepending, (state) => {
+
+         .addCase(ADD_NOTE.postAddNote.rejected, (state) => {
             state.loading = false
          })
    },
 })
-
-export const addNoteAction = addNoteSlice.actions

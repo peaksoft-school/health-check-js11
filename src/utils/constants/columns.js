@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import NavLink from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { format } from 'date-fns'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
@@ -602,12 +602,10 @@ const SPECIALISTS_COLUMN = [
                            fontSize: '16px',
                         }}
                      >
-                        {' '}
                         {row.original.firstName} {row.original.lastName}
                      </span>
                      <br />
                      <span style={{ color: '#959595', fontSize: '14px' }}>
-                        {' '}
                         {row.original.position}
                      </span>
                   </Typography>
@@ -709,4 +707,5 @@ export {
    COLUMNS,
    APPLICATIONS_COLUMN,
    SPECIALISTS_COLUMN,
+   PATIENTS_COLUMN,
 }

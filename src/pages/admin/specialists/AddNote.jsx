@@ -11,8 +11,9 @@ import MyEditor from './Editor'
 import PhotoSvg from '../../../assets/icons/svgs/зhoto.svg'
 
 const AddNote = () => {
-   const doctors = useSelector((state) => state.addNote)
+   const { doctors } = useSelector((state) => state.addNote)
 
+   console.log(doctors)
    const dispatch = useDispatch()
 
    const data = {
@@ -86,9 +87,11 @@ const AddNote = () => {
                      src={values.imageSrc || PhotoSvg}
                      alt="Фото специалиста"
                   />
+
                   <label htmlFor="fileInput" className="change-photo">
                      Нажмите для добавления фотографии
                   </label>
+
                   <input
                      id="fileInput"
                      type="file"
@@ -119,15 +122,20 @@ const AddNote = () => {
                            onChange={changeSelectHandler}
                            className="custom-select"
                            placeholder={values.departmentId}
+                           variant="schedule"
                         />
                      </Box>
+
                      <Box className="two-row">
                         <StyledInfo>Фамилия</StyledInfo>
+
                         <StyledInput
                            value={values.lastName}
                            onChange={handleChange('lastName')}
                         />
+
                         <StyledInfo>Должность</StyledInfo>
+
                         <StyledInput
                            value={values.position}
                            onChange={handleChange('position')}
@@ -146,6 +154,7 @@ const AddNote = () => {
                      <StyledButton type="button" variant="grey">
                         ОТМЕНИТЬ
                      </StyledButton>
+
                      <StyledButton type="submit">ДОБАВИТЬ</StyledButton>
                   </Box>
                </Box>

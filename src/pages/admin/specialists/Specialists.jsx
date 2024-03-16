@@ -10,6 +10,7 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import { SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
+import { ROUTES } from '../../../routes/routes'
 
 const Specialists = () => {
    const [searchName, setSearchName] = useState('')
@@ -21,7 +22,6 @@ const Specialists = () => {
    }, [])
 
    const { isLoading, specialists } = useSelector((state) => state.specialists)
-   console.log(specialists)
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -30,7 +30,7 @@ const Specialists = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            SPECIALISTS_THUNK.serachSpecilaist({
+            SPECIALISTS_THUNK.searchSpecilaist({
                searchName: debouncedSearchText,
             })
          )
@@ -43,10 +43,10 @@ const Specialists = () => {
             <Box className="button-container">
                <Typography className="title">Специалисты</Typography>
 
-               <NavLink to="/admin/specialists/add-note">
+               <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
                   <Button className="add-button">
                      <PlusIcon className="plus-icon" />
-                     Добавить запись
+                     Добавить специалиста
                   </Button>
                </NavLink>
 
@@ -88,20 +88,16 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& > .add-button': {
-         fontFamily: 'Manrope',
-         fontSize: '0.875rem',
-         fontStyle: 'normal',
-         fontWeight: '600',
-         lineHeight: 'normal',
-         letterSpacing: '0.02625rem',
-         textTransform: 'uppercase',
-         display: 'flex',
-         gap: '1rem',
-         alignItems: 'center',
-         height: '2.75rem',
-         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-         width: '13.0625rem !important',
-         flexShrink: '0',
+         padding: '0',
+         fontSize: '13px',
+         height: '40px',
+         width: '232px',
+
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+         },
 
          '& .plus-icon': {
             width: '1.125rem',
@@ -135,29 +131,24 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          transition: '1s',
          color: '#048741 !important',
       },
+   },
+   '& .table-container': {
+      width: '100%',
+      borderRadius: '0.375rem',
+      bordeRradius: ' 0.375rem',
+      backgroundColor: 'white',
+      marginTop: '1.25rem',
+   },
 
-      '& .tables': {
-         padding: '0rem',
-      },
-
-      '& .input-container': {
-         width: '37.5rem',
-         marginTop: '2.12rem',
-      },
-
-      '& .table-container': {
-         width: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: 'white',
-         marginTop: '1.25rem',
-      },
+   '& .input-container': {
+      width: '37.5rem ',
+      marginTop: '0.1rem',
    },
 }))
 
 const StyledInput = styled(SearchInput)(() => ({
-   height: '2.5rem',
-   padding: '0rem 0.3rem',
+   height: '2rem',
+   padding: '0 0.3rem',
    display: 'inline-flex',
    justifyContent: 'center',
    width: '100%',

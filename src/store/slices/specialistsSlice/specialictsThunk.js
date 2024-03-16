@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-import { showToast } from '../../../utils/helpers/notification'
 
 const getSpecialists = createAsyncThunk(
    'specialists/getSpecialists',
@@ -30,11 +29,11 @@ const getSpecialistById = createAsyncThunk(
 
 const deleteSpecialists = createAsyncThunk(
    'specialists/deleteSpecialists',
-   async (id, { dispatch, rejectWithValue }) => {
+   async ({ id, handleClose }, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/doctor/${id}`)
          dispatch(getSpecialists())
-
+         handleClose()
          return id
       } catch (error) {
          return rejectWithValue(error)
@@ -56,7 +55,7 @@ const updateDoctorStatus = createAsyncThunk(
    }
 )
 
-const serachSpecilaist = createAsyncThunk(
+const searchSpecilaist = createAsyncThunk(
    'specialists/search',
    async ({ searchName, rejectWithValue }) => {
       try {
@@ -110,7 +109,7 @@ export const SPECIALISTS_THUNK = {
    deleteSpecialists,
    updateDoctorStatus,
    getSpecialistById,
-   serachSpecilaist,
+   searchSpecilaist,
    getDepartment,
    updateButton,
 }

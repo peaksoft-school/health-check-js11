@@ -13,6 +13,7 @@ export const specialistsSlice = createSlice({
    name: 'specialists',
    initialState,
    reducers: {},
+
    extraReducers: (builder) => {
       builder
          .addCase(
@@ -57,12 +58,13 @@ export const specialistsSlice = createSlice({
          .addCase(SPECIALISTS_THUNK.getSpecialistById.rejected, (state) => {
             state.isLoading = false
          })
-         .addCase(SPECIALISTS_THUNK.serachSpecilaist.pending, (state) => {
+
+         .addCase(SPECIALISTS_THUNK.searchSpecilaist.pending, (state) => {
             state.status = 'loading'
          })
 
          .addCase(
-            SPECIALISTS_THUNK.serachSpecilaist.fulfilled,
+            SPECIALISTS_THUNK.searchSpecilaist.fulfilled,
             (state, action) => {
                if (action.payload && !action.payload.error) {
                   const updateSpecilaist = action.payload.map((specialist) => ({
@@ -81,7 +83,7 @@ export const specialistsSlice = createSlice({
          )
 
          .addCase(
-            SPECIALISTS_THUNK.serachSpecilaist.rejected,
+            SPECIALISTS_THUNK.searchSpecilaist.rejected,
             (state, action) => {
                state.status = 'failed'
                state.error = action.error.message
@@ -122,5 +124,3 @@ export const specialistsSlice = createSlice({
          })
    },
 })
-
-export const SPECIALIST_ACTIONS = specialistsSlice.actions
