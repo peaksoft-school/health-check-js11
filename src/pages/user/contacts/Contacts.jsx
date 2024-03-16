@@ -128,7 +128,7 @@ const StyledSpecialistRow = styled(Typography)(() => ({
 
 const NavLinkStyle = styled(NavLink)(({ theme }) => ({
    textDecoration: 'none',
-   color: '#959595',
+   color: theme.palette.secondary.lightGrey,
 }))
 
 const StyledLine = styled(Box)(() => ({
