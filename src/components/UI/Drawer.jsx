@@ -11,6 +11,8 @@ export default Drawer
 
 const StyledDrawer = styled(MuiDrawer)(() => ({
    '.MuiDrawer-paper': {
+      maxWidth: '400px',
+      background: ' #F3F1F1',
       overflowX: 'clip !important',
    },
 }))

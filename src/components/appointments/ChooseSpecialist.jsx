@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { styled, Typography, Box, Rating } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { UsersIcon } from '../../assets/icons'
 import Button from '../UI/Button'
 import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
 
-const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
+const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
    const { doctorsTimesheet } = useSelector((state) => state.onlineAppointments)
 
    const dispatch = useDispatch()
@@ -20,9 +21,9 @@ const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       0
    ).getDate()}`
 
-   const getDoctorName = ({ name, time, id, date }) => {
+   const getDoctorName = ({ time, id, doctor }) => {
       goBack()
-      setDoctorName({ name, id, date })
+      setDoctorName({ doctor })
       setTime(time)
       dispatch(
          ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule({
@@ -33,10 +34,21 @@ const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       )
    }
 
+   const formatDates = (dateString) => {
+      const options = {
+         day: 'numeric',
+         month: 'long',
+         weekday: 'short',
+      }
+
+      const date = new Date(dateString)
+      return date.toLocaleDateString('ru-RU', options)
+   }
+
    return (
       <StyledContainer>
          <StyledButton variant="grey">
-            <UsersIcon /> <Typography>Любой свободный специалист</Typography>
+            <UsersIcon /> <Typography>Свободные специалисты</Typography>
          </StyledButton>
 
          <Box className="doctors">
@@ -56,14 +68,17 @@ const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                         </Typography>
 
                         <Box className="rating-box">
-                           <Rating className="rating" value={5} readOnly />
-                           166
+                           <Rating size="small" value={5} readOnly />
+                           <Typography className="reviews" variant="span">
+                              166
+                           </Typography>
                         </Box>
                      </Box>
                   </Box>
 
-                  <Typography>
-                     ближайшее время для записи {startDate}
+                  <Typography className="date">
+                     ближайшее время для записи <span> </span>
+                     {formatDates(doctor.dateOfConsultation)}:
                   </Typography>
 
                   <Box className="times-box">
@@ -75,10 +90,9 @@ const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                               key={time}
                               onClick={() => {
                                  getDoctorName({
-                                    name: doctor.doctorFullName,
+                                    doctor,
                                     id: doctor.doctorId,
                                     time: appointmentTime,
-                                    date: doctor.dateOfConsultation,
                                  })
                               }}
                               variant="grey"
@@ -95,16 +109,22 @@ const ChoseSpecialist = ({ goBack, setDoctorName, setTime }) => {
    )
 }
 
-export default ChoseSpecialist
+export default ChooseSpecialist
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    marginTop: '20px',
+   padding: '7px',
 
    '& .doctors': {
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
       padding: '10px ',
+
+      '& .date': {
+         fontFamily: 'Manrope',
+         color: theme.palette.primary.darkGrey,
+      },
 
       '& > .doctor': {
          padding: '10px 20px',
@@ -117,9 +137,22 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
          '& > .first-part': {
             '& > .image': {
-               width: '40px',
+               borderRadius: '50%',
+               width: '50px',
                alignSelf: 'start',
-               height: '40px',
+               height: '50px',
+            },
+
+            '& .rating-box': {
+               display: 'flex',
+               alignIntems: 'center',
+               gap: '8px',
+
+               '& > .reviews': {
+                  fontFamily: 'Manrope',
+                  fontSize: '14px',
+                  color: '#707070',
+               },
             },
 
             '& .facility': {
@@ -176,3 +209,5 @@ const StyledTimeButton = styled(Button)(() => ({
       borderRadius: '1.5rem',
    },
 }))
+
+const Users = styled('span')(() => ({}))

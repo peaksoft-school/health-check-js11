@@ -4,17 +4,23 @@ import { ONLINE_APPOINTMENTS_THUNKS } from './onlineAppointmentsThunk'
 const initialState = {
    doctorsTimesheet: [],
    doctors: {},
+   doctorData: {},
    date: [],
    facilityArray: [],
    isLoading: false,
    appoinmentId: null,
    code: null,
+   isResult: false,
 }
 
 export const onlineAppointmentsSlice = createSlice({
    name: 'onlineAppointments',
    initialState,
-   reducers: {},
+   reducers: {
+      setIsResult: (state) => {
+         state.isResult = true
+      },
+   },
 
    clearDeletedAppointmentsIds: (state) => {
       state.deletedAppointmentsIds = []
@@ -93,10 +99,9 @@ export const onlineAppointmentsSlice = createSlice({
             ONLINE_APPOINTMENTS_THUNKS.addAppointment.fulfilled,
             (state, { payload }) => {
                state.isLoading = false
-               const [code, id] = payload.message.split(' ')
+               const [id, code] = payload.message.split(' ')
                state.code = code
                state.appoinmentId = id
-               console.log(payload.message)
             }
          )
 
@@ -113,5 +118,28 @@ export const onlineAppointmentsSlice = createSlice({
                state.isLoading = false
             }
          )
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.checkVerificationCode.fulfilled,
+            (state, { payload }) => {
+               state.isLoading = false
+               state.doctorData = payload
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.checkVerificationCode.pending,
+            (state) => {
+               state.isLoading = true
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNKS.checkVerificationCode.rejected,
+            (state) => {
+               state.isLoading = false
+            }
+         )
    },
 })
+
+export const ONLINE_APPOINTMENTS_ACTIONS = onlineAppointmentsSlice.actions

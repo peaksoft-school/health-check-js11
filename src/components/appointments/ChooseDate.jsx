@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import { styled, Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { DateCalendar } from '@mui/x-date-pickers'
 import { DAYS_OF_WEEK } from '../../utils/constants'
 import Button from '../UI/Button'
 
-const ChooseDatePage = ({
-   formPageHandler,
+const ChooseDate = ({
+   formHandler,
    selectedDate,
    setSelectedDate,
    selectedTime,
@@ -34,8 +33,8 @@ const ChooseDatePage = ({
          )
 
          if (consultation && consultation.startTimeOfConsultation.length > 0) {
-            return consultation.startTimeOfConsultation.map((time) => {
-               const appointmentTime = time.slice(0, 5)
+            return consultation.startTimeOfConsultation?.map((time) => {
+               const appointmentTime = time ? time.slice(0, 5) : ''
                const isSelected = appointmentTime === selectedTime
 
                return (
@@ -60,7 +59,8 @@ const ChooseDatePage = ({
    }
 
    return (
-      <>
+      <Box>
+         <hr />
          <StyledContainer>
             <StyledDateCalendar
                dayOfWeekFormatter={(_day, weekday) =>
@@ -75,28 +75,31 @@ const ChooseDatePage = ({
                      {day.format('MMMM')}
                   </DayComponentProps>
                )}
-               shouldDisableDay={shouldDisableDay}
+               shoulddisableday={shouldDisableDay}
                value={selectedDate}
                onChange={handleDateChange}
             />
 
-            <StyledTimesBox>{renderSelectedDateTimesheet()}</StyledTimesBox>
+            {selectedDate && (
+               <StyledTimesBox>{renderSelectedDateTimesheet()}</StyledTimesBox>
+            )}
          </StyledContainer>
-         <StyledButton onClick={formPageHandler}>Продолжить</StyledButton>
-      </>
+         <StyledButton onClick={formHandler}>Продолжить</StyledButton>
+      </Box>
    )
 }
-export default ChooseDatePage
+export default ChooseDate
 
 const StyledContainer = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '10px',
+   width: '100% !important',
 }))
 
 const StyledDateCalendar = styled(DateCalendar)(() => ({
    backgroundColor: 'white',
-   width: '100% !important',
+   width: '100%',
 
    '.MuiPickersArrowSwitcher-spacer': {
       width: '120px',
@@ -189,7 +192,7 @@ const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       width: '100%',
       margin: '15px  0',
-      height: '2.75rem',
+      height: '2.5rem',
       fontSize: '0.875rem',
 
       '&:active': {

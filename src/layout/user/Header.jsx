@@ -7,7 +7,7 @@ import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
-import AddOnlineAppointments from '../../components/appointments/AddOnlineAppointments'
+import AddAppointments from '../../components/appointments/AddAppointments'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
@@ -59,8 +59,6 @@ const Header = () => {
 
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
-
-   // const getFacility = () =>
 
    const handlelogOut = () => {
       handleProfileMenuClose()
@@ -254,7 +252,7 @@ const Header = () => {
                      ЗАПИСЬ ОНАЛЙН
                   </StyledButton>
 
-                  <AddOnlineAppointments
+                  <AddAppointments
                      open={toggleDrawerModal}
                      onClose={toggleDrawerHandler}
                   />

@@ -51,13 +51,13 @@ const getDoctorSchedule = createAsyncThunk(
 const addAppointment = createAsyncThunk(
    'online-appointments/addAppointment',
 
-   async ({ facility, data, setCode }, { rejectWithValue }) => {
+   async ({ facility, data }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
             `/api/appointment/add?facility=${facility}`,
             data
          )
-         setCode(true)
+
          return response.data
       } catch (error) {
          return rejectWithValue(error)
@@ -68,12 +68,13 @@ const addAppointment = createAsyncThunk(
 const checkVerificationCode = createAsyncThunk(
    'online-appointments/code',
 
-   async ({ code, id }, { rejectWithValue }) => {
+   async ({ verificationCode, id, open }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.patch(
-            `/api/appointment?appointmentId=${id}&code=${code}`
+            `/api/appointment?appointmentId=${id}&code=${verificationCode}`
          )
 
+         open()
          return response.data
       } catch (error) {
          return rejectWithValue(error)
@@ -83,10 +84,13 @@ const checkVerificationCode = createAsyncThunk(
 
 const deleteAppoinment = createAsyncThunk(
    'appointments/deleteById',
-   async (id, { dispatch, rejectWithValue }) => {
+   async ({ appoinmentId, setDeleteSuccess }, { rejectWithValue }) => {
       try {
-         await axiosInstance.delete(`/api/appointment/${id}`)
-         return id
+         await axiosInstance.delete(`/api/appointment/${appoinmentId}`)
+
+         setDeleteSuccess(true)
+
+         return appoinmentId
       } catch (error) {
          return rejectWithValue(error)
       }

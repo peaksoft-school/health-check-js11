@@ -1,21 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Drawer from '../UI/Drawer'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
-import OnlineAppointmentsContent from './OnlineAppointmentsContent'
+import Appointments from './Appointments'
 import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
-import ChoseSpecialist from './ChoseSpecialist'
-import ChooseDatePage from './ChooseDatePage'
+import ChooseSpecialist from './ChooseSpecialist'
+import ChooseDate from './ChooseDate'
 import { showToast } from '../../utils/helpers/notification'
-import Form from './Form'
+import AppointmentsForm from './AppointmentsForm'
+import Registered from './Result'
 
-const AddOnlineAppointments = ({ open, onClose }) => {
-   const [mainPage, setMainPage] = useState(true)
-   const [specialistPage, setSpecialistPage] = useState(false)
+const AddAppointments = ({ open, onClose }) => {
+   const [main, setMain] = useState(true)
+   const [result, setResult] = useState(false)
+   const [specialist, setSpecialist] = useState(false)
    const [doctorInfo, setDoctorInfo] = useState('')
-   const [datePage, setDatePage] = useState(false)
-   const [formPage, setFormPage] = useState(false)
+   const [date, setDate] = useState(false)
+   const [form, setForm] = useState(false)
    const [facility, setFacility] = useState('')
    const [selectedDate, setSelectedDate] = useState(null)
    const [time, setTime] = useState('')
@@ -38,124 +40,154 @@ const AddOnlineAppointments = ({ open, onClose }) => {
       }
    }
 
-   const specialistPafwHandler = () => {
+   const specialistHandler = () => {
       if (facility) {
-         setMainPage((prev) => !prev)
-         setSpecialistPage((prev) => !prev)
+         setMain((prev) => !prev)
+         setSpecialist((prev) => !prev)
       } else {
          showToast({ message: 'выбурите услугу!', status: 'error' })
       }
    }
 
    const datePageHandler = () => {
-      setMainPage(false)
-      setFormPage(false)
-      setDatePage(true)
+      setMain(false)
+      setForm(false)
+      setDate(true)
    }
 
-   const formPageHandler = () => {
-      setDatePage(false)
-      setMainPage(false)
-      setFormPage(true)
+   const formHandler = () => {
+      setDate(false)
+      setMain(false)
+      setForm(true)
+   }
+
+   const handlerClose = () => {
+      onClose()
+      setMain(true)
+      setDoctorInfo('')
+      setTime('')
+      setResult(false)
+      setFacility('')
    }
 
    const goBack = () => {
-      setSpecialistPage(false)
-      setFormPage(false)
-      setDatePage(false)
-      setMainPage(true)
+      setSpecialist(false)
+      setForm(false)
+      setDate(false)
+      setMain(true)
+      setResult(false)
+   }
+
+   const goBackAndClear = () => {
+      setMain(true)
+      setSpecialist(false)
+      setDate(false)
+      setResult(false)
+      setTime('')
+      setFacility('')
+      setDoctorInfo('')
+      setSelectedDate('')
+      setForm(false)
+   }
+
+   const openLast = () => {
+      setForm(false)
+      setResult(true)
    }
 
    return (
       <Drawer open={open} onClose={onClose}>
          <StyledDrawer>
-            <div className="header-box">
-               {mainPage ? (
-                  <CloseIcon onClick={onClose} />
+            <Box className="header-box">
+               {main || result ? (
+                  <CloseIcon onClick={handlerClose} />
                ) : (
                   <GoBackIcon onClick={goBack} />
                )}
 
-               <div className="header">
+               <Box className="header">
                   <Typography className="title">
-                     {mainPage && 'Онлайн Запись'}
-                     {specialistPage && 'Выбрать специалиста'}
-                     {datePage && 'Выбрать дату и время'}
-                     {formPage && 'Запись'}
+                     {main && 'Онлайн Запись'}
+                     {specialist && 'Выбрать специалиста'}
+                     {date && 'Выбрать дату и время'}
+                     {form && 'Запись'}
+                     {result && 'Онлайн Запись'}
                   </Typography>
-               </div>
-            </div>
+               </Box>
+
+               <Box> </Box>
+            </Box>
 
             <StyledContainer>
-               {mainPage && (
-                  <OnlineAppointmentsContent
+               {main && (
+                  <Appointments
                      value={facility.label}
-                     doctorName={doctorInfo}
+                     doctorInfo={doctorInfo}
                      date={time}
                      selectHandler={changeFacilityHandler}
-                     toggleSpecialist={specialistPafwHandler}
+                     toggleSpecialist={specialistHandler}
                      toggleDate={datePageHandler}
                      setDoctorName={setDoctorInfo}
                      setDat={setTime}
                      validate={!!validate}
-                     openForm={formPageHandler}
+                     openForm={formHandler}
                   />
                )}
 
-               {specialistPage && (
-                  <ChoseSpecialist
+               {specialist && (
+                  <ChooseSpecialist
                      setDoctorName={setDoctorInfo}
                      goBack={goBack}
                      setTime={setTime}
                   />
                )}
 
-               {datePage && (
-                  <ChooseDatePage
+               {date && (
+                  <ChooseDate
                      selectedDate={selectedDate}
                      setTime={setTime}
                      setSelectedDate={setSelectedDate}
                      selectedTime={time}
                      setSelectedTime={setTime}
-                     formPageHandler={formPageHandler}
+                     formHandler={formHandler}
                   />
                )}
-               {formPage && (
-                  <Form
+
+               {form && (
+                  <AppointmentsForm
                      doctorInfo={doctorInfo}
                      facility={facility.label}
                      time={time}
                      date={selectedDate}
+                     open={openLast}
                   />
                )}
+
+               {result && <Registered goBack={goBackAndClear} />}
             </StyledContainer>
          </StyledDrawer>
       </Drawer>
    )
 }
 
-export default AddOnlineAppointments
+export default AddAppointments
 
-const StyledDrawer = styled('div')(() => ({
-   background: ' #F3F1F1',
+const StyledDrawer = styled(Box)(() => ({
    '& .header-box': {
       display: 'flex',
       boxSizing: 'content-box',
-      padding: '10px',
+      padding: '15px',
       background: '#fff',
+      justifyContent: 'space-between',
    },
 
    '& .header': {
-      display: 'flex',
-      justifyContent: 'center',
       alignItems: 'center',
+      display: 'flex',
 
       '& .title': {
-         margin: '0 0 0 75px ',
          fontFamily: 'Manrope',
-         fontStyle: 'normal',
          fontWeight: '700',
-         fontSize: '16px',
          color: '#048741',
       },
    },
