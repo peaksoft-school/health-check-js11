@@ -27,7 +27,7 @@ const { Control } = components
 
 const CustomControl = ({ children, ...props }) => (
    <Control {...props}>
-      <ChooseServiceIcon />
+      <AppointmentIcon />
       {children}
    </Control>
 )
@@ -69,8 +69,8 @@ const customStylesAppointments = {
    control: (provided) => {
       return {
          ...provided,
-         height: '65px',
-         paddingLeft: '20px',
+         height: '60px',
+         paddingLeft: '25px',
          width: '100%',
          border: 'none',
          borderRadius: '10px',
@@ -84,7 +84,7 @@ const customStylesAppointments = {
 
    menu: (provided) => ({
       ...provided,
-      width: '320px',
+      width: '400px',
    }),
 }
 
@@ -223,6 +223,10 @@ const Icon = styled(Typography)(() => ({
    top: 16,
    left: 15,
    zIndex: '100',
+}))
+
+const AppointmentIcon = styled(ChooseServiceIcon)(() => ({
+   marginRight: '10px',
 }))
 
 const MenuItemStyle = styled(MenuItem)(({ theme }) => ({

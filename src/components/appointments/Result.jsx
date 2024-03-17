@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Rating, styled, Typography } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import Button from '../UI/Button'
@@ -6,30 +6,30 @@ import { PlusIcon, RegisteredIcon } from '../../assets/icons'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
 import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments-user/onlineAppointmentsSlice'
 
-const Registered = ({ goBack }) => {
+const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
+   const doctorData = useSelector(
+      (state) => state.onlineAppointments.doctorData
+   )
+   const dispatch = useDispatch()
 
-   const closeModal = () => setToggleModal((prev) => !prev)
-
-   const { doctorData } = useSelector((state) => state.onlineAppointments)
-
-   const formatDate = (dateString) => {
+   const formatDate = useMemo(() => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
-      const date = new Date(dateString)
+      const date = new Date(doctorData.localDate)
       const formattedDate = date.toLocaleDateString('ru-RU', options)
       const capitalizedWeekday =
          formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
       return capitalizedWeekday
-   }
+   }, [doctorData.localDate])
 
-   const dispatch = useDispatch()
+   const closeModal = () => setToggleModal((prev) => !prev)
 
-   const startTime = doctorData ? doctorData?.startTime.slice(0, 5) : ''
-   const endTime = doctorData ? doctorData?.endTime.slice(0, 5) : ''
+   const startTime = doctorData ? doctorData.startTime.slice(0, 5) : ''
+   const endTime = doctorData ? doctorData.endTime.slice(0, 5) : ''
 
    useEffect(() => {
       dispatch(ONLINE_APPOINTMENTS_ACTIONS.setIsResult())
-   })
+   }, [dispatch])
 
    return (
       <Container>
@@ -38,7 +38,7 @@ const Registered = ({ goBack }) => {
          <Submited>Вы записаны</Submited>
 
          <Typography className="date">
-            {formatDate(doctorData.localDate)}, {`${startTime}-${endTime}`}
+            {formatDate}, {`${startTime}-${endTime}`}
          </Typography>
 
          <Profile>
@@ -73,7 +73,7 @@ const Registered = ({ goBack }) => {
    )
 }
 
-export default Registered
+export default Result
 
 const Container = styled('div')(() => ({
    margin: '6px',

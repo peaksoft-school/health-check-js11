@@ -1,36 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
 import Input from '../UI/inputs/Input'
 import Button from '../UI/Button'
 import NumberInput from '../UI/inputs/NumberInput'
 import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
+import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
 
 const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
-   const dispatch = useDispatch()
    const [verificationCode, setVerificationCode] = useState('')
 
+   const dispatch = useDispatch()
+
    const { accessToken } = useSelector((state) => state.auth)
-   const { code, appoinmentId } = useSelector(
+   const { code, appointmentId } = useSelector(
       (state) => state.onlineAppointments
    )
+   const { userData } = useSelector((state) => state.profile)
 
    useEffect(() => {
       dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
-   }, [accessToken])
-
-   const dates = date ? date.format('YYYY-MM-DD') : null
-   const { userData } = useSelector((state) => state.profile)
+   }, [accessToken, dispatch])
 
    const onSubmit = (values) => {
       const data = {
          ...values,
          startTimeConsultation: time,
          doctorId: doctorInfo.doctor.doctorId,
-         date: dates || doctorInfo.doctor.dateOfConsultation,
+         date: date
+            ? date.format('YYYY-MM-DD')
+            : doctorInfo.doctor.dateOfConsultation,
       }
 
       dispatch(
@@ -46,16 +47,14 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          dispatch(
             ONLINE_APPOINTMENTS_THUNKS.checkVerificationCode({
                verificationCode,
-               id: appoinmentId,
+               id: appointmentId,
                open,
             })
          )
-      } else showToast({ status: 'error', message: 'не верный код' })
+      } else {
+         showToast({ status: 'error', message: 'Неверный код' })
+      }
    }
-
-   useEffect(() => {
-      dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
-   }, [accessToken])
 
    const { values, handleChange, handleSubmit } = useFormik({
       initialValues: {
@@ -63,8 +62,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          email: userData.email,
          phoneNumber: userData.number,
       },
-
-      validateOnChange: false,
       onSubmit,
    })
 
@@ -75,8 +72,9 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       <StyledContainer>
          <Box className="container">
             <StyledForm onSubmit={handleSubmit}>
-               <div className="form-container">
+               <Box className="form-container">
                   <Typography>Ваше имя и фамилия </Typography>
+
                   <StyledInput
                      value={values.fullName}
                      placeholder="Введите имя и фамилия"
@@ -84,9 +82,10 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   />
 
                   <Typography>Номер телефона</Typography>
+
                   <NumberInput
                      value={values.phoneNumber}
-                     onChange={handleChange('phomeNumber')}
+                     onChange={handleChange('phoneNumber')}
                      mask="_"
                      name="number"
                      id="number"
@@ -101,24 +100,22 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      onChange={handleChange('email')}
                      placeholder="Введите e-mail"
                   />
+
                   {code && (
                      <>
                         <Typography variant="small">
                            Введите код из почты
                         </Typography>
+
                         <StyledSmsCodeInput
                            onChange={changeVerificationCodeHandler}
                            value={verificationCode}
                         />
                      </>
                   )}
-               </div>
+               </Box>
 
-               {code ? (
-                  ''
-               ) : (
-                  <StyledButton type="submit">Продолжить</StyledButton>
-               )}
+               {!code && <StyledButton type="submit">Продолжить</StyledButton>}
             </StyledForm>
 
             {code && <StyledButton onClick={sendCode}>Записаться</StyledButton>}
@@ -183,7 +180,7 @@ const StyledInput = styled(Input)(() => ({
       height: '0.5rem',
       width: '336px',
       color: 'black',
-      borderRadius: '5px    ',
+      borderRadius: '5px',
    },
 
    '& .MuiOutlinedInput-root ': {

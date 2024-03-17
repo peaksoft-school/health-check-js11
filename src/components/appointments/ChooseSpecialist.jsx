@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { styled, Typography, Box, Rating } from '@mui/material'
+import { useCallback } from 'react'
+import { styled, Typography, Box } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { UsersIcon } from '../../assets/icons'
 import Button from '../UI/Button'
+import SpecialistCard from './SpecialistCard'
 import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
 
 const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
    const { doctorsTimesheet } = useSelector((state) => state.onlineAppointments)
-
    const dispatch = useDispatch()
 
    const currentDate = new Date()
@@ -20,6 +20,16 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       currentDate.getMonth() + 1,
       0
    ).getDate()}`
+
+   const getRandomDoctor = useCallback(() => {
+      const doctor =
+         doctorsTimesheet[Math.floor(Math.random() * doctorsTimesheet.length)]
+      const firstAppointmentTime = doctor.startTimeOfConsultation[0]
+
+      setTime(firstAppointmentTime)
+      goBack()
+      setDoctorName({ doctor })
+   }, [doctorsTimesheet, goBack, setDoctorName, setTime])
 
    const getDoctorName = ({ time, id, doctor }) => {
       goBack()
@@ -34,7 +44,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       )
    }
 
-   const formatDates = (dateString) => {
+   const formatDates = useCallback((dateString) => {
       const options = {
          day: 'numeric',
          month: 'long',
@@ -43,66 +53,23 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 
       const date = new Date(dateString)
       return date.toLocaleDateString('ru-RU', options)
-   }
+   }, [])
 
    return (
       <StyledContainer>
-         <StyledButton variant="grey">
-            <UsersIcon /> <Typography>Свободные специалисты</Typography>
+         <StyledButton onClick={getRandomDoctor} variant="grey">
+            <UsersIcon /> <Typography> Любой свободный специалист</Typography>
+            <span> </span>
          </StyledButton>
 
          <Box className="doctors">
             {doctorsTimesheet?.map((doctor) => (
-               <Box key={doctor.doctorId} className="doctor">
-                  <Box className="first-part">
-                     <img
-                        className="image"
-                        src={doctor.imageDoctor}
-                        alt="doc"
-                     />
-
-                     <Box>
-                        <Typography>{doctor.doctorFullName}</Typography>
-                        <Typography className="facility">
-                           {doctor.department}
-                        </Typography>
-
-                        <Box className="rating-box">
-                           <Rating size="small" value={5} readOnly />
-                           <Typography className="reviews" variant="span">
-                              166
-                           </Typography>
-                        </Box>
-                     </Box>
-                  </Box>
-
-                  <Typography className="date">
-                     ближайшее время для записи <span> </span>
-                     {formatDates(doctor.dateOfConsultation)}:
-                  </Typography>
-
-                  <Box className="times-box">
-                     {doctor.startTimeOfConsultation.map((time) => {
-                        const appointmentTime = time.slice(0, 5)
-
-                        return (
-                           <StyledTimeButton
-                              key={time}
-                              onClick={() => {
-                                 getDoctorName({
-                                    doctor,
-                                    id: doctor.doctorId,
-                                    time: appointmentTime,
-                                 })
-                              }}
-                              variant="grey"
-                           >
-                              {appointmentTime}
-                           </StyledTimeButton>
-                        )
-                     })}
-                  </Box>
-               </Box>
+               <SpecialistCard
+                  key={doctor.doctorId}
+                  doctor={doctor}
+                  getDoctorName={getDoctorName}
+                  formatDates={formatDates}
+               />
             ))}
          </Box>
       </StyledContainer>
@@ -120,56 +87,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       flexDirection: 'column',
       gap: '20px',
       padding: '10px ',
-
-      '& .date': {
-         fontFamily: 'Manrope',
-         color: theme.palette.primary.darkGrey,
-      },
-
-      '& > .doctor': {
-         padding: '10px 20px',
-         borderRadius: '20px',
-         border: `1px solid ${theme.palette.secondary.lightGrey}`,
-         backgroundColor: 'white',
-         display: 'flex',
-         flexDirection: 'column',
-         gap: '10px',
-
-         '& > .first-part': {
-            '& > .image': {
-               borderRadius: '50%',
-               width: '50px',
-               alignSelf: 'start',
-               height: '50px',
-            },
-
-            '& .rating-box': {
-               display: 'flex',
-               alignIntems: 'center',
-               gap: '8px',
-
-               '& > .reviews': {
-                  fontFamily: 'Manrope',
-                  fontSize: '14px',
-                  color: '#707070',
-               },
-            },
-
-            '& .facility': {
-               fontFamily: 'Manrope',
-               fontSize: '14px',
-               color: theme.palette.secondary.lightGrey,
-            },
-
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-         },
-      },
-   },
-
-   '& .times-box': {
-      width: '300px ',
    },
 }))
 
@@ -177,6 +94,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
    '&.MuiButtonBase-root': {
       backgroundColor: theme.palette.primary.main,
       border: 'none',
+      width: '100%',
 
       '&:hover': {
          backgroundColor: theme.palette.primary.main,
@@ -188,26 +106,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
    '& > div': {
       display: 'flex',
       alignItems: 'center',
+      gap: '20px',
+
+      '& > p ': {
+         fontFamily: 'Manrope',
+      },
    },
 }))
-
-const StyledTimeButton = styled(Button)(() => ({
-   '&.MuiButtonBase-root': {
-      padding: '5px 0',
-      width: '91px',
-      borderRadius: '1.5rem',
-      height: '33px',
-      margin: '4px',
-      fontSize: '10px',
-   },
-
-   '&:active': {
-      borderRadius: '1.5rem',
-   },
-
-   '&:hover': {
-      borderRadius: '1.5rem',
-   },
-}))
-
-const Users = styled('span')(() => ({}))

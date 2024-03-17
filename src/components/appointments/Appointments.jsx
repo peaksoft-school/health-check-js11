@@ -12,6 +12,7 @@ const Appointments = ({
    date,
    openForm,
    validate,
+   value,
 }) => {
    const { facilityArray } = useSelector((state) => state.onlineAppointments)
 
@@ -26,7 +27,7 @@ const Appointments = ({
       <StyledContainer>
          <StyledSelect
             variant="appointments"
-            placeholder="Выбрать услуги"
+            placeholder={value || 'Выбрать услуги'}
             options={getfacility}
             value={getfacility}
             onChange={selectHandler}
@@ -181,7 +182,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
    },
 }))
 
-const StyledSelect = styled(Select)(() => ({
+const StyledSelect = styled(Select)(({ theme }) => ({
    backroungColor: 'white',
 
    '& .MuiSelect-select': {
@@ -189,5 +190,14 @@ const StyledSelect = styled(Select)(() => ({
       marginLeft: '40px',
       border: 'none',
       padding: '20px',
+      color: 'black',
+   },
+
+   '& #react-select-3-placeholder': {
+      color: theme.palette.primary.lightBlack,
+   },
+
+   '& svg': {
+      fill: theme.palette.primary.darkGrey,
    },
 }))

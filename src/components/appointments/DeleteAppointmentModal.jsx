@@ -22,43 +22,46 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    }
 
    return (
-      <Container>
+      <StyledContainer>
          {deleteSuccess ? (
-            <ModalContent>
-               <Box className="closeContainer">
+            <StyledModalContent>
+               <Box className="close-container">
                   <CloseIcon onClick={goBack} />
                </Box>
 
                <Typography>Запись отменена</Typography>
 
                <Button onClick={goBack}>Записаться еще</Button>
-            </ModalContent>
+            </StyledModalContent>
          ) : (
-            <ModalContent>
+            <StyledModalContent>
                <Typography variant="h3">Отмена записи</Typography>
+
                <hr />
+
                <Typography>
                   После отмены запись будет невозможно восстановить
                </Typography>
+
                <Box className="buttons-box">
                   <Button
                      variant="outlined"
-                     className="calceledButton"
+                     className="calceled-button"
                      onClick={deleteHandler}
                   >
                      Отменить запись
                   </Button>
                   <Button onClick={handleClose}>Закрыть</Button>
                </Box>
-            </ModalContent>
+            </StyledModalContent>
          )}
-      </Container>
+      </StyledContainer>
    )
 }
 
 export default DeleteAppointmentModal
 
-const Container = styled(Box)(() => ({
+const StyledContainer = styled(Box)(() => ({
    position: 'fixed',
    top: 0,
    right: 0,
@@ -72,7 +75,7 @@ const Container = styled(Box)(() => ({
    padding: '0 2rem',
 }))
 
-const ModalContent = styled(Box)(() => ({
+const StyledModalContent = styled(Box)(() => ({
    width: '100%',
    position: 'relative',
    display: 'flex',
@@ -83,7 +86,7 @@ const ModalContent = styled(Box)(() => ({
    textAlign: 'center',
    marginBottom: '44%',
 
-   '.closeContainer': {
+   '.close-container': {
       alignItems: 'center',
       justifyContent: 'center',
       marginLeft: '40%',
@@ -102,7 +105,7 @@ const ModalContent = styled(Box)(() => ({
       height: '2.5rem',
    },
 
-   '& h3': {
+   '&> h3': {
       fontWeight: '500',
       fontSize: '1.1rem',
    },
@@ -111,7 +114,7 @@ const ModalContent = styled(Box)(() => ({
       margin: '1.8rem 0',
    },
 
-   '& hr': {
+   '& > hr': {
       position: 'absolute',
       top: '22%',
       left: '0',
@@ -121,13 +124,13 @@ const ModalContent = styled(Box)(() => ({
       backgroundColor: '#F3F1F1',
    },
 
-   '& .buttons-box': {
-      '.calceledButton': {
-         height: '2.75rem',
-      },
-
+   '& >.buttons-box': {
       display: 'flex',
       flexDirection: 'column',
       gap: '0.8rem',
+
+      '& > .calceled-button': {
+         height: '2.75rem',
+      },
    },
 }))

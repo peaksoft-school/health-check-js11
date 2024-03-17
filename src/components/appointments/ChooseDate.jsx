@@ -1,4 +1,4 @@
-import { styled, Box } from '@mui/material'
+import { Box, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { DateCalendar } from '@mui/x-date-pickers'
 import { DAYS_OF_WEEK } from '../../utils/constants'
@@ -21,10 +21,6 @@ const ChooseDate = ({
       return consultation && consultation.startTimeOfConsultation.length === 0
    }
 
-   const handleTimeSelection = (time) => {
-      setSelectedTime(time)
-   }
-
    const renderSelectedDateTimesheet = () => {
       if (selectedDate) {
          const consultation = date.find(
@@ -39,9 +35,9 @@ const ChooseDate = ({
 
                return (
                   <StyledTimeButton
-                     variant={isSelected ? 'green' : 'grey'}
                      key={time}
-                     onClick={() => handleTimeSelection(appointmentTime)}
+                     variant={isSelected ? 'green' : 'grey'}
+                     onClick={() => setSelectedTime(appointmentTime)}
                   >
                      {appointmentTime}
                   </StyledTimeButton>
@@ -75,7 +71,6 @@ const ChooseDate = ({
                      {day.format('MMMM')}
                   </DayComponentProps>
                )}
-               shoulddisableday={shouldDisableDay}
                value={selectedDate}
                onChange={handleDateChange}
             />
