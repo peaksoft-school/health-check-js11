@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getAppointments = createAsyncThunk(
    'appointments/getAppointments',
@@ -9,6 +10,7 @@ const getAppointments = createAsyncThunk(
 
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -29,9 +31,10 @@ const updateAppointment = createAsyncThunk(
          dispatch(getAppointments())
 
          setIsChecked((prev) => !prev)
-
+         showToast({ message: response.data.message })
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -50,6 +53,7 @@ const searchAppointment = createAsyncThunk(
 
          return response.data
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -64,6 +68,7 @@ const deleteAppoinment = createAsyncThunk(
 
          return appointmentId
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -79,6 +84,7 @@ const deleteAllAppointments = createAsyncThunk(
 
          dispatch(getAppointments())
       } catch (error) {
+         showToast({ message: error.response.data.message, status: 'error' })
          throw new Error('Error deleting all appointments', error)
       }
    }

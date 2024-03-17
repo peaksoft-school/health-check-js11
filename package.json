@@ -19,6 +19,7 @@
       "dayjs": "^1.11.10",
       "delta": "^3.0.5",
       "draftjs-to-html": "^0.9.1",
+      "exceljs": "^4.4.0",
       "firebase": "^10.8.0",
       "formik": "^2.4.5",
       "pdf-lib": "^1.17.1",
