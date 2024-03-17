@@ -11,6 +11,8 @@ import ChangeUserPassword from './ChangeUserPassword'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 
 const Profile = () => {
+   window.scrollTo({ top: 0 })
+
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)

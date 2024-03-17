@@ -18,6 +18,8 @@ import { VALIDATION_FORGOT_PASSWORD } from '../../../utils/helpers/validate'
 import { passwordError } from '../../../utils/helpers'
 
 const ChangeUserPassword = () => {
+   window.scrollTo({ top: 0 })
+
    const [showOldPassword, setShowOldPassword] = useState(false)
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
