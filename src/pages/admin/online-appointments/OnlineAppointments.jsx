@@ -1,22 +1,33 @@
+import { Workbook } from 'exceljs'
+import { useDebounce } from 'use-debounce'
+import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { useDebounce } from 'use-debounce'
-import Table from '../../../components/UI/Table'
-import Button from '../../../components/UI/Button'
-import { PlusIcon } from '../../../assets/icons'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Loading from '../../../components/Loading'
+import { useCallback, useEffect, useState } from 'react'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
+import { NoDataImage } from '../../../assets/images'
+import { PlusIcon } from '../../../assets/icons'
+import Table from '../../../components/UI/Table'
+import Button from '../../../components/UI/Button'
+import Loading from '../../../components/Loading'
+import Schedule from '../schedule/Schedule'
 import AddSchedule from '../../../components/schedule/AddSchedule'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
+
+const getDefaultTabValue = () => {
+   const storedValue = localStorage.getItem('selectedTab')
+
+   return storedValue || '1'
+}
 
 const OnlineAppointments = () => {
-   const [value, setValue] = useState('1')
+   const [value, setValue] = useState(getDefaultTabValue)
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
    const [openModal, setOpenModal] = useState(false)
+
+   const { schedules } = useSelector((state) => state.schedule)
 
    const dispatch = useDispatch()
 
@@ -46,8 +57,93 @@ const OnlineAppointments = () => {
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
-      setShowAddButton(newValue === '1')
+
+      const newShowAddButton = newValue === '1'
+
+      setShowAddButton(newShowAddButton)
+
+      localStorage.setItem('selectedTab', newValue)
+      localStorage.setItem('showAddButton', newShowAddButton)
    }
+
+   useEffect(() => {
+      const storedValue = localStorage.getItem('selectedTab')
+
+      if (storedValue) {
+         setValue(storedValue)
+
+         const newShowAddButton = storedValue === '1'
+
+         setShowAddButton(newShowAddButton)
+
+         localStorage.setItem('showAddButton', newShowAddButton)
+      }
+   }, [])
+
+   const generateExcel = useCallback(() => {
+      const workbook = new Workbook()
+      const worksheet = workbook.addWorksheet('Schedule')
+
+      const headerRow = ['ID', 'Full Name', 'Position']
+
+      schedules.forEach((schedule) => {
+         schedule.dates.forEach((_, index) => {
+            headerRow.push(`Date of Consultation ${index + 1}`)
+            headerRow.push(`Day of Week ${index + 1}`)
+            headerRow.push(`Time Sheet ${index + 1}`)
+         })
+      })
+
+      worksheet.addRow(headerRow)
+
+      schedules.forEach((schedule) => {
+         const { id, surname, position, dates } = schedule
+
+         const rowData = [id.toString(), surname, position]
+
+         dates.forEach((date) => {
+            rowData.push(date.dateOfConsultation)
+            rowData.push(date.dayOfWeek)
+
+            const startTime = date.startTimeOfConsultation.join(', ')
+            if (startTime.length > 20) {
+               rowData.push(`${startTime.substring(0, 20)}...`)
+            } else {
+               rowData.push(startTime)
+            }
+         })
+
+         worksheet.addRow(rowData)
+      })
+
+      worksheet.columns.forEach((column) => {
+         let maxWidth = 0
+         column.eachCell((cell) => {
+            const cellWidth = cell.value
+               ? cell.value.toString().length * 1.2
+               : 10
+            maxWidth = Math.max(maxWidth, cellWidth)
+         })
+         column.width = maxWidth < 10 ? 10 : maxWidth
+      })
+
+      workbook.xlsx.writeBuffer().then((buffer) => {
+         const blob = new Blob([buffer], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+         })
+
+         const url = window.URL.createObjectURL(blob)
+         const a = document.createElement('a')
+
+         a.href = url
+         a.download = 'Schedule.xlsx'
+         document.body.appendChild(a)
+         a.click()
+
+         window.URL.revokeObjectURL(url)
+         document.body.removeChild(a)
+      })
+   }, [schedules])
 
    return (
       <StyledContainer>
@@ -65,7 +161,15 @@ const OnlineAppointments = () => {
                {isLoading && <Loading />}
 
                {!showAddButton && (
-                  <Button className="different-button">some</Button>
+                  <Box>
+                     <Button
+                        variant="secondary"
+                        className="export-btn"
+                        onClick={generateExcel}
+                     >
+                        EXPORT TO EXCEL
+                     </Button>
+                  </Box>
                )}
             </Box>
 
@@ -98,15 +202,23 @@ const OnlineAppointments = () => {
                      </Box>
 
                      <Box className="table-container">
-                        <Table
-                           columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={appointments}
-                        />
+                        {appointments.length === 0 ? (
+                           <img
+                              src={NoDataImage}
+                              alt="No Data"
+                              className="no-data-image"
+                           />
+                        ) : (
+                           <Table
+                              columns={ONLINE_APPOINTMENTS_COLUMN}
+                              data={appointments}
+                           />
+                        )}
                      </Box>
                   </TabPanel>
 
                   <TabPanel value="2" className="tables">
-                     Raspisanie
+                     <Schedule />
                   </TabPanel>
                </TabContext>
             </Box>
@@ -147,25 +259,38 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             lineHeight: 'normal',
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
-            display: 'flex',
-            alignItems: 'center',
             height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            gap: '0.625rem',
             width: '13.0625rem !important',
             flexShrink: '0',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'space-between',
+               width: '100%',
+               gap: '4px',
+            },
 
             '& > .plus-icon': {
                width: '1.125rem',
                padding: '0.625rem',
                height: '1.125rem',
             },
+         },
 
-            '& > div': {
-               display: 'flex',
-               alignItems: 'center',
-               gap: '4px',
-            },
+         '& .export-btn': {
+            borderRadius: '4px',
+            padding: '8px 20px 9px 20px',
+            height: '40px',
+         },
+
+         '& .save-btn': {
+            background: 'rgb(4, 135, 65)',
+            padding: '8px 20px 9px 20px',
+            borderRadius: '4px',
+            height: '40px',
+            marginLeft: '14px',
          },
       },
 
@@ -203,6 +328,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          bordeRradius: ' 0.375rem',
          background: 'white',
          marginTop: '1.25rem',
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center',
+
+         '& .no-data-image': {
+            width: '50%',
+            height: '30%',
+         },
       },
    },
 }))

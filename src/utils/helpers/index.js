@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material'
+
 const signInError = (errors) => {
    let errorMessage = null
 
@@ -93,11 +95,105 @@ const formatPhoneNumberWithSpaces = (phoneNumber = '') => {
    return [countryCode, firstPart, secondPart, thirdPart].join(' ')
 }
 
+const getRussianMonthName = (monthNumber) => {
+   const russianMonthNames = [
+      'Январь',
+      'Февраль',
+      'Март',
+      'Апрель',
+      'Май',
+      'Июнь',
+      'Июль',
+      'Август',
+      'Сентябрь',
+      'Октябрь',
+      'Ноябрь',
+      'Декабрь',
+   ]
+
+   return russianMonthNames[monthNumber]
+}
+
+const generateDateRange = (startDate, endDate, daysOfWeek) => {
+   if (!startDate || !endDate) {
+      return []
+   }
+
+   const start = new Date(startDate)
+   const end = new Date(endDate)
+   const dateRange = []
+
+   while (start <= end) {
+      const dayOfWeek = daysOfWeek[start.getDay()]
+
+      const date = String(start.getDate()).padStart(2, '0')
+      const monthNumber = String(start.getMonth() + 1).padStart(2, '0')
+      const monthText = getRussianMonthName(start.getMonth())
+      const year = start.getFullYear()
+
+      dateRange.push({ dayOfWeek, date, monthNumber, monthText, year })
+      start.setDate(start.getDate() + 1)
+   }
+
+   return dateRange
+}
+
+const generateFreeTimes = (startTimeOfConsultation) => {
+   if (!startTimeOfConsultation || startTimeOfConsultation.length === 0) {
+      return []
+   }
+
+   const timeRanges = startTimeOfConsultation.map((timeRange) => {
+      const [startTime, endTime] = timeRange.split(' - ')
+      const trimmedStartTime = startTime.slice(0, -3)
+      const trimmedEndTime = endTime
+         .replace(/-f$/, '')
+         .replace(/-t$/, '')
+         .slice(0, -3)
+      const isFreeTime = endTime.endsWith('-f')
+      return { time: `${trimmedStartTime} - ${trimmedEndTime}`, isFreeTime }
+   })
+
+   return timeRanges.map(({ time, isFreeTime }) => (
+      <Typography
+         key={time}
+         className={isFreeTime ? 'free-time' : 'not-free-time'}
+      >
+         {time}
+      </Typography>
+   ))
+}
+
+const handleKeyPress = (e) => {
+   const input = e.target
+   const currentValue = input.value
+   const { key } = e
+   const pattern = /[0-9]/
+
+   if (!pattern.test(key)) {
+      e.preventDefault()
+      return
+   }
+
+   if (currentValue.length >= 2 && !input.selectionStart) {
+      e.preventDefault()
+      return
+   }
+
+   if (currentValue.length === 1 && input.selectionStart === 1) {
+      e.preventDefault()
+   }
+}
+
 export {
+   getRussianMonthName,
    signInError,
+   generateDateRange,
    signUpError,
+   generateFreeTimes,
    passwordError,
    scheduleError,
    showResultError,
    formatPhoneNumberWithSpaces,
+   handleKeyPress,
 }
