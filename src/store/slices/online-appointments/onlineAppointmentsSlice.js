@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { showToast } from '../../../utils/helpers/notification'
-import { APPOINTMENTS_THUNK } from './appointmentThunk'
+import { ONLINE_APPOINTMENTS_THUNK } from './onlineAppointmentThunk'
 
 const initialState = {
    appointments: [],
@@ -11,9 +11,10 @@ const initialState = {
       JSON.parse(localStorage.getItem('deletedAppointmentsIds')) || [],
 }
 
-export const appointmentsSlice = createSlice({
-   name: 'appointments',
+export const onlineAppointmentsSlice = createSlice({
+   name: 'onlineAppointments',
    initialState,
+
    reducers: {
       handleIsChecked: (state) => {
          state.selectAll = !state.selectAll
@@ -66,7 +67,7 @@ export const appointmentsSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(
-            APPOINTMENTS_THUNK.getAppointments.fulfilled,
+            ONLINE_APPOINTMENTS_THUNK.getAppointments.fulfilled,
             (state, action) => {
                const updatedAppointments = action.payload.map(
                   (appointment) => ({
@@ -80,12 +81,15 @@ export const appointmentsSlice = createSlice({
             }
          )
 
-         .addCase(APPOINTMENTS_THUNK.getAppointments.pending, (state) => {
-            state.isLoading = true
-         })
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNK.getAppointments.pending,
+            (state) => {
+               state.isLoading = true
+            }
+         )
 
          .addCase(
-            APPOINTMENTS_THUNK.getAppointments.rejected,
+            ONLINE_APPOINTMENTS_THUNK.getAppointments.rejected,
             (state, action) => {
                state.isLoading = false
 
@@ -97,7 +101,7 @@ export const appointmentsSlice = createSlice({
          )
 
          .addCase(
-            APPOINTMENTS_THUNK.searchAppointment.fulfilled,
+            ONLINE_APPOINTMENTS_THUNK.searchAppointment.fulfilled,
             (state, action) => {
                if (action.payload && !action.payload.error) {
                   const updatedAppointments = action.payload.map(
@@ -117,12 +121,15 @@ export const appointmentsSlice = createSlice({
             }
          )
 
-         .addCase(APPOINTMENTS_THUNK.updateAppointment.fulfilled, (state) => {
-            state.isLoading = false
-         })
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNK.updateAppointment.fulfilled,
+            (state) => {
+               state.isLoading = false
+            }
+         )
 
          .addCase(
-            APPOINTMENTS_THUNK.updateAppointment.rejected,
+            ONLINE_APPOINTMENTS_THUNK.updateAppointment.rejected,
             (state, action) => {
                state.isLoading = false
 
@@ -132,14 +139,14 @@ export const appointmentsSlice = createSlice({
             }
          )
 
-         .addCase(APPOINTMENTS_THUNK.deleteAppoinment.fulfilled, () => {
+         .addCase(ONLINE_APPOINTMENTS_THUNK.deleteAppoinment.fulfilled, () => {
             showToast({
                message: 'Запись успешно удалено',
             })
          })
 
          .addCase(
-            APPOINTMENTS_THUNK.deleteAllAppointments.fulfilled,
+            ONLINE_APPOINTMENTS_THUNK.deleteAllAppointments.fulfilled,
             (state) => {
                state.deletedAppointmentsIds = []
                showToast({
@@ -150,4 +157,4 @@ export const appointmentsSlice = createSlice({
    },
 })
 
-export const APPOINTMENTS_ACTIONS = appointmentsSlice.actions
+export const ONLINE_APPOINTMENTS_ACTIONS = onlineAppointmentsSlice.actions

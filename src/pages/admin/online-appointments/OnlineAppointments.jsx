@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
-import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Loading from '../../../components/Loading'
-import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
-import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 import AddSchedule from '../../../components/schedule/AddSchedule'
+import Loading from '../../../components/Loading'
+import { PlusIcon } from '../../../assets/icons'
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
 
 const OnlineAppointments = () => {
    const [value, setValue] = useState('1')
@@ -21,7 +21,7 @@ const OnlineAppointments = () => {
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.appointments
+      (state) => state.onlineAppointments
    )
 
    const toggleModal = () => setOpenModal((prev) => !prev)
@@ -33,7 +33,7 @@ const OnlineAppointments = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            APPOINTMENTS_THUNK.searchAppointment({
+            ONLINE_APPOINTMENTS_THUNK.searchAppointment({
                searchName: debouncedSearchText,
             })
          )
@@ -41,7 +41,7 @@ const OnlineAppointments = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(APPOINTMENTS_THUNK.getAppointments())
+      dispatch(ONLINE_APPOINTMENTS_THUNK.getAppointments())
    }, [])
 
    const tabsChange = (_, newValue) => {

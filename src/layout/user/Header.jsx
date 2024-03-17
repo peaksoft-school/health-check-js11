@@ -22,7 +22,7 @@ import {
 } from '../../utils/constants/index'
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
-import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 
 const Header = () => {
    const { role, isAuth } = useSelector((state) => state.auth)
@@ -41,12 +41,17 @@ const Header = () => {
 
    const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
 
+   const handleProfileMenuOpen = (event) =>
+      setProfileMenuAnchorEl(event.currentTarget)
+
    const toggleDrawerHandler = () => {
-      // if (isAuth) {
-      setToggleDrawerModal((prev) => !prev)
-      dispatch(ONLINE_APPOINTMENTS_THUNKS.getAllFacility())
-      // }
-      // return setOpenSignUpModal(true)
+      if (isAuth) {
+         setToggleDrawerModal((prev) => !prev)
+         handleProfileMenuOpen()
+
+         dispatch(APPOINTMENTS_THUNKS.getAllFacility())
+      }
+      return setOpenSignUpModal(true)
    }
 
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
@@ -56,9 +61,6 @@ const Header = () => {
    const openLogOutHandler = () => setToggleLogOutModal(true)
 
    const isProfileMenuOpen = !!profileMenuAnchorEl
-
-   const handleProfileMenuOpen = (event) =>
-      setProfileMenuAnchorEl(event.currentTarget)
 
    const handlelogOut = () => {
       handleProfileMenuClose()

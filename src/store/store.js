@@ -15,9 +15,9 @@ import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
 import { applicationSlice } from './slices/application/aplicationSlice'
 import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
-import { appointmentsSlice } from './slices/online-appointments/appointmentsSlice'
+import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
-import { onlineAppointmentsSlice } from './slices/online-appointments-user/onlineAppointmentsSlice'
+import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
    key: 'HEALTH_CHECK',
    storage,
-   whitelist: ['auth', 'appointments', 'applications', 'profile'],
+   whitelist: ['auth', 'onlineAppointments', 'applications', 'profile'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

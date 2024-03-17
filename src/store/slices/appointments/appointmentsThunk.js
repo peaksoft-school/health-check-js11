@@ -97,7 +97,7 @@ const deleteAppoinment = createAsyncThunk(
    }
 )
 
-export const ONLINE_APPOINTMENTS_THUNKS = {
+export const APPOINTMENTS_THUNKS = {
    getDoctorSchedule,
    getAllFacility,
    getDoctorsAvailableTimesheet,

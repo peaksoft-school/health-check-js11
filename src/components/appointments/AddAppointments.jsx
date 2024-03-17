@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
-import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
 import Drawer from '../UI/Drawer'
 import Appointments from './Appointments'
@@ -27,7 +27,7 @@ const AddAppointments = ({ open, onClose }) => {
 
       if (selectedOption)
          dispatch(
-            ONLINE_APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet(
+            APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet(
                selectedOption.label
             )
          )
@@ -44,13 +44,9 @@ const AddAppointments = ({ open, onClose }) => {
       else showToast({ message: 'Выберите доктора!', status: 'error' })
    }
 
-   const formHandler = () => {
-      setCurrentPage('form')
-   }
+   const formHandler = () => setCurrentPage('form')
 
-   const goBack = () => {
-      setCurrentPage('main')
-   }
+   const goBack = () => setCurrentPage('main')
 
    const goBackAndClear = () => {
       setCurrentPage('main')
@@ -65,9 +61,7 @@ const AddAppointments = ({ open, onClose }) => {
       goBackAndClear()
    }
 
-   const openLast = () => {
-      setCurrentPage('result')
-   }
+   const openLast = () => setCurrentPage('result')
 
    const renderPage = () => {
       switch (currentPage) {
@@ -164,7 +158,7 @@ const StyledDrawer = styled(Box)(() => ({
       display: 'flex',
       boxSizing: 'content-box',
       background: '#fff',
-      padding: '15px',
+      padding: '0.938rem',
       justifyContent: 'space-between',
 
       '& > .header': {

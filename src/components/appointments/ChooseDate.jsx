@@ -11,7 +11,7 @@ const ChooseDate = ({
    selectedTime,
    setSelectedTime,
 }) => {
-   const { date } = useSelector((state) => state.onlineAppointments)
+   const { date } = useSelector((state) => state.appointments)
 
    const shouldDisableDay = (day) => {
       const consultation = date.find(

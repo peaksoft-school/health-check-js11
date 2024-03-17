@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { UsersIcon } from '../../assets/icons'
 import Button from '../UI/Button'
 import SpecialistCard from './SpecialistCard'
-import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 
 const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
-   const { doctorsTimesheet } = useSelector((state) => state.onlineAppointments)
+   const { doctorsTimesheet } = useSelector((state) => state.appointments)
    const dispatch = useDispatch()
 
    const currentDate = new Date()
@@ -31,7 +31,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       setDoctorName({ doctor })
 
       dispatch(
-         ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule({
+         APPOINTMENTS_THUNKS.getDoctorSchedule({
             id: doctor.doctorId,
             startDate,
             endDate,
@@ -44,7 +44,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       setDoctorName({ doctor })
       setTime(time)
       dispatch(
-         ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule({
+         APPOINTMENTS_THUNKS.getDoctorSchedule({
             id,
             startDate,
             endDate,
@@ -94,14 +94,14 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 export default ChooseSpecialist
 
 const StyledContainer = styled(Box)(() => ({
-   marginTop: '20px',
+   marginTop: '1.25rem',
    padding: '7px',
 
    '& .doctors': {
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px',
-      padding: '10px ',
+      gap: '1.25rem',
+      padding: '0.625rem ',
    },
 
    '& p': {
@@ -125,7 +125,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
    '& > div': {
       display: 'flex',
       alignItems: 'center',
-      gap: '20px',
+      gap: '1.25rem',
 
       '& > p ': {
          fontFamily: 'Manrope',

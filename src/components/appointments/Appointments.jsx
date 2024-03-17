@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { styled, Box, Typography, Rating } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { CalendarWithDotsIcon, DeleteIcon, UsersIcon } from '../../assets/icons'
@@ -18,7 +18,7 @@ const Appointments = ({
    date,
    setDat,
 }) => {
-   const { facilityArray } = useSelector((state) => state.onlineAppointments)
+   const { facilityArray } = useSelector((state) => state.appointments)
 
    const getfacility = facilityArray?.map((facility) => ({
       value: facility.id,
@@ -39,7 +39,11 @@ const Appointments = ({
    }, [])
 
    const deleteDateHandler = () => setDat('')
-   const deleteDoctorHandler = () => setDoctorName('')
+
+   const deleteDoctorHandler = () => {
+      setDat('')
+      setDoctorName('')
+   }
 
    return (
       <StyledContainer>
@@ -53,14 +57,14 @@ const Appointments = ({
          />
 
          {doctorInfo ? (
-            <Box className="first-part" onClick={toggleSpecialist}>
+            <Box className="first-part">
                <img
                   className="image"
                   src={doctorInfo.doctor.imageDoctor}
                   alt="doctor"
                />
 
-               <Box className="doctor-info">
+               <Box onClick={toggleSpecialist} className="doctor-info">
                   <Typography className="doctor-name">
                      {doctorInfo.doctor.doctorFullName}
                   </Typography>
@@ -104,7 +108,7 @@ const Appointments = ({
                      </Box>
                   </Box>
                </StyledButton>
-               <DeleteIcon onClick={deleteDateHandler} />
+               <DeleteIcon className="delete" onClick={deleteDateHandler} />
             </Box>
          ) : (
             <StyledButton onClick={toggleDate} variant="grey">
@@ -129,34 +133,38 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    marginTop: '10px',
    display: 'flex',
    flexDirection: 'column',
-   gap: '15px',
+   gap: '0.938rem',
 
    '& .time': {
       width: '100%',
       display: 'flex',
-      gap: '60px',
+      gap: '3.75rem',
       alignItems: 'center',
       backgroundColor: 'white',
-      borderRadius: '15px',
+      borderRadius: '0.938rem',
+   },
+
+   '& .delete': {
+      marginLeft: '2.4rem',
    },
 
    '& .first-part': {
       backgroundColor: 'white',
-      borderRadius: '15px',
+      borderRadius: '0.938rem',
       boxSizing: 'content-box',
-      padding: '5px',
+      padding: '0.313rem',
 
       '& img': {
-         marginLeft: '12px',
-         marginRight: '12px',
+         marginLeft: '0.75rem',
+         marginRight: '0.75rem',
          borderRadius: '50%',
-         width: '40px',
+         width: '2.5rem',
          alignSelf: 'start',
-         height: '40px',
+         height: '2.5rem',
       },
 
       '& .doctor-info': {
-         marginRight: '130px',
+         marginRight: '8.125rem',
          display: 'flex',
          width: 'auto',
          flexDirection: 'column',
@@ -174,7 +182,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& .rating-box': {
          display: 'flex',
          alignIntems: 'center',
-         gap: '12px',
+         gap: '0.75rem',
 
          '& > .reviews': {
             fontFamily: 'Manrope',
@@ -254,9 +262,9 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 
    '& .MuiSelect-select': {
       display: 'flex',
-      marginLeft: '40px',
+      marginLeft: '2.5rem',
       border: 'none',
-      padding: '20px',
+      padding: '1.25rem',
       color: 'black',
    },
 

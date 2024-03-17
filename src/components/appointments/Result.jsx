@@ -1,16 +1,14 @@
 import { useEffect, useState, useMemo } from 'react'
-import { Rating, styled, Typography } from '@mui/material'
+import { Rating, styled, Typography, Box } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { PlusIcon, RegisteredIcon } from '../../assets/icons'
-import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments-user/onlineAppointmentsSlice'
+import { APPOINTMENTS_ACTIONS } from '../../store/slices/appointments/appointmentsSlice'
 import Button from '../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
 
 const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
-   const doctorData = useSelector(
-      (state) => state.onlineAppointments.doctorData
-   )
+   const { doctorData } = useSelector((state) => state.appointments)
    const dispatch = useDispatch()
 
    const formatDate = useMemo(() => {
@@ -28,11 +26,11 @@ const Result = ({ goBack }) => {
    const endTime = doctorData ? doctorData.endTime.slice(0, 5) : ''
 
    useEffect(() => {
-      dispatch(ONLINE_APPOINTMENTS_ACTIONS.setIsResult())
+      dispatch(APPOINTMENTS_ACTIONS.setIsResult())
    }, [dispatch])
 
    return (
-      <Container>
+      <StyledContainer>
          <RegisteredIcon />
 
          <Submited>Вы записаны</Submited>
@@ -41,23 +39,29 @@ const Result = ({ goBack }) => {
             {formatDate}, {`${startTime}-${endTime}`}
          </Typography>
 
-         <Profile>
-            <ImageContainer>
-               <Image src={doctorData.doctorImage} alt="doctor" />
-            </ImageContainer>
+         <Box className="doctor">
+            <Box className="image-box">
+               <img src={doctorData.doctorImage} alt="doctor" />
+            </Box>
 
-            <About>
-               <Title>{doctorData.doctorFullName}</Title>
+            <Box className="doctor-info">
+               <Typography variant="h4" className="name">
+                  {doctorData.doctorFullName}
+               </Typography>
 
-               <Specialist>{doctorData.facility}</Specialist>
+               <Typography className="facility">
+                  {doctorData.facility}
+               </Typography>
 
-               <RatingContainer>
+               <Box className="raiting-box">
                   <Rating size="small" value={5} readOnly />
 
-                  <Users>166</Users>
-               </RatingContainer>
-            </About>
-         </Profile>
+                  <Typography variant="span" className="revews">
+                     166
+                  </Typography>
+               </Box>
+            </Box>
+         </Box>
 
          <Cancel onClick={closeModal}>Отменить запись</Cancel>
 
@@ -69,17 +73,17 @@ const Result = ({ goBack }) => {
          {toggleModal && (
             <DeleteAppointmentModal handleClose={closeModal} goBack={goBack} />
          )}
-      </Container>
+      </StyledContainer>
    )
 }
 
 export default Result
 
-const Container = styled('div')(() => ({
+const StyledContainer = styled('div')(() => ({
    margin: '6px',
-   padding: '30px 16px',
+   padding: '1.875rem 1rem',
    backgroundColor: '#fff',
-   borderRadius: '16px',
+   borderRadius: '1rem',
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
@@ -89,70 +93,70 @@ const Container = styled('div')(() => ({
       fontWeight: 500,
       fontFamily: 'Manrope',
    },
+
+   '& > .doctor': {
+      display: 'flex',
+      marginRight: '5rem',
+      marginTop: '1.25rem',
+      marginBottom: '2.5rem',
+      gap: '0.625rem',
+
+      '& > .image-box': {
+         width: '36px',
+         height: '36px',
+         alignSelf: 'start',
+
+         '& > img': {
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+         },
+      },
+
+      '& > .doctor-info': {
+         marginLeft: '10px',
+
+         '& > .name': {
+            fontFamily: 'Manrope',
+            fontWeight: 500,
+            fontSize: '1rem',
+            lineHeight: '19px',
+         },
+
+         '& > .facility': {
+            fontFamily: 'Manrope',
+            fontWeight: 500,
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#959595',
+            marginBottom: '3px',
+         },
+
+         '& > .raiting-box': {
+            display: 'flex',
+            alignItems: 'center',
+
+            '& > .revews': {
+               marginLeft: '8px',
+               fontFamily: 'Manrope',
+               fontWeight: 400,
+               fontSize: '12px',
+               lineHeight: '16px',
+               color: '#707070',
+            },
+         },
+      },
+   },
 }))
 
 const Submited = styled('p')(() => ({
    fontFamily: 'Manrope',
    fontWeight: '600',
-   fontSize: '19px',
-   margin: '5px 0',
+   fontSize: '1.188rem',
+   margin: '0.313rem 0',
 }))
 
-const Profile = styled('div')(() => ({
-   display: 'flex',
-   marginRight: '5rem',
-   marginTop: '20px',
-   marginBottom: '40px',
-   gap: '10px',
-}))
-
-const ImageContainer = styled('div')(() => ({
-   width: '36px',
-   height: '36px',
-   alignSelf: 'start',
-}))
-
-const Image = styled('img')(() => ({
-   width: '100%',
-   height: '100%',
-   borderRadius: '50%',
-}))
-
-const About = styled('div')(() => ({
-   marginLeft: '10px',
-}))
-
-const Title = styled('h4')(() => ({
-   fontFamily: 'Manrope',
-   fontWeight: 500,
-   fontSize: '1rem',
-   lineHeight: '19px',
-}))
-
-const Specialist = styled('p')(() => ({
-   fontFamily: 'Manrope',
-   fontWeight: 500,
-   fontSize: '14px',
-   lineHeight: '16px',
-   color: '#959595',
-   marginBottom: '3px',
-}))
-
-const RatingContainer = styled('div')(() => ({
-   display: 'flex',
-   alignItems: 'center',
-}))
-
-const Users = styled('span')(() => ({
-   marginLeft: '8px',
-   fontFamily: 'Manrope',
-   fontWeight: 400,
-   fontSize: '12px',
-   lineHeight: '16px',
-   color: '#707070',
-}))
-
-const Cancel = styled('p')(() => ({
+const Cancel = styled(Typography)(() => ({
    fontFamily: 'Manrope',
    fontWeight: '500',
    color: '#ff0000',
@@ -162,7 +166,7 @@ const Cancel = styled('p')(() => ({
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       width: '100%',
-      marginTop: '24px',
+      marginTop: '0.313rem',
       height: '2.75rem',
       fontSize: '0.875rem',
 

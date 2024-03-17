@@ -4,8 +4,8 @@ import { format } from 'date-fns'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
 import LinkPatient from '../../components/UI/admin/LinkPatient'
-import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
-import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
+import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import SelectSeparately from '../../components/UI/admin/SelectSeparately'
@@ -23,7 +23,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Header: (
          <SelectAll
             variant="appointments"
-            selectFn={APPOINTMENTS_ACTIONS.handleIsChecked}
+            selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsChecked}
          />
       ),
       accessor: 'checkbox',
@@ -35,7 +35,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => (
          <SelectSeparately
-            selectFn={APPOINTMENTS_ACTIONS.handleIsCheckedItem}
+            selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsCheckedItem}
             variant="appointments"
             id={row.original.appointmentId}
             isSelected={row.original.isSelected}
@@ -47,8 +47,8 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Header: (
          <DeleteSelected
             variant="appointments"
-            clearFn={APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
-            deleteFn={APPOINTMENTS_THUNK.deleteAllAppointments}
+            clearFn={ONLINE_APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
+            deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAllAppointments}
          />
       ),
 
@@ -201,7 +201,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
             <ProcessedCheckbox
                checked={row.original.processed}
                id={row.original.appointmentId}
-               updateFn={APPOINTMENTS_THUNK.updateAppointment}
+               updateFn={ONLINE_APPOINTMENTS_THUNK.updateAppointment}
                variant="appointments"
             />
          )
@@ -228,7 +228,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
             <Delete
                name={row.original.fullName}
                disabled={row.original.processed}
-               deleteFn={APPOINTMENTS_THUNK.deleteAppoinment}
+               deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAppoinment}
                id={row.original.appointmentId}
             />
          )

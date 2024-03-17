@@ -2,19 +2,19 @@ import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../UI/Button'
-import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { CloseIcon } from '../../assets/icons'
 
 const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    const [deleteSuccess, setDeleteSuccess] = useState(false)
 
-   const { appoinmentId } = useSelector((state) => state.onlineAppointments)
+   const { appoinmentId } = useSelector((state) => state.appointments)
 
    const dispatch = useDispatch()
 
    const deleteHandler = () => {
       dispatch(
-         ONLINE_APPOINTMENTS_THUNKS.deleteAppoinment({
+         APPOINTMENTS_THUNKS.deleteAppoinment({
             appoinmentId,
             setDeleteSuccess,
          })
@@ -81,7 +81,7 @@ const StyledModalContent = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    backgroundColor: '#fff',
-   padding: '20px',
+   padding: '1.25rem',
    borderRadius: '1rem',
    textAlign: 'center',
    marginBottom: '44%',

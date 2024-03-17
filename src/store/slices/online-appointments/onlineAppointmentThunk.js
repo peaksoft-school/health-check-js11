@@ -83,7 +83,7 @@ const deleteAllAppointments = createAsyncThunk(
    }
 )
 
-export const APPOINTMENTS_THUNK = {
+export const ONLINE_APPOINTMENTS_THUNK = {
    getAppointments,
    updateAppointment,
    searchAppointment,

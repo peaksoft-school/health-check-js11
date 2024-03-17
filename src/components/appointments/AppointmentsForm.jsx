@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Input from '../UI/inputs/Input'
 import Button from '../UI/Button'
 import NumberInput from '../UI/inputs/NumberInput'
-import { ONLINE_APPOINTMENTS_THUNKS } from '../../store/slices/online-appointments-user/onlineAppointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
 import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
 
@@ -15,7 +15,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
    const dispatch = useDispatch()
 
    const { accessToken } = useSelector((state) => state.auth)
-   const { code, appointmentId } = useSelector(
+   const { code, appointmentId, isLoading } = useSelector(
       (state) => state.onlineAppointments
    )
    const { userData } = useSelector((state) => state.profile)
@@ -35,7 +35,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       }
 
       dispatch(
-         ONLINE_APPOINTMENTS_THUNKS.addAppointment({
+         APPOINTMENTS_THUNKS.addAppointment({
             facility,
             data,
          })
@@ -45,7 +45,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
    const sendCode = () => {
       if (verificationCode === code) {
          dispatch(
-            ONLINE_APPOINTMENTS_THUNKS.checkVerificationCode({
+            APPOINTMENTS_THUNKS.checkVerificationCode({
                verificationCode,
                id: appointmentId,
                open,
@@ -115,7 +115,15 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   )}
                </Box>
 
-               {!code && <StyledButton type="submit">Продолжить</StyledButton>}
+               {!code && (
+                  <StyledButton
+                     type="submit"
+                     colorLoading="secondary"
+                     isLoading={isLoading}
+                  >
+                     Продолжить
+                  </StyledButton>
+               )}
             </StyledForm>
 
             {code && <StyledButton onClick={sendCode}>Записаться</StyledButton>}
@@ -127,30 +135,32 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
 export default AppointmentsForm
 
 const StyledContainer = styled(Box)(() => ({
-   marginTop: '10px',
-   padding: '5px',
+   marginTop: '0.625rem',
+   padding: '0.313rem',
+   width: '100%',
 
    '& .container': {
-      padding: '15px',
+      padding: '0.938rem',
+      width: '23.125rem',
       backgroundColor: 'white',
-      borderRadius: '15px',
+      borderRadius: '0.938rem',
    },
 }))
 
 const StyledForm = styled('form')(() => ({
    display: 'flex',
    flexDirection: 'column',
-   gap: '10px',
+   gap: '0.625rem',
 
    '& p': {
       fontFamily: 'Manrope',
    },
 
    '& .form-container': {
-      marginTop: '15px',
+      marginTop: '0.938rem',
       display: 'flex',
       flexDirection: 'column',
-      gap: '10px',
+      gap: '0.625rem',
       width: '400px',
    },
 }))
@@ -180,13 +190,13 @@ const StyledInput = styled(Input)(() => ({
       height: '0.5rem',
       width: '336px',
       color: 'black',
-      borderRadius: '5px',
+      borderRadius: '0.313rem',
    },
 
    '& .MuiOutlinedInput-root ': {
       color: 'black',
       width: '336px',
-      borderRadius: '5px',
+      borderRadius: '0.313rem',
       height: '2.625rem',
    },
 }))
@@ -201,7 +211,7 @@ const StyledSmsCodeInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       color: 'black',
       width: '120px',
-      borderRadius: '5px',
+      borderRadius: '0.313rem',
       height: '2.625rem',
    },
 }))
