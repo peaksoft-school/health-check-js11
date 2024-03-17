@@ -21,7 +21,40 @@ const AboutClinic = () => {
          </Typography>
 
          <Box className="image-box">
-            <img src={AboutClinicImage} alt="clinic-info" />
+            <Typography className="text">
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+               eiusmod tempor
+               <br />
+               incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+               veniam, quis
+               <br /> nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+               commodo consequat.
+               <br />
+               Duis aute irure dolor in reprehenderit in voluptate velit esse
+               cillum dolore eu
+               <br />
+               fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+               proident, sunt in
+               <br />
+               culpa qui officia deserunt mollit anim id est laborum
+            </Typography>
+            <Typography>
+               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+               eiusmod tempor
+               <br />
+               incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+               veniam, quis
+               <br /> nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+               commodo consequat.
+               <br />
+               Duis aute irure dolor in reprehenderit in voluptate velit esse
+               cillum dolore eu
+               <br />
+               fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+               proident, sunt in
+               <br />
+               culpa qui officia deserunt mollit anim id est laborum
+            </Typography>
          </Box>
 
          <AboutUs variant="component" />
@@ -41,9 +74,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 
    '& .image-box': {
-      padding: '3.125rem 0 0 11.25rem',
-      display: 'flex',
-      justifyContent: 'center',
+      padding: '3.125rem  0 0 11.25rem',
+      display: 'block',
+      justifyContent: 'flex-start',
+      marginLeft: '-4.50rem',
+
+      '& .text': {
+         marginBottom: '2.50rem',
+      },
    },
 }))
 
