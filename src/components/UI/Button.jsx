@@ -24,7 +24,7 @@ const Button = forwardRef(
          {...rest}
       >
          {isLoading ? (
-            <CircularProgress color={colorLoading} />
+            <StyledLoading color={colorLoading} />
          ) : (
             <div>{children}</div>
          )}
@@ -46,7 +46,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          '&:hover': {
             background:
                'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
-            border: 'none',
+            border: 'none !important',
          },
 
          '&:active': {
@@ -124,3 +124,11 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
 
    return defaultStyle
 })
+
+const StyledLoading = styled(CircularProgress)(() => ({
+   position: 'absolute',
+   bottom: 6,
+   width: '28px !important',
+   height: '28px !important',
+   zIndex: 100,
+}))

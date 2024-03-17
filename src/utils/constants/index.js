@@ -44,13 +44,26 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
+import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
-   { id: 1, to: '/about-clinic', label: 'О клинике' },
-   { id: 2, to: '/services', label: 'Услуги' },
-   { id: 3, to: '/doctors', label: 'Врачи' },
-   { id: 4, to: '/prices', label: 'Цены' },
-   { id: 5, to: '/contacts', label: 'Контакты' },
+   {
+      id: 1,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.ABOUT_CLINICK}`,
+      label: 'О клинике',
+   },
+   {
+      id: 2,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
+      label: 'Услуги',
+   },
+   { id: 3, to: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}`, label: 'Врачи' },
+   { id: 4, to: `${ROUTES.USER.INDEX}${ROUTES.USER.PRICES}`, label: 'Цены' },
+   {
+      id: 5,
+      to: `${ROUTES.USER.INDEX}${ROUTES.USER.CONTACTS}`,
+      label: 'Контакты',
+   },
 ]
 
 const HEADER_SOCIALS = [
@@ -362,11 +375,26 @@ const FAKE_DATA = [
    },
 ]
 
-const HEADER_ADMIN = [
-   { id: 1, text: 'Онлайн-запись' },
-   { id: 2, text: 'Заявки' },
-   { id: 3, text: 'Специалисты' },
-   { id: 4, text: 'Пациенты' },
+const ADMIN_NAVIGATIONS = [
+   { id: 1, to: ROUTES.ADMIN.INDEX, label: 'Онлайн-запись' },
+
+   {
+      id: 2,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.APPLICATIONS}`,
+      label: 'Заявки',
+   },
+
+   {
+      id: 3,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`,
+      label: 'Специалисты',
+   },
+
+   {
+      id: 4,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}`,
+      label: 'Пациенты',
+   },
 ]
 
 const DAYS = [
@@ -475,7 +503,7 @@ const DEPARTMENTS = [
 
    {
       id: 13,
-      title: 'Проктология',
+      label: 'Проктология',
       value: 'проктология',
    },
 
@@ -565,14 +593,17 @@ const RUSSIAN_DAYS = [
 ]
 
 const DAYS_OF_WEEK = {
-   Su: 'ПН',
-   Mo: 'ВТ',
-   Tu: 'СР',
-   We: 'ЧТ',
-   Th: 'ПТ',
-   Fr: 'СБ',
-   Sa: 'ВС',
+   Su: 'Пн',
+   Mo: 'Вт',
+   Tu: 'Ср',
+   We: 'Чт',
+   Th: 'Пт',
+   Fr: 'Сб',
+   Sa: 'Вс',
 }
+
+const MAP =
+   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d365.48247976201736!2d74.62719552257737!3d42.875802431657775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb78fc81678db%3A0x8f6025b536a29455!2sPeaksoft%20house!5e0!3m2!1sru!2skg!4v1710599618852!5m2!1sru!2skg'
 
 export {
    HEADER_SOCIALS,
@@ -585,11 +616,12 @@ export {
    SERVICES,
    BEST_DOCTORS,
    FAKE_DATA,
-   HEADER_ADMIN,
+   ADMIN_NAVIGATIONS,
    DAYS,
    DEPARTMENTS,
    INTERVAL_TIME,
    RUSSIAN_DAYS,
    DAYS_OF_WEEK,
    PROSEDURA,
+   MAP,
 }
