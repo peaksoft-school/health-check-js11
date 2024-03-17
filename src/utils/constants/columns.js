@@ -585,7 +585,7 @@ const SPECIALISTS_COLUMN = [
          padding: '19px 0 20px',
          fontWeight: '700',
          display: 'flex',
-         flex: 0.6,
+         flex: 0.7,
       },
 
       tdStyle: {
@@ -634,7 +634,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
-         flex: 0.4,
+         flex: 0.51,
       },
 
       Cell: ({ value }) => (
@@ -678,7 +678,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.91,
+         flex: 0.99,
          fontSize: '16px',
       },
    },

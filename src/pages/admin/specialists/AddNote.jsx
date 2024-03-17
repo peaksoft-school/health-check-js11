@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { Typography, Box, styled, Card } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
+import { NavLink } from 'react-router-dom'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
@@ -39,6 +40,10 @@ const AddNote = () => {
       validateOnChange: false,
       onSubmit,
    })
+   const handleImageClick = () => {
+      const fileInput = document.getElementById('fileInput')
+      fileInput.click()
+   }
 
    const handleFileChange = (event) => {
       const file = event.target.files[0]
@@ -73,25 +78,38 @@ const AddNote = () => {
    return (
       <StyledMainContainer>
          <Box className="box">
-            <StyledSpecialistRow>
-               Специалисты
-               <span className="doctor-name">&gt; Добавление специалиста</span>
-            </StyledSpecialistRow>
+            <NavLink to="/admin/specialists" className="navlink">
+               <StyledSpecialistRow>
+                  Специалисты
+                  <span className="doctor-name">
+                     &gt; Добавление специалиста
+                  </span>
+               </StyledSpecialistRow>
+            </NavLink>
 
             <Typography className="title">Добавление специалиста</Typography>
 
             <form onSubmit={handleSubmit} className="table-container">
-               <StyledImage>
+               <StyledImage onClick={handleImageClick}>
                   <img
                      className="image"
                      src={values.imageSrc || PhotoSvg}
                      alt="Фото специалиста"
+                     style={
+                        values.imageSrc
+                           ? {
+                                width: '155px',
+                                height: '150px',
+                                borderRadius: '50%',
+                                marginLeft: '-0.0rem',
+                             }
+                           : null
+                     }
                   />
-
                   <label htmlFor="fileInput" className="change-photo">
-                     Нажмите для добавления фотографии
+                     Нажмите для добавления
+                     <br /> <span className="mark">фотографии</span>
                   </label>
-
                   <input
                      id="fileInput"
                      type="file"
@@ -177,6 +195,12 @@ const StyledMainContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
    },
+   '& .navlink': {
+      marginBottom: '2rem',
+      color: 'grey',
+      fontSize: '14px',
+      textDecoration: 'none',
+   },
    '& .title': {
       fontSize: '1.375rem',
       fontWeight: '400',
@@ -211,13 +235,13 @@ const StyledMainContainer = styled(Box)(() => ({
    },
    '& .depatment-container': {
       marginTop: '-10.10rem',
-      '& > .Alisher': {
+      '& > .wrapper': {
          border: '1px solid #D9D9D9',
          borderRadius: '4px',
          width: '1060px',
          height: '274px',
 
-         '& .ToolBar': {
+         '& .tool-bar': {
             border: '1px solid #D9D9D9',
             height: '50px',
 
@@ -242,7 +266,7 @@ const StyledMainContainer = styled(Box)(() => ({
                },
             },
          },
-         '& .Muslima': {
+         '& .text-editor': {
             width: '1070px',
             height: '200px',
             '& .DraftEditor-root': {
@@ -308,6 +332,7 @@ const StyledImage = styled(Box)(() => ({
    width: '150px',
    height: '140px',
    backgroundColor: '#E0E2E7',
+
    '& .image': {
       width: '35px',
       height: '35px',
@@ -315,9 +340,13 @@ const StyledImage = styled(Box)(() => ({
    },
    '& .change-photo': {
       width: '100%',
-      marginLeft: '-3rem',
-      marginTop: '12rem',
+      marginLeft: '-0.1rem',
+      marginTop: '12.25rem',
       color: '#909CB5',
       fontSize: '12px',
+      position: 'absolute',
+      '& .mark': {
+         marginLeft: '2.50rem',
+      },
    },
 }))

@@ -3,6 +3,7 @@ import { Typography, Box, styled, Card } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { useParams } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
@@ -65,12 +66,14 @@ const SpecialistInnerPage = () => {
    return (
       <StyledMainContainer>
          <Box className="box">
-            <StyledSpecialistRow>
-               Специалисты
-               <span className="doctor-name">
-                  &gt; {specialist.firstName} {specialist.lastName}
-               </span>
-            </StyledSpecialistRow>
+            <NavLink to="/admin/specialists" className="navlink">
+               <StyledSpecialistRow>
+                  Специалисты
+                  <span className="doctor-name">
+                     &gt; {specialist.firstName} {specialist.lastName}
+                  </span>
+               </StyledSpecialistRow>
+            </NavLink>
 
             <Typography className="title">
                {specialist.firstName} {specialist.lastName}
@@ -171,6 +174,12 @@ const StyledMainContainer = styled(Box)(() => ({
       maxWidth: '1600px',
       margin: '0 auto',
       paddingBottom: '30px',
+   },
+   '& .navlink': {
+      marginBottom: '2rem',
+      color: 'grey',
+      fontSize: '14px',
+      textDecoration: 'none',
    },
    '& .title': {
       fontSize: '1.375rem',

@@ -18,9 +18,9 @@ const MyEditor = () => {
          localization={{
             locale: 'ko',
          }}
-         wrapperClassName="Alisher"
-         toolbarClassName="ToolBar"
-         editorClassName="Muslima"
+         wrapperClassName="wrapper"
+         toolbarClassName="tool-bar"
+         editorClassName="text-editor"
       />
    )
 }

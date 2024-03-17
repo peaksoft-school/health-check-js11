@@ -43,14 +43,15 @@ const Specialists = () => {
             <Box className="button-container">
                <Typography className="title">Специалисты</Typography>
 
-               <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
+               <NavLink
+                  className="navlink"
+                  to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}
+               >
                   <Button className="add-button">
                      <PlusIcon className="plus-icon" />
-                     Добавить специалиста
+                     <span className="button-text">Добавить запись</span>
                   </Button>
                </NavLink>
-
-               {isLoading && <Loading />}
             </Box>
          </Box>
 
@@ -61,6 +62,8 @@ const Specialists = () => {
                onChange={handleSearchChange}
             />
          </Box>
+
+         {isLoading && <Loading />}
 
          <Box className="table-container">
             <Table columns={SPECIALISTS_COLUMN} data={specialists} />
@@ -87,22 +90,28 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          justifyContent: 'space-between',
       },
 
-      '& > .add-button': {
-         padding: '0',
-         fontSize: '13px',
-         height: '40px',
-         width: '232px',
+      '& .navlink': {
+         textDecoration: 'none',
 
-         '& > div': {
+         '& > .add-button': {
+            fontSize: '13px',
+            height: '40px',
+            width: '232px',
+            fontFamily: 'Manrope',
             display: 'flex',
+            justifyContent: 'flex-start',
             alignItems: 'center',
-            gap: '4px',
-         },
+            '& > .plus-icon': {
+               width: '1.125rem',
+               padding: '5rem',
+               height: '1.125rem',
+               marginBottom: '8px',
+            },
 
-         '& .plus-icon': {
-            width: '1.125rem',
-            padding: '0.625rem',
-            height: '1.125rem',
+            '& .button-text': {
+               marginLeft: '8px',
+               marginTop: '8px',
+            },
          },
       },
 
@@ -138,6 +147,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       bordeRradius: ' 0.375rem',
       backgroundColor: 'white',
       marginTop: '1.25rem',
+      padding: '0 0 0 0.60rem',
    },
 
    '& .input-container': {
