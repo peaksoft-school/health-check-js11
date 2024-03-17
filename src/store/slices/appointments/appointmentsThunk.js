@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getDoctorsAvailableTimesheet = createAsyncThunk(
    'online-appointments/getTimesheet',
@@ -60,6 +61,10 @@ const addAppointment = createAsyncThunk(
 
          return response.data
       } catch (error) {
+         showToast({
+            message: error.data.message,
+            status: 'error',
+         })
          return rejectWithValue(error)
       }
    }
@@ -84,13 +89,13 @@ const checkVerificationCode = createAsyncThunk(
 
 const deleteAppoinment = createAsyncThunk(
    'appointments/deleteById',
-   async ({ appoinmentId, setDeleteSuccess }, { rejectWithValue }) => {
+   async ({ appointmentId, setDeleteSuccess }, { rejectWithValue }) => {
       try {
-         await axiosInstance.delete(`/api/appointment/${appoinmentId}`)
+         await axiosInstance.delete(`/api/appointment/${appointmentId}`)
 
          setDeleteSuccess(true)
 
-         return appoinmentId
+         return appointmentId
       } catch (error) {
          return rejectWithValue(error)
       }

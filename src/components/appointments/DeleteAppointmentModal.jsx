@@ -3,19 +3,20 @@ import { styled, Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '../UI/Button'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
-import { CloseIcon } from '../../assets/icons'
+import { CloseAndDeleteIcon, CloseIcon } from '../../assets/icons'
 
 const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    const [deleteSuccess, setDeleteSuccess] = useState(false)
 
-   const { appoinmentId } = useSelector((state) => state.appointments)
+   const { appointmentId } = useSelector((state) => state.appointments)
+   console.log(appointmentId)
 
    const dispatch = useDispatch()
 
    const deleteHandler = () => {
       dispatch(
          APPOINTMENTS_THUNKS.deleteAppoinment({
-            appoinmentId,
+            appointmentId,
             setDeleteSuccess,
          })
       )
@@ -26,7 +27,8 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
          {deleteSuccess ? (
             <StyledModalContent>
                <Box className="close-container">
-                  <CloseIcon onClick={goBack} />
+                  <CloseAndDeleteIcon onClick={goBack} />
+                  {/* <CloseIcon  /> */}
                </Box>
 
                <Typography>Запись отменена</Typography>
@@ -45,7 +47,7 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
 
                <Box className="buttons-box">
                   <Button
-                     variant="outlined"
+                     variant="secondary"
                      className="calceled-button"
                      onClick={deleteHandler}
                   >
@@ -65,7 +67,7 @@ const StyledContainer = styled(Box)(() => ({
    position: 'fixed',
    top: 0,
    right: 0,
-   width: '26.3%',
+   width: '380px',
    height: '100vh',
    display: 'flex',
    justifyContent: 'center',
@@ -93,19 +95,40 @@ const StyledModalContent = styled(Box)(() => ({
       width: '3rem',
       height: '3rem',
       borderRadius: '50%',
-      border: '3px solid #959595',
+
+      '&:hover': {
+         svg: {
+            cursor: 'pointer',
+         },
+      },
 
       svg: {
          cursor: 'pointer',
+
+         '&:hover': {
+            path: {
+               fill: 'red',
+            },
+
+            circle: {
+               stroke: 'red',
+            },
+
+            transition: 'transform 0.3s',
+            transform: ' sscale(1.3)',
+         },
       },
    },
 
    '& button': {
       width: '100%',
       height: '2.5rem',
+      fontSize: '16px',
+      textTransform: 'none',
+      fontFamily: 'Manrope',
    },
 
-   '&> h3': {
+   '& > h3': {
       fontWeight: '500',
       fontSize: '1.1rem',
    },

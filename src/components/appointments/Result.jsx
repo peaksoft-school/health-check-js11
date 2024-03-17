@@ -2,13 +2,13 @@ import { useEffect, useState, useMemo } from 'react'
 import { Rating, styled, Typography, Box } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { PlusIcon, RegisteredIcon } from '../../assets/icons'
-import { APPOINTMENTS_ACTIONS } from '../../store/slices/appointments/appointmentsSlice'
 import Button from '../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
 
 const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
+
    const dispatch = useDispatch()
 
    const formatDate = useMemo(() => {
@@ -24,10 +24,6 @@ const Result = ({ goBack }) => {
 
    const startTime = doctorData ? doctorData.startTime.slice(0, 5) : ''
    const endTime = doctorData ? doctorData.endTime.slice(0, 5) : ''
-
-   useEffect(() => {
-      dispatch(APPOINTMENTS_ACTIONS.setIsResult())
-   }, [dispatch])
 
    return (
       <StyledContainer>
@@ -156,9 +152,10 @@ const Submited = styled('p')(() => ({
    margin: '0.313rem 0',
 }))
 
-const Cancel = styled(Typography)(() => ({
+const Cancel = styled('p')(() => ({
    fontFamily: 'Manrope',
    fontWeight: '500',
+   marginButton: '20px',
    color: '#ff0000',
    cursor: 'pointer',
 }))

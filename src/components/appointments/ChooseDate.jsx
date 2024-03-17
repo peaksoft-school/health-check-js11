@@ -64,7 +64,7 @@ const ChooseDate = ({
                   DAYS_OF_WEEK[weekday.format('dd')]
                }
                shouldDisableDate={shouldDisableDay}
-               renderDay={(day, _value, DayComponentProps) => (
+               renderday={(day, _value, DayComponentProps) => (
                   <DayComponentProps
                      onFocus={DayComponentProps.onDayFocus}
                      onBlur={DayComponentProps.onDayBlur}

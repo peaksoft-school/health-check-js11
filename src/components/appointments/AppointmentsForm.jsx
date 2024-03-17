@@ -16,8 +16,9 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
 
    const { accessToken } = useSelector((state) => state.auth)
    const { code, appointmentId, isLoading } = useSelector(
-      (state) => state.onlineAppointments
+      (state) => state.appointments
    )
+
    const { userData } = useSelector((state) => state.profile)
 
    useEffect(() => {
