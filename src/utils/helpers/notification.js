@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 export const showToast = ({
    pending,
-   message,
+   message = 'success',
    status = 'success',
    duration = 1000,
 }) => {

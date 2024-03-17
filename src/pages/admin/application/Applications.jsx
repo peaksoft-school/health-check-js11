@@ -71,17 +71,11 @@ const Applications = () => {
          </Box>
 
          <Box className="table-container">
-            {preperadeArray.length > 0 ? (
-               <Table
-                  columns={APPLICATIONS_COLUMN}
-                  data={preperadeArray}
-                  className="table"
-               />
-            ) : (
-               <Typography className="not-application" variant="h5">
-                  No Applications
-               </Typography>
-            )}
+            <Table
+               columns={APPLICATIONS_COLUMN}
+               data={preperadeArray}
+               className="table"
+            />
          </Box>
       </StyledContainer>
    )

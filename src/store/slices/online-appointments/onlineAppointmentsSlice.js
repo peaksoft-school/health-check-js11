@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { showToast } from '../../../utils/helpers/notification'
 import { ONLINE_APPOINTMENTS_THUNK } from './onlineAppointmentThunk'
 
 const initialState = {
@@ -7,8 +6,7 @@ const initialState = {
    isLoading: false,
    error: null,
    selectAll: false,
-   deletedAppointmentsIds:
-      JSON.parse(localStorage.getItem('deletedAppointmentsIds')) || [],
+   deletedAppointmentsIds: [],
 }
 
 export const onlineAppointmentsSlice = createSlice({
@@ -51,17 +49,11 @@ export const onlineAppointmentsSlice = createSlice({
          } else {
             state.selectAll = false
          }
-
-         localStorage.setItem(
-            'deletedAppointmentsIds',
-            JSON.stringify(state.deletedAppointmentsIds)
-         )
       },
    },
 
    clearDeletedAppointmentsIds: (state) => {
       state.deletedAppointmentsIds = []
-      localStorage.removeItem('deletedAppointmentsIds')
    },
 
    extraReducers: (builder) => {
@@ -90,13 +82,8 @@ export const onlineAppointmentsSlice = createSlice({
 
          .addCase(
             ONLINE_APPOINTMENTS_THUNK.getAppointments.rejected,
-            (state, action) => {
+            (state) => {
                state.isLoading = false
-
-               showToast({
-                  message: (state.error = action.error.message),
-                  status: 'rejected',
-               })
             }
          )
 
@@ -130,28 +117,15 @@ export const onlineAppointmentsSlice = createSlice({
 
          .addCase(
             ONLINE_APPOINTMENTS_THUNK.updateAppointment.rejected,
-            (state, action) => {
+            (state) => {
                state.isLoading = false
-
-               showToast({
-                  message: (state.error = action.error.message),
-               })
             }
          )
-
-         .addCase(ONLINE_APPOINTMENTS_THUNK.deleteAppoinment.fulfilled, () => {
-            showToast({
-               message: 'Запись успешно удалено',
-            })
-         })
 
          .addCase(
             ONLINE_APPOINTMENTS_THUNK.deleteAllAppointments.fulfilled,
             (state) => {
                state.deletedAppointmentsIds = []
-               showToast({
-                  message: 'Выбранные записи успешно удалены',
-               })
             }
          )
    },

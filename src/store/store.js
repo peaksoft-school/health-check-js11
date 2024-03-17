@@ -11,18 +11,18 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/auth/authSlice'
+import { scheduleSlice } from './slices/schedule/scheduleSlice'
 import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
 import { applicationSlice } from './slices/application/aplicationSlice'
-import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
 import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
 import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
-   [addScheduleSlice.name]: addScheduleSlice.reducer,
    [appointmentsSlice.name]: appointmentsSlice.reducer,
+   [scheduleSlice.name]: scheduleSlice.reducer,
    [patientsSlice.name]: patientsSlice.reducer,
    [patientSlice.name]: patientSlice.reducer,
    [applicationSlice.name]: applicationSlice.reducer,

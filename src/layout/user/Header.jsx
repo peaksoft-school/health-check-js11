@@ -47,11 +47,10 @@ const Header = () => {
    const toggleDrawerHandler = () => {
       if (isAuth) {
          setToggleDrawerModal((prev) => !prev)
-         handleProfileMenuOpen()
-
          dispatch(APPOINTMENTS_THUNKS.getAllFacility())
+      } else {
+         toggleSignUpModal()
       }
-      return setOpenSignUpModal(true)
    }
 
    const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
@@ -120,6 +119,20 @@ const Header = () => {
                      </a>
                   ))}
                </Box>
+
+               <SignUp
+                  open={openSignUpModal}
+                  closeSignUp={toggleSignUpModal}
+                  onClose={toggleSignUpModal}
+                  closeMenu={handleProfileMenuClose}
+               />
+
+               <SignIn
+                  closeMenu={handleProfileMenuClose}
+                  open={openSignInModal}
+                  onClose={toggleSignInModal}
+                  closeSignUp={toggleSignUpModal}
+               />
 
                <Box className="phone-numbers-box">
                   <DefaultPhoneIcon />
@@ -209,20 +222,6 @@ const Header = () => {
                            </Modal>
                         </StyledMenu>
                      )}
-
-                     <SignUp
-                        open={openSignUpModal}
-                        closeSignUp={toggleSignUpModal}
-                        onClose={toggleSignUpModal}
-                        closeMenu={handleProfileMenuClose}
-                     />
-
-                     <SignIn
-                        closeMenu={handleProfileMenuClose}
-                        open={openSignInModal}
-                        onClose={toggleSignInModal}
-                        closeSignUp={toggleSignUpModal}
-                     />
                   </StyledMenu>
                </Box>
             </Box>

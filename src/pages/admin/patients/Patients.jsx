@@ -52,11 +52,7 @@ const Patients = () => {
                {isLoading && <Loading />}
 
                <Box className="table-container">
-                  <Table
-                     empty={<h1>Пациенты отсутствуют</h1>}
-                     columns={PATIENTS_COLUMN}
-                     data={patients}
-                  />
+                  <Table columns={PATIENTS_COLUMN} data={patients} />
                </Box>
             </Box>
          </Box>

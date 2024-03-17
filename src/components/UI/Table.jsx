@@ -10,10 +10,15 @@ import {
    Box,
 } from '@mui/material'
 import { memo, useMemo } from 'react'
+import { NoDataImage } from '../../assets/images'
 
-const Table = ({ columns: headers, data, empty }) => {
+const Table = ({ columns: headers, data }) => {
    if (!data || data.length === 0) {
-      return <StyledAbsence>{empty}</StyledAbsence>
+      return (
+         <StyledAbsence>
+            <img src={NoDataImage} alt="No Data" className="no-data-image" />
+         </StyledAbsence>
+      )
    }
 
    const columns = useMemo(() => headers, [])
@@ -101,6 +106,9 @@ const StyledTableContainer = styled(TableContainer)({
 
 const StyledAbsence = styled(Box)(() => ({
    textAlign: 'center',
-   padding: '20vh 0',
-   opacity: '20%',
+
+   '& > .no-data-image': {
+      width: '50%',
+      height: '30%',
+   },
 }))
