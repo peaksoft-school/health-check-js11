@@ -50,7 +50,7 @@ const Profile = () => {
 
    return (
       <Box>
-         <StyledLine className="line"> </StyledLine>
+         <StyledLine> </StyledLine>
          <StyledContainer>
             <Box className="box">
                <NavigatePathTitle>
@@ -311,7 +311,7 @@ const NavigatePathTitle = styled(Box)(() => ({
 }))
 
 const StyledLine = styled(Box)(() => ({
-   // width: '100r%',
-   // height: '1.3rem',
-   // backgroundColor: '#cce9da',
+   height: '0.7rem',
+   backgroundColor: '#CCE9DA',
+   marginTop: '15px',
 }))
