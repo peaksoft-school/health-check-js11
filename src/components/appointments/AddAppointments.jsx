@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
@@ -17,6 +17,7 @@ const AddAppointments = ({ open, onClose }) => {
    const [facility, setFacility] = useState('')
    const [selectedDate, setSelectedDate] = useState(null)
    const [selectedTime, setSelectedTime] = useState('')
+
    const dispatch = useDispatch()
 
    const validate = facility && doctorInfo && selectedTime
@@ -24,53 +25,49 @@ const AddAppointments = ({ open, onClose }) => {
    const changeFacilityHandler = (selectedOption) => {
       setFacility(selectedOption)
 
-      if (selectedOption) {
+      if (selectedOption)
          dispatch(
             ONLINE_APPOINTMENTS_THUNKS.getDoctorsAvailableTimesheet(
                selectedOption.label
             )
          )
-      } else {
-         showToast({ message: 'Выберите услугу!', status: 'error' })
-      }
+      else showToast({ message: 'Выберите услугу!', status: 'error' })
    }
 
-   const specialistHandler = useCallback(() => {
-      if (facility) {
-         setCurrentPage('specialist')
-      } else {
-         showToast({ message: 'Выберите услугу!', status: 'error' })
-      }
-   }, [facility])
+   const specialistHandler = () => {
+      if (facility) setCurrentPage('specialist')
+      else showToast({ message: 'Выберите услугу!', status: 'error' })
+   }
 
-   const datePageHandler = useCallback(() => {
-      setCurrentPage('date')
-   }, [])
+   const datePageHandler = () => {
+      if (doctorInfo) setCurrentPage('date')
+      else showToast({ message: 'Выберите доктора!', status: 'error' })
+   }
 
-   const formHandler = useCallback(() => {
+   const formHandler = () => {
       setCurrentPage('form')
-   }, [])
+   }
 
-   const goBack = useCallback(() => {
+   const goBack = () => {
       setCurrentPage('main')
-   }, [])
+   }
 
-   const goBackAndClear = useCallback(() => {
+   const goBackAndClear = () => {
       setCurrentPage('main')
       setFacility('')
       setDoctorInfo('')
       setSelectedDate(null)
       setSelectedTime('')
-   }, [])
+   }
 
-   const handlerClose = useCallback(() => {
+   const handlerClose = () => {
       onClose()
       goBackAndClear()
-   }, [onClose, goBackAndClear])
+   }
 
-   const openLast = useCallback(() => {
+   const openLast = () => {
       setCurrentPage('result')
-   }, [])
+   }
 
    const renderPage = () => {
       switch (currentPage) {
@@ -79,7 +76,8 @@ const AddAppointments = ({ open, onClose }) => {
                <Appointments
                   value={facility.label}
                   doctorInfo={doctorInfo}
-                  date={selectedTime}
+                  time={selectedTime}
+                  date={selectedDate}
                   selectHandler={changeFacilityHandler}
                   toggleSpecialist={specialistHandler}
                   toggleDate={datePageHandler}
@@ -89,6 +87,7 @@ const AddAppointments = ({ open, onClose }) => {
                   openForm={formHandler}
                />
             )
+
          case 'specialist':
             return (
                <ChooseSpecialist
@@ -97,6 +96,7 @@ const AddAppointments = ({ open, onClose }) => {
                   setTime={setSelectedTime}
                />
             )
+
          case 'date':
             return (
                <ChooseDate
@@ -108,6 +108,7 @@ const AddAppointments = ({ open, onClose }) => {
                   formHandler={formHandler}
                />
             )
+
          case 'form':
             return (
                <AppointmentsForm
@@ -118,10 +119,12 @@ const AddAppointments = ({ open, onClose }) => {
                   open={openLast}
                />
             )
+
          case 'result':
             return <Result goBack={goBackAndClear} />
+
          default:
-            return null
+            return 'main'
       }
    }
 
@@ -130,10 +133,11 @@ const AddAppointments = ({ open, onClose }) => {
          <StyledDrawer>
             <Box className="header-box">
                {currentPage === 'main' || currentPage === 'result' ? (
-                  <CloseIcon onClick={handlerClose} />
+                  <CloseIcon className="close-icon" onClick={handlerClose} />
                ) : (
                   <GoBackIcon onClick={goBack} />
                )}
+
                <Box className="header">
                   <Typography className="title">
                      {currentPage === 'main' && 'Онлайн Запись'}
@@ -143,9 +147,11 @@ const AddAppointments = ({ open, onClose }) => {
                      {currentPage === 'result' && 'Онлайн Запись'}
                   </Typography>
                </Box>
+
                <Box> </Box>
             </Box>
-            <StyledContainer>{renderPage()}</StyledContainer>
+
+            <Box className="content">{renderPage()}</Box>
          </StyledDrawer>
       </Drawer>
    )
@@ -157,24 +163,23 @@ const StyledDrawer = styled(Box)(() => ({
    '& .header-box': {
       display: 'flex',
       boxSizing: 'content-box',
-      padding: '15px',
       background: '#fff',
+      padding: '15px',
       justifyContent: 'space-between',
-   },
 
-   '& .header': {
-      alignItems: 'center',
-      display: 'flex',
+      '& > .header': {
+         alignItems: 'center',
+         display: 'flex',
 
-      '& .title': {
-         fontFamily: 'Manrope',
-         fontWeight: '700',
-         color: '#048741',
+         '& .title': {
+            fontFamily: 'Manrope',
+            fontWeight: '700',
+            color: '#048741',
+         },
       },
    },
-}))
 
-const StyledContainer = styled(Box)(() => ({
-   height: '100vh',
-   marginTop: '20px',
+   '& > .content': {
+      height: '100%',
+   },
 }))

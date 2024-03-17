@@ -55,8 +55,9 @@ const ChooseDate = ({
    }
 
    return (
-      <Box>
+      <>
          <hr />
+
          <StyledContainer>
             <StyledDateCalendar
                dayOfWeekFormatter={(_day, weekday) =>
@@ -80,7 +81,7 @@ const ChooseDate = ({
             )}
          </StyledContainer>
          <StyledButton onClick={formHandler}>Продолжить</StyledButton>
-      </Box>
+      </>
    )
 }
 export default ChooseDate

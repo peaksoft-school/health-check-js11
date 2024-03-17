@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Rating, styled, Typography } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
-import Button from '../UI/Button'
 import { PlusIcon, RegisteredIcon } from '../../assets/icons'
-import DeleteAppointmentModal from './DeleteAppointmentModal'
 import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments-user/onlineAppointmentsSlice'
+import Button from '../UI/Button'
+import DeleteAppointmentModal from './DeleteAppointmentModal'
 
 const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)

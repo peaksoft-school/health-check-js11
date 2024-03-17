@@ -3,19 +3,15 @@ import { toast } from 'react-toastify'
 
 export const showToast = ({
    pending,
-   message = 'Success',
+   message,
    status = 'success',
-   duration = 2000,
+   duration = 1000,
 }) => {
    let borderColor
 
    switch (status) {
       case 'error':
          borderColor = 'red'
-         break
-
-      case 'warning':
-         borderColor = '#f1c40f'
          break
 
       default:

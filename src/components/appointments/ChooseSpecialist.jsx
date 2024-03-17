@@ -29,6 +29,14 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       setTime(firstAppointmentTime)
       goBack()
       setDoctorName({ doctor })
+
+      dispatch(
+         ONLINE_APPOINTMENTS_THUNKS.getDoctorSchedule({
+            id: doctor.doctorId,
+            startDate,
+            endDate,
+         })
+      )
    }, [doctorsTimesheet, goBack, setDoctorName, setTime])
 
    const getDoctorName = ({ time, id, doctor }) => {
@@ -57,28 +65,35 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 
    return (
       <StyledContainer>
-         <StyledButton onClick={getRandomDoctor} variant="grey">
-            <UsersIcon /> <Typography> Любой свободный специалист</Typography>
-            <span> </span>
-         </StyledButton>
+         {doctorsTimesheet.length > 0 ? (
+            <>
+               <StyledButton onClick={getRandomDoctor} variant="grey">
+                  <UsersIcon />
+                  <Typography> Любой свободный специалист</Typography>
+                  <span> </span>
+               </StyledButton>
 
-         <Box className="doctors">
-            {doctorsTimesheet?.map((doctor) => (
-               <SpecialistCard
-                  key={doctor.doctorId}
-                  doctor={doctor}
-                  getDoctorName={getDoctorName}
-                  formatDates={formatDates}
-               />
-            ))}
-         </Box>
+               <Box className="doctors">
+                  {doctorsTimesheet?.map((doctor) => (
+                     <SpecialistCard
+                        key={doctor.doctorId}
+                        doctor={doctor}
+                        getDoctorName={getDoctorName}
+                        formatDates={formatDates}
+                     />
+                  ))}
+               </Box>
+            </>
+         ) : (
+            <Typography>Нет доступных докторов для этой услуги</Typography>
+         )}
       </StyledContainer>
    )
 }
 
 export default ChooseSpecialist
 
-const StyledContainer = styled(Box)(({ theme }) => ({
+const StyledContainer = styled(Box)(() => ({
    marginTop: '20px',
    padding: '7px',
 
@@ -87,6 +102,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       flexDirection: 'column',
       gap: '20px',
       padding: '10px ',
+   },
+
+   '& p': {
+      fontFamily: 'Manrope',
    },
 }))
 

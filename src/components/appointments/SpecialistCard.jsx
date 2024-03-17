@@ -8,10 +8,12 @@ const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
 
          <Box>
             <Typography>{doctor.doctorFullName}</Typography>
+
             <Typography className="facility">{doctor.department}</Typography>
 
             <Box className="rating-box">
                <Rating size="small" value={5} readOnly />
+
                <Typography className="reviews" variant="span">
                   166
                </Typography>

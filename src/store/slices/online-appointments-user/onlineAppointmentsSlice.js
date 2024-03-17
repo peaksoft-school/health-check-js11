@@ -8,7 +8,7 @@ const initialState = {
    date: [],
    facilityArray: [],
    isLoading: false,
-   appoinmentId: null,
+   appointmentId: null,
    code: null,
    isResult: false,
 }
@@ -101,7 +101,7 @@ export const onlineAppointmentsSlice = createSlice({
                state.isLoading = false
                const [id, code] = payload.message.split(' ')
                state.code = code
-               state.appoinmentId = id
+               state.appointmentId = id
             }
          )
 

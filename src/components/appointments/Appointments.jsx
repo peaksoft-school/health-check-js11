@@ -1,6 +1,7 @@
+import { useCallback, useMemo } from 'react'
 import { styled, Box, Typography, Rating } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { CalendarWithDotsIcon, UsersIcon } from '../../assets/icons'
+import { CalendarWithDotsIcon, DeleteIcon, UsersIcon } from '../../assets/icons'
 import Select from '../UI/Select'
 import Button from '../UI/Button'
 
@@ -9,10 +10,13 @@ const Appointments = ({
    toggleDate,
    selectHandler,
    doctorInfo,
-   date,
+   time,
+   setDoctorName,
    openForm,
    validate,
    value,
+   date,
+   setDat,
 }) => {
    const { facilityArray } = useSelector((state) => state.onlineAppointments)
 
@@ -21,7 +25,21 @@ const Appointments = ({
       label: facility.facility,
    }))
 
-   const appointmentTime = date ? date.slice(0, 5) : ''
+   const appointmentTime = time ? time.slice(0, 5) : ''
+
+   const formatDates = useCallback((dateString) => {
+      const options = {
+         day: 'numeric',
+         month: 'long',
+         weekday: 'long',
+      }
+
+      const date = new Date(dateString)
+      return date.toLocaleDateString('ru-RU', options)
+   }, [])
+
+   const deleteDateHandler = () => setDat('')
+   const deleteDoctorHandler = () => setDoctorName('')
 
    return (
       <StyledContainer>
@@ -30,53 +48,70 @@ const Appointments = ({
             placeholder={value || 'Выбрать услуги'}
             options={getfacility}
             value={getfacility}
+            icon={<DeleteIcon />}
             onChange={selectHandler}
          />
 
-         <StyledButton onClick={toggleSpecialist} variant="grey">
-            {doctorInfo ? (
-               <Box className="first-part">
-                  <img
-                     className="image"
-                     src={doctorInfo.doctor.imageDoctor}
-                     alt="doctor"
-                  />
+         {doctorInfo ? (
+            <Box className="first-part" onClick={toggleSpecialist}>
+               <img
+                  className="image"
+                  src={doctorInfo.doctor.imageDoctor}
+                  alt="doctor"
+               />
 
-                  <Box className="doctor-info">
-                     <Typography className="doctor-name">
-                        {doctorInfo.doctor.doctorFullName}
+               <Box className="doctor-info">
+                  <Typography className="doctor-name">
+                     {doctorInfo.doctor.doctorFullName}
+                  </Typography>
+
+                  <Typography className="facility">
+                     {doctorInfo.doctor.department}
+                  </Typography>
+
+                  <Box className="rating-box">
+                     <Rating size="small" value={5} readOnly />
+
+                     <Typography className="reviews" variant="span">
+                        166
                      </Typography>
-
-                     <Typography className="facility">
-                        {doctorInfo.doctor.department}
-                     </Typography>
-
-                     <Box className="rating-box">
-                        <Rating size="small" value={5} readOnly />
-
-                        <Typography className="reviews" variant="span">
-                           166
-                        </Typography>
-                     </Box>
                   </Box>
                </Box>
-            ) : (
+
+               <DeleteIcon onClick={deleteDoctorHandler} />
+            </Box>
+         ) : (
+            <StyledButton onClick={toggleSpecialist} variant="grey">
                <>
                   <UsersIcon className="icon" />
                   <Typography>Выбрать специалиста</Typography>
                </>
-            )}
-         </StyledButton>
+            </StyledButton>
+         )}
 
-         <StyledButton onClick={toggleDate} variant="grey">
-            <CalendarWithDotsIcon className="icon" />
-
-            {date ? (
-               <Typography>{appointmentTime}</Typography>
-            ) : (
+         {time ? (
+            <Box className="time">
+               <StyledButton onClick={toggleDate} variant="grey">
+                  <CalendarWithDotsIcon className="icon" />
+                  <Box className="date-box">
+                     <Box className="date-content">
+                        <Typography className="date">
+                           {formatDates(
+                              date || doctorInfo.doctor.dateOfConsultation
+                           )}
+                        </Typography>
+                        <Typography>{appointmentTime}</Typography>
+                     </Box>
+                  </Box>
+               </StyledButton>
+               <DeleteIcon onClick={deleteDateHandler} />
+            </Box>
+         ) : (
+            <StyledButton onClick={toggleDate} variant="grey">
+               <CalendarWithDotsIcon className="icon" />
                <Typography>Выбрать дату и время</Typography>
-            )}
-         </StyledButton>
+            </StyledButton>
+         )}
 
          {validate && (
             <StyledButtonContinue onClick={openForm}>
@@ -96,8 +131,24 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    flexDirection: 'column',
    gap: '15px',
 
+   '& .time': {
+      width: '100%',
+      display: 'flex',
+      gap: '60px',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: '15px',
+   },
+
    '& .first-part': {
+      backgroundColor: 'white',
+      borderRadius: '15px',
+      boxSizing: 'content-box',
+      padding: '5px',
+
       '& img': {
+         marginLeft: '12px',
+         marginRight: '12px',
          borderRadius: '50%',
          width: '40px',
          alignSelf: 'start',
@@ -105,9 +156,15 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& .doctor-info': {
+         marginRight: '130px',
          display: 'flex',
+         width: 'auto',
          flexDirection: 'column',
          alignItems: 'start',
+
+         svg: {
+            marginRight: '0',
+         },
       },
 
       '& .doctor-name': {
@@ -134,7 +191,23 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
+   },
+
+   '& .date-box': {
+      display: 'flex',
+      justifyContent: 'space-between',
+
+      '& > .date-content': {
+         display: 'flex',
+         flexDirection: 'column',
+         alignItems: 'start',
+
+         '& .date': {
+            fontSize: '14px',
+            fontFamily: 'Manrope',
+            color: theme.palette.secondary.lightGrey,
+         },
+      },
    },
 }))
 
@@ -144,12 +217,6 @@ const StyledButtonContinue = styled(Button)(() => ({
       marginTop: '10px',
       height: '2.75rem',
       fontSize: '0.875rem',
-
-      '& div ': {
-         display: 'flex',
-         alignItems: 'center',
-         gap: '5px',
-      },
 
       '&:active': {
          borderRadius: '0.625rem',
