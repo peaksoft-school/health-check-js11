@@ -96,8 +96,8 @@ const AddNote = () => {
                      id="fileInput"
                      type="file"
                      accept="image/*"
-                     onChange={handleFileChange}
                      style={{ display: 'none' }}
+                     onChange={handleFileChange}
                   />
                </StyledImage>
 
@@ -190,6 +190,7 @@ const StyledMainContainer = styled(Box)(() => ({
       background: 'white',
       padding: '1.90rem 15rem 1rem',
    },
+
    '& .personal-data': {
       fontSize: '22px',
    },
@@ -204,6 +205,7 @@ const StyledMainContainer = styled(Box)(() => ({
       display: 'flex',
    },
    '& .custom-select': {
+      cursor: 'pointer',
       width: '490px',
       height: '5px',
    },
@@ -218,6 +220,7 @@ const StyledMainContainer = styled(Box)(() => ({
          '& .ToolBar': {
             border: '1px solid #D9D9D9',
             height: '50px',
+
             '& > .rdw-inline-wrapper': {
                justifyContent: 'flex-start',
                marginLeft: '1.50rem',
@@ -240,7 +243,11 @@ const StyledMainContainer = styled(Box)(() => ({
             },
          },
          '& .Muslima': {
-            overflow: 'hidden',
+            width: '1070px',
+            height: '200px',
+            '& .DraftEditor-root': {
+               overflow: 'hidden',
+            },
          },
       },
    },
