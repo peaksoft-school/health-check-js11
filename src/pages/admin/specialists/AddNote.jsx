@@ -12,9 +12,10 @@ import MyEditor from './Editor'
 import PhotoSvg from '../../../assets/icons/svgs/зhoto.svg'
 
 const AddNote = () => {
+   const [shouldClearForm, setShouldClearForm] = useState(false)
+
    const { doctors } = useSelector((state) => state.addNote)
 
-   console.log(doctors)
    const dispatch = useDispatch()
 
    const data = {
@@ -27,12 +28,14 @@ const AddNote = () => {
          !values.firstName ||
          !values.lastName ||
          !values.position ||
+         !values.description ||
          !values.departmentId
       ) {
          return
       }
 
       dispatch(ADD_NOTE.postAddNote({ values }))
+      setShouldClearForm(true)
    }
 
    const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
@@ -74,6 +77,34 @@ const AddNote = () => {
          departmentId: selectedOption.id,
       }))
    }
+   const handleCancelClick = () => {
+      setValues({
+         firstName: '',
+         lastName: '',
+         position: '',
+         imageSrc: '',
+         departmentId: '',
+         description: '',
+      })
+   }
+
+   useEffect(() => {
+      if (shouldClearForm) {
+         setValues({
+            firstName: '',
+            lastName: '',
+            position: '',
+            imageSrc: '',
+            departmentId: '',
+            description: '',
+         })
+         handleChange('description')({ target: { value: '' } })
+         handleChange('departmentId')({ target: { value: '' } })
+         setShouldClearForm(false)
+      }
+   }, [shouldClearForm])
+
+   console.log(shouldClearForm)
 
    return (
       <StyledMainContainer>
@@ -169,7 +200,11 @@ const AddNote = () => {
                   />
 
                   <Box className="button-group">
-                     <StyledButton type="button" variant="grey">
+                     <StyledButton
+                        type="button"
+                        variant="grey"
+                        onClick={handleCancelClick}
+                     >
                         ОТМЕНИТЬ
                      </StyledButton>
 

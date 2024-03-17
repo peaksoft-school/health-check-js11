@@ -147,14 +147,17 @@ const SpecialistInnerPage = () => {
                      onChange={handleChange('description')}
                      value={values.description}
                   />
-                  <Box className="button-group">
-                     <StyledButton type="button" variant="grey">
-                        НАЗАД
-                     </StyledButton>
-                     <StyledButton type="submit" disabled={!dirty}>
-                        РЕДАКТИРОВАТЬ
-                     </StyledButton>
-                  </Box>
+                  <NavLink to="/admin/specialists" className="back">
+                     <Box className="button-group">
+                        <StyledButton type="button" variant="grey">
+                           НАЗАД
+                        </StyledButton>
+
+                        <StyledButton type="submit" disabled={!dirty}>
+                           РЕДАКТИРОВАТЬ
+                        </StyledButton>
+                     </Box>
+                  </NavLink>
                </Box>
             </form>
          </Box>
@@ -217,10 +220,13 @@ const StyledMainContainer = styled(Box)(() => ({
    '& .depatment-container': {
       marginTop: '-10.10rem',
    },
-   '& .button-group': {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      gap: '1rem',
+   '& .back': {
+      textDecoration: 'none',
+      '& .button-group': {
+         display: 'flex',
+         justifyContent: 'flex-end',
+         gap: '1rem',
+      },
    },
 }))
 
