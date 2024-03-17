@@ -1,8 +1,10 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { CloseIcon } from '../../assets/icons'
+import { handleKeyPress } from '../../utils/helpers'
 import Modal from '../UI/Modal'
 import Button from '../UI/Button'
-import { CloseIcon } from '../../assets/icons'
 import DeleteTimeSheets from './DeleteTimeSheets'
 
 const ChangeDay = ({
@@ -21,6 +23,12 @@ const ChangeDay = ({
    deleteTimeSheet,
    setIntervals,
    lastClicked,
+   endDate,
+   isSaveDisabled,
+   startDate,
+   setIsSaveDisabled,
+   timeRanges,
+   daysOfWeek,
 }) => {
    const { schedules } = useSelector((state) => state.schedule)
 
@@ -28,7 +36,11 @@ const ChangeDay = ({
       (doctor) => doctor.id === selectedDoctorId
    )
 
-   const clickedDateObject = generateDateRange().find(({ date, monthText }) => {
+   const clickedDateObject = generateDateRange(
+      startDate,
+      endDate,
+      daysOfWeek
+   ).find(({ date, monthText }) => {
       if (clickedDate) {
          return date === clickedDate.split('-')[2] && monthText
       }
@@ -46,16 +58,26 @@ const ChangeDay = ({
             startTimeOfConsultation.length > 0
       )
 
+   useEffect(() => {
+      const isSaveDisabledd = timeRanges.some(
+         (range) =>
+            range.startHour < 1 ||
+            range.startMinute < 1 ||
+            range.endHour < 1 ||
+            range.endMinute < 1
+      )
+      setIsSaveDisabled(isSaveDisabledd)
+   }, [timeRanges])
+
+   const isButtonDisabled = lastClicked.id === null || lastClicked.date === null
+   const buttonClassName = isButtonDisabled ? 'disabled-button' : ''
+
    return (
       <StyledContainer>
          <StyledButton
             onClick={openModal}
-            disabled={lastClicked.id === null || lastClicked.date === null}
-            className={
-               lastClicked.id === null || lastClicked.date === null
-                  ? 'disabled-button'
-                  : ''
-            }
+            disabled={isButtonDisabled}
+            className={buttonClassName}
          >
             Изменить шаблон
          </StyledButton>
@@ -63,7 +85,7 @@ const ChangeDay = ({
          <Modal handleClose={handleClose} open={open}>
             <StyledModalContainer className="modal-container">
                <Typography variant="h5" className="modal-title">
-                  Изменить день
+                  Изменить шаблон
                </Typography>
 
                <Box component="form" className="datas-container">
@@ -104,7 +126,7 @@ const ChangeDay = ({
                   <Box className="time-picker-container">
                      <Typography className="data-title">График:</Typography>
 
-                     <Box>
+                     <Box className="time-container">
                         {isTimePickerBoxVisible ? (
                            <DeleteTimeSheets
                               selectedDate={clickedDate}
@@ -116,6 +138,7 @@ const ChangeDay = ({
                               setIntervals={setIntervals}
                               removeInterval={removeInterval}
                               deleteTimeSheet={deleteTimeSheet}
+                              handleKeyPress={handleKeyPress}
                            />
                         ) : (
                            <>
@@ -139,6 +162,8 @@ const ChangeDay = ({
                                                 'start'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
+                                          maxLength={2}
                                        />
 
                                        <Box
@@ -155,6 +180,8 @@ const ChangeDay = ({
                                                 'start'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
+                                          maxLength={2}
                                        />
                                     </Box>
 
@@ -175,6 +202,8 @@ const ChangeDay = ({
                                                 'end'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
+                                          maxLength={2}
                                        />
 
                                        <Box
@@ -191,6 +220,8 @@ const ChangeDay = ({
                                                 'end'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
+                                          maxLength={2}
                                        />
                                     </Box>
 
@@ -231,8 +262,13 @@ const ChangeDay = ({
                   </Button>
 
                   <Button
-                     className="modal-buttons"
+                     className={
+                        isSaveDisabled === false
+                           ? 'modal-buttons'
+                           : 'disabled-modal-buttons'
+                     }
                      onClick={updateTimeSheetDoctor}
+                     disabled={isSaveDisabled}
                   >
                      Сохранить
                   </Button>
@@ -273,6 +309,7 @@ const StyledModalContainer = styled(Box)(() => ({
    alignItems: 'center',
    flexDirection: 'column',
    width: '31.563rem',
+   marginBottom: '20px',
 
    '& .modal-title': {
       fontWeight: '500',
@@ -287,7 +324,12 @@ const StyledModalContainer = styled(Box)(() => ({
       marginTop: '30px',
 
       '& .modal-buttons': {
-         padding: '10px, 26px, 10px, 26px',
+         width: '100%',
+         height: '39px',
+      },
+
+      '& .disabled-modal-buttons': {
+         opacity: '0.5',
          width: '100%',
          height: '39px',
       },
@@ -351,6 +393,7 @@ const StyledModalContainer = styled(Box)(() => ({
             marginTop: '10px',
             color: 'rgb(4, 135, 65)',
             cursor: 'pointer',
+            width: '150px',
          },
 
          '& .not-allowed-interval': {
@@ -393,6 +436,16 @@ const StyledModalContainer = styled(Box)(() => ({
             width: '30px',
             height: '20px',
             cursor: 'pointer',
+
+            '& #Vector': {
+               fill: 'red',
+            },
+         },
+
+         '& .time-container': {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '6px',
          },
       },
    },

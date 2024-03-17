@@ -3,7 +3,7 @@ import { axiosInstance } from '../../../configs/axiosInstance'
 import { showToast } from '../../../utils/helpers/notification'
 
 const getDoctorsByDepartment = createAsyncThunk(
-   'doctors/fetchDoctors',
+   'schedule/getDoctorsByDepartment',
    async ({ params }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
@@ -23,7 +23,7 @@ const getDoctorsByDepartment = createAsyncThunk(
 )
 
 const postNewSchedule = createAsyncThunk(
-   'newSchedule/postSchedule',
+   'schedule/postNewSchedule',
    async (
       { doctorId, departmentName, schedule, resetForm, onClose },
       { rejectWithValue }
@@ -53,8 +53,8 @@ const postNewSchedule = createAsyncThunk(
    }
 )
 
-const getAllSchedules = createAsyncThunk(
-   'schedules/getSchedules',
+const getSchedules = createAsyncThunk(
+   'schedule/getSchedules',
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('/api/schedule/all')
@@ -75,7 +75,7 @@ const savePatternTimeSheet = createAsyncThunk(
             requestData
          )
 
-         dispatch(getAllSchedules())
+         dispatch(getSchedules())
          showToast({ message: response.data.message })
          return response.data
       } catch (error) {
@@ -102,7 +102,7 @@ const updateTimeSheetDoctor = createAsyncThunk(
          )
 
          showToast({ message: response.data.message })
-         dispatch(getAllSchedules())
+         dispatch(getSchedules())
          return response.data
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
@@ -112,7 +112,7 @@ const updateTimeSheetDoctor = createAsyncThunk(
 )
 
 const deleteTimeSheets = createAsyncThunk(
-   'schedule/delete-time-sheets',
+   'schedule/deleteTimeSheets',
    async ({ doctorId, date, timeRanges }, { rejectWithValue, dispatch }) => {
       try {
          const formatedFromTimes = timeRanges.map(({ startTime }) => ({
@@ -124,11 +124,9 @@ const deleteTimeSheets = createAsyncThunk(
             formatedFromTimes
          )
 
-         showToast({ message: response.data.message })
-         dispatch(getAllSchedules())
+         dispatch(getSchedules())
          return response.data
       } catch (error) {
-         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -154,7 +152,7 @@ const scheduleSearch = createAsyncThunk(
 )
 
 export const SCHEDULE_THUNK = {
-   getAllSchedules,
+   getSchedules,
    postNewSchedule,
    getDoctorsByDepartment,
    savePatternTimeSheet,

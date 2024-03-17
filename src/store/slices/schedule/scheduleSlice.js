@@ -16,16 +16,16 @@ export const scheduleSlice = createSlice({
 
    extraReducers: (builder) => {
       builder
-         .addCase(SCHEDULE_THUNK.getAllSchedules.pending, (state) => {
+         .addCase(SCHEDULE_THUNK.getSchedules.pending, (state) => {
             state.isLoading = true
          })
 
-         .addCase(SCHEDULE_THUNK.getAllSchedules.fulfilled, (state, action) => {
+         .addCase(SCHEDULE_THUNK.getSchedules.fulfilled, (state, action) => {
             state.schedules = action.payload
             state.isLoading = false
          })
 
-         .addCase(SCHEDULE_THUNK.getAllSchedules.rejected, (state) => {
+         .addCase(SCHEDULE_THUNK.getSchedules.rejected, (state) => {
             state.isLoading = false
          })
 

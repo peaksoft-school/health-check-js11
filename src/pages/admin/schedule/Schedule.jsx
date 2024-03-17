@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 import { SCHEDULE_COLUMN } from '../../../utils/constants/columns'
-import TableSchedule from '../../../components/UI/ScheduleTable'
+import TableSchedule from '../../../components/schedule/ScheduleTable'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 
-const SchedulePage = () => {
+const Schedule = () => {
    const { schedules } = useSelector((state) => state.schedule)
 
    const [searchName, setSearchName] = useState('')
@@ -17,6 +17,8 @@ const SchedulePage = () => {
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
    const [debouncedSearchText] = useDebounce(searchName, 1000)
+
+   const tableRef = useRef(null)
 
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
@@ -29,7 +31,7 @@ const SchedulePage = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(SCHEDULE_THUNK.getAllSchedules())
+      dispatch(SCHEDULE_THUNK.getSchedules())
    }, [dispatch])
 
    return (
@@ -43,12 +45,14 @@ const SchedulePage = () => {
             />
          </StyledInputContainer>
 
-         <TableSchedule columns={SCHEDULE_COLUMN} rows={schedules} />
+         <div ref={tableRef}>
+            <TableSchedule columns={SCHEDULE_COLUMN} rows={schedules} />
+         </div>
       </>
    )
 }
 
-export default SchedulePage
+export default Schedule
 
 const StyledInputContainer = styled(Box)(() => ({
    marginBottom: '20px',

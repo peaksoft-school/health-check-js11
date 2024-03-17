@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
-import { addDays, format } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
+import dayjs from 'dayjs'
+import { generateDateRange, generateFreeTimes } from '../../utils/helpers/index'
 import Loading from '../Loading'
 import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
-import ChangeDay from '../schedule/ChangeDay'
+import ChangeDay from './ChangeDay'
+import DatePicker from '../UI/DatePicker'
+import { ProfileIcon } from '../../assets/icons'
 
-const TableSchedule = () => {
+const ScheduleTable = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
 
-   const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'))
-   const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+   const [startDate, setStartDate] = useState(dayjs())
+   const [endDate, setEndDate] = useState(dayjs().subtract(11, 'day'))
+
    const [lastClicked, setLastClicked] = useState({ id: null, date: null })
 
    const [open, setOpen] = useState(false)
@@ -22,6 +26,9 @@ const TableSchedule = () => {
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
    const [clickedDate, setClickedDate] = useState(null)
    const [intervals, setIntervals] = useState([{ id: 1 }])
+   const [installDisabled, setInstallDisabled] = useState(false)
+
+   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
 
    const dispatch = useDispatch()
 
@@ -58,6 +65,15 @@ const TableSchedule = () => {
       setTimeRanges(updatedTimeRanges)
    }
 
+   const handleMinuteChange = (value, index, type) => {
+      const paddedValue = value.toString().padStart(2, '0')
+      const updatedTimeRanges = [...timeRanges]
+
+      updatedTimeRanges[index][`${type}Minute`] = paddedValue
+
+      setTimeRanges(updatedTimeRanges)
+   }
+
    const addInterval = () => {
       if (intervals.length < 5) {
          const newIntervalId = intervals.length + 1
@@ -78,112 +94,48 @@ const TableSchedule = () => {
       setIntervals(updatedIntervals)
    }
 
-   const handleMinuteChange = (value, index, type) => {
-      const paddedValue = value.toString().padStart(2, '0')
-      const updatedTimeRanges = [...timeRanges]
-
-      updatedTimeRanges[index][`${type}Minute`] = paddedValue
-
-      setTimeRanges(updatedTimeRanges)
-   }
-
    const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
 
-   const handleDateChange = (event, type) => {
-      const selectedDate = event.target.value
+   const dateToday = dayjs()
+   const dateEnd = dayjs()
 
+   const handleDateChange = (event, type) => {
       if (type === 'start') {
-         setStartDate(selectedDate)
+         setStartDate(event)
       } else {
-         setEndDate(selectedDate)
+         setEndDate(event)
       }
    }
 
    useEffect(() => {
-      const today = new Date()
-      const defaultEndDate = addDays(today, 11)
+      setStartDate(dayjs())
 
-      setStartDate(format(today, 'yyyy-MM-dd'))
-      setEndDate(format(defaultEndDate, 'yyyy-MM-dd'))
+      setEndDate(dayjs().add(11, 'day'))
    }, [])
 
-   const getRussianMonthName = (monthNumber) => {
-      const russianMonthNames = [
-         'Январь',
-         'Февраль',
-         'Март',
-         'Апрель',
-         'Май',
-         'Июнь',
-         'Июль',
-         'Август',
-         'Сентябрь',
-         'Октябрь',
-         'Ноябрь',
-         'Декабрь',
-      ]
-
-      return russianMonthNames[monthNumber]
-   }
-
-   const generateDateRange = () => {
-      if (!startDate || !endDate) {
-         return []
+   useEffect(() => {
+      if (lastClicked.id === null && lastClicked.date === null) {
+         setInstallDisabled(true)
       }
+   }, [lastClicked])
 
-      const start = new Date(startDate)
-      const end = new Date(endDate)
-      const dateRange = []
-
-      while (start <= end) {
-         const dayOfWeek = daysOfWeek[start.getDay()]
-
-         const date = String(start.getDate()).padStart(2, '0')
-         const monthNumber = String(start.getMonth() + 1).padStart(2, '0')
-         const monthText = getRussianMonthName(start.getMonth())
-         const year = start.getFullYear()
-
-         dateRange.push({ dayOfWeek, date, monthNumber, monthText, year })
-         start.setDate(start.getDate() + 1)
-      }
-
-      return dateRange
-   }
-   const generateFreeTimes = (startTimeOfConsultation) => {
-      if (!startTimeOfConsultation || startTimeOfConsultation.length === 0) {
-         return []
-      }
-
-      const timeRanges = startTimeOfConsultation.map((timeRange) => {
-         const [startTime, endTime] = timeRange.split(' - ')
-         const trimmedStartTime = startTime.slice(0, -3)
-         const trimmedEndTime = endTime
-            .replace(/-f$/, '')
-            .replace(/-t$/, '')
-            .slice(0, -3)
-         const isFreeTime = endTime.endsWith('-f')
-         return { time: `${trimmedStartTime} - ${trimmedEndTime}`, isFreeTime }
-      })
-
-      return timeRanges.map(({ time, isFreeTime }) => (
-         <Typography
-            key={time}
-            className={isFreeTime ? 'free-time' : 'not-free-time'}
-         >
-            {time}
-         </Typography>
-      ))
-   }
-
-   const handleTdClick = (id, date) => {
+   const handleTdClick = (id, date, dates, i) => {
       if (id === lastClicked.id && date === lastClicked.date) {
          setLastClicked({ id: null, date: null })
       } else {
          setLastClicked({ id, date })
          setSelectedDoctorId(id)
          setClickedDate(date)
+
+         const checkedTd =
+            dates.find((_, index) => index === i).startTimeOfConsultation
+               .length > 0
+         setInstallDisabled(checkedTd)
       }
    }
+
+   const buttonClassName =
+      installDisabled === true ? 'button-disabled' : 'buttons'
 
    const savePatternTimeSheet = () => {
       const { id, date } = lastClicked
@@ -197,8 +149,6 @@ const TableSchedule = () => {
          )
 
          resetTimeRangesAndIntervals()
-      } else {
-         console.error('No td was clicked')
       }
    }
 
@@ -217,8 +167,6 @@ const TableSchedule = () => {
                timeRanges,
             })
          )
-      } else {
-         console.error('No td was clicked')
       }
       handleClose()
    }
@@ -234,8 +182,6 @@ const TableSchedule = () => {
                timeRanges: [{ startTime }],
             })
          )
-      } else {
-         console.error('No td was clicked')
       }
    }
 
@@ -260,80 +206,77 @@ const TableSchedule = () => {
                   setIntervals={setIntervals}
                   deleteTimeSheet={deleteTimeSheet}
                   lastClicked={lastClicked}
+                  startDate={startDate}
+                  endDate={endDate}
+                  daysOfWeek={daysOfWeek}
+                  isSaveDisabled={isSaveDisabled}
+                  timeRanges={timeRanges}
+                  setIsSaveDisabled={setIsSaveDisabled}
                />
 
                <ButtonBase
-                  className={
-                     lastClicked.id === null || lastClicked.date === null
-                        ? 'button-disabled'
-                        : 'buttons'
-                  }
+                  className={buttonClassName}
                   onClick={savePatternTimeSheet}
-                  disabled={
-                     lastClicked.id === null || lastClicked.date === null
-                  }
+                  disabled={installDisabled}
                >
                   Установить по шаблону
                </ButtonBase>
             </Box>
 
             <Box className="date-picker-box">
-               <input
-                  className="date-picker"
-                  type="date"
-                  placeholder="От"
+               <DatePicker
+                  variant="custom"
                   value={startDate}
                   onChange={(e) => handleDateChange(e, 'start')}
-                  min={format(new Date(), 'yyyy-MM-dd')}
+                  minDate={dateToday}
                />
                -
-               <input
-                  className="date-picker"
+               <DatePicker
                   type="date"
                   placeholder="До"
                   value={endDate}
-                  min={format(new Date(), 'yyyy-MM-dd')}
+                  minDate={dateEnd}
                   onChange={(e) => handleDateChange(e, 'end')}
                />
             </Box>
          </Box>
 
          <Box className="schedule-table-container">
-            <Box component="table" className="table">
-               <Box component="thead">
-                  <Box component="tr">
-                     <Box component="th" className="header-specialist">
-                        СПЕЦИАЛИСТЫ
-                     </Box>
+            <table className="table">
+               <thead>
+                  <tr>
+                     <th className="header-specialist">СПЕЦИАЛИСТЫ</th>
 
-                     {generateDateRange().map(
+                     {generateDateRange(startDate, endDate, daysOfWeek).map(
                         ({ dayOfWeek, date, monthText }) => (
-                           <Box
-                              component="th"
+                           <th
                               className="header-dates th"
                               key={(monthText, date)}
                            >
                               {dayOfWeek}
                               <Box component="br" />
                               {date} {monthText}
-                           </Box>
+                           </th>
                         )
                      )}
-                  </Box>
-               </Box>
+                  </tr>
+               </thead>
 
                {isLoading && <Loading />}
 
-               <Box component="tbody">
+               <tbody>
                   {schedules.map(({ image, surname, position, dates, id }) => (
-                     <Box component="tr" key={id}>
-                        <Box component="td" className="specialist">
-                           <Box
-                              component="img"
-                              src={image}
-                              alt="imag"
-                              className="image"
-                           />
+                     <tr key={id}>
+                        <td className="specialist">
+                           {image === null || image === undefined ? (
+                              <ProfileIcon className="image" alt="doctor-img" />
+                           ) : (
+                              <img
+                                 src={image}
+                                 className="image"
+                                 alt="doctor-img"
+                              />
+                           )}
 
                            <Typography className="surname">
                               {surname}
@@ -342,25 +285,24 @@ const TableSchedule = () => {
                            <Typography className="position">
                               {position}
                            </Typography>
-                        </Box>
+                        </td>
 
-                        {generateDateRange().map(
-                           ({ dayOfWeek, date, monthNumber, year }) => {
+                        {generateDateRange(startDate, endDate, daysOfWeek).map(
+                           ({ dayOfWeek, date, monthNumber, year }, i) => {
                               const currentDate = `${year}-${monthNumber}-${date}`
                               return (
-                                 <Box
-                                    component="td"
+                                 <td
                                     key={`${id}-${dayOfWeek}-${date}-${monthNumber}`}
                                     className="schedule-cell"
                                     onClick={() =>
-                                       handleTdClick(id, currentDate)
+                                       handleTdClick(id, currentDate, dates, i)
                                     }
                                  >
                                     <Box
                                        className={`${
                                           isLastClicked(id, currentDate)
                                              ? 'highlighted'
-                                             : 'unHighlighted'
+                                             : 'un-highlighted'
                                        }`}
                                     >
                                        <Box className="free-time-container">
@@ -388,20 +330,20 @@ const TableSchedule = () => {
                                           )}
                                        </Box>
                                     </Box>
-                                 </Box>
+                                 </td>
                               )
                            }
                         )}
-                     </Box>
+                     </tr>
                   ))}
-               </Box>
-            </Box>
+               </tbody>
+            </table>
          </Box>
       </StyledContainer>
    )
 }
 
-export default TableSchedule
+export default ScheduleTable
 
 const StyledContainer = styled(Box)(() => ({
    backgroundColor: 'white',
@@ -456,6 +398,15 @@ const StyledContainer = styled(Box)(() => ({
 
    '& .schedule-table-container': {
       overflowX: 'auto',
+
+      '&::-webkit-scrollbar': {
+         height: '15px',
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+         backgroundColor: '#92919183',
+         borderRadius: '10px',
+      },
    },
 
    '& .table': {
@@ -509,6 +460,7 @@ const StyledContainer = styled(Box)(() => ({
             height: '46px',
             marginBottom: '6px',
             borderRadius: '50%',
+            contain: 'paint',
          },
 
          '& > .surname': {
@@ -564,14 +516,32 @@ const StyledContainer = styled(Box)(() => ({
          boxShadow: '0px 0px 5px 1px',
          overflow: 'auto',
          padding: '3px',
+
+         '& .free-time-container': {
+            paddingLeft: '12px',
+            transition: '0.2s',
+         },
+
+         '&::-webkit-scrollbar': {
+            width: '5px',
+         },
+
+         '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#d5d5d5',
+            borderRadius: '5px',
+         },
       },
 
-      '& .unHighlighted': {
+      '& .un-highlighted': {
          height: '9.875rem',
          transition: '0.2s',
          width: '100%',
          overflow: 'hidden',
          padding: '6px',
+
+         '& .free-time-container': {
+            transition: '0.2s',
+         },
       },
    },
 }))

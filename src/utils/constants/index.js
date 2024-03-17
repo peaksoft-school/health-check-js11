@@ -506,8 +506,24 @@ const DAYS_OF_WEEK = {
    Sa: 'Вс',
 }
 
+const RUSSIAN_MONTH_NAME = [
+   'Январь',
+   'Февраль',
+   'Март',
+   'Апрель',
+   'Май',
+   'Июнь',
+   'Июль',
+   'Август',
+   'Сентябрь',
+   'Октябрь',
+   'Ноябрь',
+   'Декабрь',
+]
+
 export {
    HEADER_SOCIALS,
+   RUSSIAN_MONTH_NAME,
    REVIEWS,
    NAVIGATIONS,
    FOOTER_SOCIALS,

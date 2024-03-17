@@ -1,22 +1,28 @@
-import { Box, Typography, Tab, styled } from '@mui/material'
-import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useEffect, useState } from 'react'
 import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
-import Table from '../../../components/UI/Table'
-import Button from '../../../components/UI/Button'
-import { PlusIcon } from '../../../assets/icons'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Loading from '../../../components/Loading'
+import { useDispatch, useSelector } from 'react-redux'
+import { Box, Typography, Tab, styled } from '@mui/material'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
+import { useCallback, useEffect, useState } from 'react'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
+import { NoDataImage } from '../../../assets/images'
+import { PlusIcon } from '../../../assets/icons'
+import Table from '../../../components/UI/Table'
+import Button from '../../../components/UI/Button'
+import Loading from '../../../components/Loading'
 import Schedule from '../schedule/Schedule'
-import { NoData } from '../../../assets/images'
 import AddSchedule from '../../../components/schedule/AddSchedule'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
+
+const getDefaultTabValue = () => {
+   const storedValue = localStorage.getItem('selectedTab')
+
+   return storedValue || '1'
+}
 
 const OnlineAppointments = () => {
-   const [value, setValue] = useState('1')
+   const [value, setValue] = useState(getDefaultTabValue)
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
    const [openModal, setOpenModal] = useState(false)
@@ -51,8 +57,28 @@ const OnlineAppointments = () => {
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
-      setShowAddButton(newValue === '1')
+
+      const newShowAddButton = newValue === '1'
+
+      setShowAddButton(newShowAddButton)
+
+      localStorage.setItem('selectedTab', newValue)
+      localStorage.setItem('showAddButton', newShowAddButton)
    }
+
+   useEffect(() => {
+      const storedValue = localStorage.getItem('selectedTab')
+
+      if (storedValue) {
+         setValue(storedValue)
+
+         const newShowAddButton = storedValue === '1'
+
+         setShowAddButton(newShowAddButton)
+
+         localStorage.setItem('showAddButton', newShowAddButton)
+      }
+   }, [])
 
    const generateExcel = useCallback(() => {
       const workbook = new Workbook()
@@ -78,7 +104,13 @@ const OnlineAppointments = () => {
          dates.forEach((date) => {
             rowData.push(date.dateOfConsultation)
             rowData.push(date.dayOfWeek)
-            rowData.push(date.startTimeOfConsultation.join(', '))
+
+            const startTime = date.startTimeOfConsultation.join(', ')
+            if (startTime.length > 20) {
+               rowData.push(`${startTime.substring(0, 20)}...`)
+            } else {
+               rowData.push(startTime)
+            }
          })
 
          worksheet.addRow(rowData)
@@ -172,7 +204,7 @@ const OnlineAppointments = () => {
                      <Box className="table-container">
                         {appointments.length === 0 ? (
                            <img
-                              src={NoData}
+                              src={NoDataImage}
                               alt="No Data"
                               className="no-data-image"
                            />

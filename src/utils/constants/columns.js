@@ -26,7 +26,7 @@ const SCHEDULE_COLUMN = [
 
       Cell: ({ row }) => (
          <Box>
-            <img src={row.origindl.image} alt="doctorImage" />
+            <img src={row.origindl.image} alt="doctor" />
             <Typography>{row.origindl.surename}</Typography>
             <Typography>{row.origindl.position}</Typography>
          </Box>

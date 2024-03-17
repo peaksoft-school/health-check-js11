@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { CloseIcon } from '../../assets/icons/index'
+import { handleKeyPress } from '../../utils/helpers'
 
 const DeleteTimeSheets = ({
    selectedDate,
@@ -13,7 +14,6 @@ const DeleteTimeSheets = ({
    handleHourChange,
    handleMinuteChange,
    deleteTimeSheet,
-   setIntervals,
 }) => {
    const { schedules } = useSelector((state) => state.schedule)
 
@@ -30,7 +30,11 @@ const DeleteTimeSheets = ({
                      return (
                         <StyledContainer key={dateOfConsultation}>
                            {startTimeOfConsultation.map((startTime) => (
-                              <Box component="span" className="time-box">
+                              <Box
+                                 component="span"
+                                 className="time-box"
+                                 key={startTime}
+                              >
                                  {startTime.slice(0, '5')}
 
                                  <CloseIcon
@@ -63,6 +67,7 @@ const DeleteTimeSheets = ({
                                                 'start'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
                                        />
 
                                        <Box
@@ -79,6 +84,7 @@ const DeleteTimeSheets = ({
                                                 'start'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
                                        />
                                     </Box>
 
@@ -99,6 +105,7 @@ const DeleteTimeSheets = ({
                                                 'end'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
                                        />
 
                                        <Box
@@ -115,6 +122,7 @@ const DeleteTimeSheets = ({
                                                 'end'
                                              )
                                           }
+                                          onKeyPress={handleKeyPress}
                                        />
                                     </Box>
 
