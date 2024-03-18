@@ -104,8 +104,6 @@ const AddNote = () => {
       }
    }, [shouldClearForm])
 
-   console.log(shouldClearForm)
-
    return (
       <StyledMainContainer>
          <Box className="box">

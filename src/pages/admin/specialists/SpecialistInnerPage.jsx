@@ -20,7 +20,6 @@ const SpecialistInnerPage = () => {
    const data = {
       ...specialist,
    }
-   console.log(data)
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialistById(id))
