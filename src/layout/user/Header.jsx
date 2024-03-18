@@ -230,9 +230,11 @@ const Header = () => {
                </nav>
 
                <Box className="buttons">
-                  <StyledButton className="button" variant="secondary">
-                     ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
-                  </StyledButton>
+                  <NavLink to="/records">
+                     <StyledButton className="button" variant="secondary">
+                        ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
+                     </StyledButton>
+                  </NavLink>
 
                   <StyledButton className="button" onClick={toggleSignUpModal}>
                      ЗАПИСЬ ОНАЛЙН
