@@ -110,7 +110,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
    },
 
    '& .MuiPickersArrowSwitcher-button': {
-      marginLeft: '38px',
+      display: 'none',
    },
 
    '& .MuiDayCalendar-weekDayLabel': {
@@ -127,6 +127,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
 
    '& .MuiIconButton-root-MuiPickersArrowSwitcher-button': {
       position: 'absolute',
+      display: 'none !important',
    },
 
    '& .MuiPickersCalendarHeader-switchViewButton': {
@@ -160,18 +161,17 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
 }))
 
 const StyledTimeButton = styled(Button)(({ variant }) => ({
-   '& .MuiButtonBase-root': {
-      padding: '5px 0',
-      width: '91px',
-      borderRadius: '1.5rem',
-      height: '33px',
-      borderColor: 'grey',
-      margin: '4px',
-      fontSize: '10px',
-      backgroundColor:
-         variant === 'green' ? 'var(--primary-green, #048741)' : 'transparent',
-      color: variant === 'green' ? 'white' : 'var(--primary-black, #222)',
-   },
+   padding: '5px 0',
+   width: '91px',
+   height: '33px',
+   borderColor: 'grey',
+   margin: '4px',
+   borderRadius: '1.5rem !important',
+   fontSize: '10px',
+
+   backgroundColor:
+      variant === 'green' ? 'var(--primary-green, #048741)' : 'transparent',
+   color: variant === 'green' ? 'white' : 'var(--primary-black, #222)',
 
    '&:active': {
       borderRadius: '1.5rem',

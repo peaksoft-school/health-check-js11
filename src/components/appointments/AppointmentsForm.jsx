@@ -8,10 +8,7 @@ import NumberInput from '../UI/inputs/NumberInput'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
 import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
-import {
-   VALIDATION_APPOINTMENTS_FORM,
-   VALIDATION_SIGN_UP,
-} from '../../utils/helpers/validate'
+import { VALIDATION_APPOINTMENTS_FORM } from '../../utils/helpers/validate'
 import { showAppointmentFormError } from '../../utils/helpers'
 
 const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
@@ -91,7 +88,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      value={values.fullName}
                      placeholder="Введите имя и фамилия"
                      onChange={handleChange('fullName')}
-                     // disabled={!!code}
+                     disabled={!!code}
                      autocomplete="off"
                   />
 
@@ -101,7 +98,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      onChange={handleChange('phoneNumber')}
                      mask="_"
                      autocomplete="off"
-                     // disabled={!!code}
+                     disabled={!!code}
                      value={values.phoneNumber}
                      name="number"
                      id="number"
@@ -112,7 +109,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
 
                   <Typography>Ваш e-mail</Typography>
                   <StyledInput
-                     // disabled={!!code}
+                     disabled={!!code}
                      value={values.email}
                      autocomplete="off"
                      onChange={handleChange('email')}
@@ -172,9 +169,9 @@ const StyledContainer = styled(Box)(() => ({
 
    '& .error-message': {
       color: 'red',
-      fontSize: '0.8rem',
+      top: '21.5rem',
+      fontSize: '1rem',
       position: 'absolute',
-      bottom: '16rem',
    },
 }))
 

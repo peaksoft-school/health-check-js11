@@ -110,7 +110,7 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
       return {
          ...defaultStyles,
          borderRadius: '0.225rem',
-         width: '84%',
+         width: '100%',
          border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
 
          '& input': {

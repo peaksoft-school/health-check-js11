@@ -56,10 +56,13 @@ const VALIDATION_RESULT = Yup.object().shape({
 })
 
 const VALIDATION_APPOINTMENTS_FORM = Yup.object().shape({
-   fullName: Yup.string().required('заполните все поля'),
-   phoneNumber: Yup.string().required('заполните все поля'),
+   fullName: Yup.string().required('заполните все поля!'),
+
+   phoneNumber: Yup.string()
+      .matches(phoneNumberRegex, 'Неверный формат номера телефона!')
+      .required('Номер телефона обязательное!'),
    email: Yup.string()
-      .email('Некорректный адрес электронной почты')
+      .email('Некорректный адрес электронной почты!')
       .required('заполните все поля'),
 })
 

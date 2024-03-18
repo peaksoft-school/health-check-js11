@@ -28,14 +28,12 @@ const Appointments = ({
    const appointmentTime = time ? time.slice(0, 5) : ''
 
    const formatDates = (dateString) => {
-      const options = {
-         day: 'numeric',
-         month: 'long',
-         weekday: 'long',
-      }
-
+      const options = { weekday: 'long', day: 'numeric', month: 'long' }
       const date = new Date(dateString)
-      return date.toDateString('ru-RU', options)
+      const formattedDate = date.toLocaleDateString('ru-RU', options)
+      const capitalizedWeekday =
+         formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+      return capitalizedWeekday
    }
 
    const deleteDateHandler = () => setDat('')
@@ -209,7 +207,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          alignItems: 'start',
 
          '& .date': {
+            maxWidth: '120px',
             fontSize: '14px',
+            textAlign: 'start',
             fontFamily: 'Manrope',
             color: theme.palette.secondary.lightGrey,
          },
