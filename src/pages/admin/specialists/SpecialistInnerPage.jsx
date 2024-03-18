@@ -224,7 +224,7 @@ const StyledMainContainer = styled(Box)(() => ({
       textDecoration: 'none',
       '& .button-group': {
          display: 'flex',
-         justifyContent: 'flex-end',
+         justifyContent: 'end',
          gap: '1rem',
       },
    },
