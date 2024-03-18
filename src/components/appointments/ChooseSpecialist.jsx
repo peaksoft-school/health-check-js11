@@ -63,6 +63,11 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       return date.toLocaleDateString('ru-RU', options)
    }, [])
 
+   const updatedDoctorsTimesheet = doctorsTimesheet.map((doctor) => ({
+      ...doctor,
+      id1: Math.random(),
+   }))
+
    return (
       <StyledContainer>
          {doctorsTimesheet.length > 0 ? (
@@ -74,9 +79,9 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                </StyledButton>
 
                <Box className="doctors">
-                  {doctorsTimesheet?.map((doctor) => (
+                  {updatedDoctorsTimesheet?.map((doctor, i) => (
                      <SpecialistCard
-                        key={doctor.doctorId}
+                        key={doctor.id1}
                         doctor={doctor}
                         getDoctorName={getDoctorName}
                         formatDates={formatDates}

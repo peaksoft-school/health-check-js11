@@ -90,7 +90,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      placeholder="Введите имя и фамилия"
                      onChange={handleChange('fullName')}
                      disabled={!!code}
-                     autocomplete="off"
+                     autoComplete="off"
                   />
 
                   <Typography>Номер телефона</Typography>
@@ -98,7 +98,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   <NumberInput
                      onChange={handleChange('phoneNumber')}
                      mask="_"
-                     autocomplete="off"
+                     autoComplete="off"
                      disabled={!!code}
                      value={values.phoneNumber}
                      name="number"
@@ -112,7 +112,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   <StyledInput
                      disabled={!!code}
                      value={values.email}
-                     autocomplete="off"
+                     autoComplete="off"
                      onChange={handleChange('email')}
                      placeholder="Введите e-mail"
                   />

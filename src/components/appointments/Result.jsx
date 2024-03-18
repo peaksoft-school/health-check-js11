@@ -9,8 +9,6 @@ const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
 
-   console.log(doctorData)
-
    const formatDate = () => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
       const date = new Date(doctorData.localDate)
