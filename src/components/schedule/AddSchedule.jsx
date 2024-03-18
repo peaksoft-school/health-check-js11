@@ -121,6 +121,7 @@ const AddSchedule = ({ open, onClose }) => {
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
 
    const dateToday = dayjs()
+   const endDate = dateToday.add(1, 'day')
 
    return (
       <Modal open={open} handleClose={onClose}>
@@ -184,7 +185,7 @@ const AddSchedule = ({ open, onClose }) => {
                      onChange={(date) => setFieldValue('createEndDate', date)}
                      error={!!errors.createEndDate}
                      variant="custom"
-                     minDate={dateToday}
+                     minDate={endDate}
                   />
                </Box>
             </Box>
