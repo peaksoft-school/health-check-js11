@@ -57,8 +57,6 @@ const AddResult = ({ open, onClose }) => {
       validationSchema: VALIDATION_RESULT,
    })
 
-   console.log(values, 'servace')
-
    const handleDrop = async (acceptedFiles) => {
       const file = acceptedFiles[0]
 

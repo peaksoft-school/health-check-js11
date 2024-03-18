@@ -97,6 +97,7 @@ const Select = forwardRef(
       const [isVisible, setIsVisible] = useState(false)
 
       const changeHandler = (e) => {
+         onChange(e.target.value)
          setSelectVal(e.target.value)
       }
 
