@@ -22,7 +22,7 @@ const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
       </Box>
 
       <Typography className="date">
-         ближайшее время для записи <span> </span>
+         Ближайшее время для записи <span> </span>
          {formatDates(doctor.dateOfConsultation)}:
       </Typography>
 

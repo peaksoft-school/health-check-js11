@@ -25,10 +25,12 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
    }, [accessToken, dispatch])
 
+   const appointmentTime = time ? time.slice(0, 5) : ''
+
    const onSubmit = (values) => {
       const data = {
          ...values,
-         startTimeConsultation: time,
+         startTimeConsultation: appointmentTime,
          doctorId: doctorInfo.doctor.doctorId,
          date: date
             ? date.format('YYYY-MM-DD')

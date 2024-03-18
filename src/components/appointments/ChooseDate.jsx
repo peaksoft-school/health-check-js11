@@ -55,7 +55,7 @@ const ChooseDate = ({
    }
 
    return (
-      <>
+      <StyledBox>
          <hr />
 
          <StyledContainer>
@@ -80,11 +80,19 @@ const ChooseDate = ({
                <StyledTimesBox>{renderSelectedDateTimesheet()}</StyledTimesBox>
             )}
          </StyledContainer>
-         <StyledButton onClick={formHandler}>Продолжить</StyledButton>
-      </>
+         <StyledButton className="button" onClick={formHandler}>
+            Продолжить
+         </StyledButton>
+      </StyledBox>
    )
 }
 export default ChooseDate
+
+const StyledBox = styled(Box)(() => ({
+   '& .button': {
+      margin: '20px',
+   },
+}))
 
 const StyledContainer = styled(Box)(() => ({
    display: 'flex',
@@ -187,7 +195,7 @@ const StyledTimesBox = styled(Box)(() => ({
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       width: '100%',
-      margin: '15px  0',
+      margin: '15px ',
       height: '2.5rem',
       fontSize: '0.875rem',
 
