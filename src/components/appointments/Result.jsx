@@ -1,6 +1,6 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { Rating, styled, Typography, Box } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { PlusIcon, RegisteredIcon } from '../../assets/icons'
 import Button from '../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
@@ -8,8 +8,6 @@ import DeleteAppointmentModal from './DeleteAppointmentModal'
 const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
-
-   const dispatch = useDispatch()
 
    const formatDate = useMemo(() => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
@@ -60,6 +58,8 @@ const Result = ({ goBack }) => {
          </Box>
 
          <Cancel onClick={closeModal}>Отменить запись</Cancel>
+
+         <br />
 
          <StyledButton onClick={goBack}>
             <PlusIcon />
@@ -155,7 +155,6 @@ const Submited = styled('p')(() => ({
 const Cancel = styled('p')(() => ({
    fontFamily: 'Manrope',
    fontWeight: '500',
-   marginButton: '20px',
    color: '#ff0000',
    cursor: 'pointer',
 }))
@@ -163,7 +162,6 @@ const Cancel = styled('p')(() => ({
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       width: '100%',
-      marginTop: '0.313rem',
       height: '2.75rem',
       fontSize: '0.875rem',
 

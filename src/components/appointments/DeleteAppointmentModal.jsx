@@ -9,7 +9,6 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    const [deleteSuccess, setDeleteSuccess] = useState(false)
 
    const { appointmentId } = useSelector((state) => state.appointments)
-   console.log(appointmentId)
 
    const dispatch = useDispatch()
 
@@ -28,7 +27,6 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
             <StyledModalContent>
                <Box className="close-container">
                   <CloseAndDeleteIcon onClick={goBack} />
-                  {/* <CloseIcon  /> */}
                </Box>
 
                <Typography>Запись отменена</Typography>
@@ -104,18 +102,18 @@ const StyledModalContent = styled(Box)(() => ({
 
       svg: {
          cursor: 'pointer',
+         transition: 'transform 0.3s',
 
          '&:hover': {
             path: {
                fill: 'red',
             },
 
+            transform: 'scale(1.1)',
+
             circle: {
                stroke: 'red',
             },
-
-            transition: 'transform 0.3s',
-            transform: ' sscale(1.3)',
          },
       },
    },
@@ -134,7 +132,7 @@ const StyledModalContent = styled(Box)(() => ({
    },
 
    '& p': {
-      margin: '1.8rem 0',
+      margin: '1rem 0',
    },
 
    '& > hr': {
