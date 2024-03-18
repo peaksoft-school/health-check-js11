@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
@@ -9,19 +10,33 @@ const Records = () => {
    const [showButton, setShowButton] = useState(false)
    const [resultNumber, setResultNumber] = useState('')
 
+   const changeInputValuesHandler = (e) => setResultNumber(e.target.value)
+
+   const dispatch = useDispatch()
+
+   const sendResultNumber = (e) => {
+      e.preventDefault()
+
+      dispatch()
+   }
+
    return (
       <StyledContainer>
          <StyledForm>
-            <Box className="FormLogo">
+            <form onSubmit={sendResultNumber} className="FormLogo">
                <HealthCheckIcon />
 
                <Typography variant="h1">
                   <Typography variant="p">HEALTH</Typography> CHECK
                </Typography>
-            </Box>
+            </form>
 
             <Box className="form-container">
-               <StyledInput placeholder="Введите номер заказа..." />
+               <StyledInput
+                  value={resultNumber}
+                  onChange={changeInputValuesHandler}
+                  placeholder="Введите номер заказа..."
+               />
                <StyledButton>Найти</StyledButton>
             </Box>
          </StyledForm>
