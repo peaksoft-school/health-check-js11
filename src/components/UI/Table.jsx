@@ -16,7 +16,7 @@ const Table = ({ columns: headers, data }) => {
    if (!data || data.length === 0) {
       return (
          <StyledAbsence>
-            <img src={NoDataImage} alt="No Data" className="no-data-image" />
+            <img src={NoDataImage} alt="no data" className="no-data" />
          </StyledAbsence>
       )
    }
@@ -107,7 +107,7 @@ const StyledTableContainer = styled(TableContainer)({
 const StyledAbsence = styled(Box)(() => ({
    textAlign: 'center',
 
-   '& > .no-data-image': {
+   '& > .no-data': {
       width: '50%',
       height: '30%',
    },

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { GoBackIcon, CloseIcon } from '../../assets/icons'
@@ -20,7 +21,7 @@ const AddAppointments = ({ open, onClose }) => {
 
    const dispatch = useDispatch()
 
-   const validate = facility && doctorInfo && selectedTime
+   const isFilled = facility && doctorInfo && selectedTime
 
    const changeFacilityHandler = (selectedOption) => {
       setFacility(selectedOption)
@@ -36,7 +37,7 @@ const AddAppointments = ({ open, onClose }) => {
 
    const specialistHandler = () => {
       if (facility) setCurrentPage('specialist')
-      else showToast({ message: 'Выберите услугу!', status: 'error' })
+      else showToast({ message: 'Выберите специалиста!', status: 'error' })
    }
 
    const datePageHandler = () => {
@@ -56,14 +57,14 @@ const AddAppointments = ({ open, onClose }) => {
       setSelectedTime('')
    }
 
-   const handlerClose = () => {
+   const closeHandler = () => {
       onClose()
       goBackAndClear()
    }
 
    const openLast = () => setCurrentPage('result')
 
-   const renderPage = () => {
+   const renderPart = () => {
       switch (currentPage) {
          case 'main':
             return (
@@ -77,7 +78,7 @@ const AddAppointments = ({ open, onClose }) => {
                   toggleDate={datePageHandler}
                   setDoctorName={setDoctorInfo}
                   setDat={setSelectedTime}
-                  validate={!!validate}
+                  validate={!!isFilled}
                   openForm={formHandler}
                />
             )
@@ -123,11 +124,11 @@ const AddAppointments = ({ open, onClose }) => {
    }
 
    return (
-      <Drawer open={open} onClose={handlerClose}>
+      <Drawer open={open} onClose={closeHandler}>
          <StyledDrawer>
             <Box className="header-box">
                {currentPage === 'main' || currentPage === 'result' ? (
-                  <CloseIcon className="close-icon" onClick={handlerClose} />
+                  <CloseIcon className="close" onClick={closeHandler} />
                ) : (
                   <GoBackIcon onClick={goBack} />
                )}
@@ -145,7 +146,7 @@ const AddAppointments = ({ open, onClose }) => {
                <Box> </Box>
             </Box>
 
-            <Box className="content">{renderPage()}</Box>
+            <Box className="content">{renderPart()}</Box>
          </StyledDrawer>
       </Drawer>
    )

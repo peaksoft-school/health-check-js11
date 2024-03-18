@@ -85,6 +85,19 @@ const showResultError = (errors) => {
 
    return errorMessage
 }
+const showAppointmentFormError = (errors) => {
+   let errorMessage = null
+
+   if (errors?.fullName) {
+      errorMessage = errors.fullName
+   } else if (errors?.phoneNumber) {
+      errorMessage = errors.phoneNumber
+   } else if (errors?.email) {
+      errorMessage = errors.email
+   }
+
+   return errorMessage
+}
 
 const formatPhoneNumberWithSpaces = (phoneNumber = '') => {
    const countryCode = phoneNumber.slice(0, 4)
@@ -196,4 +209,5 @@ export {
    showResultError,
    formatPhoneNumberWithSpaces,
    handleKeyPress,
+   showAppointmentFormError,
 }

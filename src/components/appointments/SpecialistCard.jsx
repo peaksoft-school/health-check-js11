@@ -4,7 +4,7 @@ import Button from '../UI/Button'
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
    <StyledContainer>
       <Box className="first-part">
-         <img className="image" src={doctor.imageDoctor} alt="doc" />
+         <img className="image" src={doctor.imageDoctor} alt="doctor" />
 
          <Box>
             <Typography>{doctor.doctorFullName}</Typography>

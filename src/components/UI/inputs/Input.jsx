@@ -3,7 +3,17 @@ import { TextField, styled } from '@mui/material'
 
 const Input = forwardRef(
    (
-      { type, label, placeholder, onChange, error, onClick, value, ...rest },
+      {
+         type,
+         label,
+         placeholder,
+         onChange,
+         error,
+         onClick,
+         value,
+         disabled,
+         ...rest
+      },
       ref
    ) => {
       const hasError = !!error
@@ -16,6 +26,7 @@ const Input = forwardRef(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            disabled={disabled}
             ref={ref}
             {...rest}
          />
@@ -24,7 +35,7 @@ const Input = forwardRef(
 )
 
 const StyledInput = styled(TextField)(({ theme }) => ({
-   width: '414px',
+   width: '100%',
    height: '42px',
    borderRadius: '8px solid',
    caretColor: theme.palette.primary.darkGreen,

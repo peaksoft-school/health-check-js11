@@ -85,7 +85,7 @@ const customStylesAppointments = {
 
    menu: (provided) => ({
       ...provided,
-      width: '400px',
+      width: '365px',
    }),
 }
 
@@ -94,12 +94,12 @@ const Select = forwardRef(
       { options, value, onChange, placeholder, error, variant, icon, ...rest },
       ref
    ) => {
-      const [selectVal, setSelectVal] = useState('')
+      const [selectValue, setSelectValue] = useState('')
       const [isVisible, setIsVisible] = useState(false)
 
-      const changeHandler = (e) => {
+      const changeSelectHandler = (e) => {
          onChange(e.target.value)
-         setSelectVal(e.target.value)
+         setSelectValue(e.target.value)
       }
 
       const toggleSelectHandler = () => setIsVisible((prev) => !prev)
@@ -139,8 +139,8 @@ const Select = forwardRef(
 
                   <StyledMuiSelect
                      open={isVisible}
-                     value={selectVal}
-                     onChange={changeHandler}
+                     value={selectValue}
+                     onChange={changeSelectHandler}
                      IconComponent={KeyboardArrowDownIcon}
                      inputProps={{ 'aria-label': 'Without label' }}
                      MenuProps={menuProps}
@@ -151,12 +151,12 @@ const Select = forwardRef(
                      onClick={toggleSelectHandler}
                      {...rest}
                   >
-                     <StyledLabel value="">{placeholder}</StyledLabel>
+                     <StyledLabel>{placeholder}</StyledLabel>
 
                      {options?.map(({ id, label }) => (
-                        <MenuItemStyle key={id} value={label}>
+                        <StyledMenuItem key={id} value={label}>
                            {label}
-                        </MenuItemStyle>
+                        </StyledMenuItem>
                      ))}
                   </StyledMuiSelect>
                </StyledFormControl>
@@ -222,12 +222,12 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
 
 const Icon = styled(Typography)(() => ({
    position: 'absolute',
-   top: 25,
-   left: 15,
+   top: '25',
+   left: '15',
    zIndex: '100',
 }))
 
-const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
    color: theme.palette.primary.lightBlack,
    fontFamily: 'Manrope',
    height: '3rem',

@@ -3,7 +3,7 @@ import { axiosInstance } from '../../../configs/axiosInstance'
 import { showToast } from '../../../utils/helpers/notification'
 
 const getDoctorsAvailableTimesheet = createAsyncThunk(
-   'online-appointments/getTimesheet',
+   'appointments/getDoctorsAvailableTimesheet',
 
    async (facility, { rejectWithValue }) => {
       try {
@@ -18,7 +18,7 @@ const getDoctorsAvailableTimesheet = createAsyncThunk(
 )
 
 const getAllFacility = createAsyncThunk(
-   'online-appointments/facility',
+   'appointments/getAllFacility',
 
    async (_, { rejectWithValue }) => {
       try {
@@ -34,7 +34,7 @@ const getAllFacility = createAsyncThunk(
 )
 
 const getDoctorSchedule = createAsyncThunk(
-   'online-appointments/getDoctorSchedule',
+   'appointments/getDoctorSchedule',
 
    async ({ id, startDate, endDate }, { rejectWithValue }) => {
       try {
@@ -50,7 +50,7 @@ const getDoctorSchedule = createAsyncThunk(
 )
 
 const addAppointment = createAsyncThunk(
-   'online-appointments/addAppointment',
+   'appointments/addAppointment',
 
    async ({ facility, data }, { rejectWithValue }) => {
       try {
@@ -71,15 +71,16 @@ const addAppointment = createAsyncThunk(
 )
 
 const checkVerificationCode = createAsyncThunk(
-   'online-appointments/code',
+   'appointments/checkVerificationCode',
 
-   async ({ verificationCode, id, open }, { rejectWithValue }) => {
+   async ({ verificationCode, id, openCodeInput }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.patch(
             `/api/appointment?appointmentId=${id}&code=${verificationCode}`
          )
 
-         open()
+         openCodeInput()
+
          return response.data
       } catch (error) {
          return rejectWithValue(error)

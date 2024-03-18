@@ -274,11 +274,13 @@ const StyledForm = styled('form')(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
       height: '0.4375em',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 }))

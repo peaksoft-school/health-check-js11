@@ -13,7 +13,7 @@ const ChooseDate = ({
 }) => {
    const { date } = useSelector((state) => state.appointments)
 
-   const shouldDisableDay = (day) => {
+   const dayUnavailableForConsultationHandler = (day) => {
       const consultation = date.find(
          (item) => item.dateOfConsultation === day.format('YYYY-MM-DD')
       )
@@ -49,7 +49,7 @@ const ChooseDate = ({
       return null
    }
 
-   const handleDateChange = (date) => {
+   const changeDateHandler = (date) => {
       setSelectedDate(date)
       setSelectedTime(null)
    }
@@ -63,7 +63,7 @@ const ChooseDate = ({
                dayOfWeekFormatter={(_day, weekday) =>
                   DAYS_OF_WEEK[weekday.format('dd')]
                }
-               shouldDisableDate={shouldDisableDay}
+               shouldDisableDate={dayUnavailableForConsultationHandler}
                renderday={(day, _value, DayComponentProps) => (
                   <DayComponentProps
                      onFocus={DayComponentProps.onDayFocus}
@@ -73,7 +73,7 @@ const ChooseDate = ({
                   </DayComponentProps>
                )}
                value={selectedDate}
-               onChange={handleDateChange}
+               onChange={changeDateHandler}
             />
 
             {selectedDate && (
@@ -105,15 +105,15 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
    backgroundColor: 'white',
    width: '100%',
 
-   '.MuiPickersArrowSwitcher-spacer': {
+   '& .MuiPickersArrowSwitcher-spacer': {
       width: '120px',
    },
 
-   '.MuiPickersArrowSwitcher-button': {
+   '& .MuiPickersArrowSwitcher-button': {
       marginLeft: '38px',
    },
 
-   '.MuiDayCalendar-weekDayLabel': {
+   '& .MuiDayCalendar-weekDayLabel': {
       color: 'var(--primary-black, #222)',
       textAlign: 'center',
       fontFamily: 'Manrope',
@@ -121,19 +121,19 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
       fontWeight: '500',
    },
 
-   '.MuiPickersCalendarHeader-label': {
+   '& .MuiPickersCalendarHeader-label': {
       marginRight: '37px',
    },
 
-   '.MuiIconButton-root-MuiPickersArrowSwitcher-button': {
+   '& .MuiIconButton-root-MuiPickersArrowSwitcher-button': {
       position: 'absolute',
    },
 
-   '.MuiPickersCalendarHeader-switchViewButton': {
+   '& .MuiPickersCalendarHeader-switchViewButton': {
       display: 'none',
    },
 
-   '.MuiPickersCalendarHeader-labelContainer': {
+   '& .MuiPickersCalendarHeader-labelContainer': {
       marginLeft: '20%',
       order: '1',
       margin: '0',
@@ -141,7 +141,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
       right: '100px',
    },
 
-   '.MuiPickersDay-root': {
+   '& .MuiPickersDay-root': {
       borderRadius: '3px',
       height: '28px',
       marginTop: '0.5rem',
@@ -149,18 +149,18 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
       color: 'var(--primary-black-gray, black)',
    },
 
-   '.MuiPickersDay-root:focus.Mui-selected': {
+   '& .MuiPickersDay-root:focus.Mui-selected': {
       background: 'var(--primary-green, #048741) !important',
       color: 'white',
    },
 
-   '.MuiPickersDay-root.Mui-disabled': {
+   '& .MuiPickersDay-root.Mui-disabled': {
       color: 'var(--primary-gray, #4D4E51)',
    },
 }))
 
 const StyledTimeButton = styled(Button)(({ variant }) => ({
-   '&.MuiButtonBase-root': {
+   '& .MuiButtonBase-root': {
       padding: '5px 0',
       width: '91px',
       borderRadius: '1.5rem',
@@ -194,7 +194,7 @@ const StyledTimesBox = styled(Box)(() => ({
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
-      width: '100%',
+      width: '92%',
       margin: '15px ',
       height: '2.5rem',
       fontSize: '0.875rem',

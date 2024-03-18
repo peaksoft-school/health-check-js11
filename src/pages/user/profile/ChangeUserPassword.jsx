@@ -168,9 +168,9 @@ const ChangeUserPassword = () => {
 
                      <Button
                         className="confirm-button"
-                        isLoading={isLoading}
+                        // isLoading={isLoading}
                         onClick={handleSubmit}
-                        colorLoading="secondary"
+                        // colorLoading="secondary"
                      >
                         ПОДТВЕРДИТЬ
                      </Button>

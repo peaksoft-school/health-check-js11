@@ -8,6 +8,11 @@ import NumberInput from '../UI/inputs/NumberInput'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
 import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
+import {
+   VALIDATION_APPOINTMENTS_FORM,
+   VALIDATION_SIGN_UP,
+} from '../../utils/helpers/validate'
+import { showAppointmentFormError } from '../../utils/helpers'
 
 const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
    const [verificationCode, setVerificationCode] = useState('')
@@ -45,13 +50,15 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       )
    }
 
+   const openCodeInput = () => open()
+
    const sendCode = () => {
       if (verificationCode === code) {
          dispatch(
             APPOINTMENTS_THUNKS.checkVerificationCode({
                verificationCode,
                id: appointmentId,
-               open,
+               openCodeInput,
             })
          )
       } else {
@@ -59,13 +66,15 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       }
    }
 
-   const { values, handleChange, handleSubmit } = useFormik({
+   const { values, handleChange, errors, handleSubmit } = useFormik({
       initialValues: {
          fullName: `${userData.firstName} ${userData.lastName}`,
          email: userData.email,
          phoneNumber: userData.number,
       },
+
       onSubmit,
+      validationSchema: VALIDATION_APPOINTMENTS_FORM,
    })
 
    const changeVerificationCodeHandler = (e) =>
@@ -82,14 +91,18 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      value={values.fullName}
                      placeholder="Введите имя и фамилия"
                      onChange={handleChange('fullName')}
+                     // disabled={!!code}
+                     autocomplete="off"
                   />
 
                   <Typography>Номер телефона</Typography>
 
                   <NumberInput
-                     value={values.phoneNumber}
                      onChange={handleChange('phoneNumber')}
                      mask="_"
+                     autocomplete="off"
+                     // disabled={!!code}
+                     value={values.phoneNumber}
                      name="number"
                      id="number"
                      variant="drawer"
@@ -99,10 +112,18 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
 
                   <Typography>Ваш e-mail</Typography>
                   <StyledInput
+                     // disabled={!!code}
                      value={values.email}
+                     autocomplete="off"
                      onChange={handleChange('email')}
                      placeholder="Введите e-mail"
                   />
+
+                  {showAppointmentFormError(errors) && (
+                     <Typography className="error-message">
+                        {showAppointmentFormError(errors)}
+                     </Typography>
+                  )}
 
                   {code && (
                      <>
@@ -111,6 +132,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                         </Typography>
 
                         <StyledSmsCodeInput
+                           autocomplete="off"
                            onChange={changeVerificationCodeHandler}
                            value={verificationCode}
                         />
@@ -140,13 +162,19 @@ export default AppointmentsForm
 const StyledContainer = styled(Box)(() => ({
    marginTop: '0.625rem',
    padding: '0.313rem',
-   width: '100%',
 
    '& .container': {
       padding: '0.938rem',
       width: '23.125rem',
       backgroundColor: 'white',
       borderRadius: '0.938rem',
+   },
+
+   '& .error-message': {
+      color: 'red',
+      fontSize: '0.8rem',
+      position: 'absolute',
+      bottom: '16rem',
    },
 }))
 
@@ -164,7 +192,6 @@ const StyledForm = styled('form')(() => ({
       display: 'flex',
       flexDirection: 'column',
       gap: '0.625rem',
-      width: '400px',
    },
 }))
 

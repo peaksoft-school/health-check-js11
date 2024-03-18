@@ -77,6 +77,16 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
       validationSchema: VALIDATION_SIGN_IN,
    })
 
+   const handleInputChange = (fieldName) => (event) => {
+      const newValue = event.target.value.trim()
+      handleChange({
+         target: {
+            name: fieldName,
+            value: newValue,
+         },
+      })
+   }
+
    return (
       <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit} autoComplete="off">
@@ -87,7 +97,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                   placeholder="Логин"
                   value={values.email}
                   error={!!errors.email}
-                  onChange={handleChange('email')}
+                  onChange={handleInputChange('email')}
                />
 
                <StyledInput
@@ -95,7 +105,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   error={!!errors.password}
-                  onChange={handleChange('password')}
+                  onChange={handleInputChange('password')}
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
@@ -222,10 +232,12 @@ const StyledForm = styled('form')(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-input': {
       height: '0.5rem',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-root ': {
+      width: '414px',
       height: '2.625rem',
       borderRadius: '0.5rem',
    },

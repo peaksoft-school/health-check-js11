@@ -151,8 +151,8 @@ const Profile = () => {
                                        className="confirm-button"
                                        type="submit"
                                        disabled={!dirty}
-                                       isLoading={isLoading}
-                                       colorLoading="secondary"
+                                       // isLoading={isLoading}
+                                       //       colorLoading="secondary"
                                     >
                                        РЕДАКТИРОВАТЬ
                                     </Button>

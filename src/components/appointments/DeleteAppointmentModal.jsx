@@ -86,7 +86,7 @@ const StyledModalContent = styled(Box)(() => ({
    textAlign: 'center',
    marginBottom: '44%',
 
-   '.close-container': {
+   '& .close-container': {
       alignItems: 'center',
       justifyContent: 'center',
       marginLeft: '40%',
@@ -95,23 +95,23 @@ const StyledModalContent = styled(Box)(() => ({
       borderRadius: '50%',
 
       '&:hover': {
-         svg: {
+         '& svg ': {
             cursor: 'pointer',
          },
       },
 
-      svg: {
+      '& svg': {
          cursor: 'pointer',
          transition: 'transform 0.3s',
 
          '&:hover': {
-            path: {
+            '& path': {
                fill: 'red',
             },
 
             transform: 'scale(1.1)',
 
-            circle: {
+            '& circle': {
                stroke: 'red',
             },
          },

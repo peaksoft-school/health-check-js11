@@ -21,7 +21,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       0
    ).getDate()}`
 
-   const getRandomDoctor = useCallback(() => {
+   const getRandomDoctor = () => {
       const doctor =
          doctorsTimesheet[Math.floor(Math.random() * doctorsTimesheet.length)]
       const firstAppointmentTime = doctor.startTimeOfConsultation[0]
@@ -37,7 +37,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
             endDate,
          })
       )
-   }, [doctorsTimesheet, goBack, setDoctorName, setTime])
+   }
 
    const getDoctorName = ({ time, id, doctor }) => {
       goBack()

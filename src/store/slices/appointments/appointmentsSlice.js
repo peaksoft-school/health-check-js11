@@ -6,7 +6,7 @@ const initialState = {
    doctors: {},
    doctorData: {},
    date: [],
-   facilityArray: [],
+   facilities: [],
    isLoading: false,
    appointmentId: null,
    code: null,
@@ -44,7 +44,7 @@ export const appointmentsSlice = createSlice({
          .addCase(
             APPOINTMENTS_THUNKS.getAllFacility.fulfilled,
             (state, { payload }) => {
-               state.facilityArray = payload
+               state.facilities = payload
                state.isLoading = false
             }
          )
@@ -80,6 +80,7 @@ export const appointmentsSlice = createSlice({
                const [id, code] = payload.message.split(' ')
                state.code = code
                state.appointmentId = id
+               console.log(payload.message)
             }
          )
 

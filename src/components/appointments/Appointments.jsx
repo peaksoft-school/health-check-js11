@@ -18,16 +18,16 @@ const Appointments = ({
    date,
    setDat,
 }) => {
-   const { facilityArray } = useSelector((state) => state.appointments)
+   const { facilities } = useSelector((state) => state.appointments)
 
-   const getfacility = facilityArray?.map((facility) => ({
-      value: facility.id,
-      label: facility.facility,
+   const transformedFacilities = facilities?.map(({ id, facility }) => ({
+      value: id,
+      label: facility,
    }))
 
    const appointmentTime = time ? time.slice(0, 5) : ''
 
-   const formatDates = useCallback((dateString) => {
+   const formatDates = (dateString) => {
       const options = {
          day: 'numeric',
          month: 'long',
@@ -35,8 +35,8 @@ const Appointments = ({
       }
 
       const date = new Date(dateString)
-      return date.toLocaleDateString('ru-RU', options)
-   }, [])
+      return date.toDateString('ru-RU', options)
+   }
 
    const deleteDateHandler = () => setDat('')
 
@@ -50,8 +50,8 @@ const Appointments = ({
          <StyledSelect
             variant="appointments"
             placeholder={value || 'Выбрать услуги'}
-            options={getfacility}
-            value={getfacility}
+            options={transformedFacilities}
+            value={transformedFacilities}
             icon={<DeleteIcon />}
             onChange={selectHandler}
          />
@@ -108,7 +108,10 @@ const Appointments = ({
                      </Box>
                   </Box>
                </StyledButton>
-               <DeleteIcon onClick={deleteDateHandler} />
+               <DeleteIcon
+                  className="delete-icon"
+                  onClick={deleteDateHandler}
+               />
             </Box>
          ) : (
             <StyledButton onClick={toggleDate} variant="grey">
@@ -135,10 +138,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    flexDirection: 'column',
    gap: '0.938rem',
 
-   '& .time': {
-      width: '100%',
+   '& > .time': {
       display: 'flex',
-      gap: '3.75rem',
+      gap: '6.4rem',
       alignItems: 'center',
       backgroundColor: 'white',
       borderRadius: '0.938rem',
@@ -151,12 +153,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       padding: '0.313rem',
 
       '& img': {
-         marginLeft: '0.75rem',
-         marginRight: '0.75rem',
+         marginLeft: '1.2rem',
+         marginRight: '1rem',
          borderRadius: '50%',
-         width: '2.5rem',
+         width: '2.3rem',
          alignSelf: 'start',
-         height: '2.5rem',
+         height: '2.3rem',
       },
 
       '& .doctor-info': {

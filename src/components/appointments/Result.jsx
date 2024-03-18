@@ -9,14 +9,14 @@ const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
 
-   const formatDate = useMemo(() => {
+   const formatDate = () => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
       const date = new Date(doctorData.localDate)
       const formattedDate = date.toLocaleDateString('ru-RU', options)
       const capitalizedWeekday =
          formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
       return capitalizedWeekday
-   }, [doctorData.localDate])
+   }
 
    const closeModal = () => setToggleModal((prev) => !prev)
 
@@ -27,7 +27,7 @@ const Result = ({ goBack }) => {
       <StyledContainer>
          <RegisteredIcon />
 
-         <Submited>Вы записаны</Submited>
+         <Typography className="submited">Вы записаны</Typography>
 
          <Typography className="date">
             {formatDate}, {`${startTime}-${endTime}`}
@@ -57,7 +57,9 @@ const Result = ({ goBack }) => {
             </Box>
          </Box>
 
-         <Cancel onClick={closeModal}>Отменить запись</Cancel>
+         <Typography className="cancel" onClick={closeModal}>
+            Отменить запись
+         </Typography>
 
          <br />
 
@@ -75,7 +77,7 @@ const Result = ({ goBack }) => {
 
 export default Result
 
-const StyledContainer = styled('div')(() => ({
+const StyledContainer = styled(Box)(() => ({
    margin: '6px',
    padding: '1.875rem 1rem',
    backgroundColor: '#fff',
@@ -88,6 +90,20 @@ const StyledContainer = styled('div')(() => ({
    '& .date': {
       fontWeight: 500,
       fontFamily: 'Manrope',
+   },
+
+   '& > .cancel': {
+      fontFamily: 'Manrope',
+      fontWeight: '500',
+      color: '#ff0000',
+      cursor: 'pointer',
+   },
+
+   '& > .submited': {
+      fontFamily: 'Manrope',
+      fontWeight: '600',
+      fontSize: '1.188rem',
+      margin: '0.313rem 0',
    },
 
    '& > .doctor': {
@@ -145,25 +161,14 @@ const StyledContainer = styled('div')(() => ({
    },
 }))
 
-const Submited = styled('p')(() => ({
-   fontFamily: 'Manrope',
-   fontWeight: '600',
-   fontSize: '1.188rem',
-   margin: '0.313rem 0',
-}))
-
-const Cancel = styled('p')(() => ({
-   fontFamily: 'Manrope',
-   fontWeight: '500',
-   color: '#ff0000',
-   cursor: 'pointer',
-}))
+const Cancel = styled('p')(() => ({}))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {
       width: '100%',
       height: '2.75rem',
       fontSize: '0.875rem',
+      textTransform: 'none',
 
       '& div ': {
          display: 'flex',
