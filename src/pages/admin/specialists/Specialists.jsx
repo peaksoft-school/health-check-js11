@@ -49,7 +49,7 @@ const Specialists = () => {
                >
                   <Button className="add-button">
                      <PlusIcon className="plus-icon" />
-                     <span className="button-text">Добавить запись</span>
+                     Добавить специалиста
                   </Button>
                </NavLink>
             </Box>
@@ -90,28 +90,22 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          justifyContent: 'space-between',
       },
 
-      '& .navlink': {
-         textDecoration: 'none',
+      '&  .add-button': {
+         fontSize: '11px',
+         height: '45px',
+         width: '232px',
+         fontFamily: 'Manrope',
 
-         '& > .add-button': {
-            fontSize: '13px',
-            height: '40px',
-            width: '232px',
-            fontFamily: 'Manrope',
+         '& > div': {
             display: 'flex',
-            justifyContent: 'flex-start',
             alignItems: 'center',
-            '& > .plus-icon': {
-               width: '1.125rem',
-               padding: '5rem',
-               height: '1.125rem',
-               marginBottom: '8px',
-            },
+            justifyContent: 'space-between',
+            width: '100%',
+            gap: '4px',
+         },
 
-            '& .button-text': {
-               marginLeft: '8px',
-               marginTop: '8px',
-            },
+         '& .plus-icon': {
+            marginLeft: '-0.20rem',
          },
       },
 
