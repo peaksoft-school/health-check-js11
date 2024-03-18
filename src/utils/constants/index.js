@@ -280,7 +280,11 @@ const FAKE_DATA = [
 ]
 
 const ADMIN_NAVIGATIONS = [
-   { id: 1, to: ROUTES.ADMIN.INDEX, label: 'Онлайн-запись' },
+   {
+      id: 1,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ONLINE_APPOINTMENTS}`,
+      label: 'Онлайн-запись',
+   },
 
    {
       id: 2,
@@ -457,30 +461,24 @@ const DEPARTMENTS = [
 const INTERVAL_TIME = [
    {
       id: 1,
-      label: '15 мин',
-      time: 'FIFTEEN',
-   },
-
-   {
-      id: 2,
       label: '30 минут',
       time: 'THIRTY',
    },
 
    {
-      id: 3,
+      id: 2,
       label: '45 минут',
       time: 'FOURTYFIVE',
    },
 
    {
-      id: 4,
+      id: 3,
       label: ' 1 час',
       time: 'SIXTY',
    },
 
    {
-      id: 5,
+      id: 4,
       label: '1,5 часа',
       time: 'NINETY',
    },

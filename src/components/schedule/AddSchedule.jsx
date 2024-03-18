@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { styled, Typography, Box } from '@mui/material'
 import { useFormik } from 'formik'
 import { format } from 'date-fns'
@@ -107,21 +108,31 @@ const AddSchedule = ({ open, onClose }) => {
 
    const getDoctors = (selectedOption) => {
       handleChange('departmentName')(selectedOption.label)
+
       dispatch(
          SCHEDULE_THUNK.getDoctorsByDepartment({ params: selectedOption.label })
       )
    }
+
+   useEffect(() => {
+      setFieldValue('doctor', '')
+   }, [values.departmentName])
 
    const doctorsFullname = doctors?.map((doctor) => ({
       value: doctor.id,
       label: doctor.fullNameDoctor,
    }))
 
+   console.log(values.doctor)
+
    const handleDayButtonClick = (dayLabel) =>
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
 
    const dateToday = dayjs()
    const endDate = dateToday.add(1, 'day')
+
+   const selectDoctor = (selectedOption) =>
+      setFieldValue('doctor', selectedOption)
 
    return (
       <Modal open={open} handleClose={onClose}>
@@ -153,9 +164,7 @@ const AddSchedule = ({ open, onClose }) => {
                      (option) => option.label === values.doctor
                   )}
                   options={doctorsFullname}
-                  onChange={(selectedOption) => {
-                     setFieldValue('doctor', selectedOption.label)
-                  }}
+                  onChange={selectDoctor}
                   placeholder="Выберите специалиста"
                   error={!!errors.doctor}
                   variant="schedule"

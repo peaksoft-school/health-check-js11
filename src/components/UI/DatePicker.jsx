@@ -79,7 +79,6 @@ const DatePicker = ({
                   '.MuiPickersDay-root': {
                      borderRadius: variant === 'custom' ? '50%' : '3px',
                      height: variant === 'custom' ? 'none' : '28px',
-                     marginTop: '0.5rem',
                      fontWeight: '500',
                      color: 'var(--primary-black-gray, #4D4E51)',
                   },
@@ -96,7 +95,7 @@ const DatePicker = ({
 }
 export default DatePicker
 
-const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
+const StyledDatePicker = styled(MuiDatePicker)(({ theme, error }) => ({
    borderRadius: '8px',
    fontFamily: 'Roboto',
    fontWeight: '400',

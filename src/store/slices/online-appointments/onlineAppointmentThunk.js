@@ -31,7 +31,6 @@ const updateAppointment = createAsyncThunk(
          dispatch(getAppointments())
 
          setIsChecked((prev) => !prev)
-         showToast({ message: response.data.message })
          return response.data
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })

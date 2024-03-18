@@ -53,7 +53,7 @@ const customStyles = {
          },
 
          '&:hover': {
-            borderColor: state.isFocused ? 'none' : '#c1b5b5',
+            borderColor: state.isFocused ? '#c1b5b5' : '#c1b5b5',
             width: '100%',
          },
       }

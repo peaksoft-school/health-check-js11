@@ -6,8 +6,13 @@ import { ROUTES } from './routes'
 
 export const ADMIN_ROUTES = [
    {
-      path: ROUTES.ADMIN.INDEX,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ONLINE_APPOINTMENTS}`,
       element: <OnlineAppointments />,
+   },
+
+   {
+      path: `${ROUTES.ADMIN.INDEX}`,
+      element: <h1>hello</h1>,
    },
 
    {

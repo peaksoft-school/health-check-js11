@@ -11,7 +11,7 @@ const AppRoutes = () => {
    const router = createBrowserRouter(
       [
          {
-            path: ROUTES.USER.index,
+            path: ROUTES.USER.INDEX,
             element: (
                <ProtectedRoute
                   roles={[ROLES.USER, ROLES.GUEST]}
@@ -23,7 +23,7 @@ const AppRoutes = () => {
          },
 
          {
-            path: ROUTES.ADMIN.index,
+            path: ROUTES.ADMIN.INDEX,
             element: (
                <ProtectedRoute
                   roles={[ROLES.ADMIN]}

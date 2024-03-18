@@ -14,7 +14,7 @@ const Profile = () => {
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)
-   const { userData } = useSelector((state) => state.profile)
+   const { userData, isLoading } = useSelector((state) => state.profile)
 
    const data = {
       ...userData,
@@ -151,6 +151,8 @@ const Profile = () => {
                                        className="confirm-button"
                                        type="submit"
                                        disabled={!dirty}
+                                       isLoading={isLoading}
+                                       colorLoading="secondary"
                                     >
                                        РЕДАКТИРОВАТЬ
                                     </Button>

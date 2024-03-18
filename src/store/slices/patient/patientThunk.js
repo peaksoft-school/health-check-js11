@@ -26,6 +26,19 @@ const postFile = createAsyncThunk('patients/postFile', async (data) => {
    }
 })
 
+const getPatientResult = createAsyncThunk(
+   'patients/getPatientResult',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`/api/result/${id}`)
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
 const addPatientResult = createAsyncThunk(
    'patientsResult/addResult',
    async (result, { rejectWithValue, dispatch }) => {
@@ -38,7 +51,9 @@ const addPatientResult = createAsyncThunk(
          })
 
          result.resetForm()
-         result.handlerClose()
+         result.closeHandler()
+
+         dispatch(getPatientResult(result.id))
 
          showToast({
             message: response.data.message,
@@ -58,19 +73,6 @@ const addPatientResult = createAsyncThunk(
             })
          }
 
-         return rejectWithValue(error)
-      }
-   }
-)
-
-const getPatientResult = createAsyncThunk(
-   'patients/getPatientResult',
-   async (id, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get(`/api/result/${id}`)
-
-         return response.data
-      } catch (error) {
          return rejectWithValue(error)
       }
    }

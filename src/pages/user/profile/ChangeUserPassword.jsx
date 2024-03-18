@@ -7,7 +7,7 @@ import {
    InputAdornment,
 } from '@mui/material'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { forgotPassword } from '../../../store/slices/auth/authThunk'
 import Input from '../../../components/UI/inputs/Input'
@@ -21,6 +21,8 @@ const ChangeUserPassword = () => {
    const [showOldPassword, setShowOldPassword] = useState(false)
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+   const { userData, isLoading } = useSelector((state) => state.profile)
 
    const dispatch = useDispatch()
 
@@ -164,7 +166,12 @@ const ChangeUserPassword = () => {
                         </Button>
                      </NavLink>
 
-                     <Button className="confirm-button" onClick={handleSubmit}>
+                     <Button
+                        className="confirm-button"
+                        isLoading={isLoading}
+                        onClick={handleSubmit}
+                        colorLoading="secondary"
+                     >
                         ПОДТВЕРДИТЬ
                      </Button>
                   </StyledButtonContainer>

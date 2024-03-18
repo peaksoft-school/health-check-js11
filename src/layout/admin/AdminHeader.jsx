@@ -140,6 +140,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
          color: '#222',
          gap: '0.625rem',
          fontSize: '1.10rem',
+         cursor: 'pointer',
       },
 
       '& .cursor': {

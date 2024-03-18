@@ -19,6 +19,7 @@ const ROUTES = {
 
    ADMIN: {
       INDEX: '/admin',
+      ONLINE_APPOINTMENTS: 'online-appointments',
       PATIENTS: 'patients',
       ID: 'id',
       APPLICATIONS: 'applications',

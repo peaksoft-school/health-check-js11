@@ -39,6 +39,7 @@ const AddResult = ({ open, onClose }) => {
             userId: data.id,
             url: formData,
 
+            id: data.id,
             resetForm,
             closeHandler,
          })
@@ -56,6 +57,8 @@ const AddResult = ({ open, onClose }) => {
       validationSchema: VALIDATION_RESULT,
    })
 
+   console.log(values, 'servace')
+
    const handleDrop = async (acceptedFiles) => {
       const file = acceptedFiles[0]
 
@@ -71,6 +74,7 @@ const AddResult = ({ open, onClose }) => {
             else
                showToast({
                   message: 'не допустимый размер файла',
+                  status: 'error',
                })
          } catch (error) {
             console.error('Error reading PDF: ', error)
@@ -87,14 +91,14 @@ const AddResult = ({ open, onClose }) => {
    const handleChangeFile = (e) => {
       const file = e.target.files[0]
 
-      if (file.type === 'application/pdf') {
-         setFieldValue('file', file)
-      }
+      if (file.type === 'application/pdf') setFieldValue('file', file)
    }
 
    const stopPropagationHandler = (e) => e.stopPropagation()
 
-   const changeSelectHandler = (service) => setFieldValue('service', service)
+   const changeSelectHandler = (service) => {
+      setFieldValue('service', service)
+   }
 
    const changeDateHandler = (date) => setFieldValue('date', date)
 
@@ -108,10 +112,10 @@ const AddResult = ({ open, onClose }) => {
             <Box className="content-box">
                <Box className="select">
                   <Box className="select-box">
-                     <label htmlFor="department">Услуги</label>
+                     <label htmlFor="service">Услуги</label>
 
                      <StyledSelect
-                        id="department"
+                        id="service"
                         placeholder="Выберите услугу"
                         error={!!errors.service}
                         options={DEPARTMENTS}
