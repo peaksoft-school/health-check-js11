@@ -53,6 +53,7 @@ const customStyles = {
    menu: (provided) => ({
       ...provided,
       width: '220px',
+      zIndex: 10000,
    }),
 }
 

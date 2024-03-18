@@ -3,6 +3,9 @@ import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppoint
 import Patients from '../pages/admin/patients/Patients'
 import Patient from '../pages/admin/patient/Patient'
 import { ROUTES } from './routes'
+import Specialists from '../pages/admin/specialists/Specialists'
+import SpecialistInnerPage from '../pages/admin/specialists/SpecialistInnerPage'
+import AddNote from '../pages/admin/specialists/AddNote'
 
 export const ADMIN_ROUTES = [
    {
@@ -27,6 +30,16 @@ export const ADMIN_ROUTES = [
 
    {
       path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`,
-      element: <div>specialist</div>,
+      element: <Specialists />,
+   },
+
+   {
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}/:${ROUTES.ADMIN.ID}`,
+      element: <SpecialistInnerPage />,
+   },
+
+   {
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`,
+      element: <AddNote />,
    },
 ]
