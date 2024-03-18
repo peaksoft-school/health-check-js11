@@ -9,6 +9,8 @@ const Result = ({ goBack }) => {
    const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
 
+   console.log(doctorData)
+
    const formatDate = () => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
       const date = new Date(doctorData.localDate)
@@ -30,7 +32,7 @@ const Result = ({ goBack }) => {
          <Typography className="submited">Вы записаны</Typography>
 
          <Typography className="date">
-            {formatDate}, {`${startTime}-${endTime}`}
+            {formatDate()}, {`${startTime}-${endTime}`}
          </Typography>
 
          <Box className="doctor">

@@ -55,6 +55,7 @@ const AddAppointments = ({ open, onClose }) => {
       setDoctorInfo('')
       setSelectedDate(null)
       setSelectedTime('')
+      onClose()
    }
 
    const closeHandler = () => {

@@ -84,6 +84,7 @@ const StyledModalContent = styled(Box)(() => ({
    padding: '1.25rem',
    borderRadius: '1rem',
    textAlign: 'center',
+   gap: '14px',
    marginBottom: '44%',
 
    '& .close-container': {
@@ -128,7 +129,7 @@ const StyledModalContent = styled(Box)(() => ({
 
    '& > h3': {
       fontWeight: '500',
-      fontSize: '1.1rem',
+      fontSize: '1.3rem',
    },
 
    '& p': {

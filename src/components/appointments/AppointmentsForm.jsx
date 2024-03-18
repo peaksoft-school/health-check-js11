@@ -50,7 +50,9 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
    const openCodeInput = () => open()
 
    const sendCode = () => {
-      if (verificationCode === code) {
+      if (!verificationCode) {
+         showToast({ status: 'error', message: 'Введите код' })
+      } else if (verificationCode === code) {
          dispatch(
             APPOINTMENTS_THUNKS.checkVerificationCode({
                verificationCode,
@@ -62,7 +64,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          showToast({ status: 'error', message: 'Неверный код' })
       }
    }
-
    const { values, handleChange, errors, handleSubmit } = useFormik({
       initialValues: {
          fullName: `${userData.firstName} ${userData.lastName}`,

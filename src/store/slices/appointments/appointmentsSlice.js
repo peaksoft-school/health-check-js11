@@ -77,10 +77,9 @@ export const appointmentsSlice = createSlice({
             APPOINTMENTS_THUNKS.addAppointment.fulfilled,
             (state, { payload }) => {
                state.isLoading = false
-               const [id, code] = payload.message.split(' ')
+               const [id, code] = payload.messageCode.split(' ')
                state.code = code
                state.appointmentId = id
-               console.log(payload.message)
             }
          )
 
