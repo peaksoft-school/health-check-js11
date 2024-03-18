@@ -108,7 +108,7 @@ const Appointments = ({
                      </Box>
                   </Box>
                </StyledButton>
-               <DeleteIcon className="delete" onClick={deleteDateHandler} />
+               <DeleteIcon onClick={deleteDateHandler} />
             </Box>
          ) : (
             <StyledButton onClick={toggleDate} variant="grey">
@@ -142,10 +142,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       alignItems: 'center',
       backgroundColor: 'white',
       borderRadius: '0.938rem',
-   },
-
-   '& .delete': {
-      marginLeft: '2.4rem',
    },
 
    '& .first-part': {

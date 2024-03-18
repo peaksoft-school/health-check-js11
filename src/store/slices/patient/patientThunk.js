@@ -55,23 +55,18 @@ const addPatientResult = createAsyncThunk(
 
          dispatch(getPatientResult(result.id))
 
-         showToast({
-            message: response.data.message,
-         })
-
          return response.data
       } catch (error) {
-         if (error.response.status === 403) {
+         if (error.response.status === 403)
             showToast({
                message: 'ошибка на стороне сервера',
                status: 'error',
             })
-         } else {
+         else
             showToast({
                message: error.message,
                status: 'error',
             })
-         }
 
          return rejectWithValue(error)
       }

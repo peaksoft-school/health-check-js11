@@ -27,7 +27,8 @@ const { Control } = components
 
 const CustomControl = ({ children, ...props }) => (
    <Control {...props}>
-      <AppointmentIcon />
+      {/* <AppointmentIcon /> */}
+      <ChooseServiceIcon />
       {children}
    </Control>
 )
@@ -169,7 +170,7 @@ export default Select
 
 const StyledFormControl = styled(FormControl)(() => ({
    '& .MuiOutlinedInput-notchedOutline': {
-      border: 'none',
+      border: 'none !important',
    },
 }))
 
@@ -221,13 +222,9 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
 
 const Icon = styled(Typography)(() => ({
    position: 'absolute',
-   top: 16,
+   top: 25,
    left: 15,
    zIndex: '100',
-}))
-
-const AppointmentIcon = styled(ChooseServiceIcon)(() => ({
-   marginRight: '10px',
 }))
 
 const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
