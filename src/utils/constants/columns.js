@@ -1,22 +1,38 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { format } from 'date-fns'
+import SelectSeparately from '../../components/online-appointments/SelectSeparately'
+import DeleteSelected from '../../components/UI/admin/DeleteSelected'
+import SelectAll from '../../components/online-appointments/SelectAll'
+import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
+import LocalDate from '../../components/UI/admin/LocalDate'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
 import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
 import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
-import SelectAll from '../../components/UI/admin/SelectAll'
-import DeleteSelected from '../../components/UI/admin/DeleteSelected'
-import SelectSeparately from '../../components/UI/admin/SelectSeparately'
-import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import { formatPhoneNumberWithSpaces } from '../helpers'
 import {
    handleIsChecked,
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
-import { formatPhoneNumberWithSpaces } from '../helpers'
+import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+
+const SCHEDULE_COLUMN = [
+   {
+      Header: 'Специалисты',
+      accessor: 'name',
+
+      Cell: ({ row }) => (
+         <Box>
+            <img src={row.origindl.image} alt="doctor" />
+            <Typography>{row.origindl.surename}</Typography>
+            <Typography>{row.origindl.position}</Typography>
+         </Box>
+      ),
+   },
+]
 
 const ONLINE_APPOINTMENTS_COLUMN = [
    {
@@ -169,14 +185,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         fontSize: '5px',
       },
 
-      Cell: ({ row }) => (
-         <Box>
-            <Typography variant="p">{row.original.localDate}</Typography>
-            <Typography variant="p">{row.original.localTime}</Typography>
-         </Box>
-      ),
+      Cell: ({ row }) => <LocalDate row={row} />,
    },
 
    {
@@ -552,6 +564,7 @@ const APPLICATIONS_COLUMN = [
 
 export {
    ONLINE_APPOINTMENTS_COLUMN,
+   SCHEDULE_COLUMN,
    PATIENTS_COLUMN,
    COLUMNS,
    APPLICATIONS_COLUMN,
