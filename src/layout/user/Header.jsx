@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -39,7 +39,10 @@ const Header = () => {
 
    const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
 
-   const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
+   const toggleSignUpModal = () => {
+      handleProfileMenuClose()
+      setOpenSignUpModal((prev) => !prev)
+   }
 
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
@@ -53,7 +56,10 @@ const Header = () => {
       }
    }
 
-   const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
+   const toggleSignInModal = () => {
+      handleProfileMenuClose()
+      setOpenSignInModal((prev) => !prev)
+   }
 
    const closeLogOutHandler = () => setToggleLogOutModal(false)
 
