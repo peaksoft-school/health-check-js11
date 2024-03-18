@@ -64,6 +64,7 @@ const deleteAppoinment = createAsyncThunk(
       try {
          await axiosInstance.delete(`/api/appointment/${appointmentId}`)
          dispatch(getAppointments())
+
          return appointmentId
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })

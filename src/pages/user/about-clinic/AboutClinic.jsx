@@ -1,6 +1,7 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { AboutClinicImage } from '../../../assets/images'
+// eslint-disable-next-line import/no-cycle
 import AboutUs from '../../../components/landing/AboutUs'
 
 const AboutClinic = () => {

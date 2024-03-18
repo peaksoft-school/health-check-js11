@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 import Loading from '../../../components/Loading'
 import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
-import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 
 const Patients = () => {
    const [searchName, setSearchName] = useState('')
