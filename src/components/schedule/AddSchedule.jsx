@@ -18,6 +18,23 @@ import { VALIDATION_SCHEDULE } from '../../utils/helpers/validate'
 import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
 import Button from '../UI/Button'
 
+const selectStyles = {
+   control: (styles, state) => ({
+      ...styles,
+      width: '270px',
+
+      borderColor: state.isFocused
+         ? 'rgba(4, 135, 65, 0.80) !important'
+         : '#d9d9d9',
+      boxShadow: 'none',
+      borderRadius: '6px',
+
+      '& span': {
+         width: '0',
+      },
+   }),
+}
+
 const AddSchedule = ({ open, onClose }) => {
    const dispatch = useDispatch()
 
@@ -207,7 +224,7 @@ const AddSchedule = ({ open, onClose }) => {
                      }
                      error={!!errors.interval}
                      placeholder="Выберите интервал часов"
-                     className="custom-select"
+                     styles={{ ...selectStyles }}
                      variant="schedule"
                   />
                </Box>
@@ -301,12 +318,6 @@ const StyledForm = styled('form')(() => ({
       fontSize: '24px',
       fontWeight: '500',
       color: '#222',
-   },
-
-   '& > .custom-select': {
-      borderRadius: '6px !important',
-      height: '5.2vh',
-      border: 'none',
    },
 
    '& > .input-block': {
