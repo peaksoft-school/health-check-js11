@@ -9,10 +9,11 @@ import {
    styled,
 } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpIcon } from '../../../assets/icons'
 import { PROSEDURA, SERVICES } from '../../../utils/constants'
 import Leave from '../../../components/landing/Leave'
+import { ROUTES } from '../../../routes/routes'
 
 const Services = () => {
    const [procedure, setProcedure] = useState(false)
@@ -21,11 +22,17 @@ const Services = () => {
    const [zoom4, setZoom4] = useState(false)
    const [result, setResult] = useState(false)
 
+   const navigate = useNavigate()
+
    const handleClick = () => setProcedure(!procedure)
    const handleClickSecond = () => setIndications(!indications)
    const handleClickThird = () => setContraindications(!contraindications)
    const handleClickFouth = () => setZoom4(!zoom4)
    const handleClickFifth = () => setResult(!result)
+
+   const handleNavigate = (id) => {
+      navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/${id}`)
+   }
 
    return (
       <StyledContainer>
@@ -48,7 +55,7 @@ const Services = () => {
 
                <Box className="cards-box">
                   {SERVICES.map(({ id, name, icon }) => (
-                     <StyledService key={id}>
+                     <StyledService key={id} onClick={() => handleNavigate(id)}>
                         <Box className="icon">{icon}</Box>
 
                         <Typography className="name">{name}</Typography>

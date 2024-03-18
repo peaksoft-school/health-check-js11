@@ -1,3 +1,4 @@
+import Service from '../layout/user/Service'
 import ChangePassword from '../pages/change-password/ChangePassword'
 import Home from '../pages/home/Home'
 import AboutClinic from '../pages/user/about-clinic/AboutClinic'
@@ -28,6 +29,11 @@ export const USER_ROUTES = [
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
       element: <Services />,
+   },
+
+   {
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/:${ROUTES.USER.ID}`,
+      element: <Service />,
    },
 
    {

@@ -15,6 +15,8 @@ const ROUTES = {
       PRICES: 'prices',
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
+      SERVICE: 'service',
+      ID: 'id',
    },
 
    ADMIN: {
