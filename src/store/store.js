@@ -17,6 +17,7 @@ import { patientSlice } from './slices/patient/patientSlice'
 import { applicationSlice } from './slices/application/aplicationSlice'
 import { appointmentsSlice } from './slices/online-appointments/appointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
+import { doctorSlice } from './slices/doctors/doctorSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
    [patientSlice.name]: patientSlice.reducer,
    [applicationSlice.name]: applicationSlice.reducer,
    [profileSlice.name]: profileSlice.reducer,
+   [doctorSlice.name]: doctorSlice.reducer,
 })
 
 const persistConfig = {
