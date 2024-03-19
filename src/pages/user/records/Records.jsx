@@ -32,7 +32,7 @@ const Records = () => {
                </Typography>
             </Box>
 
-            <from onSubmit={sendResultNumber} className="form-container">
+            <form onSubmit={sendResultNumber} className="form-container">
                <StyledInput
                   value={resultNumber}
                   onChange={changeInputValuesHandler}
@@ -40,7 +40,7 @@ const Records = () => {
                />
 
                <StyledButton type="submit">Найти</StyledButton>
-            </from>
+            </form>
          </StyledForm>
 
          <hr />
@@ -142,7 +142,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       color: '#346EFB',
    },
 
-   ul: {
+   '& ul': {
       paddingLeft: '3.2rem',
       fontFamily: 'Manrope',
       fontSize: '0.8rem',
@@ -188,40 +188,46 @@ const HeaderContainer = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space-between',
-   margin: '1rem 2rem',
+   margin: '0rem 2rem rem',
+   paddingLeft: '1rem',
+   paddingTop: '1rem',
 
-   '.buttonsBox': {
+   '& .buttonsBox': {
       display: 'flex',
       flexDirection: 'row',
       gap: '1rem',
 
-      button: {
+      '& button': {
          background: ' #3977C0',
          gap: '1rem',
+
          '&.closeBtn': {
             background: 'red',
          },
       },
    },
 
-   '.file': {
+   '& .file': {
       width: '100%',
       height: '33vh',
       background: 'rgba(254, 251, 251, 0.50)',
       backdropFilter: 'blur(156px)',
       opacity: 0.8,
    },
-   ul: {
+
+   '& ul': {
       paddingLeft: '3.2rem',
       fontFamily: 'Manrope',
       fontSize: '0.8rem',
-      li: {
+
+      '& li': {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
          fontSize: '15px',
          fontWeight: '400',
       },
-      '.liRed': {
+
+      '& .liRed': {
          color: 'red',
       },
    },
