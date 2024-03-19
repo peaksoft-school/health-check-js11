@@ -65,6 +65,10 @@ const Service = () => {
                   ))}
                </ul>
             </Box>
+
+            <Typography>
+               Цены на прием <span> врача-дерматолога</span>
+            </Typography>
          </Box>
       </StyledContainer>
    )

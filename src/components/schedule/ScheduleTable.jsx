@@ -13,20 +13,20 @@ const ScheduleTable = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
 
    const [startDate, setStartDate] = useState(dayjs())
-   const [endDate, setEndDate] = useState(dayjs().subtract(11, 'day'))
+   const [endDate, setEndDate] = useState(dayjs().add(11, 'day'))
 
    const [lastClicked, setLastClicked] = useState({ id: null, date: null })
 
    const [open, setOpen] = useState(false)
 
    const [timeRanges, setTimeRanges] = useState([
-      { startHour: 0, startMinute: 0, endHour: 0, endMinute: 0 },
+      { startHour: '', startMinute: '', endHour: '', endMinute: '' },
    ])
 
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
    const [clickedDate, setClickedDate] = useState(null)
    const [intervals, setIntervals] = useState([{ id: 1 }])
-   const [installDisabled, setInstallDisabled] = useState(false)
+   const [installDisabled, setInstallDisabled] = useState(true)
 
    const [isSaveDisabled, setIsSaveDisabled] = useState(true)
 

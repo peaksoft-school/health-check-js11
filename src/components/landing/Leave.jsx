@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import Button from '../UI/Button'
+import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
 import { DoctorLeaveImage } from '../../assets/images'
-import NumberInput from '../UI/inputs/NumberInput'
 import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import Button from '../UI/Button'
+import NumberInput from '../UI/inputs/NumberInput'
 
 const Leave = () => {
    const dispatch = useDispatch()

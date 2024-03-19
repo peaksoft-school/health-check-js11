@@ -1,9 +1,10 @@
-import { Workbook } from 'exceljs'
-import { useDebounce } from 'use-debounce'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useCallback, useEffect, useState } from 'react'
+import { Workbook } from 'exceljs'
+import { useDebounce } from 'use-debounce'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
 import { NoDataImage } from '../../../assets/images'
@@ -15,25 +16,20 @@ import Schedule from '../schedule/Schedule'
 import AddSchedule from '../../../components/schedule/AddSchedule'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 
-const getDefaultTabValue = () => {
-   const storedValue = localStorage.getItem('selectedTab')
-
-   return storedValue || '1'
-}
-
 const OnlineAppointments = () => {
-   const [value, setValue] = useState(getDefaultTabValue)
+   const { schedules } = useSelector((state) => state.schedule)
+   const { isLoading, appointments } = useSelector(
+      (state) => state.appointments
+   )
+
+   const [value, setValue] = useState('online-appointments')
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
    const [openModal, setOpenModal] = useState(false)
 
-   const { schedules } = useSelector((state) => state.schedule)
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const dispatch = useDispatch()
-
-   const { isLoading, appointments } = useSelector(
-      (state) => state.appointments
-   )
 
    const toggleModal = () => setOpenModal((prev) => !prev)
 
@@ -56,27 +52,23 @@ const OnlineAppointments = () => {
    }, [])
 
    const tabsChange = (_, newValue) => {
+      const newShowAddButton = newValue === 'online-appointments'
+
       setValue(newValue)
 
-      const newShowAddButton = newValue === '1'
-
-      setShowAddButton(newShowAddButton)
-
-      localStorage.setItem('selectedTab', newValue)
-      localStorage.setItem('showAddButton', newShowAddButton)
+      searchParams.set('tab', newValue)
+      setSearchParams(searchParams)
    }
 
    useEffect(() => {
-      const storedValue = localStorage.getItem('selectedTab')
+      const tabFormUrl = searchParams.get('tab')
 
-      if (storedValue) {
-         setValue(storedValue)
-
-         const newShowAddButton = storedValue === '1'
-
-         setShowAddButton(newShowAddButton)
-
-         localStorage.setItem('showAddButton', newShowAddButton)
+      if (tabFormUrl) {
+         setValue(tabFormUrl)
+      } else {
+         setValue('online-appointments')
+         searchParams.set('tab', 'online-appointments')
+         setSearchParams(searchParams)
       }
    }, [])
 
@@ -151,16 +143,12 @@ const OnlineAppointments = () => {
             <Box className="button-container">
                <Typography className="title">Онлайн-запись</Typography>
 
-               {showAddButton && (
+               {value === 'online-appointments' ? (
                   <Button className="add-button" onClick={toggleModal}>
                      <PlusIcon className="plus-icon" />
                      Добавить запись
                   </Button>
-               )}
-
-               {isLoading && <Loading />}
-
-               {!showAddButton && (
+               ) : (
                   <Box>
                      <Button
                         variant="secondary"
@@ -173,6 +161,8 @@ const OnlineAppointments = () => {
                )}
             </Box>
 
+            {isLoading && <Loading />}
+
             <AddSchedule open={openModal} onClose={toggleModal} />
 
             <Box>
@@ -184,15 +174,19 @@ const OnlineAppointments = () => {
                      >
                         <Tab
                            label="Онлайн-запись"
-                           value="1"
+                           value="online-appointments"
                            className="route"
                         />
 
-                        <Tab label="Расписание" value="2" className="route" />
+                        <Tab
+                           label="Расписание"
+                           value="schedules"
+                           className="route"
+                        />
                      </TabList>
                   </Box>
 
-                  <TabPanel value="1" className="tables">
+                  <TabPanel value="online-appointments" className="tables">
                      <Box className="input-container">
                         <StyledInput
                            placeholder="Поиск"
@@ -217,7 +211,7 @@ const OnlineAppointments = () => {
                      </Box>
                   </TabPanel>
 
-                  <TabPanel value="2" className="tables">
+                  <TabPanel value="schedules" className="tables">
                      <Schedule />
                   </TabPanel>
                </TabContext>
