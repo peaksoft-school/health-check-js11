@@ -1,11 +1,11 @@
 import { Box, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { DateCalendar } from '@mui/x-date-pickers'
+import { format } from 'date-fns'
 import { DAYS_OF_WEEK } from '../../utils/constants'
 import Button from '../UI/Button'
 
 const ChooseDate = ({
-   formHandler,
    selectedDate,
    setSelectedDate,
    selectedTime,
@@ -54,24 +54,18 @@ const ChooseDate = ({
       setSelectedTime(null)
    }
 
+   const dayOfWeekFormatter = (_day, weekday) => {
+      return DAYS_OF_WEEK[format(weekday, 'EE')]
+   }
+
    return (
       <StyledBox>
          <hr />
 
          <StyledContainer>
             <StyledDateCalendar
-               dayOfWeekFormatter={(_day, weekday) =>
-                  DAYS_OF_WEEK[weekday.format('dd')]
-               }
+               dayOfWeekFormatter={dayOfWeekFormatter}
                shouldDisableDate={dayUnavailableForConsultationHandler}
-               renderday={(day, _value, DayComponentProps) => (
-                  <DayComponentProps
-                     onFocus={DayComponentProps.onDayFocus}
-                     onBlur={DayComponentProps.onDayBlur}
-                  >
-                     {day.format('MMMM')}
-                  </DayComponentProps>
-               )}
                value={selectedDate}
                onChange={changeDateHandler}
             />
@@ -80,9 +74,6 @@ const ChooseDate = ({
                <StyledTimesBox>{renderSelectedDateTimesheet()}</StyledTimesBox>
             )}
          </StyledContainer>
-         <StyledButton className="button" onClick={formHandler}>
-            Продолжить
-         </StyledButton>
       </StyledBox>
    )
 }
@@ -110,7 +101,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
    },
 
    '& .MuiPickersArrowSwitcher-button': {
-      display: 'none',
+      marginLeft: '50px',
    },
 
    '& .MuiDayCalendar-weekDayLabel': {
@@ -123,11 +114,12 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
 
    '& .MuiPickersCalendarHeader-label': {
       marginRight: '37px',
+      pointerEvents: 'none !important',
    },
 
    '& .MuiIconButton-root-MuiPickersArrowSwitcher-button': {
       position: 'absolute',
-      display: 'none !important',
+      // display: 'none !important',
    },
 
    '& .MuiPickersCalendarHeader-switchViewButton': {
@@ -190,17 +182,4 @@ const StyledTimesBox = styled(Box)(() => ({
    width: '370px',
    borderRadius: '15px',
    backgroundColor: 'white',
-}))
-
-const StyledButton = styled(Button)(() => ({
-   '&.MuiButtonBase-root': {
-      width: '92%',
-      margin: '15px ',
-      height: '2.5rem',
-      fontSize: '0.875rem',
-
-      '&:active': {
-         borderRadius: '0.625rem',
-      },
-   },
 }))

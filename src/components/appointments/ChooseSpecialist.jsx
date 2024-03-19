@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { styled, Typography, Box } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { UsersIcon } from '../../assets/icons'
@@ -14,10 +13,14 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
    const currentYear = currentDate.getFullYear()
    const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0')
 
+   const targetDate = new Date(currentYear, currentDate.getMonth() + 5, 1)
+   const targetYear = targetDate.getFullYear()
+   const targetMonth = (targetDate.getMonth() + 1).toString().padStart(2, '0')
+
    const startDate = `${currentYear}-${currentMonth}-01`
-   const endDate = `${currentYear}-${currentMonth}-${new Date(
-      currentYear,
-      currentDate.getMonth() + 1,
+   const endDate = `${targetYear}-${targetMonth}-${new Date(
+      targetYear,
+      targetDate.getMonth() + 1,
       0
    ).getDate()}`
 
@@ -39,6 +42,39 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       )
    }
 
+   const data = [
+      {
+         department: 'Urolog',
+         doctors: [
+            {
+               image: '',
+               fullName: '',
+               position: '',
+            },
+         ],
+      },
+      {
+         department: 'Urolog',
+         doctors: [
+            {
+               image: '',
+               fullName: '',
+               position: '',
+            },
+         ],
+      },
+      {
+         department: 'Urolog',
+         doctors: [
+            {
+               image: '',
+               fullName: '',
+               position: '',
+            },
+         ],
+      },
+   ]
+
    const getDoctorName = ({ time, id, doctor }) => {
       goBack()
       setDoctorName({ doctor })
@@ -52,7 +88,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       )
    }
 
-   const formatDates = useCallback((dateString) => {
+   const formatDates = (dateString) => {
       const options = {
          day: 'numeric',
          month: 'long',
@@ -61,11 +97,11 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 
       const date = new Date(dateString)
       return date.toLocaleDateString('ru-RU', options)
-   }, [])
+   }
 
    const updatedDoctorsTimesheet = doctorsTimesheet.map((doctor) => ({
       ...doctor,
-      id1: Math.random(),
+      costomId: Math.random(),
    }))
 
    return (
@@ -81,7 +117,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                <Box className="doctors">
                   {updatedDoctorsTimesheet?.map((doctor, i) => (
                      <SpecialistCard
-                        key={doctor.id1}
+                        key={doctor.costomId}
                         doctor={doctor}
                         getDoctorName={getDoctorName}
                         formatDates={formatDates}

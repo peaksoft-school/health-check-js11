@@ -1,13 +1,13 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { Rating, styled, Typography, Box } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { PlusIcon, RegisteredIcon } from '../../assets/icons'
+import { PlusIcon, ProfileIcon, RegisteredIcon } from '../../assets/icons'
 import Button from '../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
 
 const Result = ({ goBack }) => {
-   const [toggleModal, setToggleModal] = useState(false)
    const { doctorData } = useSelector((state) => state.appointments)
+   const [toggleModal, setToggleModal] = useState(false)
 
    const formatDate = () => {
       const options = { weekday: 'long', day: 'numeric', month: 'long' }
@@ -35,7 +35,15 @@ const Result = ({ goBack }) => {
 
          <Box className="doctor">
             <Box className="image-box">
-               <img src={doctorData.doctorImage} alt="doctor" />
+               {doctorData.doctorImage.startsWith('https://') ? (
+                  <img
+                     className="image"
+                     src={doctorData.doctorImage}
+                     alt="doctor"
+                  />
+               ) : (
+                  <ProfileIcon className="image" />
+               )}
             </Box>
 
             <Box className="doctor-info">
@@ -108,7 +116,7 @@ const StyledContainer = styled(Box)(() => ({
 
    '& > .doctor': {
       display: 'flex',
-      marginRight: '5rem',
+      alignItems: 'center',
       marginTop: '1.25rem',
       marginBottom: '2.5rem',
       gap: '0.625rem',
@@ -118,7 +126,7 @@ const StyledContainer = styled(Box)(() => ({
          height: '36px',
          alignSelf: 'start',
 
-         '& > img': {
+         '& > .image': {
             width: '100%',
             height: '100%',
             borderRadius: '50%',

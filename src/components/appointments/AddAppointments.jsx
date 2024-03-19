@@ -11,6 +11,7 @@ import ChooseSpecialist from './ChooseSpecialist'
 import ChooseDate from './ChooseDate'
 import AppointmentsForm from './AppointmentsForm'
 import Result from './Result'
+import Button from '../UI/Button'
 
 const AddAppointments = ({ open, onClose }) => {
    const [currentPage, setCurrentPage] = useState('main')
@@ -95,14 +96,19 @@ const AddAppointments = ({ open, onClose }) => {
 
          case 'date':
             return (
-               <ChooseDate
-                  selectedDate={selectedDate}
-                  setTime={setSelectedTime}
-                  setSelectedDate={setSelectedDate}
-                  selectedTime={selectedTime}
-                  setSelectedTime={setSelectedTime}
-                  formHandler={formHandler}
-               />
+               <>
+                  <ChooseDate
+                     selectedDate={selectedDate}
+                     setTime={setSelectedTime}
+                     setSelectedDate={setSelectedDate}
+                     selectedTime={selectedTime}
+                     setSelectedTime={setSelectedTime}
+                  />
+
+                  <StyledButton className="button" onClick={formHandler}>
+                     Продолжить
+                  </StyledButton>
+               </>
             )
 
          case 'form':
@@ -131,7 +137,7 @@ const AddAppointments = ({ open, onClose }) => {
                {currentPage === 'main' || currentPage === 'result' ? (
                   <CloseIcon className="close" onClick={closeHandler} />
                ) : (
-                  <GoBackIcon onClick={goBack} />
+                  <GoBackIcon className="close" onClick={goBack} />
                )}
 
                <Box className="header">
@@ -156,12 +162,16 @@ const AddAppointments = ({ open, onClose }) => {
 export default AddAppointments
 
 const StyledDrawer = styled(Box)(() => ({
-   '& .header-box': {
+   '& > .header-box': {
       display: 'flex',
       boxSizing: 'content-box',
       background: '#fff',
       padding: '0.938rem',
       justifyContent: 'space-between',
+
+      '& svg': {
+         cursor: 'pointer',
+      },
 
       '& > .header': {
          alignItems: 'center',
@@ -177,5 +187,18 @@ const StyledDrawer = styled(Box)(() => ({
 
    '& > .content': {
       height: '100%',
+   },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   '&.MuiButtonBase-root': {
+      width: '92%',
+      margin: '15px ',
+      height: '2.5rem',
+      fontSize: '0.875rem',
+
+      '&:active': {
+         borderRadius: '0.625rem',
+      },
    },
 }))

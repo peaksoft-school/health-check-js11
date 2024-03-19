@@ -23,3 +23,7 @@
 p {
    text-transform: none;
 }
+
+.select-placeholder-text {
+   color: #222222;
+}

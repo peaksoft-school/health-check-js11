@@ -12,16 +12,15 @@ import { VALIDATION_APPOINTMENTS_FORM } from '../../utils/helpers/validate'
 import { showAppointmentFormError } from '../../utils/helpers'
 
 const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
-   const [verificationCode, setVerificationCode] = useState('')
-
-   const dispatch = useDispatch()
-
+   const { userData } = useSelector((state) => state.profile)
    const { accessToken } = useSelector((state) => state.auth)
    const { code, appointmentId, isLoading } = useSelector(
       (state) => state.appointments
    )
 
-   const { userData } = useSelector((state) => state.profile)
+   const [verificationCode, setVerificationCode] = useState('')
+
+   const dispatch = useDispatch()
 
    useEffect(() => {
       dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
@@ -50,12 +49,14 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
    const openCodeInput = () => open()
 
    const sendCode = () => {
-      if (!verificationCode) {
+      const trimmedCode = verificationCode.trim()
+
+      if (!trimmedCode) {
          showToast({ status: 'error', message: 'Введите код' })
-      } else if (verificationCode === code) {
+      } else if (trimmedCode === code) {
          dispatch(
             APPOINTMENTS_THUNKS.checkVerificationCode({
-               verificationCode,
+               verificationCode: trimmedCode,
                id: appointmentId,
                openCodeInput,
             })
@@ -64,6 +65,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          showToast({ status: 'error', message: 'Неверный код' })
       }
    }
+
    const { values, handleChange, errors, handleSubmit } = useFormik({
       initialValues: {
          fullName: `${userData.firstName} ${userData.lastName}`,
@@ -75,13 +77,14 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
       validationSchema: VALIDATION_APPOINTMENTS_FORM,
    })
 
-   const changeVerificationCodeHandler = (e) =>
+   const changeVerificationCodeHandler = (e) => {
       setVerificationCode(e.target.value)
+   }
 
    return (
       <StyledContainer>
          <Box className="container">
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledForm autocomplete="off" onSubmit={handleSubmit}>
                <Box className="form-container">
                   <Typography>Ваше имя и фамилия </Typography>
 
@@ -90,7 +93,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                      placeholder="Введите имя и фамилия"
                      onChange={handleChange('fullName')}
                      disabled={!!code}
-                     autoComplete="off"
                   />
 
                   <Typography>Номер телефона</Typography>
@@ -98,7 +100,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   <NumberInput
                      onChange={handleChange('phoneNumber')}
                      mask="_"
-                     autoComplete="off"
                      disabled={!!code}
                      value={values.phoneNumber}
                      name="number"
@@ -112,7 +113,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                   <StyledInput
                      disabled={!!code}
                      value={values.email}
-                     autoComplete="off"
                      onChange={handleChange('email')}
                      placeholder="Введите e-mail"
                   />
@@ -130,7 +130,6 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
                         </Typography>
 
                         <StyledSmsCodeInput
-                           autocomplete="off"
                            onChange={changeVerificationCodeHandler}
                            value={verificationCode}
                         />

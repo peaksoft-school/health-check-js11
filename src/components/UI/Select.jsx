@@ -27,8 +27,7 @@ const { Control } = components
 
 const CustomControl = ({ children, ...props }) => (
    <Control {...props}>
-      {/* <AppointmentIcon /> */}
-      <ChooseServiceIcon />
+      <StyledIcon />
       {children}
    </Control>
 )
@@ -113,7 +112,9 @@ const Select = forwardRef(
                   onChange={onChange}
                   isSearchable={false}
                   styles={{ ...customStylesAppointments }}
-                  placeholder={placeholder}
+                  placeholder={
+                     <p className="select-placeholder-text">{placeholder}</p>
+                  }
                   error={error}
                   ref={ref}
                   components={{ Control: CustomControl }}
@@ -177,6 +178,10 @@ const StyledFormControl = styled(FormControl)(() => ({
 
 const StyledLabel = styled(FormControl)(() => ({
    display: 'none',
+}))
+
+const StyledIcon = styled(ChooseServiceIcon)(() => ({
+   marginRight: '11px',
 }))
 
 const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({

@@ -75,6 +75,9 @@ const signIn = createAsyncThunk(
    }
 )
 
+// schedule валидация модалка
+// заменить дейтпикер иконки
+
 const forgotPassword = createAsyncThunk(
    'auth/forgotPassword',
    async ({ email, link, onClose, setEmail }, { rejectWithValue }) => {

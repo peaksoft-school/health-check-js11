@@ -1,10 +1,15 @@
 import { styled, Typography, Box, Rating } from '@mui/material'
 import Button from '../UI/Button'
+import { ProfileIcon } from '../../assets/icons'
 
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
    <StyledContainer>
       <Box className="first-part">
-         <img className="image" src={doctor.imageDoctor} alt="doctor" />
+         {doctor.imageDoctor.startsWith('https://') ? (
+            <img className="image" src={doctor.imageDoctor} alt="doctor" />
+         ) : (
+            <ProfileIcon className="image" />
+         )}
 
          <Box>
             <Typography>{doctor.doctorFullName}</Typography>

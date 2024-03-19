@@ -61,10 +61,17 @@ const addAppointment = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.data.message,
+               status: 'error',
+            })
+         }
          return rejectWithValue(error)
       }
    }

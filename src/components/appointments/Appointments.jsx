@@ -1,7 +1,11 @@
-import { useCallback } from 'react'
 import { styled, Box, Typography, Rating } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { CalendarWithDotsIcon, DeleteIcon, UsersIcon } from '../../assets/icons'
+import {
+   CalendarWithDotsIcon,
+   DeleteIcon,
+   ProfileIcon,
+   UsersIcon,
+} from '../../assets/icons'
 import Select from '../UI/Select'
 import Button from '../UI/Button'
 
@@ -56,11 +60,11 @@ const Appointments = ({
 
          {doctorInfo ? (
             <Box className="first-part">
-               <img
-                  className="image"
-                  src={doctorInfo.doctor.imageDoctor}
-                  alt="doctor"
-               />
+               {doctorInfo.doctor.imageDoctor.startsWith('https://') ? (
+                  <img src={doctorInfo.doctor.imageDoctor} alt="doctor" />
+               ) : (
+                  <ProfileIcon className="image-icon" />
+               )}
 
                <Box onClick={toggleSpecialist} className="doctor-info">
                   <Typography className="doctor-name">
@@ -106,10 +110,7 @@ const Appointments = ({
                      </Box>
                   </Box>
                </StyledButton>
-               <DeleteIcon
-                  className="delete-icon"
-                  onClick={deleteDateHandler}
-               />
+               <DeleteIcon className="delete" onClick={deleteDateHandler} />
             </Box>
          ) : (
             <StyledButton onClick={toggleDate} variant="grey">
@@ -138,10 +139,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& > .time': {
       display: 'flex',
-      gap: '6.4rem',
+      justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'white',
       borderRadius: '0.938rem',
+
+      '& >.delete': {
+         marginRight: '15px',
+      },
    },
 
    '& .first-part': {
@@ -151,6 +156,15 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       padding: '0.313rem',
 
       '& img': {
+         marginLeft: '1.2rem',
+         marginRight: '1rem',
+         borderRadius: '50%',
+         width: '2.3rem',
+         alignSelf: 'start',
+         height: '2.3rem',
+      },
+
+      '& .image-icon': {
          marginLeft: '1.2rem',
          marginRight: '1rem',
          borderRadius: '50%',
@@ -207,8 +221,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          alignItems: 'start',
 
          '& .date': {
-            maxWidth: '120px',
-            fontSize: '14px',
+            fontSize: '13px',
             textAlign: 'start',
             fontFamily: 'Manrope',
             color: theme.palette.secondary.lightGrey,
