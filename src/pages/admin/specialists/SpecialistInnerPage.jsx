@@ -9,6 +9,7 @@ import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { DEPARTMENTS } from '../../../utils/constants'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const SpecialistInnerPage = () => {
    const { id } = useParams()
@@ -65,14 +66,11 @@ const SpecialistInnerPage = () => {
    return (
       <StyledMainContainer>
          <Box className="box">
-            <NavLink to="/admin/specialists" className="navlink">
-               <StyledSpecialistRow>
-                  Специалисты
-                  <span className="doctor-name">
-                     &gt; {specialist.firstName} {specialist.lastName}
-                  </span>
-               </StyledSpecialistRow>
-            </NavLink>
+            <BreadCrumbs
+               to="/admin/specialists"
+               before="Специалисты"
+               text={`${specialist.firstName} ${specialist.lastName}`}
+            />
 
             <Typography className="title">
                {specialist.firstName} {specialist.lastName}
@@ -167,7 +165,7 @@ const SpecialistInnerPage = () => {
 export default SpecialistInnerPage
 
 const StyledMainContainer = styled(Box)(() => ({
-   padding: '1.87rem 4.37rem 0',
+   padding: '1.87rem 4.37rem 0 ',
    backgroundColor: '#F5F5F5',
 
    '& > .box': {
@@ -177,18 +175,7 @@ const StyledMainContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
    },
-   '& .navlink': {
-      marginBottom: '2rem',
-      color: 'grey',
-      fontSize: '14px',
-      textDecoration: 'none',
-   },
-   '& .title': {
-      fontSize: '1.375rem',
-      fontWeight: '400',
-      lineHeight: 'normal',
-      marginBottom: '1.87rem',
-   },
+
    '& .table-container': {
       width: '100%',
       borderRadius: '0.375rem',
@@ -227,6 +214,9 @@ const StyledMainContainer = styled(Box)(() => ({
          gap: '1rem',
       },
    },
+   '& .title': {
+      marginBottom: '2rem',
+   },
 }))
 
 const StyledInfo = styled(Typography)(() => ({
@@ -264,16 +254,6 @@ const StyledButton = styled(Button)(() => ({
    width: '14.3rem',
    height: '2.5rem',
    marginTop: '5rem',
-}))
-
-const StyledSpecialistRow = styled(Typography)(() => ({
-   marginBottom: '2rem',
-   color: 'grey',
-   fontSize: '14px',
-
-   '& .doctor-name': {
-      color: 'green',
-   },
 }))
 
 const StyledImage = styled(Box)(() => ({

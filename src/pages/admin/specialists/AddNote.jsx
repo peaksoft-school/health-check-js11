@@ -10,6 +10,7 @@ import { DEPARTMENTS } from '../../../utils/constants'
 import { ADD_NOTE } from '../../../store/slices/addNote/AddNoteThunk'
 import MyEditor from './Editor'
 import PhotoSvg from '../../../assets/icons/svgs/зhoto.svg'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const AddNote = () => {
    const [shouldClearForm, setShouldClearForm] = useState(false)
@@ -107,14 +108,11 @@ const AddNote = () => {
    return (
       <StyledMainContainer>
          <Box className="box">
-            <NavLink to="/admin/specialists" className="navlink">
-               <StyledSpecialistRow>
-                  Специалисты
-                  <span className="doctor-name">
-                     &gt; Добавление специалиста
-                  </span>
-               </StyledSpecialistRow>
-            </NavLink>
+            <BreadCrumbs
+               to="/admin/specialists"
+               before="Специалисты"
+               text="Добавление специалиста"
+            />
 
             <Typography className="title">Добавление специалиста</Typography>
 
@@ -228,18 +226,6 @@ const StyledMainContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
    },
-   '& .navlink': {
-      marginBottom: '2rem',
-      color: 'grey',
-      fontSize: '14px',
-      textDecoration: 'none',
-   },
-   '& .title': {
-      fontSize: '1.375rem',
-      fontWeight: '400',
-      lineHeight: 'normal',
-      marginBottom: '1.87rem',
-   },
    '& .table-container': {
       width: '100%',
       borderRadius: '0.375rem',
@@ -313,6 +299,9 @@ const StyledMainContainer = styled(Box)(() => ({
       justifyContent: 'flex-end',
       gap: '1rem',
    },
+   '& .title': {
+      marginBottom: '2rem',
+   },
 }))
 
 const StyledInfo = styled(Typography)(() => ({
@@ -343,16 +332,6 @@ const StyledButton = styled(Button)(() => ({
    width: '14.3rem',
    height: '2.5rem',
    marginTop: '5rem',
-}))
-
-const StyledSpecialistRow = styled(Typography)(() => ({
-   marginBottom: '2rem',
-   color: 'grey',
-   fontSize: '14px',
-
-   '& .doctor-name': {
-      color: 'green',
-   },
 }))
 
 const StyledImage = styled(Box)(() => ({
