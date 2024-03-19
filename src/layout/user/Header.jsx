@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -23,9 +23,10 @@ import {
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
+import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
 
 const Header = () => {
-   const { role, isAuth } = useSelector((state) => state.auth)
+   const { role, isAuth, accessToken } = useSelector((state) => state.auth)
 
    const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
    const [openSignUpModal, setOpenSignUpModal] = useState(false)
@@ -36,6 +37,10 @@ const Header = () => {
    const dispatch = useDispatch()
 
    const navigate = useNavigate()
+
+   useEffect(() => {
+      dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
+   }, [accessToken])
 
    const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled, Box } from '@mui/material'
 import { format } from 'date-fns'
@@ -8,24 +8,18 @@ import Button from '../UI/Button'
 import NumberInput from '../UI/inputs/NumberInput'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { showToast } from '../../utils/helpers/notification'
-import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
 import { VALIDATION_APPOINTMENTS_FORM } from '../../utils/helpers/validate'
 import { showAppointmentFormError } from '../../utils/helpers'
 
 const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
+   const [verificationCode, setVerificationCode] = useState('')
+
    const { userData } = useSelector((state) => state.profile)
-   const { accessToken } = useSelector((state) => state.auth)
    const { code, appointmentId, isLoading } = useSelector(
       (state) => state.appointments
    )
 
-   const [verificationCode, setVerificationCode] = useState('')
-
    const dispatch = useDispatch()
-
-   useEffect(() => {
-      dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
-   }, [accessToken, dispatch])
 
    const appointmentTime = time ? time.slice(0, 5) : ''
 

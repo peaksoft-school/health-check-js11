@@ -1,6 +1,7 @@
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
 import { format as formatDate } from 'date-fns'
+import { CalendarIcon } from '@mui/x-date-pickers'
 import { DAYS_OF_WEEK } from '../../utils/constants'
 
 const DatePicker = ({
@@ -25,6 +26,9 @@ const DatePicker = ({
          onBlur={onBlur}
          dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
+         components={{
+            openPickerIcon: <CalendarIcon />,
+         }}
          minDate={minDate}
          error={error}
          slotProps={{

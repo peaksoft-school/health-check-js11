@@ -1,4 +1,4 @@
-import { styled, Typography, Box } from '@mui/material'
+import { styled, Typography, Box, CircularProgress } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { UsersIcon } from '../../assets/icons'
 import Button from '../UI/Button'
@@ -6,7 +6,9 @@ import SpecialistCard from './SpecialistCard'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 
 const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
-   const { doctorsTimesheet } = useSelector((state) => state.appointments)
+   const { doctorsTimesheet, isLoading } = useSelector(
+      (state) => state.appointments
+   )
    const dispatch = useDispatch()
 
    const currentDate = new Date()
@@ -42,39 +44,6 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       )
    }
 
-   const data = [
-      {
-         department: 'Urolog',
-         doctors: [
-            {
-               image: '',
-               fullName: '',
-               position: '',
-            },
-         ],
-      },
-      {
-         department: 'Urolog',
-         doctors: [
-            {
-               image: '',
-               fullName: '',
-               position: '',
-            },
-         ],
-      },
-      {
-         department: 'Urolog',
-         doctors: [
-            {
-               image: '',
-               fullName: '',
-               position: '',
-            },
-         ],
-      },
-   ]
-
    const getDoctorName = ({ time, id, doctor }) => {
       goBack()
       setDoctorName({ doctor })
@@ -106,6 +75,8 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 
    return (
       <StyledContainer>
+         {isLoading && <StyledLoading />}
+
          {doctorsTimesheet.length > 0 ? (
             <>
                <StyledButton onClick={getRandomDoctor} variant="grey">
@@ -172,4 +143,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
          fontFamily: 'Manrope',
       },
    },
+}))
+
+const StyledLoading = styled(CircularProgress)(() => ({
+   position: 'absolute',
+   bottom: 6,
+   width: '28px !important',
+   height: '28px !important',
+   zIndex: 100,
 }))
