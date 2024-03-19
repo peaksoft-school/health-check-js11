@@ -14,35 +14,47 @@ const ChooseDate = ({
    const { date } = useSelector((state) => state.appointments)
 
    const dayUnavailableForConsultationHandler = (day) => {
-      const consultation = date.find(
-         (item) => item.dateOfConsultation === day.format('YYYY-MM-DD')
-      )
+      if (day instanceof Date) {
+         const formattedDay = format(day, 'yyyy-MM-dd')
+         const consultation = date.find(
+            (item) => item.dateOfConsultation === formattedDay
+         )
 
-      return consultation && consultation.startTimeOfConsultation.length === 0
+         return (
+            consultation && consultation.startTimeOfConsultation.length === 0
+         )
+      }
+
+      return false
    }
 
    const renderSelectedDateTimesheet = () => {
       if (selectedDate) {
-         const consultation = date.find(
-            (item) =>
-               item.dateOfConsultation === selectedDate.format('YYYY-MM-DD')
-         )
+         if (selectedDate instanceof Date) {
+            const formattedDate = format(selectedDate, 'yyyy-MM-dd')
+            const consultation = date.find(
+               (item) => item.dateOfConsultation === formattedDate
+            )
 
-         if (consultation && consultation.startTimeOfConsultation.length > 0) {
-            return consultation.startTimeOfConsultation?.map((time) => {
-               const appointmentTime = time ? time.slice(0, 5) : ''
-               const isSelected = appointmentTime === selectedTime
+            if (
+               consultation &&
+               consultation.startTimeOfConsultation.length > 0
+            ) {
+               return consultation.startTimeOfConsultation?.map((time) => {
+                  const appointmentTime = time ? time.slice(0, 5) : ''
+                  const isSelected = appointmentTime === selectedTime
 
-               return (
-                  <StyledTimeButton
-                     key={time}
-                     variant={isSelected ? 'green' : 'grey'}
-                     onClick={() => setSelectedTime(appointmentTime)}
-                  >
-                     {appointmentTime}
-                  </StyledTimeButton>
-               )
-            })
+                  return (
+                     <StyledTimeButton
+                        key={time}
+                        variant={isSelected ? 'green' : 'grey'}
+                        onClick={() => setSelectedTime(appointmentTime)}
+                     >
+                        {appointmentTime}
+                     </StyledTimeButton>
+                  )
+               })
+            }
          }
       }
 
@@ -64,10 +76,10 @@ const ChooseDate = ({
 
          <StyledContainer>
             <StyledDateCalendar
-               dayOfWeekFormatter={dayOfWeekFormatter}
                shouldDisableDate={dayUnavailableForConsultationHandler}
                value={selectedDate}
                onChange={changeDateHandler}
+               dayOfWeekFormatter={dayOfWeekFormatter}
             />
 
             {selectedDate && (
@@ -80,7 +92,7 @@ const ChooseDate = ({
 export default ChooseDate
 
 const StyledBox = styled(Box)(() => ({
-   '& .button': {
+   '& > .button': {
       margin: '20px',
    },
 }))
@@ -110,11 +122,12 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
       fontFamily: 'Manrope',
       fontSize: '14px',
       fontWeight: '500',
+      textTransform: 'capitalize',
    },
 
    '& .MuiPickersCalendarHeader-label': {
       marginRight: '37px',
-      pointerEvents: 'none !important',
+      textTransform: 'capitalize',
    },
 
    '& .MuiIconButton-root-MuiPickersArrowSwitcher-button': {
@@ -147,6 +160,11 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
       color: 'white',
    },
 
+   '& .MuiPickersDay-root.Mui-selected': {
+      background: 'var(--primary-green, #048741) !important',
+      color: 'white',
+   },
+
    '& .MuiPickersDay-root.Mui-disabled': {
       color: 'var(--primary-gray, #4D4E51)',
    },
@@ -160,7 +178,6 @@ const StyledTimeButton = styled(Button)(({ variant }) => ({
    margin: '4px',
    borderRadius: '1.5rem !important',
    fontSize: '10px',
-
    backgroundColor:
       variant === 'green' ? 'var(--primary-green, #048741)' : 'transparent',
    color: variant === 'green' ? 'white' : 'var(--primary-black, #222)',
@@ -178,7 +195,6 @@ const StyledTimesBox = styled(Box)(() => ({
    padding: '10px',
    margin: '5px',
    paddingLeft: '30px',
-
    width: '370px',
    borderRadius: '15px',
    backgroundColor: 'white',

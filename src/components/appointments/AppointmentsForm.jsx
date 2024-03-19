@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { Typography, styled, Box } from '@mui/material'
+import { format } from 'date-fns'
 import { useDispatch, useSelector } from 'react-redux'
 import Input from '../UI/inputs/Input'
 import Button from '../UI/Button'
@@ -34,7 +35,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          startTimeConsultation: appointmentTime,
          doctorId: doctorInfo.doctor.doctorId,
          date: date
-            ? date.format('YYYY-MM-DD')
+            ? format(date, 'YYYY-MM-DD')
             : doctorInfo.doctor.dateOfConsultation,
       }
 
