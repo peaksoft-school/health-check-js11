@@ -111,9 +111,11 @@ const StyledButton = styled(Button)(({ theme }) => ({
       borderRadius: '1.5rem',
       marginTop: '1.75rem',
       padding: '10px 23px',
+      height: '46px',
 
       '&:hover': {
          padding: '10px 23px',
+         height: '46px',
       },
    },
 

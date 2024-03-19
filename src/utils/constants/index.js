@@ -24,6 +24,7 @@ import {
    EndokrinologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 
+import { ROUTES } from '../../routes/routes'
 import {
    FooterInstagramIcon,
    FooterTelegramIcon,
@@ -44,7 +45,6 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
    {
@@ -1256,14 +1256,14 @@ const DEPARTMENTS = [
 
    {
       id: 9,
-      label: 'Офтальмология',
-      value: 'офтальмология',
+      label: 'Гинекология',
+      value: 'Гинекология',
    },
 
    {
       id: 10,
-      label: 'Гинекология',
-      value: 'гинекология',
+      label: 'Офтальмология   ',
+      value: 'Офтальмология',
    },
 
    {
@@ -1379,11 +1379,26 @@ const DAYS_OF_WEEK = {
    Sa: 'Вс',
 }
 
+const RUSSIAN_MONTH_NAME = [
+   'Январь',
+   'Февраль',
+   'Март',
+   'Апрель',
+   'Май',
+   'Июнь',
+   'Июль',
+   'Август',
+   'Сентябрь',
+   'Октябрь',
+   'Ноябрь',
+   'Декабрь',
+]
 const MAP =
    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d365.48247976201736!2d74.62719552257737!3d42.875802431657775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb78fc81678db%3A0x8f6025b536a29455!2sPeaksoft%20house!5e0!3m2!1sru!2skg!4v1710599618852!5m2!1sru!2skg'
 
 export {
    HEADER_SOCIALS,
+   RUSSIAN_MONTH_NAME,
    REVIEWS,
    NAVIGATIONS,
    FOOTER_SOCIALS,

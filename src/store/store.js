@@ -11,21 +11,25 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/auth/authSlice'
+import { scheduleSlice } from './slices/schedule/scheduleSlice'
 import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
 import { applicationSlice } from './slices/application/aplicationSlice'
-import { addScheduleSlice } from './slices/schedule/addScheduleSlice'
 import { appointmentsSlice } from './slices/online-appointments/appointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
+import { specialistsSlice } from './slices/specialistsSlice/specialistsSlice'
+import { addNoteSlice } from './slices/addNote/AddNoteSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
-   [addScheduleSlice.name]: addScheduleSlice.reducer,
    [appointmentsSlice.name]: appointmentsSlice.reducer,
+   [scheduleSlice.name]: scheduleSlice.reducer,
    [patientsSlice.name]: patientsSlice.reducer,
    [patientSlice.name]: patientSlice.reducer,
    [applicationSlice.name]: applicationSlice.reducer,
    [profileSlice.name]: profileSlice.reducer,
+   [specialistsSlice.name]: specialistsSlice.reducer,
+   [addNoteSlice.name]: addNoteSlice.reducer,
 })
 
 const persistConfig = {
