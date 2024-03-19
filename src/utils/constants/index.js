@@ -495,13 +495,13 @@ const RUSSIAN_DAYS = [
 ]
 
 const DAYS_OF_WEEK = {
-   Su: 'Пн',
-   Mo: 'Вт',
-   Tu: 'Ср',
-   We: 'Чт',
-   Th: 'Пт',
-   Fr: 'Сб',
-   Sa: 'Вс',
+   Mo: 'Пн',
+   Tu: 'Вт',
+   We: 'Ср',
+   Th: 'Чт',
+   Fr: 'Пт',
+   Sa: 'Сб',
+   Su: 'Вс',
 }
 
 const RUSSIAN_MONTH_NAME = [

@@ -1,6 +1,6 @@
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
-import { parseISO } from 'date-fns'
+import { format as formatDate } from 'date-fns'
 import { DAYS_OF_WEEK } from '../../utils/constants'
 
 const DatePicker = ({
@@ -14,29 +14,19 @@ const DatePicker = ({
    error,
    ...rest
 }) => {
-   const parsedValue = typeof value === 'string' ? parseISO(value) : value
+   const dayOfWeekFormatter = (_day, weekday) => {
+      return DAYS_OF_WEEK[formatDate(weekday, 'dd')]
+   }
 
    return (
       <StyledDatePicker
-         value={parsedValue}
-         onChange={(date) => onChange(date)}
+         value={value}
+         onChange={onChange}
          onBlur={onBlur}
-         dayOfWeekFormatter={(_day, weekday) =>
-            DAYS_OF_WEEK[weekday.format('dd')]
-         }
+         dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
          minDate={minDate}
          error={error}
-         format={format}
-         renderDay={(day, _value, DayComponentProps) => (
-            <DayComponentProps
-               onFocus={DayComponentProps.onDayFocus}
-               onBlur={DayComponentProps.onDayBlur}
-            >
-               {day.format('MMMM')}
-            </DayComponentProps>
-         )}
-         {...rest}
          slotProps={{
             desktopPaper: {
                sx: {
@@ -54,6 +44,7 @@ const DatePicker = ({
                      fontFamily: 'Manrope',
                      fontSize: '14px',
                      fontWeight: '500',
+                     textTransform: 'capitalize',
                   },
 
                   '.MuiPickersCalendarHeader-label': {
@@ -87,9 +78,15 @@ const DatePicker = ({
                      background: 'var(--primary-green, #048741) !important',
                      color: 'white',
                   },
+
+                  '.MuiPickersDay-root.Mui-selected': {
+                     background: 'var(--primary-green, #048741) !important',
+                     color: 'white',
+                  },
                },
             },
          }}
+         {...rest}
       />
    )
 }
