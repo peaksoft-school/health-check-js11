@@ -1,9 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-// import { showToast } from '../../../utils/helpers/notification'
 
 const getResults = createAsyncThunk(
-   'profile/getUserData',
+   'result/getUserResults',
 
    async (resultNumber, { rejectWithValue }) => {
       try {

@@ -11,10 +11,17 @@ export const resultSlice = createSlice({
    reducers: {},
 
    extraReducers: (builder) => {
-      builder.addCase(
-         RESULTS_THUNKS.getResults.fulfilled((state) => {
+      builder
+         .addCase(RESULTS_THUNKS.getResults.fulfilled, (state) => {
+            state.isLoading = false
+         })
+
+         .addCase(RESULTS_THUNKS.getResults.pending, (state) => {
             state.isLoading = true
          })
-      )
+
+         .addCase(RESULTS_THUNKS.getResults.rejected, (state) => {
+            state.isLoading = true
+         })
    },
 })

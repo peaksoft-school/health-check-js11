@@ -5,6 +5,7 @@ import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { HealthCheckIcon } from '../../../assets/icons'
+import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 
 const Records = () => {
    const [showButton, setShowButton] = useState(false)
@@ -17,28 +18,29 @@ const Records = () => {
    const sendResultNumber = (e) => {
       e.preventDefault()
 
-      dispatch()
+      dispatch(RESULTS_THUNKS.getResults(resultNumber))
    }
 
    return (
       <StyledContainer>
          <StyledForm>
-            <form onSubmit={sendResultNumber} className="FormLogo">
+            <Box className="FormLogo">
                <HealthCheckIcon />
 
                <Typography variant="h1">
                   <Typography variant="p">HEALTH</Typography> CHECK
                </Typography>
-            </form>
+            </Box>
 
-            <Box className="form-container">
+            <from onSubmit={sendResultNumber} className="form-container">
                <StyledInput
                   value={resultNumber}
                   onChange={changeInputValuesHandler}
                   placeholder="Введите номер заказа..."
                />
-               <StyledButton>Найти</StyledButton>
-            </Box>
+
+               <StyledButton type="submit">Найти</StyledButton>
+            </from>
          </StyledForm>
 
          <hr />
