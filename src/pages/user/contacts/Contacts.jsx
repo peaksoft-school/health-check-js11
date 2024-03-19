@@ -1,20 +1,14 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { MAP } from '../../../utils/constants'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const Contacts = () => (
    <>
       <StyledLine> </StyledLine>
 
       <StyledContainer>
-         <StyledSpecialistRow>
-            <Typography variant="span">
-               <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-
-               <span>О клинике</span>
-            </Typography>
-         </StyledSpecialistRow>
-
+         <BreadCrumbs to="/" before="Главная" text="Врачи" />
          <Typography className="title" variant="h3">
             Наши <span> </span>
             <Typography className="mark-title" variant="span">
