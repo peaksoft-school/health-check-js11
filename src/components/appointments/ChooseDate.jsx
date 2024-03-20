@@ -13,6 +13,22 @@ const ChooseDate = ({
 }) => {
    const { date } = useSelector((state) => state.appointments)
 
+   const getPreviousMonth = () => {
+      const currentDate = new Date()
+      currentDate.setMonth(currentDate.getMonth() - 1)
+      const year = currentDate.getFullYear()
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+      const lastDayOfMonth = new Date(
+         year,
+         currentDate.getMonth() + 2,
+         0
+      ).getDate()
+      const formattedDate = `${year}-${month}-${lastDayOfMonth}`
+      return formattedDate
+   }
+
+   const previousMonth = getPreviousMonth()
+
    const dayUnavailableForConsultationHandler = (day) => {
       if (day instanceof Date) {
          const formattedDay = format(day, 'yyyy-MM-dd')
@@ -80,6 +96,7 @@ const ChooseDate = ({
                value={selectedDate}
                onChange={changeDateHandler}
                dayOfWeekFormatter={dayOfWeekFormatter}
+               minDate={previousMonth}
             />
 
             {selectedDate && (
@@ -104,7 +121,7 @@ const StyledContainer = styled(Box)(() => ({
    width: '100% !important',
 }))
 
-const StyledDateCalendar = styled(DateCalendar)(() => ({
+const StyledDateCalendar = styled(DateCalendar)(({ theme }) => ({
    backgroundColor: 'white',
    width: '100%',
 
@@ -117,7 +134,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
    },
 
    '& .MuiDayCalendar-weekDayLabel': {
-      color: 'var(--primary-black, #222)',
+      color: `var(--primary-black, ${theme.palette.primary.lightBlack})`,
       textAlign: 'center',
       fontFamily: 'Manrope',
       fontSize: '14px',
@@ -170,7 +187,7 @@ const StyledDateCalendar = styled(DateCalendar)(() => ({
    },
 }))
 
-const StyledTimeButton = styled(Button)(({ variant }) => ({
+const StyledTimeButton = styled(Button)(({ variant, theme }) => ({
    padding: '5px 0',
    width: '91px',
    height: '33px',
@@ -180,7 +197,10 @@ const StyledTimeButton = styled(Button)(({ variant }) => ({
    fontSize: '10px',
    backgroundColor:
       variant === 'green' ? 'var(--primary-green, #048741)' : 'transparent',
-   color: variant === 'green' ? 'white' : 'var(--primary-black, #222)',
+   color:
+      variant === 'green'
+         ? 'white'
+         : `var(--primary-black, ${theme.palette.primary.lightBlack})`,
 
    '&:active': {
       borderRadius: '1.5rem',

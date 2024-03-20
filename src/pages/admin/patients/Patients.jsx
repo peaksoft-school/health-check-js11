@@ -1,6 +1,6 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Box, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
@@ -11,9 +11,11 @@ import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
 const Patients = () => {
    const [searchName, setSearchName] = useState('')
 
-   const dispatch = useDispatch()
-
    const { isLoading, patients } = useSelector((state) => state.patients)
+
+   const memoizedPatients = useMemo(() => patients, [patients])
+
+   const dispatch = useDispatch()
 
    const searchChange = (e) => setSearchName(e.target.value)
 
@@ -52,7 +54,7 @@ const Patients = () => {
                {isLoading && <Loading />}
 
                <Box className="table-container">
-                  <Table columns={PATIENTS_COLUMN} data={patients} />
+                  <Table columns={PATIENTS_COLUMN} data={memoizedPatients} />
                </Box>
             </Box>
          </Box>
@@ -61,9 +63,9 @@ const Patients = () => {
 }
 export default Patients
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -93,7 +95,7 @@ const StyledContainer = styled(Box)(() => ({
          height: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
-         background: 'white',
+         background: theme.palette.primary.main,
          marginTop: '1.25rem',
 
          '& .MuiTable-root': {
@@ -106,7 +108,7 @@ const StyledContainer = styled(Box)(() => ({
             },
 
             '& .MuiTableRow-root:nth-of-type(even)': {
-               backgroundColor: '#F5F5F5',
+               backgroundColor: theme.palette.primary.backgroundAdmin,
             },
          },
       },

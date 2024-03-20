@@ -137,7 +137,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
          display: 'flex',
          justifyContent: 'center',
          alignItems: 'center',
-         color: '#222',
+         color: theme.palette.primary.lightBlack,
          gap: '0.625rem',
          fontSize: '1.10rem',
          cursor: 'pointer',

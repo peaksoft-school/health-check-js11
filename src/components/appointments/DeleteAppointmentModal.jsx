@@ -75,12 +75,12 @@ const StyledContainer = styled(Box)(() => ({
    padding: '0 2rem',
 }))
 
-const StyledModalContent = styled(Box)(() => ({
+const StyledModalContent = styled(Box)(({ theme }) => ({
    width: '100%',
    position: 'relative',
    display: 'flex',
    flexDirection: 'column',
-   backgroundColor: '#fff',
+   backgroundColor: theme.palette.primary.main,
    padding: '1.25rem',
    borderRadius: '1rem',
    textAlign: 'center',

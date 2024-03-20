@@ -16,7 +16,7 @@ export const appointmentsSlice = createSlice({
    name: 'appointments',
    initialState,
    reducers: {
-      goBackClearCode: (state, { payload }) => {
+      goBackClearCode: (state) => {
          state.code = null
       },
    },

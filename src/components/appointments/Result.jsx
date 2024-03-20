@@ -85,10 +85,10 @@ const Result = ({ goBack }) => {
 
 export default Result
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    margin: '6px',
    padding: '1.875rem 1rem',
-   backgroundColor: '#fff',
+   backgroundColor: theme.palette.primary.main,
    borderRadius: '1rem',
    display: 'flex',
    flexDirection: 'column',
@@ -148,7 +148,7 @@ const StyledContainer = styled(Box)(() => ({
             fontWeight: 500,
             fontSize: '14px',
             lineHeight: '16px',
-            color: '#959595',
+            color: theme.palette.secondary.lightGrey,
             marginBottom: '3px',
          },
 
@@ -168,8 +168,6 @@ const StyledContainer = styled(Box)(() => ({
       },
    },
 }))
-
-const Cancel = styled('p')(() => ({}))
 
 const StyledButton = styled(Button)(() => ({
    '&.MuiButtonBase-root': {

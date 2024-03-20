@@ -29,7 +29,7 @@ const AppointmentsForm = ({ facility, doctorInfo, time, date, open }) => {
          startTimeConsultation: appointmentTime,
          doctorId: doctorInfo.doctor.doctorId,
          date: date
-            ? format(date, 'YYYY-MM-DD')
+            ? format(date, 'yyyy-MM-dd')
             : doctorInfo.doctor.dateOfConsultation,
       }
 

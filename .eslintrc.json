@@ -24,6 +24,7 @@
    "rules": {
       "no-unused-vars": "off",
       "no-nested-ternary": "off",
+      "no-plusplus": "warn",
       "no-param-reassign": "off",
       "global-require": 0,
       "import/no-extraneous-dependencies": "off",

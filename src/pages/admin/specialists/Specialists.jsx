@@ -76,7 +76,7 @@ export default Specialists
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -92,7 +92,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '&  .add-button': {
          height: '45px',
-         // width: '232px',
+         width: '232px',
          fontFamily: 'Manrope',
 
          '& > div': {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,6 +33,7 @@ const OnlineAppointments = () => {
    const { isLoading, appointments } = useSelector(
       (state) => state.onlineAppointments
    )
+   const memoizedAppointments = useMemo(() => appointments, [appointments])
 
    const toggleModal = () => setOpenModal((prev) => !prev)
 
@@ -199,7 +200,7 @@ const OnlineAppointments = () => {
                      <Box className="table-container">
                         <Table
                            columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={appointments}
+                           data={memoizedAppointments}
                         />
                      </Box>
                   </TabPanel>
@@ -220,7 +221,7 @@ export default OnlineAppointments
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -315,7 +316,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          width: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
-         background: 'white',
+         background: theme.palette.primary.main,
          marginTop: '1.25rem',
          display: 'flex',
          alignItems: 'center',

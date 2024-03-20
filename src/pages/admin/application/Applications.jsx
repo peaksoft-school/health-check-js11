@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
@@ -57,6 +57,8 @@ const Applications = () => {
       }
    })
 
+   const memoizedApplications = useMemo(() => preperadeArray, [preperadeArray])
+
    return (
       <StyledContainer>
          <Box className="box">
@@ -78,7 +80,7 @@ const Applications = () => {
                <Box className="table-container">
                   <Table
                      columns={APPLICATIONS_COLUMN}
-                     data={preperadeArray}
+                     data={memoizedApplications}
                      className="table"
                   />
                </Box>
@@ -90,9 +92,9 @@ const Applications = () => {
 
 export default Applications
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -122,7 +124,7 @@ const StyledContainer = styled(Box)(() => ({
          height: '100%',
          borderRadius: '0.375rem',
          bordeRradius: ' 0.375rem',
-         background: 'white',
+         background: theme.palette.primary.main,
          marginTop: '1.25rem',
 
          '& .MuiTable-root': {
@@ -135,7 +137,7 @@ const StyledContainer = styled(Box)(() => ({
             },
 
             '& .MuiTableRow-root:nth-of-type(even)': {
-               backgroundColor: '#F5F5F5',
+               backgroundColor: theme.palette.primary.backgroundAdmin,
             },
          },
       },

@@ -151,7 +151,7 @@ export default Patient
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .patient': {
       display: 'flex',
@@ -210,7 +210,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             width: '100%',
             height: '100%',
             justifyContent: 'space-between',
-            backgroundColor: '#DBEBFF',
+            backgroundColor: theme.palette.tertiary.daisy,
             borderRadius: '8px',
             padding: ' 2vh 2vh 7vh 2vh',
          },

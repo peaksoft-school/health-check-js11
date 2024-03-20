@@ -298,7 +298,7 @@ const AddSchedule = ({ open, onClose }) => {
 
 export default AddSchedule
 
-const StyledForm = styled('form')(() => ({
+const StyledForm = styled('form')(({ theme }) => ({
    padding: '10px',
    width: '490px',
    height: '594px',
@@ -322,7 +322,7 @@ const StyledForm = styled('form')(() => ({
       textAlign: 'center',
       fontSize: '24px',
       fontWeight: '500',
-      color: '#222',
+      color: theme.palette.primary.lightBlack,
    },
 
    '& > .input-block': {
@@ -341,16 +341,16 @@ const StyledForm = styled('form')(() => ({
       marginBottom: '2em',
 
       '& > .active': {
-         backgroundColor: '#fff',
+         backgroundColor: theme.palette.primary.main,
          padding: '10px 17px 10px 16px',
          justifyContent: 'center',
          alignItems: 'center',
 
          borderRadius: '10px',
-         border: '1px solid #d9d9d9',
+         border: `1px solid ${theme.palette.secondary.main}`,
          fontSize: '16px',
          fontWeight: '600',
-         color: '#959595',
+         color: theme.palette.secondary.lightGrey,
       },
 
       '& >.day-of-week': {
@@ -362,7 +362,7 @@ const StyledForm = styled('form')(() => ({
          fontSize: '16px',
          fontWeight: '600',
          backgroundColor: '#3977c0',
-         color: '#ffffff',
+         color: theme.palette.primary.main,
          border: '0.3px solid #3977c0',
       },
    },

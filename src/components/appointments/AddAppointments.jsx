@@ -15,7 +15,7 @@ import Button from '../UI/Button'
 import { APPOINTMENTS_ACTIONS } from '../../store/slices/appointments/appointmentsSlice'
 
 const AddAppointments = ({ open, onClose }) => {
-   const [currentPage, setCurrentPage] = useState('main')
+   const [currentPart, setCurrentPart] = useState('main')
    const [doctorInfo, setDoctorInfo] = useState('')
    const [facility, setFacility] = useState('')
    const [selectedDate, setSelectedDate] = useState(null)
@@ -38,21 +38,21 @@ const AddAppointments = ({ open, onClose }) => {
    }
 
    const specialistHandler = () => {
-      if (facility) setCurrentPage('specialist')
+      if (facility) setCurrentPart('specialist')
       else showToast({ message: 'Выберите специалиста!', status: 'error' })
    }
 
    const datePageHandler = () => {
-      if (doctorInfo) setCurrentPage('date')
+      if (doctorInfo) setCurrentPart('date')
       else showToast({ message: 'Выберите доктора!', status: 'error' })
    }
 
-   const formHandler = () => setCurrentPage('form')
+   const formHandler = () => setCurrentPart('form')
 
-   const goBack = () => setCurrentPage('main')
+   const goBack = () => setCurrentPart('main')
 
    const goBackAndClear = () => {
-      setCurrentPage('main')
+      setCurrentPart('main')
       setFacility('')
       setDoctorInfo('')
       setSelectedDate(null)
@@ -61,9 +61,8 @@ const AddAppointments = ({ open, onClose }) => {
    }
 
    const goBackAndClearCode = () => {
-      dispatch(
-         goBackAndClear(APPOINTMENTS_ACTIONS.goBackClearCode(goBackAndClear))
-      )
+      setCurrentPart('main')
+      dispatch(APPOINTMENTS_ACTIONS.goBackClearCode())
    }
 
    const closeHandler = () => {
@@ -71,10 +70,10 @@ const AddAppointments = ({ open, onClose }) => {
       goBackAndClear()
    }
 
-   const openLast = () => setCurrentPage('result')
+   const openLast = () => setCurrentPart('result')
 
    const renderPart = () => {
-      switch (currentPage) {
+      switch (currentPart) {
          case 'main':
             return (
                <Appointments
@@ -130,7 +129,7 @@ const AddAppointments = ({ open, onClose }) => {
             )
 
          case 'result':
-            return <Result goBack={goBackAndClear} />
+            return <Result />
 
          default:
             return 'main'
@@ -141,19 +140,19 @@ const AddAppointments = ({ open, onClose }) => {
       <Drawer open={open} onClose={closeHandler}>
          <StyledDrawer>
             <Box className="header-box">
-               {currentPage === 'main' || currentPage === 'result' ? (
+               {currentPart === 'main' || currentPart === 'result' ? (
                   <CloseIcon className="close" onClick={closeHandler} />
                ) : (
-                  <GoBackIcon className="close" onClick={goBack} />
+                  <GoBackIcon className="close" onClick={goBackAndClearCode} />
                )}
 
                <Box className="header">
                   <Typography className="title">
-                     {currentPage === 'main' && 'Онлайн Запись'}
-                     {currentPage === 'specialist' && 'Выбрать специалиста'}
-                     {currentPage === 'date' && 'Выбрать дату и время'}
-                     {currentPage === 'form' && 'Запись'}
-                     {currentPage === 'result' && 'Онлайн Запись'}
+                     {currentPart === 'main' && 'Онлайн Запись'}
+                     {currentPart === 'specialist' && 'Выбрать специалиста'}
+                     {currentPart === 'date' && 'Выбрать дату и время'}
+                     {currentPart === 'form' && 'Запись'}
+                     {currentPart === 'result' && 'Онлайн Запись'}
                   </Typography>
                </Box>
 
@@ -168,11 +167,11 @@ const AddAppointments = ({ open, onClose }) => {
 
 export default AddAppointments
 
-const StyledDrawer = styled(Box)(() => ({
+const StyledDrawer = styled(Box)(({ theme }) => ({
    '& > .header-box': {
       display: 'flex',
       boxSizing: 'content-box',
-      background: '#fff',
+      background: theme.palette.primary.main,
       padding: '0.938rem',
       justifyContent: 'space-between',
 

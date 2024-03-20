@@ -73,6 +73,14 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
       costomId: Math.random(),
    }))
 
+   const loadingMessage = () => {
+      return isLoading ? (
+         <StyledLoading />
+      ) : (
+         <Typography>Нет доступных докторов для этой услуги</Typography>
+      )
+   }
+
    return (
       <StyledContainer>
          {doctorsTimesheet.length > 0 ? (
@@ -94,10 +102,8 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                   ))}
                </Box>
             </>
-         ) : isLoading ? (
-            <StyledLoading />
          ) : (
-            <Typography>Нет доступных докторов для этой услуги</Typography>
+            loadingMessage()
          )}
       </StyledContainer>
    )

@@ -166,9 +166,9 @@ const SpecialistInnerPage = () => {
 
 export default SpecialistInnerPage
 
-const StyledMainContainer = styled(Box)(() => ({
+const StyledMainContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -177,18 +177,21 @@ const StyledMainContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
    },
+
    '& .navlink': {
       marginBottom: '2rem',
       color: 'grey',
       fontSize: '14px',
       textDecoration: 'none',
    },
+
    '& .title': {
       fontSize: '1.375rem',
       fontWeight: '400',
       lineHeight: 'normal',
       marginBottom: '1.87rem',
    },
+
    '& .table-container': {
       width: '100%',
       borderRadius: '0.375rem',
@@ -199,26 +202,33 @@ const StyledMainContainer = styled(Box)(() => ({
          border: 'none',
       },
    },
+
    '& .personal-data': {
       fontSize: '22px',
    },
+
    '& .one-row': {
       padding: '1.90rem 0 1rem',
       gap: '1rem',
    },
+
    '& .two-row': {
       padding: '1.97rem 5rem 1rem',
    },
+
    '& .input-container': {
       display: 'flex',
    },
+
    '& .custom-select': {
       width: '490px',
       height: '5px',
    },
+
    '& .depatment-container': {
       marginTop: '-10.10rem',
    },
+
    '& .back': {
       textDecoration: 'none',
       '& .button-group': {
@@ -276,7 +286,7 @@ const StyledSpecialistRow = styled(Typography)(() => ({
    },
 }))
 
-const StyledImage = styled(Box)(() => ({
+const StyledImage = styled(Box)(({ theme }) => ({
    display: 'flex',
    marginLeft: '-12rem',
    marginTop: '1rem',
@@ -288,7 +298,7 @@ const StyledImage = styled(Box)(() => ({
    '& .change-photo': {
       marginLeft: '-6.80rem',
       marginTop: '8.90rem',
-      color: '#346EFB',
+      color: theme.palette.tertiary.lightBlue,
       fontSize: '12px',
    },
 }))
