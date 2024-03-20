@@ -42,7 +42,7 @@ const StyledTimePicker = styled(MuiTimePicker)(({ error }) => ({
    fontFamily: 'Manropo',
    fontWeight: '400',
    fontSize: '14px',
-   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+   border: error ? '1px solid red' : '1px solid #D4D4D4',
    input: {
       width: '3.7rem',
       padding: '3px 6px 3px 6px',

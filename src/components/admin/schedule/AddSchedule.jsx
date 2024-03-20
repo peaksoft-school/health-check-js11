@@ -20,20 +20,27 @@ import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 import Button from '../../UI/Button'
 
 const selectStyles = {
-   control: (styles, state) => ({
-      ...styles,
-      width: '270px',
+   control: (styles, state) => {
+      let borderColor = state.isFocused ? 'rgba(4, 135, 65, 0.80)' : '#cccccc'
 
-      borderColor: state.isFocused
-         ? 'rgba(4, 135, 65, 0.80) !important'
-         : '#d9d9d9',
-      boxShadow: 'none',
-      borderRadius: '6px',
+      if (state.selectProps.error) {
+         borderColor = 'red'
+      }
 
-      '& span': {
-         width: '0',
-      },
-   }),
+      return {
+         ...styles,
+         width: '270px',
+         // borderColor: state.isFocused
+         //    ? 'rgba(4, 135, 65, 0.80) !important'
+         //    : '#d9d9d9',
+         boxShadow: 'none',
+         border: `1px solid ${borderColor}`,
+         borderRadius: '6px',
+         '& span': {
+            width: '0',
+         },
+      }
+   },
 }
 
 const AddSchedule = ({ open, onClose }) => {
@@ -120,14 +127,16 @@ const AddSchedule = ({ open, onClose }) => {
       label: doctor.fullNameDoctor,
    }))
 
-   const handleDayButtonClick = (dayLabel) =>
+   const handleDayButtonClick = (dayLabel) => {
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
+   }
 
    const dateToday = dayjs()
    const endDate = dateToday.add(1, 'day')
 
-   const selectDoctor = (selectedOption) =>
+   const selectDoctor = (selectedOption) => {
       setFieldValue('doctor', selectedOption.label)
+   }
 
    return (
       <Modal open={open} handleClose={onClose}>
@@ -278,12 +287,6 @@ const AddSchedule = ({ open, onClose }) => {
                   </button>
                ))}
             </Box>
-
-            {scheduleError(errors) && (
-               <Typography className="error-message">
-                  {scheduleError(errors)}
-               </Typography>
-            )}
 
             <Box className="button-group">
                <StyledButton onClick={onClose} type="button" variant="grey">

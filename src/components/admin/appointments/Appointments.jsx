@@ -8,6 +8,8 @@ import {
 } from '../../../assets/icons'
 import Select from '../../UI/Select'
 import Button from '../../UI/Button'
+import { containsTheHTTPS } from '../../../utils/helpers'
+import { NotUserImage } from '../../../assets/images'
 
 const Appointments = ({
    toggleSpecialist,
@@ -60,10 +62,14 @@ const Appointments = ({
 
          {doctorInfo ? (
             <Box className="first-part">
-               {doctorInfo.doctor.imageDoctor.startsWith('https://') ? (
-                  <img src={doctorInfo.doctor.imageDoctor} alt="doctor" />
+               {containsTheHTTPS(doctorInfo.doctor.imageDoctor) ? (
+                  <img
+                     className="image"
+                     src={doctorInfo.doctor.imageDoctor}
+                     alt="doctor"
+                  />
                ) : (
-                  <ProfileIcon className="image-icon" />
+                  <img className="image" src={NotUserImage} alt="doctor" />
                )}
 
                <Box onClick={toggleSpecialist} className="doctor-info">

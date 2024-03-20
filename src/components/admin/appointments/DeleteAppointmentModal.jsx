@@ -5,7 +5,7 @@ import Button from '../../UI/Button'
 import { APPOINTMENTS_THUNKS } from '../../../store/slices/appointments/appointmentsThunk'
 import { CloseAndDeleteIcon } from '../../../assets/icons'
 
-const DeleteAppointmentModal = ({ handleClose, goBack }) => {
+const DeleteAppointmentModal = ({ handleClose, goBack, goBackAndClear }) => {
    const { appointmentId } = useSelector((state) => state.appointments)
 
    const [deleteSuccess, setDeleteSuccess] = useState(false)
@@ -51,6 +51,7 @@ const DeleteAppointmentModal = ({ handleClose, goBack }) => {
                   >
                      Отменить запись
                   </Button>
+
                   <Button onClick={handleClose}>Закрыть</Button>
                </Box>
             </StyledModalContent>

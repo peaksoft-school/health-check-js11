@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Rating, styled, Typography, Box } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { PlusIcon, ProfileIcon, RegisteredIcon } from '../../../assets/icons'
+import { PlusIcon, RegisteredIcon } from '../../../assets/icons'
 import Button from '../../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
+import { NotUserImage } from '../../../assets/images'
+import { containsTheHTTPS } from '../../../utils/helpers'
 
-const Result = ({ goBack }) => {
+const Result = ({ goBack, goBackAndClear }) => {
    const { doctorData } = useSelector((state) => state.appointments)
    const [toggleModal, setToggleModal] = useState(false)
 
@@ -18,7 +20,9 @@ const Result = ({ goBack }) => {
       return capitalizedWeekday
    }
 
-   const closeModal = () => setToggleModal((prev) => !prev)
+   const closeModal = () => {
+      setToggleModal((prev) => !prev)
+   }
 
    const startTime = doctorData ? doctorData.startTime.slice(0, 5) : ''
    const endTime = doctorData ? doctorData.endTime.slice(0, 5) : ''
@@ -35,14 +39,14 @@ const Result = ({ goBack }) => {
 
          <Box className="doctor">
             <Box className="image-box">
-               {doctorData.doctorImage.startsWith('https://') ? (
+               {containsTheHTTPS(doctorData.imageDoctor) ? (
                   <img
                      className="image"
-                     src={doctorData.doctorImage}
+                     src={doctorData.imageDoctor}
                      alt="doctor"
                   />
                ) : (
-                  <ProfileIcon className="image" />
+                  <img className="image" src={NotUserImage} alt="doctor" />
                )}
             </Box>
 
@@ -77,7 +81,11 @@ const Result = ({ goBack }) => {
          </StyledButton>
 
          {toggleModal && (
-            <DeleteAppointmentModal handleClose={closeModal} goBack={goBack} />
+            <DeleteAppointmentModal
+               goBackAndClear={goBackAndClear}
+               handleClose={closeModal}
+               goBack={goBack}
+            />
          )}
       </StyledContainer>
    )

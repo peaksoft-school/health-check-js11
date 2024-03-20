@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getSpecialists = createAsyncThunk(
    'specialists/getSpecialists',
@@ -33,6 +34,11 @@ const deleteSpecialists = createAsyncThunk(
       try {
          await axiosInstance.delete(`/api/doctor/${id}`)
          dispatch(getSpecialists())
+
+         showToast({
+            message: 'успешно удалено',
+         })
+
          return id
       } catch (error) {
          return rejectWithValue(error)

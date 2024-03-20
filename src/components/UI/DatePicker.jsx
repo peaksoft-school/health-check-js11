@@ -26,6 +26,7 @@ const DatePicker = ({
          onBlur={onBlur}
          dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
+         minDate={minDate}
          error={error}
          slots={{
             openPickerIcon: CalendarIcon,
@@ -100,7 +101,7 @@ const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
-   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+   border: error ? '1px solid red' : '1px solid #D4D4D4',
 
    input: {
       width: '5.625rem',

@@ -1,14 +1,15 @@
 import { styled, Typography, Box, Rating } from '@mui/material'
 import Button from '../../UI/Button'
-import { ProfileIcon } from '../../../assets/icons'
+import { NotUserImage } from '../../../assets/images'
+import { containsTheHTTPS } from '../../../utils/helpers'
 
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
    <StyledContainer>
       <Box className="first-part">
-         {doctor.imageDoctor.startsWith('https://') ? (
+         {containsTheHTTPS(doctor.imageDoctor) ? (
             <img className="image" src={doctor.imageDoctor} alt="doctor" />
          ) : (
-            <ProfileIcon className="image" />
+            <img className="image" src={NotUserImage} alt="doctor" />
          )}
 
          <Box>

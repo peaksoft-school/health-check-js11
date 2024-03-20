@@ -70,6 +70,14 @@ const AddAppointments = ({ open, onClose }) => {
       goBackAndClear()
    }
 
+   const goBackAndClearNotClose = () => {
+      setCurrentPart('main')
+      setFacility('')
+      setDoctorInfo('')
+      setSelectedDate(null)
+      setSelectedTime('')
+   }
+
    const openLast = () => setCurrentPart('result')
 
    const renderPart = () => {
@@ -129,7 +137,12 @@ const AddAppointments = ({ open, onClose }) => {
             )
 
          case 'result':
-            return <Result />
+            return (
+               <Result
+                  goBackAndClear={goBackAndClearCode}
+                  goBack={goBackAndClearNotClose}
+               />
+            )
 
          default:
             return 'main'
