@@ -3,15 +3,13 @@ import { NavLink } from 'react-router-dom'
 import { AboutClinicImage } from '../../../assets/images'
 // eslint-disable-next-line import/no-cycle
 import AboutUs from '../../../components/landing/AboutUs'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const AboutClinic = () => {
    return (
       <StyledContainer>
          <NavigatePathTitle>
-            <p>
-               <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-               <span>О клинике</span>
-            </p>
+            <BreadCrumbs to="/" before="Главная" text="О клинике" />
          </NavigatePathTitle>
 
          <Typography className="title" variant="h3">
