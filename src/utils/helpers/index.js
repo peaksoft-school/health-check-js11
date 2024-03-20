@@ -25,6 +25,19 @@ const passwordError = (errors) => {
 
    return errorMessage
 }
+const resetPasswordError = (errors) => {
+   let errorMessage = null
+
+   if (errors.oldPassword) {
+      errorMessage = errors.oldPassword
+   } else if (errors.confirmPassword) {
+      errorMessage = errors.confirmPassword
+   } else if (errors.newPassword) {
+      errorMessage = errors.newPassword
+   }
+
+   return errorMessage
+}
 
 const signUpError = (errors) => {
    let errorMessage = null
@@ -216,4 +229,5 @@ export {
    formatPhoneNumberWithSpaces,
    handleKeyPress,
    showAppointmentFormError,
+   resetPasswordError,
 }

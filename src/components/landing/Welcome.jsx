@@ -1,4 +1,5 @@
 import { styled, Box, Typography } from '@mui/material'
+import { Link } from 'react-scroll'
 import { DoctorWelcomeImage } from '../../assets/images'
 import Button from '../UI/Button'
 
@@ -16,7 +17,9 @@ const Welcome = () => (
                технологии и ведут прием лучшие специалисты.
             </StyledDescription>
 
-            <StyledButton variant="secondary">оставьте заявку</StyledButton>
+            <Link spy smooth to="Leave">
+               <StyledButton variant="secondary">ОСТАВЬТЕ ЗАЯВКУ</StyledButton>
+            </Link>
          </Box>
 
          <img className="doctor" src={DoctorWelcomeImage} alt="доктор" />

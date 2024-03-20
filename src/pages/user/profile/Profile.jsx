@@ -259,12 +259,14 @@ const StyledInput = styled(Input)(() => ({
    marginBottom: '1.5rem',
 
    '& .MuiOutlinedInput-root ': {
+      width: '414px',
       height: '2.625rem',
       color: 'black',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       height: '0.4375em',
       color: 'black',
       borderRadius: '0.5rem',

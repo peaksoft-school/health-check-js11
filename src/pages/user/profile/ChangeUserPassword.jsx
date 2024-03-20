@@ -14,8 +14,9 @@ import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
-import { VALIDATION_FORGOT_PASSWORD } from '../../../utils/helpers/validate'
-import { passwordError } from '../../../utils/helpers'
+import { VALIDATION_CHANGE_PASSWORD } from '../../../utils/helpers/validate'
+import { passwordError, resetPasswordError } from '../../../utils/helpers'
+import { showToast } from '../../../utils/helpers/notification'
 
 const ChangeUserPassword = () => {
    const [showOldPassword, setShowOldPassword] = useState(false)
@@ -25,6 +26,8 @@ const ChangeUserPassword = () => {
    const { userData, isLoading } = useSelector((state) => state.profile)
 
    const dispatch = useDispatch()
+
+   const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
 
    const onSubmit = (values, { resetForm }) => {
       const { oldPassword, newPassword, confirmPassword } = values
@@ -49,21 +52,28 @@ const ChangeUserPassword = () => {
 
       validateOnChange: false,
       onSubmit,
-      validationSchema: VALIDATION_FORGOT_PASSWORD,
+      validationSchema: VALIDATION_CHANGE_PASSWORD,
    })
 
    const sentEmai = (e) => {
       e.preventDefault()
       const { email } = values
 
-      dispatch(
-         forgotPassword({
-            email,
-            link: 'http://localhost:3000/change-password',
-            setEmail: () => '',
-            onClose: () => '',
+      if (!emailRegex.test(email)) {
+         showToast({
+            message: 'не валидный email',
+            status: 'error',
          })
-      )
+      } else {
+         dispatch(
+            forgotPassword({
+               email,
+               link: 'http://localhost:3000/change-password',
+               setEmail: () => '',
+               onClose: () => '',
+            })
+         )
+      }
    }
 
    const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
@@ -83,6 +93,7 @@ const ChangeUserPassword = () => {
                   <StyledInput
                      value={values.oldPassword}
                      name="password"
+                     error={!!errors.oldPassword}
                      onChange={handleChange('oldPassword')}
                      placeholder="Введите пароль"
                      type={showOldPassword ? 'text' : 'password'}
@@ -152,9 +163,9 @@ const ChangeUserPassword = () => {
                   />
 
                   <div>
-                     {passwordError(errors) && (
+                     {resetPasswordError(errors) && (
                         <Typography className="error-message">
-                           {passwordError(errors)}
+                           {resetPasswordError(errors)}
                         </Typography>
                      )}
                   </div>
@@ -254,9 +265,11 @@ const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
       borderRadius: '0.5rem',
+      width: '414px',
    },
 
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       color: 'black',
       height: '0.4375em',
       borderRadius: '0.5rem',

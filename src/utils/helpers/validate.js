@@ -38,6 +38,18 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
       .required('Подтвердите пароль!'),
 })
 
+const VALIDATION_CHANGE_PASSWORD = Yup.object().shape({
+   oldPassword: Yup.string().required('Введите старый пароль!'),
+
+   newPassword: Yup.string()
+      .required('Введите новый пароль!')
+      .min(8, 'Минимальная длина пароля 8 символов!')
+      .matches(passwordRegex, 'Не вылидный пароль!'),
+   confirmPassword: Yup.string()
+      .oneOf([Yup.ref('newPassword'), null], 'Пароли не совпадают!')
+      .required('Подтвердите пароль!'),
+})
+
 const VALIDATION_SIGN_IN = Yup.object().shape({
    email: Yup.string()
       .email()
@@ -92,4 +104,5 @@ export {
    VALIDATION_RESULT,
    VALIDATION_FORGOT_PASSWORD,
    VALIDATION_APPOINTMENTS_FORM,
+   VALIDATION_CHANGE_PASSWORD,
 }
