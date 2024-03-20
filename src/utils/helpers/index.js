@@ -198,7 +198,13 @@ const handleKeyPress = (e) => {
    }
 }
 
+const containsTheHTTPS = (url) => {
+   const regex = /https/
+   return regex.test(url)
+}
+
 export {
+   containsTheHTTPS,
    getRussianMonthName,
    signInError,
    generateDateRange,

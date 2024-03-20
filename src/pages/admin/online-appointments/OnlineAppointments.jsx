@@ -4,7 +4,6 @@ import { useDebounce } from 'use-debounce'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
@@ -13,6 +12,7 @@ import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
 import Schedule from '../schedule/Schedule'
 import AddSchedule from '../../../components/admin/schedule/AddSchedule'
+import Table from '../../../components/UI/Table'
 
 const getDefaultTabValue = () => {
    const storedValue = localStorage.getItem('selectedTab')

@@ -1,7 +1,6 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { NavLink } from 'react-router-dom'
+import { Box, Typography } from '@mui/material'
 import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 import LocalDate from '../../components/UI/admin/LocalDate'
@@ -11,7 +10,6 @@ import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
 import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
-import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
 import { formatPhoneNumberWithSpaces } from '../helpers'
 import {
@@ -19,10 +17,10 @@ import {
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
-import { EditIcon } from '../../assets/icons'
-import SpocialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
-// import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
-import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
+import SelectSeparately from '../../components/UI/admin/SelectSeparately'
+import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
+import SpecialistInfo from '../../components/admin/specialists/SpecialistInfo'
+import SpecialistActions from '../../components/admin/specialists/SpecialistActions'
 
 const SCHEDULE_COLUMN = [
    {
@@ -32,6 +30,7 @@ const SCHEDULE_COLUMN = [
       Cell: ({ row }) => (
          <Box>
             <img src={row.origindl.image} alt="doctor" />
+
             <Typography>{row.origindl.surename}</Typography>
             <Typography>{row.origindl.position}</Typography>
          </Box>
@@ -95,7 +94,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => row.index + 1,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.index + 1}
+         </Typography>
+      ),
    },
 
    {
@@ -111,6 +118,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.fullName}
+         </Typography>
+      ),
    },
 
    {
@@ -129,7 +146,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => {
          const { phoneNumber } = row.original
-         return <Box>{formatPhoneNumberWithSpaces(phoneNumber)}</Box>
+         return (
+            <Box
+               style={{
+                  color: row.original.processed ? 'black' : '#707070',
+               }}
+            >
+               {formatPhoneNumberWithSpaces(phoneNumber)}
+            </Box>
+         )
       },
    },
 
@@ -146,6 +171,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.email}
+         </Typography>
+      ),
    },
 
    {
@@ -161,6 +196,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.facility}
+         </Typography>
+      ),
    },
 
    {
@@ -176,6 +221,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.specialist}
+         </Typography>
+      ),
    },
 
    {
@@ -193,7 +248,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          fontSize: '5px',
       },
 
-      Cell: ({ row }) => <LocalDate row={row} />,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            <LocalDate row={row} />
+         </Typography>
+      ),
    },
 
    {
@@ -243,6 +306,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Cell: ({ row }) => {
          return (
             <Delete
+               text="запись"
                name={row.original.fullName}
                disabled={row.original.processed}
                deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAppoinment}
@@ -375,6 +439,7 @@ const PATIENTS_COLUMN = [
                id={row.original.id}
                deleteFn={PATIENTS_THUNKS.deletePatients}
                variant="patients"
+               text="пациента"
             />
          )
       },
@@ -425,7 +490,15 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => row.index + 1,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.index + 1}
+         </Typography>
+      ),
    },
    {
       Header: 'Имя',
@@ -438,6 +511,16 @@ const APPLICATIONS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.name}
+         </Typography>
+      ),
    },
    {
       Header: 'Дата',
@@ -451,7 +534,13 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '500',
       },
       Cell: ({ row }) => (
-         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
+         <Box
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {format(new Date(row.original.date), 'dd.MM.yy')}{' '}
+         </Box>
       ),
    },
    {
@@ -469,7 +558,15 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => {
          const { number } = row.original
-         return <Box>{formatPhoneNumberWithSpaces(number)}</Box>
+         return (
+            <Box
+               style={{
+                  color: row.original.processed ? 'black' : '#707070',
+               }}
+            >
+               {formatPhoneNumberWithSpaces(number)}
+            </Box>
+         )
       },
    },
    {
@@ -511,6 +608,7 @@ const APPLICATIONS_COLUMN = [
             id={row.original.id}
             name={row.original.name}
             disabled={row.original.processed}
+            text="заявку"
          />
       ),
    },
@@ -522,35 +620,38 @@ const SPECIALISTS_COLUMN = [
       accessor: 'id',
 
       style: {
-         padding: '19px 0 20px',
-         fontWeight: '700',
+         padding: '19px 0 20px 20px',
+         fontSize: '16px',
          flex: '0.2',
+         paddingLeft: '20px',
       },
 
-      tdStyle: {
-         fontWeight: '600',
-      },
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.isActive ? 'black' : '#707070',
+            }}
+         >
+            {row.original.id}
+         </Typography>
+      ),
    },
+
    {
       Header: 'Статус',
+
       style: {
          padding: '19px 0 20px',
          flex: 0.38,
-         fontWeight: '600',
       },
 
-      tdStyle: {
-         justifyContent: 'end',
-      },
-
-      Cell: ({ row }) => {
-         return <SpocialistSwicher {...row.original} />
-      },
+      Cell: ({ row }) => <SpecialistSwicher {...row.original} />,
    },
 
    {
       Header: 'Специалист',
       accessor: 'specialists',
+
       style: {
          padding: '19px 0 20px',
          fontWeight: '700',
@@ -562,39 +663,7 @@ const SPECIALISTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => {
-         return (
-            <Box style={{ display: 'flex', alignItems: 'center' }}>
-               <img
-                  src={row.original.image}
-                  alt="doctor"
-                  style={{
-                     width: '38px',
-                     height: '38px',
-                     marginRight: '13px',
-                     borderRadius: '50%',
-                  }}
-               />
-
-               <div>
-                  <Typography variant="span">
-                     <span
-                        style={{
-                           color: '#222222',
-                           fontSize: '16px',
-                        }}
-                     >
-                        {row.original.firstName} {row.original.lastName}
-                     </span>
-                     <br />
-                     <span style={{ color: '#959595', fontSize: '14px' }}>
-                        {row.original.position}
-                     </span>
-                  </Typography>
-               </div>
-            </Box>
-         )
-      },
+      Cell: ({ row }) => <SpecialistInfo {...row.original} />,
    },
 
    {
@@ -607,50 +676,39 @@ const SPECIALISTS_COLUMN = [
          flex: 0.51,
       },
 
-      Cell: ({ value }) => (
-         <span style={{ fontWeight: '500', fontSize: '16px', color: 'black' }}>
-            {value}
-         </span>
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.isActive ? 'black' : '#707070',
+            }}
+         >
+            {row.original.department}
+         </Typography>
       ),
    },
 
    {
       Header: 'Расписание до',
       accessor: 'endDateWork',
-      Cell: ({ value }) => {
-         const date = new Date(value)
 
-         const months = [
-            'января',
-            'февраля',
-            'марта',
-            'апреля',
-            'мая',
-            'июня',
-            'июля',
-            'августа',
-            'сентября',
-            'октября',
-            'ноября',
-            'декабря',
-         ]
-
-         const day = date.getDate()
-
-         const month = months[date.getMonth()]
-
-         const year = date.getFullYear()
-
-         const formattedDate = `${day} ${month} ${year} г.`
-
-         return <span style={{ color: 'black' }}>{formattedDate}</span>
-      },
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.99,
          fontSize: '16px',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.isActive ? 'black' : '#707070',
+            }}
+         >
+            {format(new Date(row.original.endDateWork), 'd MMMM yyyy г.', {
+               locale: ru,
+            })}
+         </Typography>
+      ),
    },
    {
       Header: 'Действия',
@@ -658,7 +716,6 @@ const SPECIALISTS_COLUMN = [
 
       style: {
          padding: '19px 10px 20px 10px',
-         fontWeight: '600',
          flex: 0.2,
       },
 
@@ -667,29 +724,7 @@ const SPECIALISTS_COLUMN = [
          justifyContent: 'center',
       },
 
-      Cell: ({ row }) => {
-         const disabled = false
-
-         return (
-            <div
-               style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '30px',
-               }}
-            >
-               <NavLink to={row.original.id.toString()}>
-                  <EditIcon />
-               </NavLink>
-               <Delete
-                  name={`${row.original.firstName} ${row.original.lastName}`}
-                  deleteFn={SPECIALISTS_THUNK.deleteSpecialists}
-                  id={row.original.id}
-                  variant="patients"
-               />
-            </div>
-         )
-      },
+      Cell: ({ row }) => <SpecialistActions {...row.original} />,
    },
 ]
 

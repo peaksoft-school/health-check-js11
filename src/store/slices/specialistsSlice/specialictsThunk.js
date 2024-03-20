@@ -42,12 +42,13 @@ const deleteSpecialists = createAsyncThunk(
 
 const updateDoctorStatus = createAsyncThunk(
    'specialists/updateDoctorStatus',
-   async ({ id, active }, { dispatch, rejectWithValue }) => {
+   async ({ id, checked }, { dispatch, rejectWithValue }) => {
       try {
-         await axiosInstance.patch(`/api/doctor/${id}?b=${!active}`)
+         await axiosInstance.patch(`/api/doctor/${id}?b=${checked}`)
 
          dispatch(getSpecialists())
-         return { active, id }
+
+         return { checked, id }
       } catch (error) {
          return rejectWithValue(error.response.data)
       }

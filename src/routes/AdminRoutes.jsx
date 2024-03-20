@@ -12,9 +12,7 @@ const OnlineAppointments = lazy(
 const Patients = lazy(() => import('../pages/admin/patients/Patients'))
 const Patient = lazy(() => import('../pages/admin/patient/Patient'))
 const Specialists = lazy(() => import('../pages/admin/specialists/Specialists'))
-const SpecialistInnerPage = lazy(
-   () => import('../pages/admin/specialists/SpecialistInnerPage')
-)
+const Specialist = lazy(() => import('../pages/admin/specialist/Specialist'))
 const AddNote = lazy(() => import('../pages/admin/specialists/AddNote'))
 
 export const ADMIN_ROUTES = [
@@ -76,7 +74,7 @@ export const ADMIN_ROUTES = [
       path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}/:${ROUTES.ADMIN.ID}`,
       element: (
          <Suspense>
-            <SpecialistInnerPage />
+            <Specialist />
          </Suspense>
       ),
    },

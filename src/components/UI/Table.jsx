@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react'
 import { useTable } from 'react-table'
 import {
    TableContainer,
@@ -9,14 +10,13 @@ import {
    styled,
    Box,
 } from '@mui/material'
-import { memo, useMemo } from 'react'
 import { NoDataImage } from '../../assets/images'
 
 const Table = ({ columns: headers, data }) => {
    if (!data || data.length === 0) {
       return (
          <StyledAbsence>
-            <img src={NoDataImage} alt="no data" className="no-data" />
+            <img src={NoDataImage} alt="no-data" />
          </StyledAbsence>
       )
    }
@@ -102,13 +102,17 @@ const StyledTableContainer = styled(TableContainer)({
    '& > .table-head': {
       height: '3.688rem',
    },
+
+   '& .MuiTableCell-root': {
+      fontWeight: '600',
+   },
 })
 
 const StyledAbsence = styled(Box)(() => ({
    textAlign: 'center',
 
-   '& > .no-data': {
-      width: '50%',
-      height: '30%',
+   '& > img': {
+      width: '600px',
+      height: '600px',
    },
 }))
