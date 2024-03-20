@@ -91,12 +91,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '&  .add-button': {
-         fontSize: '11px',
          height: '45px',
-         width: '232px',
+         // width: '232px',
          fontFamily: 'Manrope',
 
          '& > div': {
+            fontSize: '18px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

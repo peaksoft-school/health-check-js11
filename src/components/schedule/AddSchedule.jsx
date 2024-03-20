@@ -42,17 +42,14 @@ const AddSchedule = ({ open, onClose }) => {
    const { doctors } = useSelector((state) => state.schedule)
 
    const onSubmit = (values, { resetForm }) => {
-      const createStartDate = format(
-         new Date(values.createStartDate),
-         'yyyy-MM-dd'
-      )
+      const createStartDate = format(values.createStartDate, 'yyyy-MM-dd')
 
-      const createEndDate = format(new Date(values.createEndDate), 'yyyy-MM-dd')
+      const createEndDate = format(values.createEndDate, 'yyyy-MM-dd')
 
-      const startTime = format(new Date(values.startTime), 'HH:mm')
-      const endTime = format(new Date(values.endTime), 'HH:mm')
-      const startBreak = format(new Date(values.startBreak), 'HH:mm')
-      const endBreak = format(new Date(values.endBreak), 'HH:mm')
+      const startTime = format(values.startTime, 'HH:mm')
+      const endTime = format(values.endTime, 'HH:mm')
+      const startBreak = format(values.startBreak, 'HH:mm')
+      const endBreak = format(values.endBreak, 'HH:mm')
 
       const dataToSend = {
          createStartDate,

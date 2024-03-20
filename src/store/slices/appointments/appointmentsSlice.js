@@ -3,10 +3,10 @@ import { APPOINTMENTS_THUNKS } from './appointmentsThunk'
 
 const initialState = {
    doctorsTimesheet: [],
-   doctors: {},
-   doctorData: {},
-   date: [],
    facilities: [],
+   doctors: {},
+   date: [],
+   doctorData: {},
    isLoading: false,
    appointmentId: null,
    code: null,
@@ -15,7 +15,11 @@ const initialState = {
 export const appointmentsSlice = createSlice({
    name: 'appointments',
    initialState,
-   reducers: {},
+   reducers: {
+      goBackClearCode: (state, { payload }) => {
+         state.code = null
+      },
+   },
 
    extraReducers: (builder) => {
       builder

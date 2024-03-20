@@ -75,8 +75,6 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
 
    return (
       <StyledContainer>
-         {isLoading && <StyledLoading />}
-
          {doctorsTimesheet.length > 0 ? (
             <>
                <StyledButton onClick={getRandomDoctor} variant="grey">
@@ -96,6 +94,8 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                   ))}
                </Box>
             </>
+         ) : isLoading ? (
+            <StyledLoading />
          ) : (
             <Typography>Нет доступных докторов для этой услуги</Typography>
          )}
@@ -147,8 +147,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const StyledLoading = styled(CircularProgress)(() => ({
    position: 'absolute',
-   bottom: 6,
-   width: '28px !important',
-   height: '28px !important',
-   zIndex: 100,
+   bottom: 260,
+   left: 140,
+   color: '#1c8b5a',
+   width: '100px !important',
+   height: '100px !important',
+   zIndex: 10000,
 }))

@@ -1,4 +1,3 @@
-import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import styled from '@emotion/styled'
 
@@ -37,6 +36,7 @@ const StyledNavLink = styled(NavLink)(() => ({
 
    '&.active': {
       fontWeight: 500,
+      color: 'black',
    },
 
    '& > .line': {

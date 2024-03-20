@@ -12,6 +12,7 @@ import ChooseDate from './ChooseDate'
 import AppointmentsForm from './AppointmentsForm'
 import Result from './Result'
 import Button from '../UI/Button'
+import { APPOINTMENTS_ACTIONS } from '../../store/slices/appointments/appointmentsSlice'
 
 const AddAppointments = ({ open, onClose }) => {
    const [currentPage, setCurrentPage] = useState('main')
@@ -57,6 +58,12 @@ const AddAppointments = ({ open, onClose }) => {
       setSelectedDate(null)
       setSelectedTime('')
       onClose()
+   }
+
+   const goBackAndClearCode = () => {
+      dispatch(
+         goBackAndClear(APPOINTMENTS_ACTIONS.goBackClearCode(goBackAndClear))
+      )
    }
 
    const closeHandler = () => {

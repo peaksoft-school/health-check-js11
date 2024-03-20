@@ -6,13 +6,14 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
 import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
+import Loading from '../../../components/Loading'
 
 const Applications = () => {
    const dispatch = useDispatch()
 
    const [searchText, setSearchText] = useState('')
 
-   const { selectAllApplications, items } = useSelector(
+   const { selectAllApplications, items, isLoading } = useSelector(
       (state) => state.applications
    )
 
@@ -58,24 +59,30 @@ const Applications = () => {
 
    return (
       <StyledContainer>
-         <StyledMainText>
-            <Typography className="title">Заявки</Typography>
-         </StyledMainText>
+         <Box className="box">
+            <Box className="button-container">
+               <Typography variant="h3">Заявки</Typography>
+            </Box>
 
-         <Box className="input-container">
-            <StyledSearchInput
-               value={searchText}
-               onChange={handleSearch}
-               placeholder="Поиск"
-            />
-         </Box>
+            <Box>
+               <Box className="input-container">
+                  <StyledInput
+                     value={searchText}
+                     onChange={handleSearch}
+                     placeholder="Поиск"
+                  />
+               </Box>
 
-         <Box className="table-container">
-            <Table
-               columns={APPLICATIONS_COLUMN}
-               data={preperadeArray}
-               className="table"
-            />
+               {isLoading && <Loading />}
+
+               <Box className="table-container">
+                  <Table
+                     columns={APPLICATIONS_COLUMN}
+                     data={preperadeArray}
+                     className="table"
+                  />
+               </Box>
+            </Box>
          </Box>
       </StyledContainer>
    )
@@ -83,59 +90,62 @@ const Applications = () => {
 
 export default Applications
 
-const StyledSearchInput = styled(SearchInput)(() => ({
-   width: '100%',
-}))
-
 const StyledContainer = styled(Box)(() => ({
    padding: '1.87rem 4.37rem 0',
    backgroundColor: '#F5F5F5',
-   minHeight: '100vh',
 
-   '& > .input-container': {
-      width: '42.2rem',
-      marginTop: '2.15rem',
-   },
+   '& > .box': {
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '1600px',
+      margin: '0 auto',
+      paddingBottom: '30px',
 
-   '& > .table-container': {
-      width: '100%',
-      borderRadius: '0.375rem',
-      bordeRradius: ' 0.375rem',
-      background: '#FFF',
-      height: '100%',
-      marginTop: '1.25rem',
+      '& h3': {
+         marginTop: '15px',
+         marginBottom: '15px',
+         fontSize: '24px',
+         fontWeight: '500',
+      },
 
-      '& .MuiTable-root': {
-         '& .MuiTableCell-root': {
-            borderBottom: 'none',
-         },
+      '&  .tables': {
+         padding: '0rem',
+      },
 
-         '& .MuiTableCell-head': {
-            borderBottom: '1px solid rgba(224, 224, 224, 1)',
-         },
+      '& .input-container': {
+         width: '37.5rem',
+         marginTop: '2.12rem',
+      },
 
-         '& .MuiTableRow-root:nth-of-type(even)': {
-            backgroundColor: '#F5F5F5',
+      '&  .table-container': {
+         width: '100%',
+         height: '100%',
+         borderRadius: '0.375rem',
+         bordeRradius: ' 0.375rem',
+         background: 'white',
+         marginTop: '1.25rem',
+
+         '& .MuiTable-root': {
+            '& .MuiTableCell-root': {
+               borderBottom: 'none',
+            },
+
+            '& .MuiTableCell-head': {
+               borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            },
+
+            '& .MuiTableRow-root:nth-of-type(even)': {
+               backgroundColor: '#F5F5F5',
+            },
          },
       },
    },
-
-   '& > .not-application': {
-      textAlign: 'center',
-      color: 'green',
-      fontWeight: '10rem',
-   },
 }))
 
-const StyledMainText = styled('h3')(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
-   marginBottom: '1.87rem',
+const StyledInput = styled(SearchInput)(() => ({
+   height: '2.5rem',
+   padding: '0rem 0.3rem',
+   display: 'inline-flex',
+   justifyContent: 'center',
    width: '100%',
-
-   '& > .title': {
-      fontWeight: '400',
-      lineHeight: 'normal',
-      fontSize: '1.375rem',
-   },
 }))
