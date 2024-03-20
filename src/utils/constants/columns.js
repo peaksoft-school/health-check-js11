@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { format } from 'date-fns'
-import { ru } from 'date-fns/locale'
+import { ro, ru } from 'date-fns/locale'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'
@@ -8,7 +8,6 @@ import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 import LocalDate from '../../components/UI/admin/LocalDate'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
-import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
 import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
 import { formatPhoneNumberWithSpaces } from '../helpers'
@@ -21,6 +20,7 @@ import SpecialistSwicher from '../../components/specialists/SpecialistSwicher'
 import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
 import SpecialistInfo from '../../components/specialists/SpecialistInfo'
 import SpecialistActions from '../../components/specialists/SpecialistActions'
+import Navigate from '../../components/UI/admin/Navigate'
 
 const SCHEDULE_COLUMN = [
    {
@@ -285,9 +285,9 @@ const PATIENTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => {
-         return <LinkPatient row={row} />
-      },
+      Cell: ({ row }) => (
+         <Navigate {...row.original} text={row.original.surname} />
+      ),
    },
 
    {
@@ -556,6 +556,7 @@ const SPECIALISTS_COLUMN = [
          fontSize: '16px',
          flex: '0.2',
          paddingLeft: '20px',
+         fontWeight: '700',
       },
 
       Cell: ({ row }) => (
@@ -575,6 +576,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          flex: 0.38,
+         fontWeight: '700',
       },
 
       Cell: ({ row }) => <SpecialistSwicher {...row.original} />,
@@ -625,9 +627,8 @@ const SPECIALISTS_COLUMN = [
 
       style: {
          padding: '19px 0 20px',
-         fontWeight: '600',
+         fontWeight: '700',
          flex: 0.99,
-         fontSize: '16px',
       },
 
       Cell: ({ row }) => (
@@ -642,6 +643,7 @@ const SPECIALISTS_COLUMN = [
          </Typography>
       ),
    },
+
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
@@ -649,6 +651,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 10px 20px 10px',
          flex: 0.2,
+         fontWeight: '700',
       },
 
       tdStyle: {

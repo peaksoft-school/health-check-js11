@@ -41,31 +41,29 @@ const Specialists = () => {
 
    return (
       <StyledContainer>
-         <Box className="box">
-            <Box className="button-container">
-               <Typography className="title">Специалисты</Typography>
+         <Box className="button-container">
+            <Typography className="title">Специалисты</Typography>
 
-               <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
-                  <Button className="add-button">
-                     <PlusIcon className="plus-icon" />
-                     ДОБАВИТЬ СПЕЦИАЛИСТА
-                  </Button>
-               </NavLink>
-            </Box>
+            <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
+               <Button className="add-button">
+                  <PlusIcon className="plus-icon" />
+                  ДОБАВИТЬ СПЕЦИАЛИСТА
+               </Button>
+            </NavLink>
+         </Box>
 
-            <Box className="input-container">
-               <StyledInput
-                  placeholder="Поиск"
-                  value={search}
-                  onChange={changeSearchHandler}
-               />
-            </Box>
+         <Box className="input-container">
+            <StyledInput
+               placeholder="Поиск"
+               value={search}
+               onChange={changeSearchHandler}
+            />
+         </Box>
 
-            {isLoading && <Loading />}
+         {isLoading && <Loading />}
 
-            <Box className="table-container">
-               <Table columns={SPECIALISTS_COLUMN} data={memoizedSpecialists} />
-            </Box>
+         <Box className="table-container">
+            <Table columns={SPECIALISTS_COLUMN} data={memoizedSpecialists} />
          </Box>
       </StyledContainer>
    )
@@ -74,58 +72,53 @@ const Specialists = () => {
 export default Specialists
 
 const StyledContainer = styled(Box)(() => ({
-   padding: '30px 70px',
-   backgroundColor: '#F5F5F5',
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
 
-   '& > .box': {
+   '& > .button-container': {
       display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
+      justifyContent: 'space-between',
 
-      '& > .button-container': {
-         display: 'flex',
-         justifyContent: 'space-between',
+      '& > .title': {
+         fontSize: '1.375rem',
+         fontWeight: '400',
+         lineHeight: 'normal',
+         marginBottom: '1.87rem',
+      },
 
-         '& > .title': {
-            fontSize: '1.375rem',
-            fontWeight: '400',
-            lineHeight: 'normal',
-            marginBottom: '1.87rem',
-         },
+      '& > a > .add-button': {
+         fontFamily: 'Manrope',
+         fontSize: '0.875rem',
+         fontStyle: 'normal',
+         fontWeight: '600',
+         lineHeight: 'normal',
+         letterSpacing: '0.02625rem',
+         height: '2.75rem',
+         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+         flexShrink: '0',
 
-         '& > a > .add-button': {
-            fontFamily: 'Manrope',
-            fontSize: '0.875rem',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: 'normal',
-            letterSpacing: '0.02625rem',
-            height: '2.75rem',
-            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            flexShrink: '0',
-
-            '& > div': {
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'space-between',
-               width: '100%',
-               gap: '10px',
-            },
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            gap: '10px',
          },
       },
+   },
 
-      '& > .input-container': {
-         width: '37.5rem ',
-         marginTop: '0.1rem',
-      },
+   '& > .input-container': {
+      width: '37.5rem ',
+      marginTop: '0.1rem',
+   },
 
-      '& > .table-container': {
-         width: '100%',
-         borderRadius: '0.375rem',
-         backgroundColor: 'white',
-         marginTop: '1.25rem',
-      },
+   '& > .table-container': {
+      width: '100%',
+      borderRadius: '0.375rem',
+      backgroundColor: 'white',
+      marginTop: '1.25rem',
    },
 }))
 

@@ -99,12 +99,22 @@ const StyledTableContainer = styled(TableContainer)({
    display: 'flex',
    justifyContent: 'center',
 
-   '& > .table-head': {
+   '& .MuiTableHead-root': {
       height: '3.688rem',
+      borderBottom: '1px solid  rgba(224, 224, 224, 1)',
    },
 
    '& .MuiTableCell-root': {
       fontWeight: '600',
+      border: 'none',
+   },
+
+   '& .MuiTableRow-root': {
+      borderBottom: '1px solid  rgba(224, 224, 224, 1)',
+   },
+
+   '& .MuiTableRow-root:last-of-type': {
+      borderBottom: 'none',
    },
 })
 
