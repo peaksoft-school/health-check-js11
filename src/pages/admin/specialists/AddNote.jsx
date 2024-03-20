@@ -29,7 +29,6 @@ const AddNote = () => {
          !values.firstName ||
          !values.lastName ||
          !values.position ||
-         !values.description ||
          !values.departmentId
       ) {
          return
