@@ -1,32 +1,34 @@
-import { Box, Typography, styled } from '@mui/material'
+import { Avatar, Box, Typography, styled } from '@mui/material'
+import { containsTheHTTPS } from '../../utils/helpers'
+import { NotUserImage } from '../../assets/images'
 
-const SpecialistInfo = ({ image, firstName, lastName, position, isActive }) => (
-   <StyledContainer isactive={isActive.toString()}>
-      <img src={image} alt="doctor" />
+const SpecialistInfo = ({ image, firstName, lastName, position, isActive }) => {
+   const doctorImage = containsTheHTTPS(image) ? image : NotUserImage
 
-      <Box>
-         <Typography variant="span">
-            {firstName} {lastName}
-         </Typography>
+   return (
+      <StyledContainer isactive={isActive.toString()}>
+         <Avatar src={doctorImage} alt="doctor" />
 
-         <br />
+         <Box>
+            <Typography variant="span">
+               {firstName} {lastName}
+            </Typography>
 
-         <Typography variant="span">{position}</Typography>
-      </Box>
-   </StyledContainer>
-)
+            <br />
 
+            <Typography variant="span">{position}</Typography>
+         </Box>
+      </StyledContainer>
+   )
+}
 export default SpecialistInfo
 
 const StyledContainer = styled(Box)(({ isactive }) => ({
    display: 'flex',
    alignItems: 'center',
+   gap: '13px',
 
-   '& > img': {
-      width: '38px',
-      height: '38px',
-      marginRight: '13px',
-      borderRadius: '50%',
+   '& img': {
       filter: isactive !== 'true' && 'brightness(0.7)',
    },
 
