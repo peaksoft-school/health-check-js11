@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { format } from 'date-fns'
 import { Box, Typography, styled } from '@mui/material'
@@ -7,16 +7,17 @@ import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
 import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
-import { formatPhoneNumberWithSpaces } from '../../../utils/helpers'
+import {
+   formatPhoneNumberWithSpaces,
+   useToggleModal,
+} from '../../../utils/helpers'
 import AddResult from '../../../components/admin/patients/AddResult'
 
 const Patient = () => {
-   const [toggleModal, setToggleModal] = useState(false)
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const { id } = useParams()
    const { data, isLoading, results } = useSelector((state) => state.patient)
-
-   const toggleModalHandler = () => setToggleModal((prev) => !prev)
 
    const dispatch = useDispatch()
 
@@ -34,12 +35,12 @@ const Patient = () => {
                   {data.last_name}
                </Typography>
 
-               <Button className="button" onClick={toggleModalHandler}>
+               <Button className="button" onClick={onOpenModal}>
                   <PlusIcon className="plus-icon" />
                   Добавить Результат
                </Button>
             </Box>
-            <AddResult open={toggleModal} onClose={toggleModalHandler} />
+            <AddResult open={isOpen} onClose={onCloseModal} />
 
             {isLoading && <Loading />}
 

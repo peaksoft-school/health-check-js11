@@ -15,10 +15,12 @@ import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import { VALIDATION_CHANGE_PASSWORD } from '../../../utils/helpers/validate'
-import { passwordError, resetPasswordError } from '../../../utils/helpers'
+import { resetPasswordError } from '../../../utils/helpers'
 import { showToast } from '../../../utils/helpers/notification'
 
 const ChangeUserPassword = () => {
+   window.scrollTo({ top: 0 })
+
    const [showOldPassword, setShowOldPassword] = useState(false)
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -179,9 +181,9 @@ const ChangeUserPassword = () => {
 
                      <Button
                         className="confirm-button"
-                        // isLoading={isLoading}
+                        isLoading={isLoading}
                         onClick={handleSubmit}
-                        // colorLoading="secondary"
+                        colorLoading="secondary"
                      >
                         ПОДТВЕРДИТЬ
                      </Button>

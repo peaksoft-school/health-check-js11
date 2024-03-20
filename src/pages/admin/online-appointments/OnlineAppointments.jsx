@@ -13,6 +13,7 @@ import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointm
 import Schedule from '../schedule/Schedule'
 import AddSchedule from '../../../components/admin/schedule/AddSchedule'
 import Table from '../../../components/UI/Table'
+import { useToggleModal } from '../../../utils/helpers'
 
 const getDefaultTabValue = () => {
    const storedValue = localStorage.getItem('selectedTab')
@@ -24,7 +25,7 @@ const OnlineAppointments = () => {
    const [value, setValue] = useState(getDefaultTabValue)
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
-   const [openModal, setOpenModal] = useState(false)
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const { schedules } = useSelector((state) => state.schedule)
 
@@ -34,8 +35,6 @@ const OnlineAppointments = () => {
       (state) => state.onlineAppointments
    )
    const memoizedAppointments = useMemo(() => appointments, [appointments])
-
-   const toggleModal = () => setOpenModal((prev) => !prev)
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -150,7 +149,7 @@ const OnlineAppointments = () => {
                <Typography className="title">Онлайн-запись</Typography>
 
                {showAddButton && (
-                  <Button className="add-button" onClick={toggleModal}>
+                  <Button className="add-button" onClick={onOpenModal}>
                      <PlusIcon className="plus-icon" />
                      Добавить запись
                   </Button>
@@ -169,7 +168,7 @@ const OnlineAppointments = () => {
                )}
             </Box>
 
-            <AddSchedule open={openModal} onClose={toggleModal} />
+            <AddSchedule open={isOpen} onClose={onCloseModal} />
 
             <Box>
                <TabContext value={value}>

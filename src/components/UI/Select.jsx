@@ -148,6 +148,7 @@ const Select = forwardRef(
                      MenuProps={menuProps}
                      className="select"
                      displayEmpty
+                     placeholder={placeholder}
                      ref={ref}
                      error={error}
                      onClick={toggleSelectHandler}

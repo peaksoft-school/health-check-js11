@@ -17,6 +17,7 @@ export const profileSlice = createSlice({
             PROFILE_THUNKS.getUserProfile.fulfilled,
             (state, { payload }) => {
                state.userData = payload
+               state.isLoading = false
             }
          )
          .addCase(PROFILE_THUNKS.getUserProfile.pending, (state) => {
@@ -31,6 +32,7 @@ export const profileSlice = createSlice({
             PROFILE_THUNKS.updateUserProfile.fulfilled,
             (state, { payload }) => {
                state.userData = payload
+               state.isLoading = false
             }
          )
 

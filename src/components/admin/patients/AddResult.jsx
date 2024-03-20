@@ -20,7 +20,6 @@ import Button from '../../UI/Button'
 
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
-   const [pageSize, setPageSize] = useState(null)
 
    const closeHandler = () => onClose()
 
@@ -66,7 +65,6 @@ const AddResult = ({ open, onClose }) => {
             const pdfDoc = await PDFDocument.load(arrayBuffer)
             const firstPage = pdfDoc.getPage(0)
             const { width, height } = firstPage.getSize()
-            setPageSize({ width, height })
 
             if (width > 450 && height > 600) setFieldValue('file', file)
             else
@@ -76,7 +74,6 @@ const AddResult = ({ open, onClose }) => {
                })
          } catch (error) {
             console.error('Error reading PDF: ', error)
-            setPageSize(null)
          }
       }
    }

@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
 import { styled, Box, Typography, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
@@ -12,10 +12,14 @@ import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const Profile = () => {
+   window.scrollTo({ top: 0 })
+
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)
    const { userData, isLoading } = useSelector((state) => state.profile)
+
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const data = {
       ...userData,
@@ -40,6 +44,16 @@ const Profile = () => {
    })
 
    useEffect(() => {
+      const tabFormUrl = searchParams.get('tab')
+
+      if (tabFormUrl) {
+         setValue(tabFormUrl)
+      } else {
+         setValue('profile')
+         searchParams.set('tab', '1')
+         setSearchParams(searchParams)
+      }
+
       setValues((prevState) => {
          return { ...prevState, ...data }
       })
@@ -47,6 +61,8 @@ const Profile = () => {
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
+      searchParams.set('tab', newValue)
+      setSearchParams(searchParams)
    }
 
    return (
@@ -145,8 +161,8 @@ const Profile = () => {
                                        className="confirm-button"
                                        type="submit"
                                        disabled={!dirty}
-                                       // isLoading={isLoading}
-                                       //       colorLoading="secondary"
+                                       isLoading={isLoading}
+                                       colorLoading="secondary"
                                     >
                                        РЕДАКТИРОВАТЬ
                                     </Button>
@@ -170,7 +186,7 @@ const Profile = () => {
 export default Profile
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '0 7.37rem 3.125rem !important',
+   padding: '2rem 7.37rem 3.125rem !important',
 
    '& > .box': {
       display: 'flex',
