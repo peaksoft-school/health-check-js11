@@ -341,7 +341,7 @@ const StyledForm = styled('form')(({ theme }) => ({
    '&  .day-of-week-box': {
       display: 'flex',
       justifyContent: 'space-between',
-      marginBottom: '2em',
+      // marginBottom: '2em',
 
       '& > .active': {
          backgroundColor: theme.palette.primary.main,
