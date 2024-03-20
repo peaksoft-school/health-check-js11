@@ -10,7 +10,7 @@ import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import { DEPARTMENTS } from '../../../utils/constants'
 
-const SpecialistInnerPage = () => {
+const Specialist = () => {
    const { id } = useParams()
 
    const { specialist, isLoading } = useSelector((state) => state.specialists)
@@ -164,7 +164,7 @@ const SpecialistInnerPage = () => {
    )
 }
 
-export default SpecialistInnerPage
+export default Specialist
 
 const StyledMainContainer = styled(Box)(() => ({
    padding: '1.87rem 4.37rem 0',

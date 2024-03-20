@@ -2,10 +2,10 @@ import Applications from '../pages/admin/application/Applications'
 import OnlineAppointments from '../pages/admin/online-appointments/OnlineAppointments'
 import Patients from '../pages/admin/patients/Patients'
 import Patient from '../pages/admin/patient/Patient'
-import { ROUTES } from './routes'
 import Specialists from '../pages/admin/specialists/Specialists'
-import SpecialistInnerPage from '../pages/admin/specialists/SpecialistInnerPage'
 import AddNote from '../pages/admin/specialists/AddNote'
+import Specialist from '../pages/admin/specialist/Specialist'
+import { ROUTES } from './routes'
 
 export const ADMIN_ROUTES = [
    {
@@ -35,7 +35,7 @@ export const ADMIN_ROUTES = [
 
    {
       path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}/:${ROUTES.ADMIN.ID}`,
-      element: <SpecialistInnerPage />,
+      element: <Specialist />,
    },
 
    {
