@@ -123,8 +123,6 @@ const AddSchedule = ({ open, onClose }) => {
    const handleDayButtonClick = (dayLabel) =>
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
 
-   console.log(values.doctor, 'doctor')
-
    const dateToday = dayjs()
    const endDate = dateToday.add(1, 'day')
 
