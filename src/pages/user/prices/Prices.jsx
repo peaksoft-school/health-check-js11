@@ -38,16 +38,23 @@ const Contacts = () => (
                {prices.map((el) => (
                   <CustomizedAccordions key={el.id} title={el.title}>
                      <StyledPrice>
-                        <div className="prices-data">
-                           <h2>{el.data}</h2> <h2>{el.price}com</h2>
-                        </div>
+                        <Box className="prices-data">
+                           <Typography variant="h2">{el.data}</Typography>{' '}
+                           <Typography variant="h2">{el.price} com</Typography>
+                        </Box>
 
-                        <p className="description">{el.description}</p>
+                        <Typography className="description">
+                           {el.description}
+                        </Typography>
                         {el.prices.map((item) => (
-                           <div className="prices">
-                              <h3>{item.data}</h3>
-                              <h2>{item.price}com</h2>
-                           </div>
+                           <Box className="prices">
+                              <Typography className="data-text">
+                                 {item.data}
+                              </Typography>
+                              <Typography variant="h2" className="price">
+                                 {item.price} com
+                              </Typography>
+                           </Box>
                         ))}
                      </StyledPrice>
                   </CustomizedAccordions>
@@ -128,12 +135,12 @@ const StyledAccordions = styled('div')(() => ({
       marginBottom: '1rem',
    },
 
-   '& h3': {
+   '& .data-text': {
       fontSize: '18px',
-      fontWeight: '575',
+      fontWeight: '500',
    },
 
-   '& h2': {
+   '& .price': {
       fontWeight: '500',
       fontSize: '20px',
    },
@@ -141,21 +148,22 @@ const StyledAccordions = styled('div')(() => ({
    '& .prices-data': {
       display: 'flex',
       justifyContent: 'space-between',
+      marginTop: '20px',
    },
 
    '& .prices': {
       display: 'flex',
       justifyContent: 'space-between',
-      padding: '10px 0px',
+      padding: '20px 0px',
       borderTop: '1px solid #e0e2e7',
    },
 }))
 
-const StyledPrice = styled('div')`
-   text-align: left;
-`
+const StyledPrice = styled(Box)(() => ({
+   textAlign: 'left',
+}))
 
-const AccordionContainer = styled('div')(() => ({
+const AccordionContainer = styled(Box)(() => ({
    width: '60%',
    marginLeft: '98px',
    marginBottom: '100px',
