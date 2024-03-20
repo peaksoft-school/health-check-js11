@@ -7,8 +7,8 @@ import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
 import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
 import { PlusIcon, ResultFileIcon } from '../../../assets/icons'
-import AddResult from '../../../components/patients/AddResult'
 import { formatPhoneNumberWithSpaces } from '../../../utils/helpers'
+import AddResult from '../../../components/admin/patients/AddResult'
 
 const Patient = () => {
    const [toggleModal, setToggleModal] = useState(false)

@@ -1,9 +1,9 @@
 import { styled, Typography, Box, CircularProgress } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
-import { UsersIcon } from '../../assets/icons'
-import Button from '../UI/Button'
+import { UsersIcon } from '../../../assets/icons'
+import Button from '../../UI/Button'
 import SpecialistCard from './SpecialistCard'
-import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
+import { APPOINTMENTS_THUNKS } from '../../../store/slices/appointments/appointmentsThunk'
 
 const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
    const { doctorsTimesheet, isLoading } = useSelector(

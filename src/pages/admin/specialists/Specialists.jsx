@@ -94,9 +94,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          height: '45px',
          width: '232px',
          fontFamily: 'Manrope',
+         fontSize: '11px',
 
          '& > div': {
-            fontSize: '18px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

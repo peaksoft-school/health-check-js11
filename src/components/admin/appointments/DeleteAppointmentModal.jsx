@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import Button from '../UI/Button'
-import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
-import { CloseAndDeleteIcon } from '../../assets/icons'
+import Button from '../../UI/Button'
+import { APPOINTMENTS_THUNKS } from '../../../store/slices/appointments/appointmentsThunk'
+import { CloseAndDeleteIcon } from '../../../assets/icons'
 
 const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    const { appointmentId } = useSelector((state) => state.appointments)

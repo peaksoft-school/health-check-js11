@@ -29,11 +29,10 @@ const getSpecialistById = createAsyncThunk(
 
 const deleteSpecialists = createAsyncThunk(
    'specialists/deleteSpecialists',
-   async ({ id, handleClose }, { dispatch, rejectWithValue }) => {
+   async (id, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/doctor/${id}`)
          dispatch(getSpecialists())
-         handleClose()
          return id
       } catch (error) {
          return rejectWithValue(error)

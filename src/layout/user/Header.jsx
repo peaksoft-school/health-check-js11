@@ -7,7 +7,6 @@ import SignIn from '../../pages/sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
-import AddAppointments from '../../components/appointments/AddAppointments'
 import {
    DefaultPhoneIcon,
    HeaderProfileIcon,
@@ -24,6 +23,7 @@ import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
 import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
+import AddAppointments from '../../components/admin/appointments/AddAppointments'
 
 const Header = () => {
    const { role, isAuth, accessToken } = useSelector((state) => state.auth)
@@ -60,6 +60,8 @@ const Header = () => {
          toggleSignUpModal()
       }
    }
+
+   const closeDrawerHandler = () => setToggleDrawerModal(false)
 
    const toggleSignInModal = () => {
       handleProfileMenuClose()
@@ -266,7 +268,7 @@ const Header = () => {
 
                   <AddAppointments
                      open={toggleDrawerModal}
-                     onClose={toggleDrawerHandler}
+                     onClose={closeDrawerHandler}
                   />
                </Box>
             </Box>

@@ -1,6 +1,6 @@
 import { styled, Typography, Box, Rating } from '@mui/material'
-import Button from '../UI/Button'
-import { ProfileIcon } from '../../assets/icons'
+import Button from '../../UI/Button'
+import { ProfileIcon } from '../../../assets/icons'
 
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
    <StyledContainer>

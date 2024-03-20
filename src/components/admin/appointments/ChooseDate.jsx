@@ -1,9 +1,9 @@
 import { Box, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { DateCalendar } from '@mui/x-date-pickers'
-import { format } from 'date-fns'
-import { DAYS_OF_WEEK } from '../../utils/constants'
-import Button from '../UI/Button'
+import { format, addMonths } from 'date-fns'
+import { DAYS_OF_WEEK } from '../../../utils/constants'
+import Button from '../../UI/Button'
 
 const ChooseDate = ({
    selectedDate,
@@ -77,6 +77,8 @@ const ChooseDate = ({
       return null
    }
 
+   const maxAllowedMonth = addMonths(new Date(), 5)
+
    const changeDateHandler = (date) => {
       setSelectedDate(date)
       setSelectedTime(null)
@@ -97,6 +99,7 @@ const ChooseDate = ({
                onChange={changeDateHandler}
                dayOfWeekFormatter={dayOfWeekFormatter}
                minDate={previousMonth}
+               maxDate={maxAllowedMonth}
             />
 
             {selectedDate && (

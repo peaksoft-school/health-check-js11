@@ -5,9 +5,9 @@ import {
    DeleteIcon,
    ProfileIcon,
    UsersIcon,
-} from '../../assets/icons'
-import Select from '../UI/Select'
-import Button from '../UI/Button'
+} from '../../../assets/icons'
+import Select from '../../UI/Select'
+import Button from '../../UI/Button'
 
 const Appointments = ({
    toggleSpecialist,

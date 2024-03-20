@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import Switcher from '../UI/Switcher'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
-import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
+import Switcher from '../../UI/Switcher'
+import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
+import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 
 const SpocialistSwicher = ({ id, isActive }) => {
    const [active, setActive] = useState(isActive)

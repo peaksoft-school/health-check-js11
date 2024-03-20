@@ -26,7 +26,8 @@ const TimePicker = ({
          maxTime={maxTime}
          minTime={minTime}
          error={error}
-         defaultValue={internalValue}
+         defaultValue="00:00"
+         placeholder="00:00"
          format="HH:mm"
          ampm={false}
          {...rest}

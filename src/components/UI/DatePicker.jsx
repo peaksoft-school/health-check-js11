@@ -26,7 +26,6 @@ const DatePicker = ({
          onBlur={onBlur}
          dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
-         // minDate={minDate}
          error={error}
          slots={{
             openPickerIcon: CalendarIcon,

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Rating, styled, Typography, Box } from '@mui/material'
 import { useSelector } from 'react-redux'
-import { PlusIcon, ProfileIcon, RegisteredIcon } from '../../assets/icons'
-import Button from '../UI/Button'
+import { PlusIcon, ProfileIcon, RegisteredIcon } from '../../../assets/icons'
+import Button from '../../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
 
 const Result = ({ goBack }) => {

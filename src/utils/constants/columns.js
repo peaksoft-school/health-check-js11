@@ -20,8 +20,9 @@ import {
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
 import { EditIcon } from '../../assets/icons'
-import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
-import SpecialistSwicher from '../../components/specialists/SpecialistSwicher'
+import SpocialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
+// import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
+import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 
 const SCHEDULE_COLUMN = [
    {
@@ -543,7 +544,7 @@ const SPECIALISTS_COLUMN = [
       },
 
       Cell: ({ row }) => {
-         return <SpecialistSwicher {...row.original} />
+         return <SpocialistSwicher {...row.original} />
       },
    },
 
@@ -666,20 +667,29 @@ const SPECIALISTS_COLUMN = [
          justifyContent: 'center',
       },
 
-      Cell: ({ row }) => (
-         <div
-            style={{
-               display: 'flex',
-               alignItems: 'center',
-               gap: '30px',
-            }}
-         >
-            <NavLink to={row.original.id.toString()}>
-               <EditIcon />
-            </NavLink>
-            <SpecialistsDelete {...row.original} />
-         </div>
-      ),
+      Cell: ({ row }) => {
+         const disabled = false
+
+         return (
+            <div
+               style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '30px',
+               }}
+            >
+               <NavLink to={row.original.id.toString()}>
+                  <EditIcon />
+               </NavLink>
+               <Delete
+                  name={`${row.original.firstName} ${row.original.lastName}`}
+                  deleteFn={SPECIALISTS_THUNK.deleteSpecialists}
+                  id={row.original.id}
+                  variant="patients"
+               />
+            </div>
+         )
+      },
    },
 ]
 

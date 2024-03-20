@@ -20,7 +20,7 @@ const AboutClinic = () => {
          </Typography>
 
          <Box className="image-box">
-            <img src={AboutClinicImage} alt="clinic-info" />
+            {/* <img src={AboutClinicImage} alt="clinic-info" /> */}
          </Box>
 
          <AboutUs variant="component" />

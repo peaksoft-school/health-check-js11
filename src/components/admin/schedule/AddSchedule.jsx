@@ -9,15 +9,15 @@ import {
    DEPARTMENTS,
    INTERVAL_TIME,
    RUSSIAN_DAYS,
-} from '../../utils/constants/index'
-import Modal from '../UI/Modal'
-import Select from '../UI/Select'
-import DatePicker from '../UI/DatePicker'
-import TimePicker from '../UI/TimePicker'
-import { scheduleError } from '../../utils/helpers'
-import { VALIDATION_SCHEDULE } from '../../utils/helpers/validate'
-import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
-import Button from '../UI/Button'
+} from '../../../utils/constants/index'
+import Modal from '../../UI/Modal'
+import Select from '../../UI/Select'
+import DatePicker from '../../UI/DatePicker'
+import TimePicker from '../../UI/TimePicker'
+import { scheduleError } from '../../../utils/helpers'
+import { VALIDATION_SCHEDULE } from '../../../utils/helpers/validate'
+import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
+import Button from '../../UI/Button'
 
 const selectStyles = {
    control: (styles, state) => ({
@@ -123,11 +123,13 @@ const AddSchedule = ({ open, onClose }) => {
    const handleDayButtonClick = (dayLabel) =>
       setFieldValue(`dayOfWeek.${dayLabel}`, !values.dayOfWeek[dayLabel])
 
+   console.log(values.doctor, 'doctor')
+
    const dateToday = dayjs()
    const endDate = dateToday.add(1, 'day')
 
    const selectDoctor = (selectedOption) =>
-      setFieldValue('doctor', selectedOption)
+      setFieldValue('doctor', selectedOption.label)
 
    return (
       <Modal open={open} handleClose={onClose}>

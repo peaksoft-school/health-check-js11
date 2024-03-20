@@ -7,12 +7,12 @@ import { TabContext, TabList, TabPanel } from '@mui/lab'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
-import AddSchedule from '../../../components/schedule/AddSchedule'
 import Loading from '../../../components/Loading'
 import { PlusIcon } from '../../../assets/icons'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
 import Schedule from '../schedule/Schedule'
+import AddSchedule from '../../../components/admin/schedule/AddSchedule'
 
 const getDefaultTabValue = () => {
    const storedValue = localStorage.getItem('selectedTab')

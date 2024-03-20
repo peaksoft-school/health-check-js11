@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Typography, Box, styled, Card } from '@mui/material'
+import { Typography, Box, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { useParams } from 'react-router'

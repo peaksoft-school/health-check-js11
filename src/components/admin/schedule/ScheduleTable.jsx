@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import dayjs from 'dayjs'
-import { generateDateRange, generateFreeTimes } from '../../utils/helpers/index'
-import Loading from '../Loading'
-import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
+import {
+   generateDateRange,
+   generateFreeTimes,
+} from '../../../utils/helpers/index'
+import Loading from '../../Loading'
+import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 import ChangeDay from './ChangeDay'
-import DatePicker from '../UI/DatePicker'
-import { ProfileIcon } from '../../assets/icons'
+import DatePicker from '../../UI/DatePicker'
+import { ProfileIcon } from '../../../assets/icons'
 
 const ScheduleTable = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)

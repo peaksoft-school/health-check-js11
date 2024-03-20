@@ -13,6 +13,8 @@ const Delete = ({ name, id, deleteFn, disabled, variant }) => {
       setIsButtonDisabled(!disabled)
    }, [disabled])
 
+   console.log(id, 'deleteid')
+
    const toggleModal = () => setOpen((prev) => !prev)
 
    const dispatch = useDispatch()
