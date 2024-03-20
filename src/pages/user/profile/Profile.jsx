@@ -40,10 +40,11 @@ const Profile = () => {
    })
 
    useEffect(() => {
-      setValues((prevState) => {
-         return { ...prevState, ...data }
-      })
-   }, [])
+      setValues((prev) => ({
+         ...prev,
+         ...data,
+      }))
+   }, [data])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)

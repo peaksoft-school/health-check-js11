@@ -1,8 +1,16 @@
 import { Avatar, Box, Typography, styled } from '@mui/material'
+import Navigate from '../UI/admin/Navigate'
 import { containsTheHTTPS } from '../../utils/helpers'
 import { NotUserImage } from '../../assets/images'
 
-const SpecialistInfo = ({ image, firstName, lastName, position, isActive }) => {
+const SpecialistInfo = ({
+   id,
+   image,
+   firstName,
+   lastName,
+   position,
+   isActive,
+}) => {
    const doctorImage = containsTheHTTPS(image) ? image : NotUserImage
 
    return (
@@ -11,7 +19,7 @@ const SpecialistInfo = ({ image, firstName, lastName, position, isActive }) => {
 
          <Box>
             <Typography variant="span">
-               {firstName} {lastName}
+               <Navigate id={id} text={`${firstName} ${lastName}`} />
             </Typography>
 
             <br />
@@ -30,6 +38,7 @@ const StyledContainer = styled(Box)(({ isactive }) => ({
 
    '& img': {
       filter: isactive !== 'true' && 'brightness(0.7)',
+      transition: 'filter 1s ease',
    },
 
    '& > div > span:first-of-type': {
