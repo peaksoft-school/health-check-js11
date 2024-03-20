@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TimePicker as MuiTimePicker } from '@mui/x-date-pickers'
 import { styled } from '@mui/material'
 
@@ -18,6 +18,7 @@ const TimePicker = ({
       setInternalValue(time)
       onChange(time)
    }
+
    return (
       <StyledTimePicker
          value={internalValue}
@@ -26,8 +27,6 @@ const TimePicker = ({
          maxTime={maxTime}
          minTime={minTime}
          error={error}
-         defaultValue="00:00"
-         placeholder="00:00"
          format="HH:mm"
          ampm={false}
          {...rest}
