@@ -12,7 +12,7 @@ const TimePicker = ({
    error,
    ...rest
 }) => {
-   const [internalValue, setInternalValue] = useState(value || '00:00')
+   const [internalValue, setInternalValue] = useState(value)
 
    const handleChange = (time) => {
       setInternalValue(time)
@@ -27,7 +27,6 @@ const TimePicker = ({
          maxTime={maxTime}
          minTime={minTime}
          error={error}
-         format="HH:mm"
          ampm={false}
          {...rest}
       />
