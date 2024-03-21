@@ -37,6 +37,12 @@ const StyledNavLink = styled(NavLink)(() => ({
    '&.active': {
       fontWeight: 500,
       color: 'black',
+
+      '& > div': {
+         width: '100%',
+         fontWeight: 500,
+         backgroundColor: '#048741',
+      },
    },
 
    '& > .line': {
@@ -45,11 +51,5 @@ const StyledNavLink = styled(NavLink)(() => ({
       background: 'none',
       position: 'absolute',
       bottom: -36.5,
-   },
-
-   '& .line.tab': {
-      width: '100%',
-      fontWeight: 500,
-      backgroundColor: '#048741',
    },
 }))

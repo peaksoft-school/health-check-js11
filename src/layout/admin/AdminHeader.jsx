@@ -151,7 +151,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
 
 const StyledMenu = styled(Menu)(() => ({
    position: 'absolute',
-   zIndex: 1000,
+   zIndex: '1000',
    marginLeft: '20px',
 }))
 

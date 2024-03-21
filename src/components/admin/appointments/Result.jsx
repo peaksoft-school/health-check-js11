@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Rating, styled, Typography, Box } from '@mui/material'
+import { Rating, styled, Typography, Box, Avatar } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { PlusIcon, RegisteredIcon } from '../../../assets/icons'
 import Button from '../../UI/Button'
@@ -40,13 +40,13 @@ const Result = ({ goBack, goBackAndClear }) => {
          <Box className="doctor">
             <Box className="image-box">
                {containsTheHTTPS(doctorData.imageDoctor) ? (
-                  <img
+                  <Avatar
                      className="image"
                      src={doctorData.imageDoctor}
                      alt="doctor"
                   />
                ) : (
-                  <img className="image" src={NotUserImage} alt="doctor" />
+                  <Avatar className="image" src={NotUserImage} alt="doctor" />
                )}
             </Box>
 
