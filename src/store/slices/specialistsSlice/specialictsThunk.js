@@ -18,7 +18,7 @@ const getSpecialistById = createAsyncThunk(
    'specialists/getSpecialistsById',
    async (id, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`/api/doctor?id=${id}`)
+         const response = await axiosInstance.get(`/api/doctor/${id}`)
 
          return response.data
       } catch (error) {
