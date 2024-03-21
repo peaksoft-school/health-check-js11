@@ -6,8 +6,9 @@ import {
    styled,
    MenuItem,
 } from '@mui/material'
-import Selector from 'react-select'
+import Selector, { components } from 'react-select'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { ChooseServiceIcon } from '../../assets/icons'
 
 const menuProps = {
    PaperProps: {
@@ -20,6 +21,15 @@ const menuProps = {
       },
    },
 }
+
+const { Control } = components
+
+const CustomControl = ({ children, ...props }) => (
+   <Control {...props}>
+      <StyledIcon />
+      {children}
+   </Control>
+)
 
 const customStyles = {
    control: (provided, state) => {
@@ -43,7 +53,7 @@ const customStyles = {
          },
 
          '&:hover': {
-            borderColor: state.isFocused ? 'none' : '#c1b5b5',
+            borderColor: state.isFocused ? '#c1b5b5' : '#c1b5b5',
             width: '100%',
          },
       }
@@ -53,6 +63,65 @@ const customStyles = {
       ...provided,
       width: '220px',
       zIndex: 10000,
+   }),
+
+   menuList: (base) => ({
+      ...base,
+
+      '::-webkit-scrollbar': {
+         width: '5px',
+         height: '0px',
+      },
+      '::-webkit-scrollbar-track': {
+         background: '#f1f1f1',
+      },
+      '::-webkit-scrollbar-thumb': {
+         background: '#888',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+         background: '#555',
+      },
+   }),
+}
+
+const customStylesAppointments = {
+   control: (provided) => {
+      return {
+         ...provided,
+         height: '60px',
+         paddingLeft: '25px',
+         width: '100%',
+         border: 'none',
+         borderRadius: '10px',
+         boxShadow: 'none',
+
+         '& span': {
+            width: '0px',
+         },
+      }
+   },
+
+   menu: (provided) => ({
+      ...provided,
+      width: '365px',
+   }),
+
+   menuList: (base) => ({
+      ...base,
+
+      '::-webkit-scrollbar': {
+         width: '5px',
+         height: '0px',
+      },
+      '::-webkit-scrollbar-track': {
+         background: '#f1f1f1',
+      },
+      '::-webkit-scrollbar-thumb': {
+         background: '#888',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+         background: '#555',
+      },
    }),
 }
 
@@ -74,7 +143,7 @@ const Select = forwardRef(
       const [selectValue, setSelectValue] = useState('')
       const [isVisible, setIsVisible] = useState(false)
 
-      const changeHandler = (e) => {
+      const changeSelectHandler = (e) => {
          onChange(e.target.value)
          setSelectValue(e.target.value)
       }
@@ -92,14 +161,26 @@ const Select = forwardRef(
             ref={ref}
             {...rest}
          />
+      ) : variant === 'appointments' ? (
+         <Selector
+            options={options}
+            onChange={onChange}
+            isSearchable={false}
+            styles={{ ...customStylesAppointments }}
+            placeholder={
+               <p className="select-placeholder-text">{placeholder}</p>
+            }
+            error={error}
+            ref={ref}
+            components={{ Control: CustomControl }}
+            {...rest}
+         />
       ) : (
          <StyledFormControl fullWidth isopen={isVisible.toString()}>
-            <StyledIcon variant="span">{icon}</StyledIcon>
-
             <StyledMuiSelect
                open={isVisible}
                value={selectValue}
-               onChange={changeHandler}
+               onChange={changeSelectHandler}
                IconComponent={KeyboardArrowDownIcon}
                inputProps={{ 'aria-label': 'Without label' }}
                MenuProps={menuProps}
@@ -114,9 +195,9 @@ const Select = forwardRef(
 
                {options &&
                   options?.map(({ id, label }) => (
-                     <MenuItemStyle key={id} value={label}>
+                     <StyledMenuItem key={id} value={label}>
                         {label}
-                     </MenuItemStyle>
+                     </StyledMenuItem>
                   ))}
             </StyledMuiSelect>
          </StyledFormControl>
@@ -136,6 +217,10 @@ const StyledLabel = styled(FormControl)(() => ({
    display: 'none',
 }))
 
+const StyledIcon = styled(ChooseServiceIcon)(() => ({
+   marginRight: '11px',
+}))
+
 const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    border: error
       ? `1px solid #d32f2f`
@@ -144,7 +229,7 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    maxWidth: '100%',
    borderRadius: '10px',
    fontFamily: 'Manrope',
-   fontWeight: 400,
+   fontWeight: '400',
    fontSize: '16px',
    lineHeight: '21.86px',
    color: '#4D4E51',
@@ -177,14 +262,7 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    },
 }))
 
-const StyledIcon = styled(Typography)(() => ({
-   position: 'absolute',
-   top: '25',
-   left: '15',
-   zIndex: '100',
-}))
-
-const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
    color: theme.palette.primary.lightBlack,
    fontFamily: 'Manrope',
    height: '3rem',

@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { CloseIcon } from '../../assets/icons/index'
-import { handleKeyPress } from '../../utils/helpers'
+import { CloseIcon } from '../../../assets/icons/index'
+import { handleKeyPress } from '../../../utils/helpers'
 
 const DeleteTimeSheets = ({
    selectedDate,

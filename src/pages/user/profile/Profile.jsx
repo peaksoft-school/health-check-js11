@@ -3,19 +3,21 @@ import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
 import { styled, Box, Typography, Tab } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
-import ChangeUserPassword from './ChangeUserPassword'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
+import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)
-   const { userData } = useSelector((state) => state.profile)
+   const { userData, isLoading } = useSelector((state) => state.profile)
+
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const data = {
       ...userData,
@@ -40,23 +42,33 @@ const Profile = () => {
    })
 
    useEffect(() => {
-      setValues((prev) => ({
-         ...prev,
-         ...data,
-      }))
-   }, [data])
+      const tabFormUrl = searchParams.get('tab')
+
+      if (tabFormUrl) {
+         setValue(tabFormUrl)
+      } else {
+         setValue('profile')
+         searchParams.set('tab', '1')
+         setSearchParams(searchParams)
+      }
+
+      setValues((prevState) => {
+         return { ...prevState, ...data }
+      })
+   }, [])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
+      searchParams.set('tab', newValue)
+      setSearchParams(searchParams)
    }
 
    return (
       <Box>
          <StyledLine> </StyledLine>
          <StyledContainer>
+            <BreadCrumbs to="/" text="Профиль" before="Главная" />
             <Box className="box">
-               <BreadCrumbs to="/" text="Профиль" before="Главная" />
-
                <Box className="title-container">
                   <Typography className="title">Профиль</Typography>
                </Box>
@@ -89,19 +101,23 @@ const Profile = () => {
                         >
                            <Box className="table-container">
                               <div className="first-box">
-                                 <Typography className="label">Имя</Typography>
+                                 <label className="label" htmlFor="firstName">
+                                    Имя
+                                 </label>
 
                                  <StyledInput
+                                    id="firstName"
                                     className="input"
                                     value={values.firstName}
                                     onChange={handleChange('firstName')}
                                  />
 
-                                 <Typography className="label">
+                                 <label className="label" htmlFor="email">
                                     E-mail
-                                 </Typography>
+                                 </label>
 
                                  <StyledInput
+                                    id="email"
                                     className="input"
                                     onChange={handleChange('email')}
                                     value={values.email}
@@ -109,21 +125,21 @@ const Profile = () => {
                               </div>
 
                               <div className="first-box">
-                                 <Typography className="label">
-                                    Фамилия
-                                 </Typography>
+                                 <label htmlFor="lastName">Фамилия</label>
 
                                  <StyledInput
+                                    id="lastName"
                                     onChange={handleChange('lastName')}
                                     className="input"
                                     value={values.lastName}
                                  />
 
-                                 <Typography className="label">
+                                 <label className="label" htmlFor="numberPhone">
                                     Телефон
-                                 </Typography>
+                                 </label>
 
                                  <NumberInput
+                                    id="numberPhone"
                                     variant="black"
                                     onChange={handleChange('numberPhone')}
                                     value={values.numberPhone}
@@ -146,6 +162,8 @@ const Profile = () => {
                                        className="confirm-button"
                                        type="submit"
                                        disabled={!dirty}
+                                       isLoading={isLoading}
+                                       colorLoading="secondary"
                                     >
                                        РЕДАКТИРОВАТЬ
                                     </Button>
@@ -169,13 +187,19 @@ const Profile = () => {
 export default Profile
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '0 7.37rem 3.125rem !important',
+   padding: '2rem 7.37rem 3.125rem !important',
 
    '& > .box': {
       display: 'flex',
       flexDirection: 'column',
       margin: '0 auto',
       paddingBottom: '1.875rem',
+      paddingTop: '1.875rem',
+
+      '& .first-box': {
+         display: 'flex',
+         flexDirection: 'column',
+      },
 
       '& .title-container': {
          display: 'flex',
@@ -212,7 +236,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& .label': {
+      '& label': {
          fontFamily: 'Manrope',
          fontSize: '14px',
          color: theme.palette.secondary.lightGrey,
@@ -258,19 +282,21 @@ const StyledInput = styled(Input)(() => ({
    marginBottom: '1.5rem',
 
    '& .MuiOutlinedInput-root ': {
+      width: '414px',
       height: '2.625rem',
       color: 'black',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       height: '0.4375em',
       color: 'black',
       borderRadius: '0.5rem',
    },
 }))
 
-const StyledButtonContainer = styled(Box)(() => ({
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    marginTop: '1.5rem',
    gap: '1rem',
@@ -280,28 +306,24 @@ const StyledButtonContainer = styled(Box)(() => ({
       color: `#048741!important`,
       width: '12.563rem',
       height: '2.438rem',
+
+      '&.Mui-disabled': {
+         border: 'none',
+         backgroundColor: theme.palette.primary.main,
+         color: theme.palette.secondary.input,
+      },
    },
 
    '& .confirm-button': {
       borderRadius: '8px',
       width: '12.563rem',
       height: '2.438rem',
-   },
-}))
 
-const NavigatePathTitle = styled(Box)(() => ({
-   fontSize: '0.875rem',
-   fontWeight: 400,
-   margin: '1.5rem 0',
-
-   span: {
-      color: '#048741',
-      cursor: 'pointer',
-   },
-
-   '& .navigate': {
-      textDecoration: 'none',
-      color: '#959595',
+      '&.Mui-disabled': {
+         border: 'none',
+         backgroundColor: theme.palette.primary.main,
+         color: theme.palette.secondary.input,
+      },
    },
 }))
 

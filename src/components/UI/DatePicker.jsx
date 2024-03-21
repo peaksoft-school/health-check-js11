@@ -1,7 +1,8 @@
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
-import { parseISO } from 'date-fns'
+import { format as formatDate } from 'date-fns'
 import { DAYS_OF_WEEK } from '../../utils/constants'
+import { CalendarIcon } from '../../assets/icons'
 
 const DatePicker = ({
    value,
@@ -14,29 +15,22 @@ const DatePicker = ({
    error,
    ...rest
 }) => {
-   const parsedValue = typeof value === 'string' ? parseISO(value) : value
+   const dayOfWeekFormatter = (_day, weekday) => {
+      return DAYS_OF_WEEK[formatDate(weekday, 'dd')]
+   }
 
    return (
       <StyledDatePicker
-         value={parsedValue}
-         onChange={(date) => onChange(date)}
+         value={value}
+         onChange={onChange}
          onBlur={onBlur}
-         dayOfWeekFormatter={(_day, weekday) =>
-            DAYS_OF_WEEK[weekday.format('dd')]
-         }
+         dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
          minDate={minDate}
          error={error}
-         format={format}
-         renderDay={(day, _value, DayComponentProps) => (
-            <DayComponentProps
-               onFocus={DayComponentProps.onDayFocus}
-               onBlur={DayComponentProps.onDayBlur}
-            >
-               {day.format('MMMM')}
-            </DayComponentProps>
-         )}
-         {...rest}
+         slots={{
+            openPickerIcon: CalendarIcon,
+         }}
          slotProps={{
             desktopPaper: {
                sx: {
@@ -54,6 +48,7 @@ const DatePicker = ({
                      fontFamily: 'Manrope',
                      fontSize: '14px',
                      fontWeight: '500',
+                     textTransform: 'capitalize',
                   },
 
                   '.MuiPickersCalendarHeader-label': {
@@ -79,7 +74,6 @@ const DatePicker = ({
                   '.MuiPickersDay-root': {
                      borderRadius: variant === 'custom' ? '50%' : '3px',
                      height: variant === 'custom' ? 'none' : '28px',
-                     marginTop: '0.5rem',
                      fontWeight: '500',
                      color: 'var(--primary-black-gray, #4D4E51)',
                   },
@@ -88,9 +82,15 @@ const DatePicker = ({
                      background: 'var(--primary-green, #048741) !important',
                      color: 'white',
                   },
+
+                  '.MuiPickersDay-root.Mui-selected': {
+                     background: 'var(--primary-green, #048741) !important',
+                     color: 'white',
+                  },
                },
             },
          }}
+         {...rest}
       />
    )
 }
@@ -101,7 +101,7 @@ const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
-   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+   border: error ? '1px solid red' : '1px solid #D4D4D4',
 
    input: {
       width: '5.625rem',

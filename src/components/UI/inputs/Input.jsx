@@ -11,6 +11,7 @@ const Input = forwardRef(
          error,
          onClick,
          value,
+         disabled,
          readOnly,
          ...rest
       },
@@ -26,6 +27,7 @@ const Input = forwardRef(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            disabled={disabled}
             ref={ref}
             inputProps={{ readOnly }}
             {...rest}
@@ -35,7 +37,6 @@ const Input = forwardRef(
 )
 
 const StyledInput = styled(TextField)(({ theme }) => ({
-   width: '414px',
    height: '42px',
    borderRadius: '8px solid',
    caretColor: theme.palette.primary.darkGreen,

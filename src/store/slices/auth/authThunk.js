@@ -104,7 +104,7 @@ const forgotPassword = createAsyncThunk(
             })
          }
 
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )
@@ -135,7 +135,7 @@ const changePassword = createAsyncThunk(
             })
          }
 
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )

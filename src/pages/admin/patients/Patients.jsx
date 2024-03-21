@@ -1,6 +1,6 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Box, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
@@ -11,9 +11,11 @@ import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
 const Patients = () => {
    const [searchName, setSearchName] = useState('')
 
-   const dispatch = useDispatch()
-
    const { isLoading, patients } = useSelector((state) => state.patients)
+
+   const memoizedPatients = useMemo(() => patients, [patients])
+
+   const dispatch = useDispatch()
 
    const searchChange = (e) => setSearchName(e.target.value)
 
@@ -51,11 +53,7 @@ const Patients = () => {
             {isLoading && <Loading />}
 
             <Box className="table-container">
-               <Table
-                  empty={<h1>Пациенты отсутствуют</h1>}
-                  columns={PATIENTS_COLUMN}
-                  data={patients}
-               />
+               <Table columns={PATIENTS_COLUMN} data={memoizedPatients} />
             </Box>
          </Box>
       </StyledContainer>
