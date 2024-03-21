@@ -99,7 +99,9 @@ const deleteAppoinment = createAsyncThunk(
    'appointments/deleteById',
    async ({ appointmentId, setDeleteSuccess }, { rejectWithValue }) => {
       try {
-         await axiosInstance.delete(`/api/appointment/${appointmentId}`)
+         await axiosInstance.delete(
+            `/appointment?appointmentId=${appointmentId}`
+         )
 
          setDeleteSuccess(true)
 
