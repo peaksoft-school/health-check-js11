@@ -237,6 +237,15 @@ const useToggleModal = (query) => {
    }
 }
 
+const formatDates = (dateString) => {
+   const options = { weekday: 'long', day: 'numeric', month: 'long' }
+   const date = new Date(dateString)
+   const formattedDate = date.toLocaleDateString('ru-RU', options)
+   const capitalizedWeekday =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+   return capitalizedWeekday
+}
+
 export {
    containsTheHTTPS,
    getRussianMonthName,
@@ -252,4 +261,5 @@ export {
    showAppointmentFormError,
    resetPasswordError,
    useToggleModal,
+   formatDates,
 }

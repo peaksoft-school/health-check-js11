@@ -10,13 +10,13 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { forgotPassword } from '../../../store/slices/auth/authThunk'
-import Input from '../../../components/UI/inputs/Input'
-import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import { VALIDATION_CHANGE_PASSWORD } from '../../../utils/helpers/validate'
 import { resetPasswordError } from '../../../utils/helpers'
 import { showToast } from '../../../utils/helpers/notification'
+import Button from '../../UI/Button'
+import Input from '../../UI/inputs/Input'
 
 const ChangeUserPassword = () => {
    window.scrollTo({ top: 0 })
@@ -79,9 +79,12 @@ const ChangeUserPassword = () => {
    }
 
    const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
+
    const showNewPasswordHandle = () => setShowNewPassword((prev) => !prev)
-   const showConfirmPasswordHandle = () =>
+
+   const showConfirmPasswordHandle = () => {
       setShowConfirmPassword((prev) => !prev)
+   }
 
    return (
       <Box>
@@ -90,7 +93,7 @@ const ChangeUserPassword = () => {
                <Box className="change-password-box">
                   <h3 className="change-password">Смена пароля</h3>
 
-                  <Typography className="label">Старый пароль</Typography>
+                  <label htmlFor="oldPassword">Старый пароль</label>
 
                   <StyledInput
                      value={values.oldPassword}
@@ -114,7 +117,7 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="label">Hовый пароль</Typography>
+                  <label htmlFor="newPassword">Hовый пароль</label>
 
                   <StyledInput
                      value={values.newPassword}
@@ -138,9 +141,9 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="label">
+                  <label htmlFor="confirmPassword">
                      Подтвердите новый пароль
-                  </Typography>
+                  </label>
 
                   <StyledInput
                      value={values.confirmPassword}
@@ -193,7 +196,7 @@ const ChangeUserPassword = () => {
                <Box className="reset-password-box">
                   <h3 className="change-password">Cброс пароля</h3>
 
-                  <Typography className="label">Введите email</Typography>
+                  <label htmlFor="email">Введите email</label>
 
                   <StyledInput
                      value={values.email}
@@ -236,7 +239,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          flexDirection: 'column',
       },
 
-      '& .label': {
+      '& label': {
          marginTop: '1rem',
          color: theme.palette.primary.lightBlack,
          marginBottom: '0.3rem',

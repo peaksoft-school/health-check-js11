@@ -7,9 +7,9 @@ import { NavLink, useSearchParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
-import ChangeUserPassword from './ChangeUserPassword'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
+import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
 const Profile = () => {
    window.scrollTo({ top: 0 })
@@ -104,19 +104,23 @@ const Profile = () => {
                         >
                            <Box className="table-container">
                               <div className="first-box">
-                                 <Typography className="label">Имя</Typography>
+                                 <label className="label" htmlFor="firstName">
+                                    Имя
+                                 </label>
 
                                  <StyledInput
+                                    id="firstName"
                                     className="input"
                                     value={values.firstName}
                                     onChange={handleChange('firstName')}
                                  />
 
-                                 <Typography className="label">
+                                 <label className="label" htmlFor="email">
                                     E-mail
-                                 </Typography>
+                                 </label>
 
                                  <StyledInput
+                                    id="email"
                                     className="input"
                                     onChange={handleChange('email')}
                                     value={values.email}
@@ -124,21 +128,21 @@ const Profile = () => {
                               </div>
 
                               <div className="first-box">
-                                 <Typography className="label">
-                                    Фамилия
-                                 </Typography>
+                                 <label htmlFor="lastName">Фамилия</label>
 
                                  <StyledInput
+                                    id="lastName"
                                     onChange={handleChange('lastName')}
                                     className="input"
                                     value={values.lastName}
                                  />
 
-                                 <Typography className="label">
+                                 <label className="label" htmlFor="numberPhone">
                                     Телефон
-                                 </Typography>
+                                 </label>
 
                                  <NumberInput
+                                    id="numberPhone"
                                     variant="black"
                                     onChange={handleChange('numberPhone')}
                                     value={values.numberPhone}
@@ -229,7 +233,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& .label': {
+      '& label': {
          fontFamily: 'Manrope',
          fontSize: '14px',
          color: theme.palette.secondary.lightGrey,

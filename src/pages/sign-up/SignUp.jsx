@@ -18,8 +18,8 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
 import { authWithGoogle, signUp } from '../../store/slices/auth/authThunk'
-import { auth, provider } from '../../utils/constants/authWithGoogle'
 import SignIn from '../sign-in/SignIn'
+import { auth, provider } from '../../configs/firebase'
 
 const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
    const { isLoading } = useSelector((state) => state.auth)

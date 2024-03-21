@@ -32,3 +32,11 @@ p {
       color: black;
    }
 }
+
+.custom-breadcrumbs ol li:nth-of-type(even) .custom-link {
+   font-size: 0.875rem;
+   font-weight: 400;
+   padding-bottom: 2rem;
+   color: #048741;
+   cursor: pointer;
+}

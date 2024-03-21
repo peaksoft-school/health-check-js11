@@ -147,14 +147,14 @@ const OnlineAppointments = () => {
          <Box className="button-container">
             <Typography className="title">Онлайн-запись</Typography>
 
+            {isLoading && <Loading />}
+
             {showAddButton && (
                <Button className="add-button" onClick={onOpenModal}>
                   <PlusIcon className="plus-icon" />
                   Добавить запись
                </Button>
             )}
-
-            {isLoading && <Loading />}
 
             {!showAddButton && (
                <Box>

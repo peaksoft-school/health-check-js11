@@ -194,7 +194,7 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
 
    borderRadius: '10px',
    fontFamily: 'Manrope',
-   fontWeight: 400,
+   fontWeight: '400',
    fontSize: '16px',
    lineHeight: '21.86px',
    color: '#4D4E51',

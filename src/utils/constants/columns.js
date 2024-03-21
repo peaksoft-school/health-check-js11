@@ -329,6 +329,7 @@ const PATIENTS_COLUMN = [
       },
 
       tdStyle: {
+         fontWeight: '500',
          color: 'black !important',
       },
 

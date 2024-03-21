@@ -13,6 +13,7 @@ import AppointmentsForm from './AppointmentsForm'
 import Result from './Result'
 import Button from '../../UI/Button'
 import { APPOINTMENTS_ACTIONS } from '../../../store/slices/appointments/appointmentsSlice'
+import { PART_TITLES } from '../../../utils/constants'
 
 const AddAppointments = ({ open, onClose }) => {
    const [currentPart, setCurrentPart] = useState('main')
@@ -161,11 +162,7 @@ const AddAppointments = ({ open, onClose }) => {
 
                <Box className="header">
                   <Typography className="title">
-                     {currentPart === 'main' && 'Онлайн Запись'}
-                     {currentPart === 'specialist' && 'Выбрать специалиста'}
-                     {currentPart === 'date' && 'Выбрать дату и время'}
-                     {currentPart === 'form' && 'Запись'}
-                     {currentPart === 'result' && 'Онлайн Запись'}
+                     {PART_TITLES[currentPart]}
                   </Typography>
                </Box>
 

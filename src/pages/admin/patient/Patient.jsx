@@ -151,47 +151,25 @@ const Patient = () => {
 export default Patient
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   display: 'flex',
-   flexDirection: 'column',
-   maxWidth: '1600px',
-   margin: '0 auto',
-   paddingBottom: '30px',
+   '& > .patient': {
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '1600px',
+      margin: '0 auto',
+      paddingBottom: '30px',
 
-   '& > .user-info': {
-      height: '100vh',
-      background: 'white',
-      marginTop: '1.25rem',
-      borderRadius: '0.375rem',
+      '& > .user-info': {
+         height: '100vh',
+         background: 'white',
+         marginTop: '1.25rem',
+         borderRadius: '0.375rem',
 
-      '& > .content-box': {
-         display: 'flex',
-         width: '100%',
-         gap: '90px',
-         padding: '20px',
-
-         '& > .results-inner-container': {
+         '& > .content-box': {
             display: 'flex',
             width: '100%',
-            height: '100%',
-            justifyContent: 'space-between',
-            backgroundColor: theme.palette.tertiary.daisy,
-            borderRadius: '8px',
-            padding: ' 2vh 2vh 7vh 2vh',
-         },
+            gap: '90px',
+            padding: '20px',
 
-         '& > .result-label': {
-            fontWeight: '500',
-            fontSize: '18px',
-         },
-
-         '& .result-date': {
-            '& > div': {
-               display: 'flex',
-               flexDirection: 'column',
-            },
-         },
-
-         '&  .file': {
             '& > .inner-box': {
                display: 'flex',
                flexDirection: 'column',
@@ -275,22 +253,22 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             },
          },
       },
-   },
 
-   '& > .button-container': {
-      display: 'flex',
-      justifyContent: 'space-between',
+      '& > .button-container': {
+         display: 'flex',
+         justifyContent: 'space-between',
 
-      '& > .button': {
-         padding: '0',
-         fontSize: '13px',
-         height: '40px',
-         width: '232px',
+         '& > .button': {
+            padding: '0',
+            fontSize: '13px',
+            height: '40px',
+            width: '232px',
 
-         '& > div': {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               gap: '4px',
+            },
          },
       },
    },

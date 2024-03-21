@@ -8,7 +8,7 @@ import {
 } from '../../../assets/icons'
 import Select from '../../UI/Select'
 import Button from '../../UI/Button'
-import { containsTheHTTPS } from '../../../utils/helpers'
+import { containsTheHTTPS, formatDates } from '../../../utils/helpers'
 import { NotUserImage } from '../../../assets/images'
 
 const Appointments = ({
@@ -32,15 +32,6 @@ const Appointments = ({
    }))
 
    const appointmentTime = time ? time.slice(0, 5) : ''
-
-   const formatDates = (dateString) => {
-      const options = { weekday: 'long', day: 'numeric', month: 'long' }
-      const date = new Date(dateString)
-      const formattedDate = date.toLocaleDateString('ru-RU', options)
-      const capitalizedWeekday =
-         formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
-      return capitalizedWeekday
-   }
 
    const deleteDateHandler = () => setDat('')
 
@@ -251,13 +242,15 @@ const StyledButtonContinue = styled(Button)(() => ({
 
 const StyledButton = styled(Button)(({ theme }) => ({
    '&.MuiButtonBase-root': {
+      display: 'flex',
+      justifyContent: 'start',
+
       '& div': {
          display: 'flex',
          alignItems: 'center',
-         width: '100%',
 
          '& .icon': {
-            marginRight: '20px',
+            marginRight: '15px',
          },
       },
 
@@ -283,10 +276,16 @@ const StyledSelect = styled(Select)(({ theme }) => ({
       border: 'none',
       padding: '1.25rem',
       color: 'black',
+      fontWeight: '500',
+   },
+
+   '& .select-placeholder-text': {
+      fontWeight: '500',
    },
 
    '& #react-select-3-placeholder': {
-      color: theme.palette.primary.lightBlack,
+      color: 'black',
+      fontWeight: '500',
    },
 
    '& svg': {

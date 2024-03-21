@@ -152,7 +152,6 @@ const StyledDateCalendar = styled(DateCalendar)(({ theme }) => ({
 
    '& .MuiIconButton-root-MuiPickersArrowSwitcher-button': {
       position: 'absolute',
-      // display: 'none !important',
    },
 
    '& .MuiPickersCalendarHeader-switchViewButton': {
@@ -200,6 +199,7 @@ const StyledTimeButton = styled(Button)(({ variant, theme }) => ({
    fontSize: '10px',
    backgroundColor:
       variant === 'green' ? 'var(--primary-green, #048741)' : 'transparent',
+
    color:
       variant === 'green'
          ? 'white'

@@ -3,50 +3,61 @@ import Button from '../../UI/Button'
 import { NotUserImage } from '../../../assets/images'
 import { containsTheHTTPS } from '../../../utils/helpers'
 
-const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => (
-   <StyledContainer>
-      <Box className="first-part">
-         {containsTheHTTPS(doctor.imageDoctor) ? (
-            <img className="image" src={doctor.imageDoctor} alt="doctor" />
-         ) : (
-            <img className="image" src={NotUserImage} alt="doctor" />
-         )}
+const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => {
+   const {
+      imageDoctor,
+      doctorFullName,
+      department,
+      dateOfConsultation,
+      doctorId,
+      startTimeOfConsultation,
+   } = doctor
 
-         <Box>
-            <Typography>{doctor.doctorFullName}</Typography>
+   return (
+      <StyledContainer>
+         <Box className="first-part">
+            {containsTheHTTPS(imageDoctor) ? (
+               <img className="image" src={imageDoctor} alt="doctor" />
+            ) : (
+               <img className="image" src={NotUserImage} alt="doctor" />
+            )}
 
-            <Typography className="facility">{doctor.department}</Typography>
+            <Box>
+               <Typography>{doctorFullName}</Typography>
 
-            <Box className="rating-box">
-               <Rating size="small" value={5} readOnly />
+               <Typography className="facility">{department}</Typography>
 
-               <Typography className="reviews" variant="span">
-                  166
-               </Typography>
+               <Box className="rating-box">
+                  <Rating size="small" value={5} readOnly />
+
+                  <Typography className="reviews" variant="span">
+                     166
+                  </Typography>
+               </Box>
             </Box>
          </Box>
-      </Box>
 
-      <Typography className="date">
-         Ближайшее время для записи <span> </span>
-         {formatDates(doctor.dateOfConsultation)}:
-      </Typography>
+         <Typography className="date">
+            Ближайшее время для записи <span> </span>
+            {formatDates(dateOfConsultation)}:
+         </Typography>
 
-      <Box className="times-box">
-         {doctor.startTimeOfConsultation.map((time) => (
-            <StyledTimeButton
-               key={time}
-               onClick={() => {
-                  getDoctorName({ doctor, id: doctor.doctorId, time })
-               }}
-               variant="grey"
-            >
-               {time.slice(0, 5)}
-            </StyledTimeButton>
-         ))}
-      </Box>
-   </StyledContainer>
-)
+         <Box className="times-box">
+            {startTimeOfConsultation.map((time) => (
+               <StyledTimeButton
+                  key={time}
+                  onClick={() => {
+                     getDoctorName({ doctor, id: doctorId, time })
+                  }}
+                  variant="grey"
+               >
+                  {time.slice(0, 5)}
+               </StyledTimeButton>
+            ))}
+         </Box>
+      </StyledContainer>
+   )
+}
 
 export default SpecialistCard
 

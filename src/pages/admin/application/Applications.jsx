@@ -93,9 +93,6 @@ const Applications = () => {
 export default Applications
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: theme.palette.primary.backgroundAdmin,
-
    '& > .box': {
       display: 'flex',
       flexDirection: 'column',

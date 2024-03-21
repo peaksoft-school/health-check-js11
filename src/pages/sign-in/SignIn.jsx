@@ -18,7 +18,7 @@ import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 import ForgotPassword from '../forgot-password/ForgotPassword'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
-import { auth, provider } from '../../utils/constants/authWithGoogle'
+import { auth, provider } from '../../configs/firebase'
 
 const SignIn = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)
