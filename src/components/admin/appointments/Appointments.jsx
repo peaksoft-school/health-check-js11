@@ -1,9 +1,8 @@
-import { styled, Box, Typography, Rating } from '@mui/material'
+import { styled, Box, Avatar, Typography, Rating } from '@mui/material'
 import { useSelector } from 'react-redux'
 import {
    CalendarWithDotsIcon,
    DeleteIcon,
-   ProfileIcon,
    UsersIcon,
 } from '../../../assets/icons'
 import Select from '../../UI/Select'
@@ -53,31 +52,37 @@ const Appointments = ({
 
          {doctorInfo ? (
             <Box className="first-part">
-               {containsTheHTTPS(doctorInfo.doctor.imageDoctor) ? (
-                  <img
-                     className="image"
-                     src={doctorInfo.doctor.imageDoctor}
-                     alt="doctor"
-                  />
-               ) : (
-                  <img className="image" src={NotUserImage} alt="doctor" />
-               )}
+               <Box className="info">
+                  {containsTheHTTPS(doctorInfo.doctor.imageDoctor) ? (
+                     <Avatar
+                        className="image"
+                        src={doctorInfo.doctor.imageDoctor}
+                        alt="doctor"
+                     />
+                  ) : (
+                     <Avatar
+                        className="image"
+                        src={NotUserImage}
+                        alt="doctor"
+                     />
+                  )}
 
-               <Box onClick={toggleSpecialist} className="doctor-info">
-                  <Typography className="doctor-name">
-                     {doctorInfo.doctor.doctorFullName}
-                  </Typography>
-
-                  <Typography className="facility">
-                     {doctorInfo.doctor.department}
-                  </Typography>
-
-                  <Box className="rating-box">
-                     <Rating size="small" value={5} readOnly />
-
-                     <Typography className="reviews" variant="span">
-                        166
+                  <Box onClick={toggleSpecialist} className="doctor-info">
+                     <Typography className="doctor-name">
+                        {doctorInfo.doctor.doctorFullName}
                      </Typography>
+
+                     <Typography className="facility">
+                        {doctorInfo.doctor.department}
+                     </Typography>
+
+                     <Box className="rating-box">
+                        <Rating size="small" value={5} readOnly />
+
+                        <Typography className="reviews" variant="span">
+                           166
+                        </Typography>
+                     </Box>
                   </Box>
                </Box>
 
@@ -150,7 +155,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       backgroundColor: 'white',
       borderRadius: '0.938rem',
       boxSizing: 'content-box',
-      padding: '0.313rem',
+      padding: ' 0.4rem 1rem 0.4rem 1.513rem ',
+
+      '& > .info': {
+         display: 'flex',
+         gap: '15px',
+      },
 
       '& img': {
          marginLeft: '1.2rem',

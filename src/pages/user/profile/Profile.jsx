@@ -69,9 +69,8 @@ const Profile = () => {
       <Box>
          <StyledLine> </StyledLine>
          <StyledContainer>
+            <BreadCrumbs to="/" text="Профиль" before="Главная" />
             <Box className="box">
-               <BreadCrumbs to="/" text="Профиль" before="Главная" />
-
                <Box className="title-container">
                   <Typography className="title">Профиль</Typography>
                </Box>
@@ -197,6 +196,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       flexDirection: 'column',
       margin: '0 auto',
       paddingBottom: '1.875rem',
+      paddingTop: '1.875rem',
 
       '& .title-container': {
          display: 'flex',

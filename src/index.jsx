@@ -12,7 +12,6 @@ import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
 import { fileInjectStore } from './configs/axiosInstaseFile'
 import './index.css'
-import BreadCrumbs from './components/UI/BreadCrumbs'
 
 injectStore(store)
 fileInjectStore(store)
