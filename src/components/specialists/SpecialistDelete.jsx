@@ -6,7 +6,7 @@ import Modal from '../UI/Modal'
 import Button from '../UI/Button'
 import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 
-const DeleteButton = ({ id, lastName, firstName }) => {
+const SpecialistDelete = ({ id, lastName, firstName }) => {
    const [open, setOpen] = useState(false)
 
    const dispatch = useDispatch()
@@ -55,7 +55,7 @@ const DeleteButton = ({ id, lastName, firstName }) => {
    )
 }
 
-export default DeleteButton
+export default SpecialistDelete
 
 const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',

@@ -1,25 +1,22 @@
 import { useEffect } from 'react'
-import { Typography, Box, styled, Card } from '@mui/material'
+import { NavLink, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router'
-import { NavLink } from 'react-router-dom'
-import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
+import { Typography, Box, styled } from '@mui/material'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
+import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import { DEPARTMENTS } from '../../../utils/constants'
+import { ROUTES } from '../../../routes/routes'
 
-const SpecialistInnerPage = () => {
+const Specialist = () => {
+   const { specialist } = useSelector((state) => state.specialists)
+
    const { id } = useParams()
 
-   const { specialist, isLoading } = useSelector((state) => state.specialists)
-
    const dispatch = useDispatch()
-
-   const data = {
-      ...specialist,
-   }
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialistById(id))
@@ -27,13 +24,15 @@ const SpecialistInnerPage = () => {
 
    const onSubmit = (values) => {
       const formData = new FormData()
+
       formData.append('file', values.file)
+
       dispatch(SPECIALISTS_THUNK.updateButton({ id, values }))
    }
 
    const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
       initialValues: {
-         data,
+         ...specialist,
          file: null,
       },
 
@@ -41,10 +40,18 @@ const SpecialistInnerPage = () => {
       onSubmit,
    })
 
+   useEffect(() => {
+      setValues((prevState) => ({
+         ...prevState,
+         ...specialist,
+      }))
+   }, [specialist])
+
    const handleFileChange = (event) => {
       const { name, files } = event.target
       const file = files[0]
       const imageUrl = URL.createObjectURL(file)
+
       setValues((prevValues) => ({
          ...prevValues,
          [name]: file,
@@ -56,23 +63,14 @@ const SpecialistInnerPage = () => {
       handleChange('department')(selectedOption.label)
    }
 
-   useEffect(() => {
-      setValues((prevState) => ({
-         ...prevState,
-         ...specialist,
-      }))
-   }, [specialist])
    return (
       <StyledMainContainer>
          <Box className="box">
-            <NavLink to="/admin/specialists" className="navlink">
-               <StyledSpecialistRow>
-                  Специалисты
-                  <span className="doctor-name">
-                     &gt; {specialist.firstName} {specialist.lastName}
-                  </span>
-               </StyledSpecialistRow>
-            </NavLink>
+            <BreadCrumbs
+               to="/admin/specialists"
+               before="Специалисты"
+               text={`${specialist.firstName} ${specialist.lastName}`}
+            />
 
             <Typography className="title">
                {specialist.firstName} {specialist.lastName}
@@ -146,17 +144,21 @@ const SpecialistInnerPage = () => {
                      onChange={handleChange('description')}
                      value={values.description}
                   />
-                  <NavLink to="/admin/specialists" className="back">
-                     <Box className="button-group">
+
+                  <Box className="button-group">
+                     <NavLink
+                        to={`${ROUTES.ADMIN}/${ROUTES.ADMIN.SPECIALISTS}`}
+                        className="back"
+                     >
                         <StyledButton type="button" variant="grey">
                            НАЗАД
                         </StyledButton>
+                     </NavLink>
 
-                        <StyledButton type="submit" disabled={!dirty}>
-                           РЕДАКТИРОВАТЬ
-                        </StyledButton>
-                     </Box>
-                  </NavLink>
+                     <StyledButton type="submit" disabled={!dirty}>
+                        РЕДАКТИРОВАТЬ
+                     </StyledButton>
+                  </Box>
                </Box>
             </form>
          </Box>
@@ -164,10 +166,10 @@ const SpecialistInnerPage = () => {
    )
 }
 
-export default SpecialistInnerPage
+export default Specialist
 
 const StyledMainContainer = styled(Box)(() => ({
-   padding: '1.87rem 4.37rem 0',
+   padding: '1.87rem 4.37rem 0 ',
    backgroundColor: '#F5F5F5',
 
    '& > .box': {
@@ -177,18 +179,7 @@ const StyledMainContainer = styled(Box)(() => ({
       margin: '0 auto',
       paddingBottom: '30px',
    },
-   '& .navlink': {
-      marginBottom: '2rem',
-      color: 'grey',
-      fontSize: '14px',
-      textDecoration: 'none',
-   },
-   '& .title': {
-      fontSize: '1.375rem',
-      fontWeight: '400',
-      lineHeight: 'normal',
-      marginBottom: '1.87rem',
-   },
+
    '& .table-container': {
       width: '100%',
       borderRadius: '0.375rem',
@@ -227,6 +218,9 @@ const StyledMainContainer = styled(Box)(() => ({
          gap: '1rem',
       },
    },
+   '& .title': {
+      marginBottom: '2rem',
+   },
 }))
 
 const StyledInfo = styled(Typography)(() => ({
@@ -264,16 +258,6 @@ const StyledButton = styled(Button)(() => ({
    width: '14.3rem',
    height: '2.5rem',
    marginTop: '5rem',
-}))
-
-const StyledSpecialistRow = styled(Typography)(() => ({
-   marginBottom: '2rem',
-   color: 'grey',
-   fontSize: '14px',
-
-   '& .doctor-name': {
-      color: 'green',
-   },
 }))
 
 const StyledImage = styled(Box)(() => ({

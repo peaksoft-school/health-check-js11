@@ -16,4 +16,8 @@ export { default as OrthopedicsReviewImage } from './pngs/review.jpg'
 export { default as NotFoundImage } from './pngs/not-found.jpg'
 export { default as NoDataImage } from './pngs/no-data.png'
 export { default as AboutClinicImage } from './pngs/about-clinic-page.png'
+<<<<<<< HEAD
 export { default as ResultsBackgroundImage } from './pngs/results-background.png'
+=======
+export { default as NotUserImage } from './pngs/not-user.png'
+>>>>>>> development

@@ -20,8 +20,7 @@
    }
 }
 
-.form-container {
-   .MuiFormControl-root {
-      width: 300px !important;
-   }
+a {
+   text-decoration: none;
+   color: black;
 }

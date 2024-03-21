@@ -1,72 +1,69 @@
-import { Box, Typography, Tab, styled } from '@mui/material'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { Box, Typography, Tab, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
-import { PlusIcon } from '../../../assets/icons'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import { SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import { ROUTES } from '../../../routes/routes'
+import { PlusIcon } from '../../../assets/icons'
 
 const Specialists = () => {
-   const [searchName, setSearchName] = useState('')
+   const { isLoading, specialists } = useSelector((state) => state.specialists)
+
+   const [search, setSearch] = useState('')
 
    const dispatch = useDispatch()
+
+   const [debouncedSearch] = useDebounce(search, 1000)
+
+   const memoizedSpecialists = useMemo(() => specialists, [specialists])
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialists())
    }, [])
 
-   const { isLoading, specialists } = useSelector((state) => state.specialists)
-
-   const handleSearchChange = (e) => setSearchName(e.target.value)
-
-   const [debouncedSearchText] = useDebounce(searchName, 1000)
-
    useEffect(() => {
-      if (debouncedSearchText !== undefined) {
+      if (debouncedSearch !== undefined) {
          dispatch(
             SPECIALISTS_THUNK.searchSpecilaist({
-               searchName: debouncedSearchText,
+               searchName: debouncedSearch,
             })
          )
       }
-   }, [debouncedSearchText])
+   }, [debouncedSearch])
+
+   const changeSearchHandler = (e) => setSearch(e.target.value)
 
    return (
       <StyledContainer>
-         <Box className="box">
-            <Box className="button-container">
-               <Typography className="title">Специалисты</Typography>
+         <Box className="button-container">
+            <Typography className="title">Специалисты</Typography>
 
-               <NavLink
-                  className="navlink"
-                  to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}
-               >
-                  <Button className="add-button">
-                     <PlusIcon className="plus-icon" />
-                     Добавить специалиста
-                  </Button>
-               </NavLink>
-            </Box>
+            <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
+               <Button className="add-button">
+                  <PlusIcon className="plus-icon" />
+                  ДОБАВИТЬ СПЕЦИАЛИСТА
+               </Button>
+            </NavLink>
          </Box>
 
          <Box className="input-container">
             <StyledInput
                placeholder="Поиск"
-               value={searchName}
-               onChange={handleSearchChange}
+               value={search}
+               onChange={changeSearchHandler}
             />
          </Box>
 
          {isLoading && <Loading />}
 
          <Box className="table-container">
-            <Table columns={SPECIALISTS_COLUMN} data={specialists} />
+            <Table columns={SPECIALISTS_COLUMN} data={memoizedSpecialists} />
          </Box>
       </StyledContainer>
    )
@@ -74,85 +71,60 @@ const Specialists = () => {
 
 export default Specialists
 
-const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+const StyledContainer = styled(Box)(() => ({
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
 
-   '& > .box': {
+   '& > .button-container': {
       display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
-      paddingBottom: '30px',
+      justifyContent: 'space-between',
 
-      '& .button-container': {
-         display: 'flex',
-         justifyContent: 'space-between',
-      },
-
-      '&  .add-button': {
-         fontSize: '11px',
-         height: '45px',
-         width: '232px',
-         fontFamily: 'Manrope',
-
-         '& > div': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            gap: '4px',
-         },
-
-         '& .plus-icon': {
-            marginLeft: '-0.20rem',
-         },
-      },
-
-      '& .title': {
+      '& > .title': {
          fontSize: '1.375rem',
          fontWeight: '400',
          lineHeight: 'normal',
          marginBottom: '1.87rem',
       },
 
-      '& .MuiTabs-scroller > .MuiTabs-indicator': {
-         backgroundColor: '#048741 !important',
-      },
-
-      '& .route': {
-         fontSize: '0.75rem',
+      '& > a > .add-button': {
+         fontFamily: 'Manrope',
+         fontSize: '0.875rem',
+         fontStyle: 'normal',
+         fontWeight: '600',
          lineHeight: 'normal',
-         marginRight: '1.87rem',
-         padding: '0rem',
-         transition: '0.3s',
-         fontWeight: '500',
-         color: theme.palette.secondary.LightGrey,
-      },
+         letterSpacing: '0.02625rem',
+         height: '2.75rem',
+         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+         flexShrink: '0',
 
-      '& .Mui-selected': {
-         transition: '1s',
-         color: '#048741 !important',
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            gap: '10px',
+         },
       },
    },
-   '& .table-container': {
-      width: '100%',
-      borderRadius: '0.375rem',
-      bordeRradius: ' 0.375rem',
-      backgroundColor: 'white',
-      marginTop: '1.25rem',
-      padding: '0 0 0 0.60rem',
-   },
 
-   '& .input-container': {
+   '& > .input-container': {
       width: '37.5rem ',
       marginTop: '0.1rem',
+   },
+
+   '& > .table-container': {
+      width: '100%',
+      borderRadius: '0.375rem',
+      backgroundColor: 'white',
+      marginTop: '1.25rem',
    },
 }))
 
 const StyledInput = styled(SearchInput)(() => ({
-   height: '2rem',
-   padding: '0 0.3rem',
+   height: '2.5rem',
+   padding: '0rem 0.3rem',
    display: 'inline-flex',
    justifyContent: 'center',
    width: '100%',
