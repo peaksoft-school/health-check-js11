@@ -12,8 +12,6 @@ import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
 const Profile = () => {
-   window.scrollTo({ top: 0 })
-
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)
@@ -198,6 +196,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       paddingBottom: '1.875rem',
       paddingTop: '1.875rem',
 
+      '& .first-box': {
+         display: 'flex',
+         flexDirection: 'column',
+      },
+
       '& .title-container': {
          display: 'flex',
          justifyContent: 'space-between',
@@ -293,7 +296,7 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledButtonContainer = styled(Box)(() => ({
+const StyledButtonContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    marginTop: '1.5rem',
    gap: '1rem',
@@ -303,28 +306,24 @@ const StyledButtonContainer = styled(Box)(() => ({
       color: `#048741!important`,
       width: '12.563rem',
       height: '2.438rem',
+
+      '&.Mui-disabled': {
+         border: 'none',
+         backgroundColor: theme.palette.primary.main,
+         color: theme.palette.secondary.input,
+      },
    },
 
    '& .confirm-button': {
       borderRadius: '8px',
       width: '12.563rem',
       height: '2.438rem',
-   },
-}))
 
-const NavigatePathTitle = styled(Box)(() => ({
-   fontSize: '0.875rem',
-   fontWeight: 400,
-   margin: '1.5rem 0',
-
-   span: {
-      color: '#048741',
-      cursor: 'pointer',
-   },
-
-   '& .navigate': {
-      textDecoration: 'none',
-      color: '#959595',
+      '&.Mui-disabled': {
+         border: 'none',
+         backgroundColor: theme.palette.primary.main,
+         color: theme.palette.secondary.input,
+      },
    },
 }))
 

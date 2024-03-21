@@ -105,7 +105,7 @@ const updateButton = createAsyncThunk(
          dispatch(getSpecialistById())
          return data
       } catch (error) {
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )

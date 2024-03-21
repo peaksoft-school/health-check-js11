@@ -9,13 +9,13 @@ import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
 import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import { APPLICATION_THUNK } from '../../store/slices/applications/applicationsThunk'
 import { formatPhoneNumberWithSpaces } from '../helpers'
 import {
    handleIsChecked,
    handleIsCheckedItem,
    handleRemoveChecked,
-} from '../../store/slices/application/aplicationSlice'
+} from '../../store/slices/applications/aplicationsSlice'
 import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
 import SpecialistInfo from '../../components/admin/specialists/SpecialistInfo'
 import SpecialistActions from '../../components/admin/specialists/SpecialistActions'

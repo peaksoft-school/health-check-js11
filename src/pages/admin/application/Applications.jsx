@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
-import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
+import { APPLICATION_THUNK } from '../../../store/slices/applications/applicationsThunk'
 import Loading from '../../../components/Loading'
 
 const Applications = () => {

@@ -35,7 +35,6 @@ const Input = forwardRef(
 )
 
 const StyledInput = styled(TextField)(({ theme }) => ({
-   width: '100%',
    height: '42px',
    borderRadius: '8px solid',
    caretColor: theme.palette.primary.darkGreen,
