@@ -29,7 +29,7 @@ const DataDoctors = ({ doctor }) => {
                         <Typography className="position-doctor">
                            {doctor.position}
                         </Typography>
-                        <NavLink to="/doctors/doctor">
+                        <NavLink to={`/doctors/${doctor.id}`}>
                            <Button variant="secondary" className="btn">
                               <span className="btn-text">
                                  Записаться на приём

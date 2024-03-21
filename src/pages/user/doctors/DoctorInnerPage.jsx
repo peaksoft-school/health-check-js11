@@ -1,26 +1,24 @@
 import styled from '@emotion/styled'
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useDateField } from '@mui/x-date-pickers/DateField/useDateField'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 
 const DoctorInnerPage = () => {
-   const { id } = useParams()
-   const dispatch = useDispatch()
    const { doctors } = useSelector((state) => state.doctors)
-   console.log(doctors, 'kndfldjn')
+   console.log(doctors, 'hello')
 
-   const data = {
-      ...doctors,
-   }
+   const { doctorId } = useParams()
+
+   const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(DOCTOR_THUNK.getDoctors(id))
-   }, [id, dispatch])
+      dispatch(DOCTOR_THUNK.getDoctorsById(doctorId))
+   }, [doctorId, dispatch])
 
    return (
       <StyledContainer>
@@ -38,7 +36,7 @@ const DoctorInnerPage = () => {
                      <span>Хирургия</span>
                   </NavLink>
                   {' > '}
-                  <span className="colors">Гаталусский Артур</span>
+                  <span className="colors">{doctors.fullName}</span>
                </Typography>
             </StyledSpecialistRow>
             <Typography className="name">Гаталусский Артур</Typography>

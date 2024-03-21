@@ -30,6 +30,22 @@ export const doctorSlice = createSlice({
          .addCase(DOCTOR_THUNK.getDoctors.rejected, (state) => {
             state.isLoading = false
          })
+
+         .addCase(
+            DOCTOR_THUNK.getDoctorsById.fulfilled,
+            (state, { payload }) => {
+               state.doctors = payload
+               state.isLoading = false
+            }
+         )
+
+         .addCase(DOCTOR_THUNK.getDoctorsById.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(DOCTOR_THUNK.getDoctorsById.rejected, (state) => {
+            state.isLoading = false
+         })
    },
 })
 

@@ -56,7 +56,7 @@ export const USER_ROUTES = [
       element: <Records />,
    },
    {
-      path: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}/:${ROUTES.USER.DOCTORS_INNER}`,
+      path: `${ROUTES.USER.DOCTOR_INNER}`,
       element: <DoctorInnerPage />,
    },
 ]

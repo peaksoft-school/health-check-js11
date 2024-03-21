@@ -18,4 +18,17 @@ const getDoctors = createAsyncThunk(
    }
 )
 
-export const DOCTOR_THUNK = { getDoctors }
+const getDoctorsById = createAsyncThunk(
+   'doctors/getDoctorsById',
+   async ({ id }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`api/doctor?id=${id}`)
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export const DOCTOR_THUNK = { getDoctors, getDoctorsById }

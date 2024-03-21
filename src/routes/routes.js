@@ -92,7 +92,7 @@ const ROUTES = {
       PRICES: 'prices',
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
-      DOCTORS_INNER: 'doctor',
+      DOCTOR_INNER: '/doctors/:doctorId',
    },
 
    ADMIN: {
