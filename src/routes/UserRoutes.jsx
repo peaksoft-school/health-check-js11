@@ -8,6 +8,7 @@ import Profile from '../pages/user/profile/Profile'
 import Records from '../pages/user/records/Records'
 import Services from '../pages/user/services/Services'
 import { ROUTES } from './routes'
+import DoctorInnerPage from '../pages/user/doctors/DoctorInnerPage'
 
 export const USER_ROUTES = [
    {
@@ -53,5 +54,9 @@ export const USER_ROUTES = [
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.RECORDS}`,
       element: <Records />,
+   },
+   {
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}/:${ROUTES.USER.DOCTORS_INNER}`,
+      element: <DoctorInnerPage />,
    },
 ]

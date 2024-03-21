@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import Button from '../../../components/UI/Button'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
+import DataDoctors from './DataDoctors'
 
 const Doctors = () => {
    const { doctors } = useSelector((state) => state.doctors)
@@ -46,39 +47,9 @@ const Doctors = () => {
                к совершенству.
             </Typography>
 
-            <Box className="global-container">
-               {doctors.map((doctor) => (
-                  <Box className="map-container">
-                     <Box key={doctor.id} className="text-container">
-                        <Typography className="label">
-                           {doctor.position}
-                        </Typography>
-                     </Box>
-                     <Box className="image-container">
-                        <img
-                           src={doctor.image}
-                           alt="img"
-                           className="surgeon-image"
-                        />
-                     </Box>
-                     <Box className="main-container">
-                        <Box className="name-container">
-                           <Typography variant="span" className="name">
-                              {doctor.fullName}
-                           </Typography>
-                           <Typography className="position-doctor">
-                              {doctor.department}
-                           </Typography>
-                           <Button variant="secondary" className="btn">
-                              <span className="btn-text">
-                                 Записаться на приём
-                              </span>
-                           </Button>
-                        </Box>
-                     </Box>
-                  </Box>
-               ))}
-            </Box>
+            {doctors.map((doctor) => (
+               <DataDoctors doctor={doctor} />
+            ))}
 
             <StyledSpecialist>
                <Typography variant="span">
@@ -119,66 +90,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       color: '#4D4E51',
       fontFamily: 'Manrope',
       marginTop: '-1rem',
-   },
-
-   '&  > .global-container': {
-      width: '1017px',
-      display: 'flex',
-      flexWrap: 'wrap',
-      padding: '3.125rem 0 0 6.50rem',
-      gap: '2rem',
-
-      '& > .map-container': {
-         '& .text-container': {
-            '& .label': {
-               fontFamily: 'Manrope',
-               fontSize: '24px',
-               fontWeight: '600',
-            },
-         },
-
-         '& > .image-container': {
-            marginTop: '1.50rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-
-            '& .surgeon-image': {
-               backgroundColor: '#E4E7EE',
-               borderRadius: '4px',
-            },
-         },
-
-         '& > .main-container': {
-            display: 'flex',
-            justifyContent: 'flex-start',
-            gap: '1.50rem',
-
-            '& > .name-container': {
-               padding: '1rem 0 0 0.10rem',
-
-               '& .name': {
-                  fontSize: '18px',
-                  fontFamily: 'Manrope',
-                  fontWeight: '500',
-               },
-               '& .position-doctor': {
-                  fontSize: '15px',
-                  color: '#969393',
-               },
-
-               '& .btn': {
-                  marginTop: '1rem',
-                  borderRadius: '0.5rem',
-                  width: '204px',
-                  height: '42px',
-
-                  '& .btn-text': {
-                     fontSize: '12px',
-                  },
-               },
-            },
-         },
-      },
    },
 }))
 

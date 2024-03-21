@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { NavLink } from 'react-router-dom'
 import { format } from 'date-fns'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
@@ -17,6 +18,9 @@ import {
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
+import { EditIcon } from '../../assets/icons'
+import SpecialistsDelete from '../../components/specialists/SpecialistsDelete'
+import SpecialistSwicher from '../../components/specialists/SpecialistSwicher'
 import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
 
 const SCHEDULE_COLUMN = [
@@ -411,7 +415,6 @@ const APPLICATIONS_COLUMN = [
    {
       Header: <SelectAll variant="applications" selectFn={handleIsChecked} />,
       accessor: 'checkbox',
-
       style: {
          padding: '17px 0 20px 17px',
          flex: 0.06,
@@ -425,7 +428,6 @@ const APPLICATIONS_COLUMN = [
          />
       ),
    },
-
    {
       Header: (
          <DeleteSelected
@@ -435,14 +437,11 @@ const APPLICATIONS_COLUMN = [
          />
       ),
       accessor: 'action',
-
       style: {
          padding: '17px 0 20px',
          flex: 0.06,
-         cursor: 'pointer',
       },
    },
-
    {
       Header: '№',
       accessor: 'index',
@@ -452,7 +451,6 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '700',
          flex: 0.1,
       },
-
       tdStyle: {
          fontWeight: '500',
       },
@@ -462,13 +460,11 @@ const APPLICATIONS_COLUMN = [
    {
       Header: 'Имя',
       accessor: 'name',
-
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.4,
       },
-
       tdStyle: {
          fontWeight: '500',
       },
@@ -476,17 +472,14 @@ const APPLICATIONS_COLUMN = [
    {
       Header: 'Дата',
       accessor: 'original.date',
-
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.4,
       },
-
       tdStyle: {
          fontWeight: '500',
       },
-
       Cell: ({ row }) => (
          <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
       ),
@@ -494,14 +487,12 @@ const APPLICATIONS_COLUMN = [
    {
       Header: 'Номер телефона',
       accessor: 'number',
-
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.8,
          justifyContent: 'center',
       },
-
       tdStyle: {
          fontWeight: '500',
       },
@@ -514,18 +505,15 @@ const APPLICATIONS_COLUMN = [
    {
       Header: 'Обработан',
       accessor: 'processed',
-
       style: {
          padding: '19px 10px 20px',
          flex: 0.1,
          fontWeight: '700',
       },
-
       tdStyle: {
          display: 'flex',
          justifyContent: 'center',
       },
-
       Cell: ({ row }) => (
          <ProcessedCheckbox
             variant="applications"
@@ -535,22 +523,18 @@ const APPLICATIONS_COLUMN = [
          />
       ),
    },
-
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
-
       style: {
          padding: '19px 10px 20px',
          fontWeight: '700',
          flex: 0.1,
       },
-
       tdStyle: {
          display: 'flex',
          justifyContent: 'end',
       },
-
       Cell: ({ row }) => (
          <Delete
             deleteFn={APPLICATION_THUNK.deleteApplication}
@@ -562,10 +546,179 @@ const APPLICATIONS_COLUMN = [
    },
 ]
 
+const SPECIALISTS_COLUMN = [
+   {
+      Header: '№',
+      accessor: 'id',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: '0.2',
+      },
+
+      tdStyle: {
+         fontWeight: '600',
+      },
+   },
+   {
+      Header: 'Статус',
+      style: {
+         padding: '19px 0 20px',
+         flex: 0.38,
+         fontWeight: '600',
+      },
+
+      tdStyle: {
+         justifyContent: 'end',
+      },
+
+      Cell: ({ row }) => {
+         return <SpecialistSwicher {...row.original} />
+      },
+   },
+
+   {
+      Header: 'Специалист',
+      accessor: 'specialists',
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         display: 'flex',
+         flex: 0.7,
+      },
+
+      tdStyle: {
+         fontWeight: '500',
+      },
+
+      Cell: ({ row }) => {
+         return (
+            <Box style={{ display: 'flex', alignItems: 'center' }}>
+               <img
+                  src={row.original.image}
+                  alt="doctor"
+                  style={{
+                     width: '38px',
+                     height: '38px',
+                     marginRight: '13px',
+                     borderRadius: '50%',
+                  }}
+               />
+
+               <div>
+                  <Typography variant="span">
+                     <span
+                        style={{
+                           color: '#222222',
+                           fontSize: '16px',
+                        }}
+                     >
+                        {row.original.firstName} {row.original.lastName}
+                     </span>
+                     <br />
+                     <span style={{ color: '#959595', fontSize: '14px' }}>
+                        {row.original.position}
+                     </span>
+                  </Typography>
+               </div>
+            </Box>
+         )
+      },
+   },
+
+   {
+      Header: 'Отделение',
+      accessor: 'department',
+
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '700',
+         flex: 0.51,
+      },
+
+      Cell: ({ value }) => (
+         <span style={{ fontWeight: '500', fontSize: '16px', color: 'black' }}>
+            {value}
+         </span>
+      ),
+   },
+
+   {
+      Header: 'Расписание до',
+      accessor: 'endDateWork',
+      Cell: ({ value }) => {
+         const date = new Date(value)
+
+         const months = [
+            'января',
+            'февраля',
+            'марта',
+            'апреля',
+            'мая',
+            'июня',
+            'июля',
+            'августа',
+            'сентября',
+            'октября',
+            'ноября',
+            'декабря',
+         ]
+
+         const day = date.getDate()
+
+         const month = months[date.getMonth()]
+
+         const year = date.getFullYear()
+
+         const formattedDate = `${day} ${month} ${year} г.`
+
+         return <span style={{ color: 'black' }}>{formattedDate}</span>
+      },
+      style: {
+         padding: '19px 0 20px',
+         fontWeight: '600',
+         flex: 0.99,
+         fontSize: '16px',
+      },
+   },
+   {
+      Header: 'Действия',
+      accessor: 'totalDiscount',
+
+      style: {
+         padding: '19px 10px 20px 10px',
+         fontWeight: '600',
+         flex: 0.2,
+      },
+
+      tdStyle: {
+         display: 'flex',
+         justifyContent: 'center',
+      },
+
+      Cell: ({ row }) => (
+         <div
+            style={{
+               display: 'flex',
+               alignItems: 'center',
+               gap: '30px',
+            }}
+         >
+            <NavLink to={row.original.id.toString()}>
+               <EditIcon />
+            </NavLink>
+            <SpecialistsDelete {...row.original} />
+         </div>
+      ),
+   },
+]
+
 export {
    ONLINE_APPOINTMENTS_COLUMN,
    SCHEDULE_COLUMN,
    PATIENTS_COLUMN,
    COLUMNS,
    APPLICATIONS_COLUMN,
+   SPECIALISTS_COLUMN,
 }

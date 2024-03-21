@@ -11,6 +11,7 @@ import {
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 
+import { ROUTES } from '../../routes/routes'
 import {
    FooterInstagramIcon,
    FooterTelegramIcon,
@@ -31,7 +32,6 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
    {
@@ -383,14 +383,14 @@ const DEPARTMENTS = [
 
    {
       id: 9,
-      label: 'Офтальмология',
-      value: 'офтальмология',
+      label: 'Гинекология',
+      value: 'Гинекология',
    },
 
    {
       id: 10,
-      label: 'Гинекология',
-      value: 'гинекология',
+      label: 'Офтальмология   ',
+      value: 'Офтальмология',
    },
 
    {
