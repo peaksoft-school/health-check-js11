@@ -89,7 +89,7 @@ export const applicationSlice = createSlice({
 
          .addCase(APPLICATION_THUNK.deleteApplication.fulfilled, () => {
             showToast({
-               message: 'запись удалена',
+               message: 'Запись удалена',
             })
          })
 
