@@ -12,6 +12,7 @@ const Input = forwardRef(
          onClick,
          value,
          disabled,
+         readOnly,
          ...rest
       },
       ref
@@ -28,6 +29,7 @@ const Input = forwardRef(
             placeholder={placeholder}
             disabled={disabled}
             ref={ref}
+            inputProps={{ readOnly }}
             {...rest}
          />
       )
@@ -54,11 +56,12 @@ const StyledInput = styled(TextField)(({ theme }) => ({
       },
 
       '&.Mui-focused fieldset': {
+         borderWidth: '1px',
          borderColor: theme.palette.primary.darkGreen,
       },
 
       '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-         color: theme.palette.primary.lightBlack,
+         borderColor: theme.palette.tertiary.red,
       },
    },
 }))
