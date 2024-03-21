@@ -26,4 +26,9 @@ p {
 
 .select-placeholder-text {
    color: #222222;
+
+   a {
+      text-decoration: none;
+      color: black;
+   }
 }

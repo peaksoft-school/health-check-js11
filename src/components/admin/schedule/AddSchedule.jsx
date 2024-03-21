@@ -30,9 +30,6 @@ const selectStyles = {
       return {
          ...styles,
          width: '270px',
-         // borderColor: state.isFocused
-         //    ? 'rgba(4, 135, 65, 0.80) !important'
-         //    : '#d9d9d9',
          boxShadow: 'none',
          border: `1px solid ${borderColor}`,
          borderRadius: '6px',
@@ -96,11 +93,11 @@ const AddSchedule = ({ open, onClose }) => {
             doctor: '',
             createStartDate: '',
             createEndDate: '',
-            startTime: '',
-            endTime: '',
+            startTime: '00:00',
+            endTime: '00:00',
             interval: '',
-            startBreak: '',
-            endBreak: '',
+            startBreak: '00:00',
+            endBreak: '00:00',
 
             dayOfWeek: {},
          },

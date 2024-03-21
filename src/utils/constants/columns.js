@@ -6,7 +6,6 @@ import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 import LocalDate from '../../components/UI/admin/LocalDate'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
-import LinkPatient from '../../components/UI/admin/LinkPatient'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
 import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
@@ -17,10 +16,11 @@ import {
    handleIsCheckedItem,
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
-import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
 import SpecialistInfo from '../../components/admin/specialists/SpecialistInfo'
 import SpecialistActions from '../../components/admin/specialists/SpecialistActions'
+import Navigate from '../../components/UI/admin/Navigate'
+import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 
 const SCHEDULE_COLUMN = [
    {
@@ -350,9 +350,9 @@ const PATIENTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => {
-         return <LinkPatient row={row} />
-      },
+      Cell: ({ row }) => (
+         <Navigate {...row.original} text={row.original.surname} />
+      ),
    },
 
    {
@@ -624,6 +624,7 @@ const SPECIALISTS_COLUMN = [
          fontSize: '16px',
          flex: '0.2',
          paddingLeft: '20px',
+         fontWeight: '700',
       },
 
       Cell: ({ row }) => (
@@ -643,6 +644,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 0 20px',
          flex: 0.38,
+         fontWeight: '700',
       },
 
       Cell: ({ row }) => <SpecialistSwicher {...row.original} />,
@@ -693,9 +695,8 @@ const SPECIALISTS_COLUMN = [
 
       style: {
          padding: '19px 0 20px',
-         fontWeight: '600',
+         fontWeight: '700',
          flex: 0.99,
-         fontSize: '16px',
       },
 
       Cell: ({ row }) => (
@@ -710,6 +711,7 @@ const SPECIALISTS_COLUMN = [
          </Typography>
       ),
    },
+
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
@@ -717,6 +719,7 @@ const SPECIALISTS_COLUMN = [
       style: {
          padding: '19px 10px 20px 10px',
          flex: 0.2,
+         fontWeight: '700',
       },
 
       tdStyle: {

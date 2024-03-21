@@ -144,73 +144,67 @@ const OnlineAppointments = () => {
 
    return (
       <StyledContainer>
-         <Box className="box">
-            <Box className="button-container">
-               <Typography className="title">Онлайн-запись</Typography>
+         <Box className="button-container">
+            <Typography className="title">Онлайн-запись</Typography>
 
-               {showAddButton && (
-                  <Button className="add-button" onClick={onOpenModal}>
-                     <PlusIcon className="plus-icon" />
-                     Добавить запись
+            {showAddButton && (
+               <Button className="add-button" onClick={onOpenModal}>
+                  <PlusIcon className="plus-icon" />
+                  Добавить запись
+               </Button>
+            )}
+
+            {isLoading && <Loading />}
+
+            {!showAddButton && (
+               <Box>
+                  <Button
+                     variant="secondary"
+                     className="export-btn"
+                     onClick={generateExcel}
+                  >
+                     EXPORT TO EXCEL
                   </Button>
-               )}
+               </Box>
+            )}
+         </Box>
 
-               {!showAddButton && (
-                  <Box>
-                     <Button
-                        variant="secondary"
-                        className="export-btn"
-                        onClick={generateExcel}
-                     >
-                        EXPORT TO EXCEL
-                     </Button>
-                  </Box>
-               )}
-            </Box>
+         <AddSchedule open={isOpen} onClose={onCloseModal} />
 
-            <AddSchedule open={isOpen} onClose={onCloseModal} />
+         <Box>
+            <TabContext value={value}>
+               <Box className="tabs-container">
+                  <TabList
+                     onChange={tabsChange}
+                     aria-label="lab API tabs example"
+                  >
+                     <Tab label="Онлайн-запись" value="1" className="route" />
 
-            <Box>
-               <TabContext value={value}>
-                  <Box className="tabs-container">
-                     <TabList
-                        onChange={tabsChange}
-                        aria-label="lab API tabs example"
-                     >
-                        <Tab
-                           label="Онлайн-запись"
-                           value="1"
-                           className="route"
-                        />
+                     <Tab label="Расписание" value="2" className="route" />
+                  </TabList>
+               </Box>
 
-                        <Tab label="Расписание" value="2" className="route" />
-                     </TabList>
+               <TabPanel value="1" className="tables">
+                  <Box className="input-container">
+                     <StyledInput
+                        placeholder="Поиск"
+                        value={searchName}
+                        onChange={handleSearchChange}
+                     />
                   </Box>
 
-                  <TabPanel value="1" className="tables">
-                     <Box className="input-container">
-                        <StyledInput
-                           placeholder="Поиск"
-                           value={searchName}
-                           onChange={handleSearchChange}
-                        />
-                     </Box>
+                  <Box className="table-container">
+                     <Table
+                        columns={ONLINE_APPOINTMENTS_COLUMN}
+                        data={memoizedAppointments}
+                     />
+                  </Box>
+               </TabPanel>
 
-                     <Box className="table-container">
-                        <Table
-                           columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={memoizedAppointments}
-                        />
-                     </Box>
-                  </TabPanel>
-
-                  {isLoading && <Loading />}
-
-                  <TabPanel value="2" className="tables">
-                     <Schedule />
-                  </TabPanel>
-               </TabContext>
-            </Box>
+               <TabPanel value="2" className="tables">
+                  <Schedule />
+               </TabPanel>
+            </TabContext>
          </Box>
       </StyledContainer>
    )
@@ -219,108 +213,99 @@ const OnlineAppointments = () => {
 export default OnlineAppointments
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: theme.palette.primary.backgroundAdmin,
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
 
-   '& > .box': {
+   '& .button-container': {
       display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
-      paddingBottom: '30px',
+      justifyContent: 'space-between',
 
-      '& .button-container': {
-         display: 'flex',
-         justifyContent: 'space-between',
-
-         '& .title': {
-            fontSize: '1.375rem',
-            fontWeight: '400',
-            lineHeight: 'normal',
-            marginBottom: '1.87rem',
-         },
-
-         '& > .add-button': {
-            fontFamily: 'Manrope',
-            fontSize: '0.875rem',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: 'normal',
-            letterSpacing: '0.02625rem',
-            textTransform: 'uppercase',
-            height: '2.75rem',
-            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            width: '13.0625rem !important',
-            flexShrink: '0',
-
-            '& > div': {
-               display: 'flex',
-               alignItems: 'center',
-               justifyContent: 'space-between',
-               width: '100%',
-               gap: '4px',
-            },
-
-            '& > .plus-icon': {
-               width: '1.125rem',
-               padding: '0.625rem',
-               height: '1.125rem',
-            },
-         },
-
-         '& .export-btn': {
-            borderRadius: '4px',
-            padding: '8px 20px 9px 20px',
-            height: '40px',
-         },
-
-         '& .save-btn': {
-            background: 'rgb(4, 135, 65)',
-            padding: '8px 20px 9px 20px',
-            borderRadius: '4px',
-            height: '40px',
-            marginLeft: '14px',
-         },
-      },
-
-      '& .MuiTabs-scroller > .MuiTabs-indicator': {
-         backgroundColor: '#048741 !important',
-      },
-
-      '& .route': {
-         fontSize: '0.75rem',
+      '& .title': {
+         fontSize: '1.375rem',
+         fontWeight: '400',
          lineHeight: 'normal',
-         marginRight: '1.87rem',
-         padding: '0rem',
-         transition: '0.3s',
-         fontWeight: '500',
-         color: theme.palette.secondary.LightGrey,
+         marginBottom: '1.87rem',
       },
 
-      '& .Mui-selected': {
-         transition: '1s',
-         color: '#048741 !important',
+      '& > .add-button': {
+         fontFamily: 'Manrope',
+         fontSize: '0.875rem',
+         fontStyle: 'normal',
+         fontWeight: '600',
+         lineHeight: 'normal',
+         letterSpacing: '0.02625rem',
+         textTransform: 'uppercase',
+         height: '2.75rem',
+         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+         width: '13.0625rem !important',
+         flexShrink: '0',
+
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            gap: '4px',
+         },
+
+         '& > .plus-icon': {
+            width: '1.125rem',
+            padding: '0.625rem',
+            height: '1.125rem',
+         },
       },
 
-      '& .tables': {
-         padding: '0rem',
+      '& .export-btn': {
+         borderRadius: '4px',
+         padding: '8px 20px 9px 20px',
+         height: '40px',
       },
 
-      '& .input-container': {
-         width: '37.5rem',
-         marginTop: '2.12rem',
+      '& .save-btn': {
+         background: 'rgb(4, 135, 65)',
+         padding: '8px 20px 9px 20px',
+         borderRadius: '4px',
+         height: '40px',
+         marginLeft: '14px',
       },
+   },
 
-      '& .table-container': {
-         width: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: theme.palette.primary.main,
-         marginTop: '1.25rem',
-         display: 'flex',
-         alignItems: 'center',
-         justifyContent: 'center',
-      },
+   '& .MuiTabs-scroller > .MuiTabs-indicator': {
+      backgroundColor: '#048741 !important',
+   },
+
+   '& .route': {
+      fontSize: '0.75rem',
+      lineHeight: 'normal',
+      marginRight: '1.87rem',
+      padding: '0rem',
+      transition: '0.3s',
+      fontWeight: '500',
+      color: theme.palette.secondary.LightGrey,
+   },
+
+   '& .Mui-selected': {
+      transition: '1s',
+      color: '#048741 !important',
+   },
+
+   '& .tables': {
+      padding: '0rem',
+   },
+
+   '& .input-container': {
+      width: '37.5rem',
+      marginTop: '2.12rem',
+   },
+
+   '& .table-container': {
+      width: '100%',
+      borderRadius: '0.375rem',
+      bordeRradius: ' 0.375rem',
+      background: 'white',
+      marginTop: '1.25rem',
    },
 }))
 
