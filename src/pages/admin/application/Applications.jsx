@@ -94,10 +94,6 @@ const StyledSearchInput = styled(SearchInput)(() => ({
 }))
 
 const StyledContainer = styled(Box)(() => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
-   minHeight: '100vh',
-
    '& > .input-container': {
       width: '42.2rem',
       marginTop: '2.15rem',

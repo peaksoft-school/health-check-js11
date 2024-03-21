@@ -58,7 +58,7 @@ const outerBeatAnimation = keyframes`
 `
 
 const StyledContainer = styled(Box)(() => ({
-   '::before': {
+   '&::before': {
       content: '""',
       position: 'absolute',
       top: 0,
@@ -72,8 +72,8 @@ const StyledContainer = styled(Box)(() => ({
 
    '& .content': {
       position: 'absolute',
-      width: '10vmin',
-      height: '10vmin',
+      width: '100px',
+      height: '100px',
       zIndex: 100,
       margin: 'auto',
       top: '0',

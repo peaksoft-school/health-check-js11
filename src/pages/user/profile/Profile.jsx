@@ -9,6 +9,7 @@ import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
 import ChangeUserPassword from './ChangeUserPassword'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const Profile = () => {
    const [value, setValue] = useState('1')
@@ -39,10 +40,11 @@ const Profile = () => {
    })
 
    useEffect(() => {
-      setValues((prevState) => {
-         return { ...prevState, ...data }
-      })
-   }, [])
+      setValues((prev) => ({
+         ...prev,
+         ...data,
+      }))
+   }, [data])
 
    const tabsChange = (_, newValue) => {
       setValue(newValue)
@@ -53,14 +55,7 @@ const Profile = () => {
          <StyledLine> </StyledLine>
          <StyledContainer>
             <Box className="box">
-               <NavigatePathTitle>
-                  <p>
-                     <NavLink className="navigate" to="/">
-                        Главная {' > '}
-                     </NavLink>
-                     <span>Профиль</span>
-                  </p>
-               </NavigatePathTitle>
+               <BreadCrumbs to="/" text="Профиль" before="Главная" />
 
                <Box className="title-container">
                   <Typography className="title">Профиль</Typography>
