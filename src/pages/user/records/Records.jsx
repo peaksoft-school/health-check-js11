@@ -4,7 +4,12 @@ import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
-import { HealthCheckIcon } from '../../../assets/icons'
+import {
+   CloseIcon,
+   HealthCheckIcon,
+   PrintIcon,
+   SaveIcon,
+} from '../../../assets/icons'
 import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 
 const Records = () => {
@@ -58,15 +63,15 @@ const Records = () => {
                            className="closeBtn"
                            //  onClick={handleClose}
                         >
-                           {/* <RemoveIcon /> */}
-                           Закрыть результаты
+                           <CloseIcon />
+                           ЗАКРЫТЬ РЕЗУЛЬТАТЫ
                         </Button>
                      )}
                      {showButton && (
                         <Button
                         // onClick={handleSavePDF}
                         >
-                           {/* <SortDescIcon /> */}
+                           <SaveIcon />
                            PDF
                         </Button>
                      )}
@@ -74,8 +79,8 @@ const Records = () => {
                         <Button
                         // onClick={handlePrint}
                         >
-                           {/* <PrinterIcon /> */}
-                           Распечатать
+                           <PrintIcon />
+                           РАСПЕЧАТАТЬ
                         </Button>
                      )}
                   </div>
@@ -133,13 +138,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    height: '100vh',
    display: 'flex',
 
-   '.file': {
-      width: '66vw',
-      height: '33vh',
+   '& .file': {
+      width: '62vw',
       background: 'rgba(254, 251, 251, 0.50)',
       backdropFilter: 'blur(156px)',
-      opacity: 0.8,
       color: '#346EFB',
+      opacity: 0.8,
    },
 
    '& ul': {
@@ -148,14 +152,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       fontSize: '0.8rem',
       color: '#346EFB',
 
-      li: {
+      '& li': {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
          fontSize: '15px',
          fontWeight: '400',
       },
 
-      '.liRed': {
+      '& .liRed': {
          color: '#F91515',
       },
    },
@@ -204,31 +208,6 @@ const HeaderContainer = styled('div')(() => ({
          '&.closeBtn': {
             background: 'red',
          },
-      },
-   },
-
-   '& .file': {
-      width: '100%',
-      height: '33vh',
-      background: 'rgba(254, 251, 251, 0.50)',
-      backdropFilter: 'blur(156px)',
-      opacity: 0.8,
-   },
-
-   '& ul': {
-      paddingLeft: '3.2rem',
-      fontFamily: 'Manrope',
-      fontSize: '0.8rem',
-
-      '& li': {
-         paddingTop: '0.5rem',
-         paddingRight: '0.5rem',
-         fontSize: '15px',
-         fontWeight: '400',
-      },
-
-      '& .liRed': {
-         color: 'red',
       },
    },
 }))

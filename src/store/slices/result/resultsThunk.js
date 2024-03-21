@@ -6,7 +6,7 @@ const getResults = createAsyncThunk(
 
    async (resultNumber, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.post(
+         const response = await axiosInstance.get(
             `/api/result?resultNumber=${resultNumber}`
          )
 
