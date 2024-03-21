@@ -232,6 +232,7 @@ const ScheduleTable = () => {
                />
                -
                <DatePicker
+                  variant="custom"
                   type="date"
                   placeholder="До"
                   value={endDate}
@@ -254,7 +255,7 @@ const ScheduleTable = () => {
                               key={(monthText, date)}
                            >
                               {dayOfWeek}
-                              <Box component="br" />
+                              <br />
                               {date} {monthText}
                            </th>
                         )
@@ -290,6 +291,7 @@ const ScheduleTable = () => {
                         {generateDateRange(startDate, endDate, daysOfWeek).map(
                            ({ dayOfWeek, date, monthNumber, year }, i) => {
                               const currentDate = `${year}-${monthNumber}-${date}`
+
                               return (
                                  <td
                                     key={`${id}-${dayOfWeek}-${date}-${monthNumber}`}
@@ -400,12 +402,14 @@ const StyledContainer = styled(Box)(() => ({
       overflowX: 'auto',
 
       '&::-webkit-scrollbar': {
-         height: '15px',
+         height: '25px',
+         marginTop: '10px',
       },
 
       '&::-webkit-scrollbar-thumb': {
          backgroundColor: '#92919183',
-         borderRadius: '10px',
+         borderRadius: '13px',
+         border: '7px solid #ffffff',
       },
    },
 
@@ -413,7 +417,6 @@ const StyledContainer = styled(Box)(() => ({
       border: '2px solid #D9D9D9',
       borderCollapse: 'collapse',
       maxWidth: '86.188rem',
-      width: '1379px',
 
       '& .header-specialist': {
          display: 'flex',

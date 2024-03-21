@@ -19,12 +19,11 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 const OnlineAppointments = () => {
    const { schedules } = useSelector((state) => state.schedule)
    const { isLoading, appointments } = useSelector(
-      (state) => state.appointments
+      (state) => state.onlineAppointments
    )
 
    const [value, setValue] = useState('online-appointments')
    const [searchName, setSearchName] = useState('')
-   const [showAddButton, setShowAddButton] = useState(true)
    const [openModal, setOpenModal] = useState(false)
 
    const [searchParams, setSearchParams] = useSearchParams()
@@ -52,8 +51,6 @@ const OnlineAppointments = () => {
    }, [])
 
    const tabsChange = (_, newValue) => {
-      const newShowAddButton = newValue === 'online-appointments'
-
       setValue(newValue)
 
       searchParams.set('tab', newValue)

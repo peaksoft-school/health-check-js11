@@ -59,6 +59,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
             variant="appointments"
             id={row.original.appointmentId}
             isSelected={row.original.isSelected}
+            disabled={!row.original.processed}
          />
       ),
    },

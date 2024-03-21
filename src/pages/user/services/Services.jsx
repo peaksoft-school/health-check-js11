@@ -11,9 +11,10 @@ import {
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpIcon } from '../../../assets/icons'
-import { PROSEDURA, SERVICES } from '../../../utils/constants'
-import Leave from '../../../components/landing/Leave'
+import { PROSEDURA } from '../../../utils/constants'
 import { ROUTES } from '../../../routes/routes'
+import { SERVICES } from '../../../utils/constants/services'
+import Leave from '../../../components/landing/Leave'
 
 const Services = () => {
    const [procedure, setProcedure] = useState(false)

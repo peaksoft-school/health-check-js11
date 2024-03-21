@@ -1,13 +1,18 @@
 import { styled, Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Button'
-import { SERVICES } from '../../utils/constants/index'
+import { ROUTES } from '../../routes/routes'
+import { SERVICES } from '../../utils/constants/services'
 
 const OurServices = () => {
    const navigate = useNavigate()
 
    const handleNavigate = () => {
       navigate('/services')
+   }
+
+   const handleInnerNavigate = (id) => {
+      navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/${id}`)
    }
 
    return (
@@ -26,7 +31,11 @@ const OurServices = () => {
 
             <Box className="services-box">
                {SERVICES.slice(0, 9).map(({ id, name, icon }) => (
-                  <Box className="service" key={id}>
+                  <Box
+                     className="service"
+                     key={id}
+                     onClick={() => handleInnerNavigate(id)}
+                  >
                      <StyledServiceIcon>{icon}</StyledServiceIcon>
                      <Typography className="name">{name}</Typography>
                   </Box>

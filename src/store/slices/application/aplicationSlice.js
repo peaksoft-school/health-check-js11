@@ -11,6 +11,7 @@ export const applicationSlice = createSlice({
       error: null,
       selectAllApplications: [],
       isSelectAllApplications: false,
+      doctors: [],
    },
 
    reducers: {
@@ -155,6 +156,27 @@ export const applicationSlice = createSlice({
                message: 'Успешно удалено ',
             })
          })
+
+         .addCase(APPLICATION_THUNK.getDoctorsByDepartment.pending, (state) => {
+            state.loading = true
+            state.error = null
+         })
+
+         .addCase(
+            APPLICATION_THUNK.getDoctorsByDepartment.fulfilled,
+            (state, action) => {
+               state.loading = false
+               state.doctors = action.payload
+            }
+         )
+
+         .addCase(
+            APPLICATION_THUNK.getDoctorsByDepartment.rejected,
+            (state, action) => {
+               state.loading = false
+               state.error = action.payload
+            }
+         )
    },
 })
 

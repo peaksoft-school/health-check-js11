@@ -57,6 +57,21 @@ const searchApplications = createAsyncThunk(
    }
 )
 
+const getDoctorsByDepartment = createAsyncThunk(
+   'applications/getDoctorsByDepartment',
+   async (department, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/doctor/byDepartment?facility=${department}`
+         )
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error.response.data)
+      }
+   }
+)
+
 const deleteApplication = createAsyncThunk(
    'applications/deleteApplications',
    async (id, { rejectWithValue, dispatch }) => {
@@ -112,4 +127,5 @@ export const APPLICATION_THUNK = {
    updateApplication,
    deleteAllApplication,
    createApplication,
+   getDoctorsByDepartment,
 }

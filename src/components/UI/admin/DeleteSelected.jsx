@@ -6,7 +6,9 @@ import Modal from '../Modal'
 import Button from '../Button'
 
 const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
-   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
+   const { deletedAppointmentsIds } = useSelector(
+      (state) => state.onlineAppointments
+   )
 
    const { selectAllApplications } = useSelector((store) => store.applications)
 

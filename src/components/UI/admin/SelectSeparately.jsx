@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Checkbox from '../Checkbox'
 
-const SelectSeparately = ({ isSelected, selectFn, id, variant }) => {
+const SelectSeparately = ({ isSelected, selectFn, id, variant, disabled }) => {
    const { deletedAppointmentsIds } = useSelector(
       (state) => state.onlineAppointments
    )
@@ -23,6 +23,12 @@ const SelectSeparately = ({ isSelected, selectFn, id, variant }) => {
    }
 
    const isChecked = isSelected || getIds().includes(id)
-   return <Checkbox checked={isChecked} onChange={changeCheckbox} />
+   return (
+      <Checkbox
+         checked={isChecked}
+         onChange={changeCheckbox}
+         disabled={disabled}
+      />
+   )
 }
 export default SelectSeparately
