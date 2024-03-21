@@ -27,119 +27,113 @@ const Patient = () => {
 
    return (
       <StyledContainer>
-         <Box className="patient">
-            <Box className="button-container">
-               <Typography className="title" variant="h5">
-                  {data.first_name} <span> </span>
-                  {data.last_name}
-               </Typography>
+         <Box className="button-container">
+            <Typography className="title" variant="h5">
+               {data.first_name} <span> </span>
+               {data.last_name}
+            </Typography>
 
-               <Button className="button" onClick={toggleModalHandler}>
-                  <PlusIcon className="plus-icon" />
-                  Добавить Результат
-               </Button>
-            </Box>
-            <AddResult open={toggleModal} onClose={toggleModalHandler} />
+            <Button className="button" onClick={toggleModalHandler}>
+               <PlusIcon className="plus-icon" />
+               Добавить Результат
+            </Button>
+         </Box>
+         <AddResult open={toggleModal} onClose={toggleModalHandler} />
 
-            {isLoading && <Loading />}
+         {isLoading && <Loading />}
 
-            <Box className="user-info">
-               <Box className="content-box">
-                  <Box className="inner-box">
-                     <Typography className="full-name">
-                        {data.first_name} <span> </span>
-                        {data.last_name}
+         <Box className="user-info">
+            <Box className="content-box">
+               <Box className="inner-box">
+                  <Typography className="full-name">
+                     {data.first_name} <span> </span>
+                     {data.last_name}
+                  </Typography>
+
+                  <Box>
+                     <Typography className="label">Имя</Typography>
+
+                     <Typography className="value">
+                        {data.first_name}
                      </Typography>
-
-                     <Box>
-                        <Typography className="label">Имя</Typography>
-
-                        <Typography className="value">
-                           {data.first_name}
-                        </Typography>
-                     </Box>
-
-                     <Box>
-                        <Typography className="label">Фамилия</Typography>
-
-                        <Typography className="value">
-                           {data.last_name}
-                        </Typography>
-                     </Box>
-
-                     <Box>
-                        <Typography className="label">Email</Typography>
-
-                        <Typography className="value">{data.email}</Typography>
-                     </Box>
-
-                     <Box>
-                        <Typography className="label">
-                           Номер телефона
-                        </Typography>
-
-                        <Typography className="value">
-                           {formatPhoneNumberWithSpaces(data.phone_number)}
-                        </Typography>
-                     </Box>
                   </Box>
 
-                  <Box className="results-container">
-                     {results?.map(
-                        ({ numberResult, pdf, facility, date, localTime }) => {
-                           const time = localTime.slice(0, 5)
+                  <Box>
+                     <Typography className="label">Фамилия</Typography>
 
-                           return (
-                              <Box
-                                 key={numberResult}
-                                 className="results-inner-container"
-                              >
+                     <Typography className="value">{data.last_name}</Typography>
+                  </Box>
+
+                  <Box>
+                     <Typography className="label">Email</Typography>
+
+                     <Typography className="value">{data.email}</Typography>
+                  </Box>
+
+                  <Box>
+                     <Typography className="label">Номер телефона</Typography>
+
+                     <Typography className="value">
+                        {formatPhoneNumberWithSpaces(data.phone_number)}
+                     </Typography>
+                  </Box>
+               </Box>
+
+               <Box className="results-container">
+                  {results?.map(
+                     ({ numberResult, pdf, facility, date, localTime }) => {
+                        const time = localTime.slice(0, 5)
+
+                        return (
+                           <Box
+                              key={numberResult}
+                              className="results-inner-container"
+                           >
+                              <Box>
+                                 <Typography className="result-label">
+                                    Услуга
+                                 </Typography>
+
+                                 <Typography>{facility}</Typography>
+                              </Box>
+
+                              <Box className="result-date">
+                                 <Typography className="result-label">
+                                    Дата и время:
+                                 </Typography>
+
                                  <Box>
-                                    <Typography className="result-label">
-                                       Услуга
+                                    <Typography variant="span">
+                                       {format(new Date(date), 'dd.MM.yyyy')}
                                     </Typography>
 
-                                    <Typography>{facility}</Typography>
-                                 </Box>
-
-                                 <Box className="result-date">
-                                    <Typography className="result-label">
-                                       Дата и время:
+                                    <Typography variant="span">
+                                       {time}
                                     </Typography>
-
-                                    <Box>
-                                       <Typography variant="span">
-                                          {format(new Date(date), 'dd.MM.yyyy')}
-                                       </Typography>
-
-                                       <Typography variant="span">
-                                          {time}
-                                       </Typography>
-                                    </Box>
-                                 </Box>
-
-                                 <Box>
-                                    <Typography className="result-label">
-                                       Номер заказа:
-                                    </Typography>
-
-                                    <Typography>{numberResult}</Typography>
-                                 </Box>
-
-                                 <Box className="file">
-                                    <Typography className="result-label">
-                                       Загруженный файл
-                                    </Typography>
-
-                                    <a aria-label="pdf-url" href={pdf}>
-                                       <ResultFileIcon className="insert-file" />
-                                    </a>
                                  </Box>
                               </Box>
-                           )
-                        }
-                     )}
-                  </Box>
+
+                              <Box>
+                                 <Typography className="result-label">
+                                    Номер заказа:
+                                 </Typography>
+
+                                 <Typography>{numberResult}</Typography>
+                              </Box>
+
+                              <Box className="file">
+                                 <Typography className="result-label">
+                                    Загруженный файл
+                                 </Typography>
+
+                                 <a aria-label="pdf-url" href={pdf}>
+                                    <ResultFileIcon className="insert-file" />
+                                 </a>
+                              </Box>
+                           </Box>
+                        )
+                     }
+                  )}
                </Box>
             </Box>
          </Box>
@@ -155,9 +149,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    maxWidth: '1600px',
    margin: '0 auto',
    paddingBottom: '30px',
+   height: '100vh',
 
    '& > .user-info': {
-      height: '100vh',
       background: 'white',
       marginTop: '1.25rem',
       borderRadius: '0.375rem',

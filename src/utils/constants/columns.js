@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { format } from 'date-fns'
-import { ro, ru } from 'date-fns/locale'
+import { ru } from 'date-fns/locale'
 import SelectSeparately from '../../components/online-appointments/SelectSeparately'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import SelectAll from '../../components/online-appointments/SelectAll'

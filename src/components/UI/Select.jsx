@@ -4,7 +4,6 @@ import {
    Select as MuiSelect,
    Typography,
    styled,
-   Box,
    MenuItem,
 } from '@mui/material'
 import Selector from 'react-select'
@@ -17,7 +16,6 @@ const menuProps = {
          maxHeight: '292',
          boxShadow: '0px 5px 44px 0px rgba(0, 0, 0, 0.06)',
          marginTop: '13.2rem',
-
          borderRadius: '16px 8px 8px 16px ',
       },
    },
@@ -38,6 +36,7 @@ const customStyles = {
          border: `1px solid ${borderColor}`,
          borderRadius: '10px',
          boxShadow: 'none',
+         cursor: 'pointer',
 
          '& span': {
             width: '0px',
@@ -59,64 +58,68 @@ const customStyles = {
 
 const Select = forwardRef(
    (
-      { options, value, onChange, placeholder, error, variant, icon, ...rest },
+      {
+         options,
+         value,
+         onChange,
+         placeholder,
+         error,
+         variant,
+         icon,
+         styles,
+         ...rest
+      },
       ref
    ) => {
-      const [selectVal, setSelectVal] = useState('')
+      const [selectValue, setSelectValue] = useState('')
       const [isVisible, setIsVisible] = useState(false)
 
       const changeHandler = (e) => {
          onChange(e.target.value)
-         setSelectVal(e.target.value)
+         setSelectValue(e.target.value)
       }
 
       const toggleSelectHandler = () => setIsVisible((prev) => !prev)
 
-      return (
-         <Box>
-            {variant === 'schedule' ? (
-               <Selector
-                  options={options}
-                  onChange={onChange}
-                  isSearchable={false}
-                  styles={{ ...customStyles }}
-                  placeholder={placeholder}
-                  error={error}
-                  ref={ref}
-                  {...rest}
-               />
-            ) : (
-               <StyledFormControl fullWidth isopen={isVisible.toString()}>
-                  <Icon variant="span">{icon}</Icon>
+      return variant === 'schedule' ? (
+         <Selector
+            options={options}
+            onChange={onChange}
+            isSearchable={false}
+            styles={{ ...customStyles, ...styles }}
+            placeholder={placeholder}
+            error={error}
+            ref={ref}
+            {...rest}
+         />
+      ) : (
+         <StyledFormControl fullWidth isopen={isVisible.toString()}>
+            <StyledIcon variant="span">{icon}</StyledIcon>
 
-                  <StyledMuiSelect
-                     open={isVisible}
-                     value={selectVal}
-                     onChange={changeHandler}
-                     IconComponent={KeyboardArrowDownIcon}
-                     inputProps={{ 'aria-label': 'Without label' }}
-                     MenuProps={menuProps}
-                     className="select"
-                     displayEmpty
-                     ref={ref}
-                     error={error}
-                     onClick={toggleSelectHandler}
-                     {...rest}
-                  >
-                     <StyledLabel value="">{placeholder}</StyledLabel>
+            <StyledMuiSelect
+               open={isVisible}
+               value={selectValue}
+               onChange={changeHandler}
+               IconComponent={KeyboardArrowDownIcon}
+               inputProps={{ 'aria-label': 'Without label' }}
+               MenuProps={menuProps}
+               className="select"
+               displayEmpty
+               ref={ref}
+               error={error}
+               onClick={toggleSelectHandler}
+               {...rest}
+            >
+               <StyledLabel value={placeholder}>{placeholder}</StyledLabel>
 
-                     {/* <div className="ALISHER"> */}
-                     {options &&
-                        options.map(({ id, label }) => (
-                           <MenuItemStyle key={id} value={label}>
-                              {label}
-                           </MenuItemStyle>
-                        ))}
-                     {/* </div> */}
-                  </StyledMuiSelect>
-               </StyledFormControl>
-            )}
-         </Box>
+               {options &&
+                  options?.map(({ id, label }) => (
+                     <MenuItemStyle key={id} value={label}>
+                        {label}
+                     </MenuItemStyle>
+                  ))}
+            </StyledMuiSelect>
+         </StyledFormControl>
       )
    }
 )
@@ -134,12 +137,11 @@ const StyledLabel = styled(FormControl)(() => ({
 }))
 
 const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
-   maxWidth: '100%',
-
    border: error
       ? `1px solid #d32f2f`
       : `1px solid  ${theme.palette.secondary.main}`,
 
+   maxWidth: '100%',
    borderRadius: '10px',
    fontFamily: 'Manrope',
    fontWeight: 400,
@@ -175,10 +177,10 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    },
 }))
 
-const Icon = styled(Typography)(() => ({
+const StyledIcon = styled(Typography)(() => ({
    position: 'absolute',
-   top: 25,
-   left: 15,
+   top: '25',
+   left: '15',
    zIndex: '100',
 }))
 
@@ -187,7 +189,6 @@ const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
    fontFamily: 'Manrope',
    height: '3rem',
    marginLeft: '0.6rem',
-   // height: '3rem',
 
    '&:hover': {
       background: theme.palette.tertiary.main,
