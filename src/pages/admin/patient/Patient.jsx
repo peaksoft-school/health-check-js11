@@ -150,127 +150,122 @@ const Patient = () => {
 export default Patient
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
+   paddingBottom: '30px',
 
-   '& > .patient': {
-      display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
-      paddingBottom: '30px',
+   '& > .user-info': {
+      height: '100vh',
+      background: 'white',
+      marginTop: '1.25rem',
+      borderRadius: '0.375rem',
 
-      '& > .user-info': {
-         height: '100vh',
-         background: 'white',
-         marginTop: '1.25rem',
-         borderRadius: '0.375rem',
-
-         '& > .content-box': {
-            display: 'flex',
-            width: '100%',
-            gap: '90px',
-            padding: '20px',
-
-            '& > .inner-box': {
-               display: 'flex',
-               flexDirection: 'column',
-               gap: '1rem',
-
-               '& .label': {
-                  color: '#4d4e51',
-               },
-
-               '& .value': {
-                  color: theme.palette.primary.lightBlack,
-                  fontFamily: 'Manrope',
-                  fontWeight: '500',
-                  fontSize: '16px',
-               },
-
-               '& > .full-name': {
-                  fontWeight: '400',
-                  fontSize: '22px',
-               },
-            },
-         },
-      },
-
-      '& .results-container': {
+      '& > .content-box': {
          display: 'flex',
-         flexDirection: 'column',
          width: '100%',
-         height: '100%',
-         gap: '10px',
-         borderRadius: '8px',
-         padding: ' 2vh 2vh 7vh 2vh',
+         gap: '90px',
+         padding: '20px',
 
-         '& > .results-inner-container': {
-            display: 'flex',
-            width: '100%',
-            height: '100%',
-            justifyContent: 'space-between',
-            backgroundColor: '#DBEBFF',
-            borderRadius: '8px',
-            padding: ' 2vh 2vh 7vh 2vh',
-         },
-
-         '& > .result-label': {
-            fontWeight: '500',
-            fontSize: '18px',
-         },
-
-         '& .result-date': {
-            '& > div': {
-               display: 'flex',
-               flexDirection: 'column',
-            },
-         },
-
-         '&  .file': {
+         '& > .inner-box': {
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            gap: '1rem',
 
-            '& a > .insert-file': {
-               cursor: 'pointer',
-               boxSizing: 'content-box',
-               width: '2rem',
-               transition: '1s',
-               height: '5vh',
-               padding: '0.5rem',
-               borderRadius: '6px',
-               backgroundColor: theme.palette.primary.main,
-               marginTop: '5px',
+            '& .label': {
+               color: '#4d4e51',
+            },
 
-               '&:hover': {
-                  backgroundColor: theme.palette.tertiary.lightBlue,
+            '& .value': {
+               color: theme.palette.primary.lightBlack,
+               fontFamily: 'Manrope',
+               fontWeight: '500',
+               fontSize: '16px',
+            },
 
-                  '& > path': {
-                     fill: theme.palette.primary.main,
-                     width: '2rem',
-                     height: '5vh',
-                  },
+            '& > .full-name': {
+               fontWeight: '400',
+               fontSize: '22px',
+            },
+         },
+      },
+   },
+
+   '& .results-container': {
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
+      height: '100%',
+      gap: '10px',
+      borderRadius: '8px',
+      padding: ' 2vh 2vh 7vh 2vh',
+
+      '& > .results-inner-container': {
+         display: 'flex',
+         width: '100%',
+         height: '100%',
+         justifyContent: 'space-between',
+         backgroundColor: '#DBEBFF',
+         borderRadius: '8px',
+         padding: ' 2vh 2vh 7vh 2vh',
+      },
+
+      '& > .result-label': {
+         fontWeight: '500',
+         fontSize: '18px',
+      },
+
+      '& .result-date': {
+         '& > div': {
+            display: 'flex',
+            flexDirection: 'column',
+         },
+      },
+
+      '&  .file': {
+         display: 'flex',
+         flexDirection: 'column',
+         alignItems: 'center',
+
+         '& a > .insert-file': {
+            cursor: 'pointer',
+            boxSizing: 'content-box',
+            width: '2rem',
+            transition: '1s',
+            height: '5vh',
+            padding: '0.5rem',
+            borderRadius: '6px',
+            backgroundColor: theme.palette.primary.main,
+            marginTop: '5px',
+
+            '&:hover': {
+               backgroundColor: theme.palette.tertiary.lightBlue,
+
+               '& > path': {
+                  fill: theme.palette.primary.main,
+                  width: '2rem',
+                  height: '5vh',
                },
             },
          },
       },
+   },
 
-      '& > .button-container': {
-         display: 'flex',
-         justifyContent: 'space-between',
+   '& > .button-container': {
+      display: 'flex',
+      justifyContent: 'space-between',
 
-         '& > .button': {
-            padding: '0',
-            fontSize: '13px',
-            height: '40px',
-            width: '232px',
+      '& > .button': {
+         padding: '0',
+         fontSize: '13px',
+         height: '40px',
+         width: '232px',
 
-            '& > div': {
-               display: 'flex',
-               alignItems: 'center',
-               gap: '4px',
-            },
+         '& > div': {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
          },
       },
    },
