@@ -51,6 +51,7 @@ export const specialistsSlice = createSlice({
                state.isLoading = false
             }
          )
+
          .addCase(SPECIALISTS_THUNK.getSpecialistById.pending, (state) => {
             state.isLoading = true
          })

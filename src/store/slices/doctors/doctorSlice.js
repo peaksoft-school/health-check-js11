@@ -4,6 +4,7 @@ import { DOCTOR_THUNK } from './doctorThunk'
 const initialState = {
    doctors: [],
    isLoading: false,
+   doctor: {},
    error: null,
 }
 
@@ -11,15 +12,11 @@ export const doctorSlice = createSlice({
    name: 'doctors',
    initialState,
    reducers: {},
+
    extraReducers: (builder) => {
       builder
-         .addCase(DOCTOR_THUNK.getDoctors.fulfilled, (state, action) => {
-            const updatedDoctors = action.payload.map((medic) => ({
-               ...medic,
-               isSelected: false,
-            }))
-
-            state.doctors = updatedDoctors
+         .addCase(DOCTOR_THUNK.getDoctors.fulfilled, (state, { payload }) => {
+            state.doctors = payload
             state.isLoading = false
          })
 
@@ -34,7 +31,7 @@ export const doctorSlice = createSlice({
          .addCase(
             DOCTOR_THUNK.getDoctorsById.fulfilled,
             (state, { payload }) => {
-               state.doctors = payload
+               state.doctor = payload
                state.isLoading = false
             }
          )

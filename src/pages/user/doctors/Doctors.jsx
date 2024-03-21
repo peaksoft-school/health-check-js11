@@ -1,12 +1,14 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../../../components/UI/Button'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import DataDoctors from './DataDoctors'
 
 const Doctors = () => {
+   const [showAllDoctors, setShowAllDoctors] = useState(false)
+
    const { doctors } = useSelector((state) => state.doctors)
    console.log(doctors)
    const dispatch = useDispatch()
@@ -15,6 +17,10 @@ const Doctors = () => {
       dispatch(DOCTOR_THUNK.getDoctors())
    }, [])
 
+   const visibleDoctors = showAllDoctors ? doctors : doctors.slice(0, 10)
+   const handleShowMore = () => {
+      setShowAllDoctors(true)
+   }
    return (
       <>
          <StyledLine> </StyledLine>
@@ -47,19 +53,33 @@ const Doctors = () => {
                к совершенству.
             </Typography>
 
-            {doctors.map((doctor) => (
-               <DataDoctors doctor={doctor} />
+            {visibleDoctors.map((doctor) => (
+               <DataDoctors doctor={doctor} key={doctor.id} />
             ))}
 
-            <StyledSpecialist>
-               <Typography variant="span">
-                  <span>
-                     В нашей клинике работают:
-                     <span className="marker"> более 30 специалистов</span>{' '}
-                  </span>
-                  <NavLinkStyles to="/">Показать больше</NavLinkStyles>
-               </Typography>
-            </StyledSpecialist>
+            {!showAllDoctors && doctors.length > 10 && (
+               <StyledSpecialist>
+                  <Typography variant="span">
+                     В нашей клинике работают более :{' '}
+                     <span className="marker">30 специалистов </span>
+                     <Typography
+                        component="span"
+                        onClick={handleShowMore}
+                        style={{ cursor: 'pointer' }}
+                     >
+                        <span className="click"> Показать больше</span>
+                     </Typography>
+                  </Typography>
+               </StyledSpecialist>
+            )}
+
+            {showAllDoctors && (
+               <StyledSpecialist>
+                  <Typography variant="span">
+                     В нашей клинике работают более 30 специалистов
+                  </Typography>
+               </StyledSpecialist>
+            )}
          </StyledContainer>
       </>
    )
@@ -107,12 +127,14 @@ const StyledSpecialist = styled(Typography)(() => ({
       '& .marker': {
          fontWeight: '500',
       },
+      '& .click': {
+         color: '#048741',
+         fontSize: '16px',
+         fontWeight: '500',
+         marginLeft: '1rem',
+         textDecoration: 'line',
+      },
    },
-}))
-
-const NavLinkStyles = styled(NavLink)(({ theme }) => ({
-   color: '#048741',
-   marginLeft: '1rem',
 }))
 
 const StyledLine = styled(Box)(() => ({

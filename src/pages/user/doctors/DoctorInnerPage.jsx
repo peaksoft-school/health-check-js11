@@ -4,21 +4,39 @@ import { Box } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
+import { useFormik } from 'formik'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
+import Button from '../../../components/UI/Button'
+import { ArrowLeftIcon } from '../../../assets/icons'
+import Reviews from '../../../components/landing/Reviews'
 
 const DoctorInnerPage = () => {
-   const { doctors } = useSelector((state) => state.doctors)
-   console.log(doctors, 'hello')
+   const { doctor } = useSelector((state) => state.doctors)
+   console.log(doctor, 'hello')
 
    const { doctorId } = useParams()
 
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(DOCTOR_THUNK.getDoctorsById(doctorId))
-   }, [doctorId, dispatch])
+      dispatch(DOCTOR_THUNK.getDoctorsById({ doctorId }))
+   }, [doctorId])
+
+   const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
+      initialValues: {
+         fullName: doctor.fullName || '',
+         file: null,
+      },
+      validateOnChange: false,
+   })
+
+   useEffect(() => {
+      setValues((prevState) => ({
+         ...prevState,
+         ...doctor,
+      }))
+   }, [doctor])
 
    return (
       <StyledContainer>
@@ -36,10 +54,10 @@ const DoctorInnerPage = () => {
                      <span>Хирургия</span>
                   </NavLink>
                   {' > '}
-                  <span className="colors">{doctors.fullName}</span>
+                  <span className="colors">{values.fullName}</span>
                </Typography>
             </StyledSpecialistRow>
-            <Typography className="name">Гаталусский Артур</Typography>
+            <Typography className="name">{values.fullName}</Typography>
             <Typography className="text">
                Попасть в команду медицинской клиники «Medical Clinic» могут{' '}
                <br />
@@ -51,7 +69,34 @@ const DoctorInnerPage = () => {
                ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе
                к совершенству.
             </Typography>
-            <img alt="img" />
+            <StyledBoxContainer>
+               <img alt="img" src={values.image} className="img" />
+               <Box className="flex">
+                  <Typography className="doctor-name">
+                     {values.fullName}
+                  </Typography>
+                  <Typography className="label">
+                     Отделение :{' '}
+                     <span className="mark">{values.department}</span>
+                  </Typography>
+                  <Typography className="label">
+                     Должность :{' '}
+                     <span className="mark"> {values.position}</span>{' '}
+                  </Typography>
+                  <Button variant="secondary" className="btn">
+                     <span className="btn-text">Записаться на приём</span>
+                  </Button>
+               </Box>
+            </StyledBoxContainer>
+            <Typography className="description">
+               {values.description}
+            </Typography>
+            <NavLink to="/doctors">
+               <Typography className="arrow">
+                  <ArrowLeftIcon /> Список Сотрудников
+               </Typography>
+            </NavLink>
+            <Reviews />
          </Box>
       </StyledContainer>
    )
@@ -71,6 +116,16 @@ const StyledContainer = styled(Box)(() => ({
       color: '#4D4E51',
       fontFamily: 'Manrope',
       marginTop: '-1rem',
+   },
+   '& .description': {
+      padding: '1rem 0 2rem 6.5rem',
+      fontSize: '16px',
+      fontWeight: '600',
+   },
+   '& .arrow': {
+      padding: '0 0 2rem 6.5rem',
+      color: '#048741',
+      fontSize: '16px',
    },
 }))
 const StyledSpecialistRow = styled(Typography)(() => ({
@@ -94,5 +149,55 @@ const NavLinkStyle = styled(NavLink)(({ theme }) => ({
    span: {
       color: '#048741',
       cursor: 'pointer',
+   },
+}))
+
+const StyledBoxContainer = styled(Box)(() => ({
+   padding: '3.125rem 0 2rem 6.5rem',
+   display: 'flex',
+   justifyContent: 'space-between',
+
+   '& .img': {
+      width: '319px',
+      height: '349px',
+      borderRadius: '4px',
+   },
+
+   '& .flex': {
+      marginRight: '49rem',
+      marginTop: '5rem',
+
+      '& .doctor-name': {
+         fontSize: '24px',
+         color: ' #009344',
+         fontFamily: 'Manrope',
+         fontWeight: '500',
+         marginBottom: '1rem',
+      },
+
+      '& .label': {
+         fontSize: '18px',
+         color: '#58595B',
+         fontFamily: 'Manrope',
+         fontWeight: '400',
+
+         '& .mark': {
+            fontSize: '18px',
+            color: '#222222',
+            fontFamily: 'Manrope',
+            fontWeight: '500',
+         },
+      },
+
+      '& .btn': {
+         marginTop: '1rem',
+         borderRadius: '0.5rem',
+         width: '204px',
+         height: '42px',
+
+         '& .btn-text': {
+            fontSize: '12px',
+         },
+      },
    },
 }))
