@@ -17,7 +17,7 @@ import {
    handleRemoveChecked,
 } from '../../store/slices/application/aplicationSlice'
 import SpecialistSwicher from '../../components/specialists/SpecialistSwicher'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import { APPLICATIONS_THUNKS } from '../../store/slices/application/applicationThunk'
 import SpecialistInfo from '../../components/specialists/SpecialistInfo'
 import SpecialistActions from '../../components/specialists/SpecialistActions'
 import Navigate from '../../components/UI/admin/Navigate'
@@ -42,7 +42,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
    {
       Header: (
          <SelectAll
-            variant="appointments"
+            variant="online-appointments"
             selectFn={APPOINTMENTS_ACTIONS.handleIsChecked}
          />
       ),
@@ -56,10 +56,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Cell: ({ row }) => (
          <SelectSeparately
             selectFn={APPOINTMENTS_ACTIONS.handleIsCheckedItem}
-            variant="appointments"
+            variant="online-appointments"
             id={row.original.appointmentId}
             isSelected={row.original.isSelected}
-            disabled={!row.original.processed}
+            isDisabled={!row.original.processed}
          />
       ),
    },
@@ -432,7 +432,7 @@ const APPLICATIONS_COLUMN = [
    {
       Header: (
          <DeleteSelected
-            deleteFn={APPLICATION_THUNK.deleteAllApplication}
+            deleteFn={APPLICATIONS_THUNKS.deleteAllApplication}
             clearFn={handleRemoveChecked}
             variant="applications"
          />
@@ -518,7 +518,7 @@ const APPLICATIONS_COLUMN = [
       Cell: ({ row }) => (
          <ProcessedCheckbox
             variant="applications"
-            updateFn={APPLICATION_THUNK.updateApplication}
+            updateFn={APPLICATIONS_THUNKS.updateApplication}
             checked={row.original.processed}
             id={row.original.id}
          />
@@ -538,7 +538,7 @@ const APPLICATIONS_COLUMN = [
       },
       Cell: ({ row }) => (
          <Delete
-            deleteFn={APPLICATION_THUNK.deleteApplication}
+            deleteFn={APPLICATIONS_THUNKS.deleteApplication}
             id={row.original.id}
             name={row.original.name}
             disabled={row.original.processed}

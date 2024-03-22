@@ -1,17 +1,17 @@
-import { styled, Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import Button from '../UI/Button'
+import { styled, Box, Typography } from '@mui/material'
 import { ROUTES } from '../../routes/routes'
 import { SERVICES } from '../../utils/constants/services'
+import Button from '../UI/Button'
 
 const OurServices = () => {
    const navigate = useNavigate()
 
-   const handleNavigate = () => {
-      navigate('/services')
+   const navigateHandler = () => {
+      navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`)
    }
 
-   const handleInnerNavigate = (id) => {
+   const innerNavigateHandler = (id) => () => {
       navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/${id}`)
    }
 
@@ -34,7 +34,7 @@ const OurServices = () => {
                   <Box
                      className="service"
                      key={id}
-                     onClick={() => handleInnerNavigate(id)}
+                     onClick={innerNavigateHandler(id)}
                   >
                      <StyledServiceIcon>{icon}</StyledServiceIcon>
                      <Typography className="name">{name}</Typography>
@@ -46,7 +46,7 @@ const OurServices = () => {
                <Button
                   className="button"
                   variant="secondary"
-                  onClick={handleNavigate}
+                  onClick={navigateHandler}
                >
                   Смотреть все
                </Button>
@@ -59,7 +59,7 @@ const OurServices = () => {
 export default OurServices
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: ' 0 120px',
+   padding: '0 120px',
 
    '& > .box': {
       margin: '0 auto',

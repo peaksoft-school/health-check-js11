@@ -66,6 +66,7 @@ const ChangeDay = ({
             range.endHour === '' ||
             range.endMinute === ''
       )
+
       setIsSaveDisabled(isSaveDisabledd)
    }, [timeRanges])
 
@@ -78,11 +79,12 @@ const ChangeDay = ({
             range.startHour > 23 ||
             range.endHour > 23
       )
+
       setIsSaveDisabled(saveDis)
    }, [timeRanges])
 
    const isButtonDisabled = lastClicked.id === null || lastClicked.date === null
-   const buttonClassName = isButtonDisabled ? 'disabled-button' : ''
+   const buttonClassName = isButtonDisabled && 'disabled-button'
 
    return (
       <StyledContainer>
@@ -100,7 +102,7 @@ const ChangeDay = ({
                   Изменить шаблон
                </Typography>
 
-               <Box component="form" className="datas-container">
+               <form className="datas-container">
                   <Box className="datas">
                      <Box className="data department">
                         <Typography className="data-title">
@@ -260,7 +262,7 @@ const ChangeDay = ({
                         )}
                      </Box>
                   </Box>
-               </Box>
+               </form>
 
                <Box className="modal-buttons-conainer">
                   <Button
@@ -345,18 +347,18 @@ const StyledModalContainer = styled(Box)(() => ({
       },
    },
 
-   '& .datas-container': {
+   '& > .datas-container': {
       display: 'flex',
       justifyContent: 'flex-start',
       flexDirection: 'column',
       width: '100%',
 
-      '& .datas': {
+      '& > .datas': {
          display: 'flex',
          flexDirection: 'column',
          width: '100%',
 
-         '& .data': {
+         '& > .data': {
             display: 'flex',
             flexDirection: 'row',
             marginBottom: '17px',

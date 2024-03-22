@@ -4,21 +4,24 @@ import { showToast } from '../../../utils/helpers/notification'
 
 const createApplication = createAsyncThunk(
    'application/createApplication',
-   async ({ username, phoneNumber }, { rejectWithValue }) => {
+   async ({ values, resetForm }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.post(
             '/api/application/createApplication',
-            { username, phoneNumber }
+            values
          )
 
          showToast({
             message: response.data.message,
          })
 
+         resetForm()
+         showToast({ message: response.data.messageCode })
          return response.data
       } catch (error) {
          showToast({
             message: error.response.data.message,
+            status: 'error',
          })
 
          return rejectWithValue(error.response.data)
@@ -53,21 +56,6 @@ const searchApplications = createAsyncThunk(
          return response.data
       } catch (error) {
          return rejectWithValue(error)
-      }
-   }
-)
-
-const getDoctorsByDepartment = createAsyncThunk(
-   'applications/getDoctorsByDepartment',
-   async (department, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstance.get(
-            `/api/doctor/byDepartment?facility=${department}`
-         )
-
-         return response.data
-      } catch (error) {
-         return rejectWithValue(error.response.data)
       }
    }
 )
@@ -120,12 +108,11 @@ const deleteAllApplication = createAsyncThunk(
    }
 )
 
-export const APPLICATION_THUNK = {
+export const APPLICATIONS_THUNKS = {
    getApplicationData,
    searchApplications,
    deleteApplication,
    updateApplication,
    deleteAllApplication,
    createApplication,
-   getDoctorsByDepartment,
 }

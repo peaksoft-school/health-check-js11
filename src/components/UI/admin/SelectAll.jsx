@@ -9,16 +9,19 @@ const SelectAll = ({ variant, selectFn }) => {
    )
 
    const checkedHandler = () => {
-      if (variant === 'appointments') return selectAll
+      if (variant === 'online-appointments') return selectAll
       if (variant === 'applications') return isSelectAllApplications
       return false
    }
 
    const dispatch = useDispatch()
-   const changeCheckbox = () => {
+
+   const changeCheckboxHandler = () => {
       dispatch(selectFn())
    }
 
-   return <Checkbox checked={checkedHandler()} onChange={changeCheckbox} />
+   return (
+      <Checkbox checked={checkedHandler()} onChange={changeCheckboxHandler} />
+   )
 }
 export default SelectAll

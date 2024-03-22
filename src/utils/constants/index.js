@@ -1,29 +1,4 @@
 import { Typography } from '@mui/material'
-import {
-   VaccinationIcon,
-   KardiologiyaIcon,
-   NevrologiyaIcon,
-   DermatologiyaIcon,
-   OftalmologiyaIcon,
-   TerapiyaIcon,
-   FizioterapiyaIcon,
-   OnkologiyaIcon,
-   UrologiyaIcon,
-   AllergologyIcon,
-   AnesteziologiaIcon,
-   GastroenterologyIcon,
-   GinekologiyaIcon,
-   NeurosurgeryIcon,
-   OrtopediyaIcon,
-   OtorinolaringologiyaIcon,
-   ProktologiyaIcon,
-   PsychotherapyIcon,
-   PulmonologyIcon,
-   RevmatologiyaIcon,
-   FlebologiyaIcon,
-   EndokrinologiyaIcon,
-} from '../../assets/icons/servicesIcons'
-
 import { ROUTES } from '../../routes/routes'
 import {
    FooterInstagramIcon,
@@ -131,76 +106,6 @@ const ABOUT_US = (
       Уже 20 лет мы работаем на уровне лучших мировых стандартов, внедряя и
       развивая передовые методы лечения для сохранения здоровья наших пациентов.
    </Typography>
-)
-
-const PROSEDURA = (
-   <div>
-      <p>
-         На первом этапе, консультации нашего специалиста, вам будет нужно
-         определиться с желаемым <br />
-         результатом — тоном отбеливания при помощи специальной палитры.
-         Дальнейшие действия <br /> выполняются в следующей последовательности:
-      </p>
-      <br />
-      <br />
-      <ul style={{ marginLeft: '50px' }}>
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Обработка десен защитным составом
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Защита глаз при помощи специальных очков;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Нанесение отбеливающего геля;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Первая процедура отбеливания в течение 15 минут под воздействием
-               лампы;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Полоскание для удаления остатков геля;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Вторая процедура отбеливания в течение по 15 минут под
-               воздействием лампы;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>Полоскание;</span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Третья процедура отбеливания в течение 15 минут под воздействием
-               лампы;
-            </span>
-         </li>
-
-         <li style={{ color: 'green' }}>
-            <span style={{ color: 'black' }}>
-               Нанесение реминерализирующего геля для защиты эмали от
-               чувствительности и ее восстановления.
-            </span>
-         </li>
-      </ul>
-   </div>
 )
 
 const REVIEWS = [
@@ -612,6 +517,5 @@ export {
    INTERVAL_TIME,
    RUSSIAN_DAYS,
    DAYS_OF_WEEK,
-   PROSEDURA,
    MAP,
 }

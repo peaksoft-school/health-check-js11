@@ -18,5 +18,5 @@ export { ReactComponent as RevmatologiyaIcon } from './servicesIcons/revmatologi
 export { ReactComponent as TerapiyaIcon } from './servicesIcons/terapiya.svg'
 export { ReactComponent as UrologiyaIcon } from './servicesIcons/urologiya.svg'
 export { ReactComponent as VaccinationIcon } from './servicesIcons/vaccination.svg'
-export { ReactComponent as PsychotherapyIcon } from './servicesIcons/psikhoterapiya.svg'
+export { ReactComponent as PsychotherapyIcon } from './servicesIcons/psychotherapy.svg'
 export { ReactComponent as PulmonologyIcon } from './servicesIcons/pulmonologiya.svg'

@@ -1,35 +1,22 @@
 import { useState } from 'react'
 import {
+   Accordion,
+   AccordionDetails,
+   AccordionSummary,
    Box,
-   Collapse,
-   List,
-   ListItemButton,
-   ListItemText,
    Typography,
    styled,
 } from '@mui/material'
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { ExpandLess } from '@mui/icons-material'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowUpIcon } from '../../../assets/icons'
-import { PROSEDURA } from '../../../utils/constants'
 import { ROUTES } from '../../../routes/routes'
 import { SERVICES } from '../../../utils/constants/services'
 import Leave from '../../../components/landing/Leave'
+import Prosedura from '../../../layout/user/Prosedura'
 
 const Services = () => {
-   const [procedure, setProcedure] = useState(false)
-   const [indications, setIndications] = useState(false)
-   const [contraindications, setContraindications] = useState(false)
-   const [zoom4, setZoom4] = useState(false)
-   const [result, setResult] = useState(false)
-
    const navigate = useNavigate()
-
-   const handleClick = () => setProcedure(!procedure)
-   const handleClickSecond = () => setIndications(!indications)
-   const handleClickThird = () => setContraindications(!contraindications)
-   const handleClickFouth = () => setZoom4(!zoom4)
-   const handleClickFifth = () => setResult(!result)
 
    const handleNavigate = (id) => {
       navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/${id}`)
@@ -75,95 +62,75 @@ const Services = () => {
                   вопросы. Ниже представленны наиболее популярные.
                </Typography>
 
-               <StyledDropdown onClick={handleClick}>
-                  <ListItemText primary="Как проходит процедура?" />
+               <StyledDropdown>
+                  <AccordionSummary
+                     expandIcon={<ExpandLess className="open-icon" />}
+                     aria-controls="panel1-content"
+                     id="panel1-header"
+                  >
+                     Как проходит процедура?
+                  </AccordionSummary>
 
-                  {procedure ? (
-                     <ExpandLess className="open-icon" />
-                  ) : (
-                     <ExpandMore className="open-icon" />
-                  )}
+                  <AccordionDetails className="answer">
+                     <Prosedura />
+                  </AccordionDetails>
                </StyledDropdown>
 
-               <Collapse in={procedure} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                     <ListItemButton sx={{ pl: 4 }} className="listItem">
-                        <ListItemText primary={PROSEDURA} />
-                     </ListItemButton>
-                  </List>
-               </Collapse>
+               <StyledSecondDropDown>
+                  <AccordionSummary
+                     expandIcon={<ExpandLess className="open-icon" />}
+                     aria-controls="panel1-content"
+                     id="panel1-header"
+                  >
+                     Показания
+                  </AccordionSummary>
 
-               <StyledSecondDropDown onClick={handleClickSecond}>
-                  <ListItemText primary="Показания" />
-
-                  {indications ? (
-                     <ExpandLess className="open-icon" />
-                  ) : (
-                     <ExpandMore className="open-icon" />
-                  )}
+                  <AccordionDetails className="answer">
+                     <Prosedura />
+                  </AccordionDetails>
                </StyledSecondDropDown>
 
-               <Collapse in={indications} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                     <ListItemButton sx={{ pl: 4 }} className="listItem">
-                        <ListItemText primary={PROSEDURA} />
-                     </ListItemButton>
-                  </List>
-               </Collapse>
+               <StyledSecondDropDown>
+                  <AccordionSummary
+                     expandIcon={<ExpandLess className="open-icon" />}
+                     aria-controls="panel1-content"
+                     id="panel1-header"
+                  >
+                     Противопоказания
+                  </AccordionSummary>
 
-               <StyledSecondDropDown onClick={handleClickThird}>
-                  <ListItemText primary="Противопоказания" />
-
-                  {contraindications ? (
-                     <ExpandLess className="open-icon" />
-                  ) : (
-                     <ExpandMore className="open-icon" />
-                  )}
+                  <AccordionDetails className="answer">
+                     <Prosedura />
+                  </AccordionDetails>
                </StyledSecondDropDown>
 
-               <Collapse in={contraindications} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                     <ListItemButton sx={{ pl: 4 }} className="listItem">
-                        <ListItemText primary={PROSEDURA} />
-                     </ListItemButton>
-                  </List>
-               </Collapse>
+               <StyledSecondDropDown>
+                  <AccordionSummary
+                     expandIcon={<ExpandLess className="open-icon" />}
+                     aria-controls="panel1-content"
+                     id="panel1-header"
+                  >
+                     Насколько безопасно отбеливание Zoom 4?
+                  </AccordionSummary>
 
-               <StyledSecondDropDown onClick={handleClickFouth}>
-                  <ListItemText primary="Насколько безопасно отбеливание Zoom 4?" />
-
-                  {zoom4 ? (
-                     <ExpandLess className="open-icon" />
-                  ) : (
-                     <ExpandMore className="open-icon" />
-                  )}
+                  <AccordionDetails className="answer">
+                     <Prosedura />
+                  </AccordionDetails>
                </StyledSecondDropDown>
 
-               <Collapse in={zoom4} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                     <ListItemButton sx={{ pl: 4 }} className="listItem">
-                        <ListItemText primary={PROSEDURA} />
-                     </ListItemButton>
-                  </List>
-               </Collapse>
+               <StyledSecondDropDown>
+                  <AccordionSummary
+                     expandIcon={<ExpandLess className="open-icon" />}
+                     aria-controls="panel1-content"
+                     id="panel1-header"
+                  >
+                     Сколько держится результат?
+                  </AccordionSummary>
 
-               <StyledSecondDropDown onClick={handleClickFifth}>
-                  <ListItemText primary="Сколько держится результат?" />
-
-                  {result ? (
-                     <ExpandLess className="open-icon" />
-                  ) : (
-                     <ExpandMore className="open-icon" />
-                  )}
+                  <AccordionDetails className="answer">
+                     <Prosedura />
+                  </AccordionDetails>
                </StyledSecondDropDown>
-
-               <Collapse in={result} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                     <ListItemButton sx={{ pl: 4 }} className="listItem">
-                        <ListItemText primary={PROSEDURA} />
-                     </ListItemButton>
-                  </List>
-               </Collapse>
             </Box>
          </Box>
          <Leave />
@@ -255,7 +222,7 @@ const StyledContainer = styled(Box)(() => ({
    },
 }))
 
-const StyledService = styled(Box)(() => ({
+const StyledService = styled(Box)(({ theme }) => ({
    width: '26.875rem',
    height: '5.625rem',
    display: 'flex',
@@ -267,9 +234,19 @@ const StyledService = styled(Box)(() => ({
    transition: '0.3s',
 
    '&:hover': {
+      color: 'white',
       cursor: 'pointer',
       transform: 'translateY(-7px)',
-      background: 'radial-gradient(circle #FDFDFD,#E4E7EE)',
+      backgroundColor: theme.palette.primary.darkGreen,
+
+      '& .icon': {
+         width: '3.375rem',
+         height: '3.375rem',
+
+         '& > svg path': {
+            fill: 'white',
+         },
+      },
    },
 
    '& .icon': {
@@ -278,7 +255,12 @@ const StyledService = styled(Box)(() => ({
    },
 }))
 
-const StyledDropdown = styled(ListItemButton)(() => ({
+const StyledDropdown = styled(Accordion)(() => ({
+   '&:first-of-type': {
+      borderTopLeftRadius: '10px',
+      borderTopRightRadius: '10px',
+   },
+
    width: '52.625rem',
    backgroundColor: '#048741',
    borderRadius: '10px',
@@ -288,8 +270,18 @@ const StyledDropdown = styled(ListItemButton)(() => ({
    '&:hover': {
       width: '52.625rem',
       backgroundColor: '#048741',
-      borderRadius: '10px',
       color: 'white',
+   },
+
+   '& .answer': {
+      backgroundColor: 'white',
+
+      '& > div > ul': {
+         marginLeft: '15px',
+         display: 'flex',
+         gap: '5px',
+         flexDirection: 'column',
+      },
    },
 
    '& .open-icon': {
@@ -299,14 +291,47 @@ const StyledDropdown = styled(ListItemButton)(() => ({
    },
 }))
 
-const StyledSecondDropDown = styled(ListItemButton)(() => ({
+const StyledSecondDropDown = styled(Accordion)(() => ({
    width: '52.625rem',
    backgroundColor: '#DBF0E5',
    borderRadius: '10px',
    color: '#4D4E51',
    borderLeftColor: 'red',
    marginBottom: '15px',
-   borderLeft: '8px solid rgb(4, 135, 65) !important',
+   borderLeft: '8px solid rgb(4, 135, 65)',
+   borderBottom: 'none',
+
+   '& > div .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+      transform: 'rotate(90deg)',
+   },
+
+   '& .answer': {
+      backgroundColor: 'white',
+
+      '& > div > ul': {
+         marginLeft: '15px',
+         display: 'flex',
+         gap: '5px',
+         flexDirection: 'column',
+      },
+   },
+
+   '& .open-icon': {
+      backgroundColor: 'white',
+      borderRadius: '50%',
+      fill: '#DBF0E5',
+      transform: 'rotate(90deg)',
+      border: '1px solid green',
+
+      '& > path': {
+         fill: 'green',
+      },
+   },
+
+   '&:last-of-type': {
+      borderBottomLeftRadius: '10px',
+      borderBottomRightRadius: '10px',
+   },
 
    '&:hover': {
       width: '52.625rem',
@@ -314,9 +339,7 @@ const StyledSecondDropDown = styled(ListItemButton)(() => ({
       color: '#4D4E51',
    },
 
-   '& .open-icon': {
+   '&::before': {
       backgroundColor: 'white',
-      borderRadius: '50%',
-      fill: '#DBF0E5',
    },
 }))

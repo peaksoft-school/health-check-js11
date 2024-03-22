@@ -18,11 +18,12 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 
 const OnlineAppointments = () => {
    const { schedules } = useSelector((state) => state.schedule)
+
    const { isLoading, appointments } = useSelector(
       (state) => state.onlineAppointments
    )
 
-   const [value, setValue] = useState('online-appointments')
+   const [tab, setTab] = useState('online-appointments')
    const [searchName, setSearchName] = useState('')
    const [openModal, setOpenModal] = useState(false)
 
@@ -51,7 +52,7 @@ const OnlineAppointments = () => {
    }, [])
 
    const tabsChange = (_, newValue) => {
-      setValue(newValue)
+      setTab(newValue)
 
       searchParams.set('tab', newValue)
       setSearchParams(searchParams)
@@ -61,9 +62,9 @@ const OnlineAppointments = () => {
       const tabFormUrl = searchParams.get('tab')
 
       if (tabFormUrl) {
-         setValue(tabFormUrl)
+         setTab(tabFormUrl)
       } else {
-         setValue('online-appointments')
+         setTab('online-appointments')
          searchParams.set('tab', 'online-appointments')
          setSearchParams(searchParams)
       }
@@ -139,7 +140,7 @@ const OnlineAppointments = () => {
          <Box className="button-container">
             <Typography className="title">Онлайн-запись</Typography>
 
-            {value === 'online-appointments' ? (
+            {tab === 'online-appointments' ? (
                <Button className="add-button" onClick={toggleModal}>
                   <PlusIcon className="plus-icon" />
                   Добавить запись
@@ -162,12 +163,9 @@ const OnlineAppointments = () => {
          <AddSchedule open={openModal} onClose={toggleModal} />
 
          <Box>
-            <TabContext value={value}>
+            <TabContext value={tab}>
                <Box className="tabs-container">
-                  <TabList
-                     onChange={tabsChange}
-                     aria-label="lab API tabs example"
-                  >
+                  <TabList onChange={tabsChange}>
                      <Tab
                         label="Онлайн-запись"
                         value="online-appointments"

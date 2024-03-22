@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { SPECIALISTS_THUNK } from './specialictsThunk'
 
 const initialState = {
+   getDoctorsByDepartment: [],
    specialists: [],
    specialist: {},
    isLoading: false,
@@ -31,6 +32,26 @@ export const specialistsSlice = createSlice({
          .addCase(SPECIALISTS_THUNK.getSpecialists.rejected, (state) => {
             state.isLoading = false
          })
+
+         .addCase(
+            SPECIALISTS_THUNK.getDoctorsByDepartment.fulfilled,
+            (state, { payload }) => {
+               state.getDoctorsByDepartment = payload
+            }
+         )
+
+         .addCase(SPECIALISTS_THUNK.getDoctorsByDepartment.pending, (state) => {
+            state.isLoading = true
+            state.error = null
+         })
+
+         .addCase(
+            SPECIALISTS_THUNK.getDoctorsByDepartment.rejected,
+            (state, action) => {
+               state.isLoading = false
+               state.error = action.payload
+            }
+         )
 
          .addCase(SPECIALISTS_THUNK.updateDoctorStatus.rejected, (state) => {
             state.isLoading = false

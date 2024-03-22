@@ -1,85 +1,83 @@
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useFormik } from 'formik'
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
 import { DoctorLeaveImage } from '../../assets/images'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
+import { APPLICATIONS_THUNKS } from '../../store/slices/application/applicationThunk'
 import Button from '../UI/Button'
 import NumberInput from '../UI/inputs/NumberInput'
 
 const Leave = () => {
    const dispatch = useDispatch()
-   const [userName, setUserName] = useState('')
-   const [phoneNumber, setPhoneNumber] = useState('')
 
-   const handleCreateApplication = async () => {
-      dispatch(
-         APPLICATION_THUNK.createApplication({
-            username: userName,
-            phoneNumber,
-         })
-      )
+   const onSubmit = (values, { resetForm }) =>
+      dispatch(APPLICATIONS_THUNKS.createApplication({ values, resetForm }))
 
-      setUserName('')
-      setPhoneNumber('')
-   }
+   const { values, handleChange, handleSubmit } = useFormik({
+      initialValues: {
+         username: '',
+         phoneNumber: '',
+      },
+
+      onSubmit,
+   })
 
    return (
       <StyledContainer>
-         <Box className="leave-box">
-            <Typography className="title">Оставьте заявку</Typography>
+         <Box className="box">
+            <Typography className="title" variant="h1">
+               Оставьте заявку
+            </Typography>
 
             <Typography className="description">
                Оставьте свой номер и наши специалисты свяжутся с Вами в
                ближайшее время
             </Typography>
 
-            <Box className="inputs-box">
-               <StyledInputContainer>
-                  <label htmlFor="name" className="input-label">
-                     Как к Вам обратиться?
-                  </label>
+            <form className="form" onSubmit={handleSubmit} autoComplete="off">
+               <Box className="inputs-box">
+                  <StyledInputContainer>
+                     <label htmlFor="name">Как к Вам обратиться?</label>
 
-                  <StyledInputBox>
-                     <UserIcon className="input-icons" />
+                     <StyledInputBox>
+                        <UserIcon className="input-icons" />
 
-                     <InputBase
-                        className="name-input"
-                        id="name"
-                        type="text"
-                        placeholder="Введите имя"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                     />
-                  </StyledInputBox>
-               </StyledInputContainer>
+                        <InputBase
+                           className="name-input"
+                           id="name"
+                           type="text"
+                           placeholder="Введите имя"
+                           value={values.username}
+                           onChange={handleChange('username')}
+                        />
+                     </StyledInputBox>
+                  </StyledInputContainer>
 
-               <StyledInputContainer>
-                  <label htmlFor="number" className="input-label">
-                     Номер мобильного телефона
-                  </label>
+                  <StyledInputContainer>
+                     <label htmlFor="number">Номер мобильного телефона</label>
 
-                  <Box className="number-input-container">
-                     <NumberInput
-                        id="number"
-                        mask="_"
-                        format="+996#########"
-                        placeholder="+996 (___) __-__-__"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                     >
-                        <ActivePhoneIcon className="input-icons" />
-                     </NumberInput>
-                  </Box>
-               </StyledInputContainer>
-            </Box>
+                     <Box className="number-input-container">
+                        <NumberInput
+                           id="number"
+                           mask="_"
+                           format="+996#########"
+                           placeholder="+996 (___) __-__-__"
+                           value={values.phoneNumber}
+                           onChange={handleChange('phoneNumber')}
+                        >
+                           <ActivePhoneIcon className="input-icons" />
+                        </NumberInput>
+                     </Box>
+                  </StyledInputContainer>
+               </Box>
 
-            <StyledButton onClick={handleCreateApplication}>
-               ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
-            </StyledButton>
+               <StyledButton type="submit">
+                  ОТПРАВИТЬ ЗАЯВКУ <LeaveArrowIcon className="circle-arrow" />
+               </StyledButton>
+            </form>
          </Box>
 
-         <img src={DoctorLeaveImage} alt="доктор" className="doctor" />
+         <img src={DoctorLeaveImage} alt="доктор" />
       </StyledContainer>
    )
 }
@@ -96,7 +94,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
       margin: '0.625rem',
    },
 
-   '& > .leave-box': {
+   '& > .box': {
       display: 'flex',
       width: '41.1875rem',
       height: '28.75rem',
@@ -110,6 +108,12 @@ const StyledContainer = styled('div')(({ theme }) => ({
       [theme.breakpoints.down('lg')]: {
          height: '21rem',
          width: '33rem',
+      },
+
+      '& .form': {
+         display: 'flex',
+         flexDirection: 'column',
+         alignItems: 'center',
       },
 
       '& > .title': {
@@ -142,7 +146,7 @@ const StyledContainer = styled('div')(({ theme }) => ({
       },
    },
 
-   '& > .doctor': {
+   '& > img': {
       width: '36.375rem',
       height: '33.125rem',
 
@@ -204,7 +208,7 @@ const StyledInputContainer = styled(Box)(({ theme }) => ({
       marginTop: '6px !important',
    },
 
-   '& > .input-label': {
+   '& > label': {
       [theme.breakpoints.down('lg')]: {
          fontSize: '0.813rem',
       },

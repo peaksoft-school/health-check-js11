@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { APPLICATION_THUNK } from './applicationThunk'
+import { APPLICATIONS_THUNKS } from './applicationThunk'
 import { showToast } from '../../../utils/helpers/notification'
 
 export const applicationSlice = createSlice({
@@ -11,7 +11,6 @@ export const applicationSlice = createSlice({
       error: null,
       selectAllApplications: [],
       isSelectAllApplications: false,
-      doctors: [],
    },
 
    reducers: {
@@ -64,12 +63,12 @@ export const applicationSlice = createSlice({
    extraReducers: (builder) => {
       builder
 
-         .addCase(APPLICATION_THUNK.getApplicationData.pending, (state) => {
+         .addCase(APPLICATIONS_THUNKS.getApplicationData.pending, (state) => {
             state.status = 'loading'
          })
 
          .addCase(
-            APPLICATION_THUNK.getApplicationData.fulfilled,
+            APPLICATIONS_THUNKS.getApplicationData.fulfilled,
             (state, action) => {
                state.status = 'succeeded'
                state.items = action.payload
@@ -77,53 +76,53 @@ export const applicationSlice = createSlice({
          )
 
          .addCase(
-            APPLICATION_THUNK.getApplicationData.rejected,
+            APPLICATIONS_THUNKS.getApplicationData.rejected,
             (state, action) => {
                state.status = 'failed'
                state.error = action.error.message
             }
          )
 
-         .addCase(APPLICATION_THUNK.deleteApplication.pending, (state) => {
+         .addCase(APPLICATIONS_THUNKS.deleteApplication.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(APPLICATION_THUNK.deleteApplication.fulfilled, () => {
+         .addCase(APPLICATIONS_THUNKS.deleteApplication.fulfilled, () => {
             showToast({
                message: 'запись удалена',
             })
          })
 
          .addCase(
-            APPLICATION_THUNK.deleteApplication.rejected,
+            APPLICATIONS_THUNKS.deleteApplication.rejected,
             (state, action) => {
                state.status = 'failed'
                state.error = action.error.message
             }
          )
 
-         .addCase(APPLICATION_THUNK.updateApplication.pending, (state) => {
+         .addCase(APPLICATIONS_THUNKS.updateApplication.pending, (state) => {
             state.status = 'loading'
          })
 
-         .addCase(APPLICATION_THUNK.updateApplication.fulfilled, (state) => {
+         .addCase(APPLICATIONS_THUNKS.updateApplication.fulfilled, (state) => {
             state.error = false
          })
 
          .addCase(
-            APPLICATION_THUNK.updateApplication.rejected,
+            APPLICATIONS_THUNKS.updateApplication.rejected,
             (state, action) => {
                state.status = 'failed'
                state.error = action.error.message
             }
          )
 
-         .addCase(APPLICATION_THUNK.searchApplications.pending, (state) => {
+         .addCase(APPLICATIONS_THUNKS.searchApplications.pending, (state) => {
             state.status = 'loading'
          })
 
          .addCase(
-            APPLICATION_THUNK.searchApplications.fulfilled,
+            APPLICATIONS_THUNKS.searchApplications.fulfilled,
             (state, action) => {
                if (action.payload && !action.payload.error) {
                   const updatedApplications = action.payload.map(
@@ -144,39 +143,18 @@ export const applicationSlice = createSlice({
          )
 
          .addCase(
-            APPLICATION_THUNK.searchApplications.rejected,
+            APPLICATIONS_THUNKS.searchApplications.rejected,
             (state, action) => {
                state.status = 'failed'
                state.error = action.error.message
             }
          )
 
-         .addCase(APPLICATION_THUNK.deleteAllApplication.fulfilled, () => {
+         .addCase(APPLICATIONS_THUNKS.deleteAllApplication.fulfilled, () => {
             showToast({
                message: 'Успешно удалено ',
             })
          })
-
-         .addCase(APPLICATION_THUNK.getDoctorsByDepartment.pending, (state) => {
-            state.loading = true
-            state.error = null
-         })
-
-         .addCase(
-            APPLICATION_THUNK.getDoctorsByDepartment.fulfilled,
-            (state, action) => {
-               state.loading = false
-               state.doctors = action.payload
-            }
-         )
-
-         .addCase(
-            APPLICATION_THUNK.getDoctorsByDepartment.rejected,
-            (state, action) => {
-               state.loading = false
-               state.error = action.payload
-            }
-         )
    },
 })
 

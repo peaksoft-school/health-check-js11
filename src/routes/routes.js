@@ -93,13 +93,15 @@ const ROUTES = {
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
       SERVICE: 'service',
+   },
+
+   ID: {
       ID: 'id',
    },
 
    ADMIN: {
       INDEX: '/admin',
       PATIENTS: 'patients',
-      ID: 'id',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
       ADD_NOTE: 'add-note',

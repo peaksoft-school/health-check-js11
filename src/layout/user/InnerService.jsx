@@ -14,13 +14,13 @@ import {
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ArrowUpIcon } from '../../assets/icons'
 import { SERVICES } from '../../utils/constants/services'
+import { MedicImage } from '../../assets/images'
+import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 import Reviews from '../../components/landing/Reviews'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
 import Button from '../../components/UI/Button'
 import Leave from '../../components/landing/Leave'
-import { MedicImage } from '../../assets/images'
 
-const Service = () => {
+const InnerService = () => {
    const [initialAppointment, setInitialAppointment] = useState(false)
    const [initialAppointment2, setInitialAppointment2] = useState(false)
 
@@ -36,10 +36,10 @@ const Service = () => {
    const selectedService = SERVICES.find((service) => service.id === serid)
 
    useEffect(() => {
-      dispatch(APPLICATION_THUNK.getDoctorsByDepartment(selectedService.name))
+      dispatch(SPECIALISTS_THUNK.getDoctorsByDepartment(selectedService.name))
    }, [dispatch])
 
-   const { doctors } = useSelector((state) => state.applications)
+   const { getDoctorsByDepartment } = useSelector((state) => state.specialists)
 
    return (
       <StyledContainer>
@@ -115,7 +115,7 @@ const Service = () => {
                   </Box>
 
                   <Box className="drop-down-box">
-                     <StyledDropdown onClick={handleClick}>
+                     <StyledListItemButton onClick={handleClick}>
                         <ListItemText
                            primary={selectedService.initialAppointment.type}
                            className="reception"
@@ -130,7 +130,7 @@ const Service = () => {
                         ) : (
                            <ExpandMore className="open-icon" />
                         )}
-                     </StyledDropdown>
+                     </StyledListItemButton>
 
                      <Collapse
                         in={initialAppointment}
@@ -149,7 +149,7 @@ const Service = () => {
                   </Box>
 
                   <Box className="drop-down-box">
-                     <StyledDropdown onClick={handleInitialClick}>
+                     <StyledListItemButton onClick={handleInitialClick}>
                         <ListItemText
                            primary={selectedService.initialAppointment2.type}
                            className="reception"
@@ -165,7 +165,7 @@ const Service = () => {
                         ) : (
                            <ExpandMore className="open-icon" />
                         )}
-                     </StyledDropdown>
+                     </StyledListItemButton>
 
                      <Collapse
                         in={initialAppointment2}
@@ -198,32 +198,42 @@ const Service = () => {
 
             <Reviews />
 
-            <Box className="doctors-box">
-               <Typography className="doctors-title">
-                  Специалисты в данном направлении
-               </Typography>
+            <Typography className="doctors-title">
+               Специалисты в данном направлении
+            </Typography>
 
-               {doctors.length > 0 ? (
-                  doctors.map((doctor) => (
-                     <Box key={doctor.id} className="doctors-card">
-                        <img
-                           src={doctor.image}
-                           alt="doctor-img"
-                           className="doctor-image"
-                        />
-                        <Typography className="doctor-name">
-                           {doctor.fullNameDoctor}
-                        </Typography>
-                        <Typography className="doctor-position">
-                           {doctor.position}
-                        </Typography>
-                        <Button variant="secondary" className="leave-button">
-                           Записаться на прием
-                        </Button>
-                     </Box>
-                  ))
+            <Box className="doctors-box">
+               {getDoctorsByDepartment.length > 0 ? (
+                  getDoctorsByDepartment?.map(
+                     ({ id, image, fullNameDoctor, position }) => (
+                        <Box key={id} className="doctors-card">
+                           <img src={image} alt="img-доктора" />
+
+                           <Typography className="doctor-name">
+                              {fullNameDoctor}
+                           </Typography>
+
+                           <Typography className="doctor-position">
+                              {position}
+                           </Typography>
+
+                           <Button variant="secondary" className="leave-button">
+                              Записаться на прием
+                           </Button>
+                        </Box>
+                     )
+                  )
                ) : (
-                  <MedicImage />
+                  <>
+                     <Typography className="no-doctors-text">
+                        В данном направлении нету специалистов...
+                     </Typography>
+                     <img
+                        src={MedicImage}
+                        alt="no-doctor"
+                        className="no-doctor"
+                     />
+                  </>
                )}
             </Box>
 
@@ -232,13 +242,13 @@ const Service = () => {
       </StyledContainer>
    )
 }
-export default Service
+export default InnerService
 
-const StyledDropdown = styled(ListItemButton)(() => ({
+const StyledListItemButton = styled(ListItemButton)(() => ({
    marginTop: '15px',
    padding: '16px 0',
 
-   '& .price': {
+   '& > .price': {
       width: '85px',
 
       '& > span': {
@@ -276,25 +286,28 @@ const StyledContainer = styled(Box)(() => ({
       maxWidth: '1600px',
       margin: '0 auto',
 
+      '& .doctors-title': {
+         fontFamily: 'Manrope',
+         fontSize: '24px',
+         fontWeight: '600',
+         margin: '120px 0 40px 120px',
+      },
+
       '& .main-box': {
          paddingLeft: '120px',
       },
 
       '& .doctors-box': {
-         margin: '120px 0 120px 120px',
-
-         '& .doctors-title': {
-            fontFamily: 'Manrope',
-            fontSize: '24px',
-            fontWeight: '600',
-            marginBottom: '40px',
-         },
+         display: 'flex',
+         flexWrap: 'wrap',
+         gap: '30px',
+         margin: '0px 0 120px 120px',
 
          '& .doctors-card': {
             width: '20rem',
             height: '29.5rem',
 
-            '& .doctor-image': {
+            '& > img': {
                borderRadius: '4px',
                height: '21.875rem',
                width: '20rem',
@@ -329,6 +342,14 @@ const StyledContainer = styled(Box)(() => ({
                   height: '2.625rem',
                },
             },
+         },
+
+         '& .no-doctors-text': {
+            fontFamily: 'Manrope',
+         },
+
+         '& .no-doctor': {
+            width: '800px',
          },
       },
 

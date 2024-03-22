@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
-import { APPLICATION_THUNK } from '../../../store/slices/application/applicationThunk'
+import { APPLICATIONS_THUNKS } from '../../../store/slices/application/applicationThunk'
 
 const Applications = () => {
    const dispatch = useDispatch()
@@ -21,7 +21,7 @@ const Applications = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            APPLICATION_THUNK.searchApplications({
+            APPLICATIONS_THUNKS.searchApplications({
                searchText: debouncedSearchText,
             })
          )
@@ -33,13 +33,13 @@ const Applications = () => {
    }
 
    const handleUpdate = async ({ id, isActive }) =>
-      dispatch(APPLICATION_THUNK.updateApplication({ id, isActive }))
+      dispatch(APPLICATIONS_THUNKS.updateApplication({ id, isActive }))
 
    const handleDelete = async ({ id }) =>
-      dispatch(APPLICATION_THUNK.deleteApplication({ id }))
+      dispatch(APPLICATIONS_THUNKS.deleteApplication({ id }))
 
    useEffect(() => {
-      dispatch(APPLICATION_THUNK.getApplicationData())
+      dispatch(APPLICATIONS_THUNKS.getApplicationData())
    }, [])
 
    const preperadeArray = items.map((item, index) => {
