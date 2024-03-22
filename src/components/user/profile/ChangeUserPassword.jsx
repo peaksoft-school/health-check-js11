@@ -7,22 +7,29 @@ import {
    InputAdornment,
 } from '@mui/material'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { forgotPassword } from '../../../store/slices/auth/authThunk'
-import Input from '../../../components/UI/inputs/Input'
-import Button from '../../../components/UI/Button'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
 import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
-import { VALIDATION_FORGOT_PASSWORD } from '../../../utils/helpers/validate'
-import { passwordError } from '../../../utils/helpers'
+import { VALIDATION_CHANGE_PASSWORD } from '../../../utils/helpers/validate'
+import { resetPasswordError } from '../../../utils/helpers'
+import { showToast } from '../../../utils/helpers/notification'
+import Button from '../../UI/Button'
+import Input from '../../UI/inputs/Input'
 
 const ChangeUserPassword = () => {
+   window.scrollTo({ top: 0 })
+
    const [showOldPassword, setShowOldPassword] = useState(false)
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
+   const { userData, isLoading } = useSelector((state) => state.profile)
+
    const dispatch = useDispatch()
+
+   const emailRegex = /^[^\s@]+@(?:gmail\.com|icloud\.com)$/
 
    const onSubmit = (values, { resetForm }) => {
       const { oldPassword, newPassword, confirmPassword } = values
@@ -47,27 +54,37 @@ const ChangeUserPassword = () => {
 
       validateOnChange: false,
       onSubmit,
-      validationSchema: VALIDATION_FORGOT_PASSWORD,
+      validationSchema: VALIDATION_CHANGE_PASSWORD,
    })
 
    const sentEmai = (e) => {
       e.preventDefault()
       const { email } = values
 
-      dispatch(
-         forgotPassword({
-            email,
-            link: 'http://localhost:3000/change-password',
-            setEmail: () => '',
-            onClose: () => '',
+      if (!emailRegex.test(email)) {
+         showToast({
+            message: 'не валидный email',
+            status: 'error',
          })
-      )
+      } else {
+         dispatch(
+            forgotPassword({
+               email,
+               link: 'http://localhost:3000/change-password',
+               setEmail: () => '',
+               onClose: () => '',
+            })
+         )
+      }
    }
 
    const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
+
    const showNewPasswordHandle = () => setShowNewPassword((prev) => !prev)
-   const showConfirmPasswordHandle = () =>
+
+   const showConfirmPasswordHandle = () => {
       setShowConfirmPassword((prev) => !prev)
+   }
 
    return (
       <Box>
@@ -76,11 +93,12 @@ const ChangeUserPassword = () => {
                <Box className="change-password-box">
                   <h3 className="change-password">Смена пароля</h3>
 
-                  <Typography className="label">Старый пароль</Typography>
+                  <label htmlFor="oldPassword">Старый пароль</label>
 
                   <StyledInput
                      value={values.oldPassword}
                      name="password"
+                     error={!!errors.oldPassword}
                      onChange={handleChange('oldPassword')}
                      placeholder="Введите пароль"
                      type={showOldPassword ? 'text' : 'password'}
@@ -99,7 +117,7 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="label">Hовый пароль</Typography>
+                  <label htmlFor="newPassword">Hовый пароль</label>
 
                   <StyledInput
                      value={values.newPassword}
@@ -123,9 +141,9 @@ const ChangeUserPassword = () => {
                      }}
                   />
 
-                  <Typography className="label">
+                  <label htmlFor="confirmPassword">
                      Подтвердите новый пароль
-                  </Typography>
+                  </label>
 
                   <StyledInput
                      value={values.confirmPassword}
@@ -150,9 +168,9 @@ const ChangeUserPassword = () => {
                   />
 
                   <div>
-                     {passwordError(errors) && (
+                     {resetPasswordError(errors) && (
                         <Typography className="error-message">
-                           {passwordError(errors)}
+                           {resetPasswordError(errors)}
                         </Typography>
                      )}
                   </div>
@@ -164,7 +182,12 @@ const ChangeUserPassword = () => {
                         </Button>
                      </NavLink>
 
-                     <Button className="confirm-button" onClick={handleSubmit}>
+                     <Button
+                        className="confirm-button"
+                        isLoading={isLoading}
+                        onClick={handleSubmit}
+                        colorLoading="secondary"
+                     >
                         ПОДТВЕРДИТЬ
                      </Button>
                   </StyledButtonContainer>
@@ -173,7 +196,7 @@ const ChangeUserPassword = () => {
                <Box className="reset-password-box">
                   <h3 className="change-password">Cброс пароля</h3>
 
-                  <Typography className="label">Введите email</Typography>
+                  <label htmlFor="email">Введите email</label>
 
                   <StyledInput
                      value={values.email}
@@ -216,7 +239,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          flexDirection: 'column',
       },
 
-      '& .label': {
+      '& label': {
          marginTop: '1rem',
          color: theme.palette.primary.lightBlack,
          marginBottom: '0.3rem',
@@ -247,9 +270,11 @@ const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
       borderRadius: '0.5rem',
+      width: '414px',
    },
 
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       color: 'black',
       height: '0.4375em',
       borderRadius: '0.5rem',

@@ -14,6 +14,7 @@ const NumberInput = forwardRef(
          placeholder,
          format,
          id,
+         disabled,
          mask,
       },
       ref
@@ -30,6 +31,8 @@ const NumberInput = forwardRef(
             onChange={onChange}
             ref={ref}
             {...rest}
+            className={disabled ? 'disabled' : ''}
+            disabled={disabled}
          />
       </StyledInputBox>
    )
@@ -92,6 +95,33 @@ const StyledInputBox = styled(Paper)(({ error, variant, theme }) => {
 
          '& input': {
             color: 'black',
+         },
+
+         '& input::placeholder': {
+            color: `${theme.palette.secondary.main}`,
+         },
+
+         '&:hover': {
+            border: `1px solid ${
+               error ? 'red' : theme.palette.secondary.lightGrey
+            }`,
+         },
+      }
+   }
+
+   if (variant === 'drawer') {
+      return {
+         ...defaultStyles,
+         borderRadius: '0.225rem',
+         width: '100%',
+         border: `1px solid ${error ? 'red' : theme.palette.secondary.main}`,
+
+         '& input': {
+            color: 'black',
+         },
+
+         '& .disabled': {
+            color: theme.palette.secondary.lightGrey,
          },
 
          '& input::placeholder': {

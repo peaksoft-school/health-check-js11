@@ -8,14 +8,6 @@ const UserLayout = () => {
    const isChangePassword = location.pathname === '/change-password'
    const { role } = useSelector((state) => state.auth)
 
-   // if (role === 'GUEST' && location.pathname === '/profile') {
-   //    return <Navigate to="/" replace />
-   // }
-
-   // if (role === 'GUEST' && location.pathname === '/records') {
-   //    return <Navigate to="/" replace />
-   // }
-
    if (
       role === 'GUEST' &&
       (location.pathname === '/profile' || location.pathname === '/records')

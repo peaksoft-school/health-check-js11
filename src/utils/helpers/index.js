@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import { Typography } from '@mui/material'
 
 const signInError = (errors) => {
@@ -21,6 +22,19 @@ const passwordError = (errors) => {
       errorMessage = errors.newPassword
    } else if (errors.confirmPassword) {
       errorMessage = errors.confirmPassword
+   }
+
+   return errorMessage
+}
+const resetPasswordError = (errors) => {
+   let errorMessage = null
+
+   if (errors.oldPassword) {
+      errorMessage = errors.oldPassword
+   } else if (errors.confirmPassword) {
+      errorMessage = errors.confirmPassword
+   } else if (errors.newPassword) {
+      errorMessage = errors.newPassword
    }
 
    return errorMessage
@@ -81,6 +95,19 @@ const showResultError = (errors) => {
       errorMessage = errors.date
    } else if (errors?.file) {
       errorMessage = errors.file
+   }
+
+   return errorMessage
+}
+const showAppointmentFormError = (errors) => {
+   let errorMessage = null
+
+   if (errors?.fullName) {
+      errorMessage = errors.fullName
+   } else if (errors?.phoneNumber) {
+      errorMessage = errors.phoneNumber
+   } else if (errors?.email) {
+      errorMessage = errors.email
    }
 
    return errorMessage
@@ -190,6 +217,35 @@ const containsTheHTTPS = (url) => {
    return regex.test(url)
 }
 
+const useToggleModal = (query) => {
+   const [searchParams, setSearchParams] = useSearchParams()
+   const isModalOpen = Boolean(searchParams.get(query))
+   const openModalHandler = () => {
+      searchParams.set(query, 'open')
+      setSearchParams(searchParams, {
+         replace: true,
+      })
+   }
+   const closeModalHandler = () => {
+      searchParams.delete(query)
+      setSearchParams(searchParams)
+   }
+   return {
+      onOpenModal: openModalHandler,
+      isOpen: isModalOpen,
+      onCloseModal: closeModalHandler,
+   }
+}
+
+const formatDates = (dateString) => {
+   const options = { weekday: 'long', day: 'numeric', month: 'long' }
+   const date = new Date(dateString)
+   const formattedDate = date.toLocaleDateString('ru-RU', options)
+   const capitalizedWeekday =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1)
+   return capitalizedWeekday
+}
+
 export {
    containsTheHTTPS,
    getRussianMonthName,
@@ -202,4 +258,8 @@ export {
    showResultError,
    formatPhoneNumberWithSpaces,
    handleKeyPress,
+   showAppointmentFormError,
+   resetPasswordError,
+   useToggleModal,
+   formatDates,
 }

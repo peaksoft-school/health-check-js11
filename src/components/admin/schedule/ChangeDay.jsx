@@ -1,10 +1,10 @@
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { CloseIcon } from '../../assets/icons'
-import { handleKeyPress } from '../../utils/helpers'
-import Modal from '../UI/Modal'
-import Button from '../UI/Button'
+import { CloseIcon } from '../../../assets/icons'
+import { handleKeyPress } from '../../../utils/helpers'
+import Modal from '../../UI/Modal'
+import Button from '../../UI/Button'
 import DeleteTimeSheets from './DeleteTimeSheets'
 
 const ChangeDay = ({
