@@ -228,16 +228,14 @@ const ScheduleTable = () => {
 
             <Box className="date-picker-box">
                <DatePicker
-                  variant="custom"
-                  value={startDate}
                   onChange={(e) => handleDateChange(e, 'start')}
+                  // value={startDate}
                   minDate={dateToday}
                />
                -
                <DatePicker
                   type="date"
-                  placeholder="До"
-                  value={endDate}
+                  // value={endDate}
                   minDate={dateEnd}
                   onChange={(e) => handleDateChange(e, 'end')}
                />
