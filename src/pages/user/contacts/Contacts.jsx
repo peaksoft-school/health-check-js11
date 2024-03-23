@@ -73,7 +73,7 @@ export default Contacts
 const StyledContainer = styled(Box)(({ theme }) => ({
    '& .box': {
       margin: '0 auto',
-      paddingBottom: '30px',
+      marginTop: '10px',
 
       '& > .title': {
          marginLeft: '6.25rem',
@@ -99,6 +99,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& > .text-container': {
+         // marginTop: '6rem',
+         marginBottom: '7rem',
+
          '& .label': {
             fontFamily: 'Manrope',
             padding: '1rem 0 0 6.5rem',
@@ -116,7 +119,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& > .map': {
       border: 'none',
-      marginTop: '6rem',
    },
 }))
 

@@ -43,7 +43,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .box': {
       margin: '0 auto',
       maxWidth: '1600px',
-      padding: '120px 0',
 
       '& > .title': {
          fontSize: '2.25rem',
