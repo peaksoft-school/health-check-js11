@@ -1,12 +1,14 @@
-import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useState } from 'react'
+import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { DeleteIcon } from '../../../assets/icons'
 import Modal from '../Modal'
 import Button from '../Button'
 
 const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
-   const { deletedAppointmentsIds } = useSelector((state) => state.appointments)
+   const { deletedAppointmentsIds } = useSelector(
+      (state) => state.onlineAppointments
+   )
 
    const { selectAllApplications } = useSelector((store) => store.applications)
 

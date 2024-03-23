@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
-import Switcher from '../UI/Switcher'
-import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
+import Switcher from '../../UI/Switcher'
+import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 
-const SpocialistSwicher = ({ id, isActive }) => {
+const SpecialistSwicher = ({ id, isActive }) => {
    const dispatch = useDispatch()
 
    const changeCheckboxHandler = (checked) => {
@@ -13,7 +13,7 @@ const SpocialistSwicher = ({ id, isActive }) => {
    return <StyledSwitcher checked={isActive} onChange={changeCheckboxHandler} />
 }
 
-export default SpocialistSwicher
+export default SpecialistSwicher
 
 const StyledSwitcher = styled(Switcher)(() => ({
    marginLeft: '13px',

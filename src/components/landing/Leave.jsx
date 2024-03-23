@@ -5,7 +5,7 @@ import { DoctorLeaveImage } from '../../assets/images'
 import NumberInput from '../UI/inputs/NumberInput'
 
 const Leave = () => (
-   <StyledContainer>
+   <StyledContainer id="Leave">
       <Box className="box">
          <Typography className="title">Оставьте заявку</Typography>
 

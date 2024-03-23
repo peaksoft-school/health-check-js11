@@ -11,4 +11,7 @@ const StyledLink = styled(Link)(() => ({
    '&:hover': {
       textDecoration: 'underline',
    },
+
+   color: 'black',
+   textDecoration: 'none',
 }))

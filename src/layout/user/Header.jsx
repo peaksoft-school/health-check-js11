@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -21,33 +21,58 @@ import {
 } from '../../utils/constants/index'
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
+import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
+import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
+import AddAppointments from '../../components/admin/appointments/AddAppointments'
 
 const Header = () => {
-   const { role } = useSelector((state) => state.auth)
+   const { role, isAuth, accessToken } = useSelector((state) => state.auth)
 
    const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null)
    const [openSignUpModal, setOpenSignUpModal] = useState(false)
    const [openSignInModal, setOpenSignInModal] = useState(false)
    const [toggleLogOutModal, setToggleLogOutModal] = useState(false)
+   const [toggleDrawerModal, setToggleDrawerModal] = useState(false)
 
    const dispatch = useDispatch()
 
    const navigate = useNavigate()
 
+   useEffect(() => {
+      dispatch(PROFILE_THUNKS.getUserProfile(accessToken))
+   }, [accessToken])
+
    const handleProfileMenuClose = () => setProfileMenuAnchorEl(null)
 
-   const toggleSignUpModal = () => setOpenSignUpModal((prev) => !prev)
+   const toggleSignUpModal = () => {
+      handleProfileMenuClose()
+      setOpenSignUpModal((prev) => !prev)
+   }
 
-   const toggleSignInModal = () => setOpenSignInModal((prev) => !prev)
+   const handleProfileMenuOpen = (event) =>
+      setProfileMenuAnchorEl(event.currentTarget)
+
+   const toggleDrawerHandler = () => {
+      if (isAuth) {
+         setToggleDrawerModal((prev) => !prev)
+         dispatch(APPOINTMENTS_THUNKS.getAllFacility())
+      } else {
+         toggleSignUpModal()
+      }
+   }
+
+   const closeDrawerHandler = () => setToggleDrawerModal(false)
+
+   const toggleSignInModal = () => {
+      handleProfileMenuClose()
+      setOpenSignInModal((prev) => !prev)
+   }
 
    const closeLogOutHandler = () => setToggleLogOutModal(false)
 
    const openLogOutHandler = () => setToggleLogOutModal(true)
 
    const isProfileMenuOpen = !!profileMenuAnchorEl
-
-   const handleProfileMenuOpen = (event) =>
-      setProfileMenuAnchorEl(event.currentTarget)
 
    const handlelogOut = () => {
       handleProfileMenuClose()
@@ -107,6 +132,20 @@ const Header = () => {
                      </a>
                   ))}
                </Box>
+
+               <SignUp
+                  open={openSignUpModal}
+                  closeSignUp={toggleSignUpModal}
+                  onClose={toggleSignUpModal}
+                  closeMenu={handleProfileMenuClose}
+               />
+
+               <SignIn
+                  closeMenu={handleProfileMenuClose}
+                  open={openSignInModal}
+                  onClose={toggleSignInModal}
+                  closeSignUp={toggleSignUpModal}
+               />
 
                <Box className="phone-numbers-box">
                   <DefaultPhoneIcon />
@@ -196,20 +235,6 @@ const Header = () => {
                            </Modal>
                         </StyledMenu>
                      )}
-
-                     <SignUp
-                        open={openSignUpModal}
-                        closeSignUp={toggleSignUpModal}
-                        onClose={toggleSignUpModal}
-                        closeMenu={handleProfileMenuClose}
-                     />
-
-                     <SignIn
-                        closeMenu={handleProfileMenuClose}
-                        open={openSignInModal}
-                        onClose={toggleSignInModal}
-                        closeSignUp={toggleSignUpModal}
-                     />
                   </StyledMenu>
                </Box>
             </Box>
@@ -236,9 +261,17 @@ const Header = () => {
                      </StyledButton>
                   </NavLink>
 
-                  <StyledButton className="button" onClick={toggleSignUpModal}>
+                  <StyledButton
+                     className="button"
+                     onClick={toggleDrawerHandler}
+                  >
                      ЗАПИСЬ ОНАЛЙН
                   </StyledButton>
+
+                  <AddAppointments
+                     open={toggleDrawerModal}
+                     onClose={closeDrawerHandler}
+                  />
                </Box>
             </Box>
          </Box>

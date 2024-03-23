@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-import { showToast } from '../../../utils/helpers/notification'
 
 const getApplicationData = createAsyncThunk(
    'applications/getApplications',
@@ -43,7 +42,7 @@ const deleteApplication = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )
@@ -61,7 +60,7 @@ const updateApplication = createAsyncThunk(
 
          return { isActive, id }
       } catch (error) {
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )

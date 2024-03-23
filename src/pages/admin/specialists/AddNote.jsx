@@ -1,8 +1,7 @@
-import { useEffect, useState, useMemo } from 'react'
-import { Typography, Box, styled, Card } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Typography, Box, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
@@ -214,9 +213,9 @@ const AddNote = () => {
 
 export default AddNote
 
-const StyledMainContainer = styled(Box)(() => ({
+const StyledMainContainer = styled(Box)(({ theme }) => ({
    padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   backgroundColor: theme.palette.primary.backgroundAdmin,
 
    '& > .box': {
       display: 'flex',
@@ -254,13 +253,13 @@ const StyledMainContainer = styled(Box)(() => ({
    '& .depatment-container': {
       marginTop: '-10.10rem',
       '& > .wrapper': {
-         border: '1px solid #D9D9D9',
+         border: `1px solid ${theme.palette.secondary.input}`,
          borderRadius: '4px',
          width: '1060px',
          height: '274px',
 
          '& .tool-bar': {
-            border: '1px solid #D9D9D9',
+            border: `1px solid ${theme.palette.secondary.input}`,
             height: '50px',
 
             '& > .rdw-inline-wrapper': {
