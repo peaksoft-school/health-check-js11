@@ -27,6 +27,7 @@ const DatePicker = ({
          dayOfWeekFormatter={dayOfWeekFormatter}
          maxDate={maxDate}
          minDate={minDate}
+         variant={variant}
          error={error}
          slots={{
             openPickerIcon: CalendarIcon,
@@ -72,8 +73,8 @@ const DatePicker = ({
                   },
 
                   '.MuiPickersDay-root': {
-                     borderRadius: variant === 'custom' ? '50%' : '3px',
-                     height: variant === 'custom' ? 'none' : '28px',
+                     borderRadius: '50%',
+                     height: 'none',
                      fontWeight: '500',
                      color: 'var(--primary-black-gray, #4D4E51)',
                   },
