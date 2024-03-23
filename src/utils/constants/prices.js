@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material'
 
-export const prices = [
+export const PRICES = [
    {
       id: 1,
-      title: 'Консультаия и диагностика',
+      title: 'Консультация и диагностика',
       data: 'Консультация врача-рентгенолога по внешним исследованиям',
       price: '2 300',
       description: (

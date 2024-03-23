@@ -37,7 +37,7 @@ const updateUserProfile = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'произошла ошибка',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {
@@ -72,7 +72,7 @@ const changeUserPassword = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'произошла ошибка',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {

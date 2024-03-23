@@ -114,7 +114,7 @@ export const specialistsSlice = createSlice({
 
          .addCase(SPECIALISTS_THUNK.updateButton.fulfilled, (state, action) => {
             state.isLoading = false
-            state.successMessage = 'Doctor successfully updated'
+            state.successMessage = 'Доктор успешно обновлен'
             state.updatedFirstName = action.payload.firstName
          })
 

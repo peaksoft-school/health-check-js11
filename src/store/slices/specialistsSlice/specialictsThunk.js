@@ -36,7 +36,7 @@ const deleteSpecialists = createAsyncThunk(
          dispatch(getSpecialists())
 
          showToast({
-            message: 'успешно удалено',
+            message: 'Успешно удалено',
          })
 
          return id

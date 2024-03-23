@@ -63,7 +63,7 @@ const addAppointment = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'произошла ошибка',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {

@@ -1,9 +1,9 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { prices } from '../../../utils/constants/prices'
+import { PRICES } from '../../../utils/constants/prices'
 import CustomizedAccordions from '../../../components/UI/CustomizedAccordions'
 
-const Contacts = () => (
+const Proces = () => (
    <>
       <StyledLine> </StyledLine>
 
@@ -35,7 +35,7 @@ const Contacts = () => (
 
          <AccordionContainer>
             <StyledAccordions>
-               {prices.map((el) => (
+               {PRICES.map((el) => (
                   <CustomizedAccordions key={el.id} title={el.title}>
                      <StyledPrice>
                         <Box className="prices-data">
@@ -65,7 +65,7 @@ const Contacts = () => (
    </>
 )
 
-export default Contacts
+export default Proces
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .title': {

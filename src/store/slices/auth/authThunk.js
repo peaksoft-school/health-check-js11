@@ -14,7 +14,7 @@ const signUp = createAsyncThunk(
          )
 
          showToast({
-            message: 'вы успешно зарегистрировались',
+            message: 'Вы успешно зарегистрировались',
          })
 
          const { email, role, token } = response.data
@@ -28,7 +28,7 @@ const signUp = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'Ошибка на стороне сервера',
                status: 'error',
             })
          } else {
@@ -50,7 +50,7 @@ const signIn = createAsyncThunk(
          const response = await axiosInstance.post('/api/auth/signIn', values)
 
          showToast({
-            message: 'вы успешно вошли в аккаунт',
+            message: 'Вы успешно вошли в аккаунт',
          })
 
          resetForm()
@@ -60,7 +60,7 @@ const signIn = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'не верный пароль или email',
+               message: 'Не верный пароль или email',
                status: 'error',
             })
          } else {
@@ -94,7 +94,7 @@ const forgotPassword = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'Ошибка на стороне сервера',
                status: 'error',
             })
          } else {
@@ -118,14 +118,14 @@ const changePassword = createAsyncThunk(
          )
 
          showToast({
-            message: 'пароль успешно изменен!',
+            message: 'Пароль успешно изменен!',
          })
 
          return response
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'Ошибка на стороне сервера',
                status: 'error',
             })
          } else {
@@ -149,7 +149,7 @@ const authWithGoogle = createAsyncThunk(
          )
 
          showToast({
-            message: 'вы успешно зарегистрировались',
+            message: 'Вы успешно зарегистрировались',
          })
 
          return response

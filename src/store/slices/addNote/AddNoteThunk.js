@@ -9,7 +9,7 @@ const postAddNote = createAsyncThunk(
          const response = await axiosInstance.post(`api/doctor`, values)
 
          showToast({
-            message: 'запись успешно добавлена ',
+            message: 'Запись успешно добавлена ',
          })
 
          return response.data

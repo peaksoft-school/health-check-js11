@@ -3,6 +3,7 @@ import { axiosInstance } from '../../../configs/axiosInstance'
 
 const getPatients = createAsyncThunk(
    'patients/getPatients',
+
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('/api/user/getAllPatients')
@@ -16,6 +17,7 @@ const getPatients = createAsyncThunk(
 
 const deletePatients = createAsyncThunk(
    'patients/deleteById',
+
    async (id, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/user/${id}`)
@@ -30,6 +32,7 @@ const deletePatients = createAsyncThunk(
 
 const searchPatients = createAsyncThunk(
    'patients/search',
+
    async ({ searchName }, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get(
