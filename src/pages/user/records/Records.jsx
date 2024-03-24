@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Document, Page } from 'react-pdf'
 import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'

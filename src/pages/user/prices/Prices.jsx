@@ -78,13 +78,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
    },
 
-   '& .image-box': {
-      padding: '3.125rem 0 0 11.25rem',
-      display: 'flex',
-      justifyContent: 'center',
-   },
-
-   '& .text': {
+   '& > .text': {
       fontSize: '18px',
       padding: '3.125rem 0 2rem 6.5rem',
       color: '#4D4E51',
@@ -102,7 +96,7 @@ const StyledSpecialistRow = styled(Typography)(() => ({
    fontWeight: '400',
    padding: '3.125rem 0 2rem 6.5rem',
 
-   span: {
+   '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
@@ -129,12 +123,6 @@ const StyledAccordions = styled('div')(() => ({
       fontSize: '20px',
    },
 
-   '& .description': {
-      fontSize: '18px',
-      marginTop: '1rem',
-      marginBottom: '1rem',
-   },
-
    '& .data-text': {
       fontSize: '18px',
       fontWeight: '500',
@@ -144,11 +132,21 @@ const StyledAccordions = styled('div')(() => ({
       fontWeight: '500',
       fontSize: '20px',
    },
+}))
 
-   '& .prices-data': {
+const StyledPrice = styled(Box)(() => ({
+   textAlign: 'left',
+
+   '& > .prices-data': {
       display: 'flex',
       justifyContent: 'space-between',
       marginTop: '20px',
+   },
+
+   '& > .description': {
+      fontSize: '18px',
+      marginTop: '1rem',
+      marginBottom: '1rem',
    },
 
    '& .prices': {
@@ -157,10 +155,6 @@ const StyledAccordions = styled('div')(() => ({
       padding: '20px 0px',
       borderTop: '1px solid #e0e2e7',
    },
-}))
-
-const StyledPrice = styled(Box)(() => ({
-   textAlign: 'left',
 }))
 
 const AccordionContainer = styled(Box)(() => ({

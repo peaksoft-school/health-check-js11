@@ -28,7 +28,7 @@ const signUp = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'Ошибка на стороне сервера',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {
@@ -94,7 +94,7 @@ const forgotPassword = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'Ошибка на стороне сервера',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {
@@ -125,7 +125,7 @@ const changePassword = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'Ошибка на стороне сервера',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {

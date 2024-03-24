@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getResults = createAsyncThunk(
    'result/getUserResults',
@@ -12,6 +13,11 @@ const getResults = createAsyncThunk(
 
          return response.data
       } catch (error) {
+         showToast({
+            message: 'Не верный номер',
+            status: error,
+         })
+
          return rejectWithValue(error)
       }
    }

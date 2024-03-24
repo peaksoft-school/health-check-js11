@@ -14,10 +14,17 @@ const postAddNote = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({
-            message: error.response.data.message,
-            status: 'error',
-         })
+         if (error.response.status === 403) {
+            showToast({
+               message: 'Произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
 
          return rejectWithValue(error)
       }

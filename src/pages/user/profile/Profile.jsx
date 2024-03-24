@@ -75,7 +75,7 @@ const Profile = () => {
 
                <Box>
                   <TabContext value={value}>
-                     <Box className="tabs-container">
+                     <Box>
                         <TabList
                            onChange={tabsChange}
                            aria-label="lab API tabs example"
@@ -101,24 +101,18 @@ const Profile = () => {
                         >
                            <Box className="table-container">
                               <div className="first-box">
-                                 <label className="label" htmlFor="firstName">
-                                    Имя
-                                 </label>
+                                 <label htmlFor="firstName">Имя</label>
 
                                  <StyledInput
                                     id="firstName"
-                                    className="input"
                                     value={values.firstName}
                                     onChange={handleChange('firstName')}
                                  />
 
-                                 <label className="label" htmlFor="email">
-                                    E-mail
-                                 </label>
+                                 <label htmlFor="email">E-mail</label>
 
                                  <StyledInput
                                     id="email"
-                                    className="input"
                                     onChange={handleChange('email')}
                                     value={values.email}
                                  />
@@ -130,13 +124,10 @@ const Profile = () => {
                                  <StyledInput
                                     id="lastName"
                                     onChange={handleChange('lastName')}
-                                    className="input"
                                     value={values.lastName}
                                  />
 
-                                 <label className="label" htmlFor="numberPhone">
-                                    Телефон
-                                 </label>
+                                 <label htmlFor="numberPhone">Телефон</label>
 
                                  <NumberInput
                                     id="numberPhone"
@@ -199,9 +190,15 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& .first-box': {
          display: 'flex',
          flexDirection: 'column',
+
+         '& > label': {
+            fontFamily: 'Manrope',
+            fontSize: '14px',
+            color: theme.palette.secondary.lightGrey,
+         },
       },
 
-      '& .title-container': {
+      '& > .title-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
@@ -236,12 +233,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& label': {
-         fontFamily: 'Manrope',
-         fontSize: '14px',
-         color: theme.palette.secondary.lightGrey,
-      },
-
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
          margin: '0 auto',
          backgroundColor: '#048741 !important',
@@ -256,24 +247,24 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          color: theme.palette.secondary.LightGrey,
       },
 
-      '& .Mui-selected': {
-         transition: '1s',
-         color: '#048741 !important',
-      },
-
       '& .tables': {
          padding: '0rem',
          margin: '0px',
+
+         '& .table-container': {
+            display: 'flex',
+            gap: '1rem',
+            width: '100%',
+            borderRadius: '0.375rem',
+            bordeRradius: ' 0.375rem',
+            background: 'white',
+            marginTop: '1.25rem',
+         },
       },
 
-      '& .table-container': {
-         display: 'flex',
-         gap: '1rem',
-         width: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: 'white',
-         marginTop: '1.25rem',
+      '& .Mui-selected': {
+         transition: '1s',
+         color: '#048741 !important',
       },
    },
 }))
