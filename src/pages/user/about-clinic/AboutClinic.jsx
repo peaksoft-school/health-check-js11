@@ -12,16 +12,18 @@ const AboutClinic = () => {
       <>
          <StyledLine> </StyledLine>
          <StyledContainer>
-            <NavigatePathTitle>
-               <BreadCrumbs to="/" before="Главная" text="О клинике" />
-            </NavigatePathTitle>
+            <Box className="block">
+               <NavigatePathTitle>
+                  <BreadCrumbs to="/" before="Главная" text="О клинике" />
+               </NavigatePathTitle>
 
-            <Typography className="title" variant="h3">
-               Здоровье — самое <span> </span>
-               <Typography className="mark" variant="span">
-                  ценное в жизни
+               <Typography className="title" variant="h3">
+                  Здоровье — самое <span> </span>
+                  <Typography className="mark" variant="span">
+                     ценное в жизни
+                  </Typography>
                </Typography>
-            </Typography>
+            </Box>
 
             <Box className="image-box">
                <Box className="block-text">
@@ -87,16 +89,19 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    flexDirection: 'column',
    alignItems: 'center',
 
-   '& > .title': {
-      marginLeft: '6.25rem',
-      fontFamily: 'Manrope',
-      fontSize: '2.25rem',
-      fontWeight: '600',
-      lineHeight: 'normal',
-
-      '& > .mark': {
-         color: theme.palette.primary.darkGreen,
+   '& .block': {
+      marginRight: '41rem',
+      '& > .title': {
+         marginLeft: '6.25rem',
          fontFamily: 'Manrope',
+         fontSize: '2.25rem',
+         fontWeight: '600',
+         lineHeight: 'normal',
+
+         '& > .mark': {
+            color: theme.palette.primary.darkGreen,
+            fontFamily: 'Manrope',
+         },
       },
    },
 
