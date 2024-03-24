@@ -13,7 +13,6 @@ import Reviews from '../../../components/landing/Reviews'
 
 const DoctorInnerPage = () => {
    const { doctor } = useSelector((state) => state.doctors)
-   console.log(doctor, 'hello')
 
    const { doctorId } = useParams()
 

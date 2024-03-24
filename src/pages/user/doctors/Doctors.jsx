@@ -10,7 +10,6 @@ const Doctors = () => {
    const [showAllDoctors, setShowAllDoctors] = useState(false)
 
    const { doctors } = useSelector((state) => state.doctors)
-   console.log(doctors)
    const dispatch = useDispatch()
 
    useEffect(() => {
