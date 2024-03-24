@@ -90,7 +90,7 @@ const DoctorInnerPage = () => {
             <Typography className="description">
                {values.description}
             </Typography>
-            <NavLink to="/doctors">
+            <NavLink to="/doctors" className="line">
                <Typography className="arrow">
                   <ArrowLeftIcon /> Список Сотрудников
                </Typography>
@@ -103,6 +103,9 @@ const DoctorInnerPage = () => {
 
 export default DoctorInnerPage
 const StyledContainer = styled(Box)(() => ({
+   '& .line': {
+      textDecoration: 'none',
+   },
    '& .name': {
       fontSize: '36px',
       fontWeight: '600',
