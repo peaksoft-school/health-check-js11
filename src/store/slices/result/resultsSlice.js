@@ -3,6 +3,7 @@ import { RESULTS_THUNKS } from './resultsThunk'
 
 const initialState = {
    isLoading: false,
+   result: '',
 }
 
 export const resultSlice = createSlice({
@@ -12,8 +13,9 @@ export const resultSlice = createSlice({
 
    extraReducers: (builder) => {
       builder
-         .addCase(RESULTS_THUNKS.getResults.fulfilled, (state) => {
+         .addCase(RESULTS_THUNKS.getResults.fulfilled, (state, { payload }) => {
             state.isLoading = false
+            state.result = payload
          })
 
          .addCase(RESULTS_THUNKS.getResults.pending, (state) => {

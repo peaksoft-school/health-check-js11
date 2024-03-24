@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Document, Page } from 'react-pdf'
 import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
@@ -15,6 +16,8 @@ import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 const Records = () => {
    const [showButton, setShowButton] = useState(false)
    const [resultNumber, setResultNumber] = useState('')
+
+   const { result } = useSelector((state) => state.result)
 
    const changeInputValuesHandler = (e) => setResultNumber(e.target.value)
 
@@ -107,20 +110,19 @@ const Records = () => {
                      <br /> по номеру 909 090
                   </li>
                </ul>
-
-               <div className="resultpaper">
-                  {showButton && (
-                     <object
-                        // data={result.pdgFileCheque}
-                        title="submit"
-                        type="application/pdf"
-                        width="900px"
-                        height="590px"
-                     >
-                        <p>Ваш браузер не поддерживает просмотр PDF.</p>
-                     </object>
-                  )}
-               </div>
+            </div>
+            <div className="resultpaper">
+               {/* {showButton && ( */}
+               <object
+                  data={result}
+                  title="submit"
+                  type="application/pdf"
+                  width="900px"
+                  height="460px"
+               >
+                  <p>Ваш браузер не поддерживает просмотр PDF.</p>
+               </object>
+               {/* )} */}
             </div>
          </Box>
       </StyledContainer>
@@ -148,6 +150,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& ul': {
       paddingLeft: '3.2rem',
+      paddingBottom: '1rem',
       fontFamily: 'Manrope',
       fontSize: '0.8rem',
       color: '#346EFB',
