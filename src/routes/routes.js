@@ -15,14 +15,17 @@ const ROUTES = {
       PRICES: 'prices',
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
+      DOCTOR_INNER: '/doctors/:doctorId',
    },
 
    ADMIN: {
       INDEX: '/admin',
+      ONLINE_APPOINTMENTS: 'online-appointments',
       PATIENTS: 'patients',
       ID: 'id',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
+      ADD_NOTE: 'add-note',
    },
 }
 

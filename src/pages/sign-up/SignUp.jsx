@@ -18,8 +18,8 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
 import { authWithGoogle, signUp } from '../../store/slices/auth/authThunk'
-import { auth, provider } from '../../utils/constants/authWithGoogle'
 import SignIn from '../sign-in/SignIn'
+import { auth, provider } from '../../configs/firebase'
 
 const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
    const { isLoading } = useSelector((state) => state.auth)
@@ -274,11 +274,13 @@ const StyledForm = styled('form')(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
       height: '0.4375em',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 }))

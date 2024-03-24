@@ -1,7 +1,9 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { AboutClinicImage, SignatureImage } from '../../../assets/images'
+// eslint-disable-next-line import/no-cycle
 import AboutUs from '../../../components/landing/AboutUs'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const AboutClinic = () => {
    window.scrollTo({ top: 0 })
@@ -9,14 +11,10 @@ const AboutClinic = () => {
    return (
       <>
          <StyledLine> </StyledLine>
-
          <StyledContainer>
-            <StyledSpecialistRow>
-               <p>
-                  <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-                  <span>О клинике</span>
-               </p>
-            </StyledSpecialistRow>
+            <NavigatePathTitle>
+               <BreadCrumbs to="/" before="Главная" text="О клинике" />
+            </NavigatePathTitle>
 
             <Typography className="title" variant="h3">
                Здоровье — самое <span> </span>
@@ -65,7 +63,6 @@ const AboutClinic = () => {
                <Box className="signature-container">
                   <img src={SignatureImage} alt="img" className="signature" />
                </Box>
-
                <Box className="photo-container">
                   <img src={AboutClinicImage} alt="img" className="image" />
                </Box>
@@ -91,10 +88,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    alignItems: 'center',
 
    '& > .title': {
-      marginLeft: '-35rem',
-      fontSize: '36px',
-      fontWeight: '500',
+      marginLeft: '6.25rem',
       fontFamily: 'Manrope',
+      fontSize: '2.25rem',
+      fontWeight: '600',
+      lineHeight: 'normal',
 
       '& > .mark': {
          color: theme.palette.primary.darkGreen,
@@ -180,4 +178,10 @@ const StyledLine = styled(Box)(() => ({
    height: '0.7rem',
    backgroundColor: '#CCE9DA',
    marginTop: '15px',
+}))
+
+const NavigatePathTitle = styled(Box)(() => ({
+   fontSize: '0.875rem',
+   fontWeight: 400,
+   padding: '3.125rem 0 2rem 6.5rem',
 }))

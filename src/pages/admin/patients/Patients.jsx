@@ -1,19 +1,21 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Box, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 import Loading from '../../../components/Loading'
 import { PATIENTS_THUNKS } from '../../../store/slices/patients/patientsThunk'
-import { PATIENTS_COLUMN } from '../../../utils/constants/columns'
 
 const Patients = () => {
    const [searchName, setSearchName] = useState('')
 
-   const dispatch = useDispatch()
-
    const { isLoading, patients } = useSelector((state) => state.patients)
+
+   const memoizedPatients = useMemo(() => patients, [patients])
+
+   const dispatch = useDispatch()
 
    const searchChange = (e) => setSearchName(e.target.value)
 
@@ -35,29 +37,23 @@ const Patients = () => {
 
    return (
       <StyledContainer>
-         <Box className="box">
-            <Box className="button-container">
-               <Typography variant="h3">Пациенты</Typography>
+         <Box className="button-container">
+            <Typography variant="h3">Пациенты</Typography>
+         </Box>
+
+         <Box>
+            <Box className="input-container">
+               <StyledInput
+                  placeholder="Поиск"
+                  value={searchName}
+                  onChange={searchChange}
+               />
             </Box>
 
-            <Box>
-               <Box className="input-container">
-                  <StyledInput
-                     placeholder="Поиск"
-                     value={searchName}
-                     onChange={searchChange}
-                  />
-               </Box>
+            {isLoading && <Loading />}
 
-               {isLoading && <Loading />}
-
-               <Box className="table-container">
-                  <Table
-                     empty={<h1>Пациенты отсутствуют</h1>}
-                     columns={PATIENTS_COLUMN}
-                     data={patients}
-                  />
-               </Box>
+            <Box className="table-container">
+               <Table columns={PATIENTS_COLUMN} data={memoizedPatients} />
             </Box>
          </Box>
       </StyledContainer>
@@ -66,52 +62,47 @@ const Patients = () => {
 export default Patients
 
 const StyledContainer = styled(Box)(() => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
+   paddingBottom: '30px',
 
-   '& > .box': {
-      display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
-      paddingBottom: '30px',
+   '& h3': {
+      marginTop: '15px',
+      marginBottom: '15px',
+      fontSize: '24px',
+      fontWeight: '500',
+   },
 
-      '& h3': {
-         marginTop: '15px',
-         marginBottom: '15px',
-         fontSize: '24px',
-         fontWeight: '500',
-      },
+   '&  .tables': {
+      padding: '0rem',
+   },
 
-      '&  .tables': {
-         padding: '0rem',
-      },
+   '& .input-container': {
+      width: '37.5rem',
+      marginTop: '2.12rem',
+   },
 
-      '& .input-container': {
-         width: '37.5rem',
-         marginTop: '2.12rem',
-      },
+   '&  .table-container': {
+      width: '100%',
+      height: '100%',
+      borderRadius: '0.375rem',
+      bordeRradius: ' 0.375rem',
+      background: 'white',
+      marginTop: '1.25rem',
 
-      '&  .table-container': {
-         width: '100%',
-         height: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: 'white',
-         marginTop: '1.25rem',
+      '& .MuiTable-root': {
+         '& .MuiTableCell-root': {
+            borderBottom: 'none',
+         },
 
-         '& .MuiTable-root': {
-            '& .MuiTableCell-root': {
-               borderBottom: 'none',
-            },
+         '& .MuiTableCell-head': {
+            borderBottom: '1px solid rgba(224, 224, 224, 1)',
+         },
 
-            '& .MuiTableCell-head': {
-               borderBottom: '1px solid rgba(224, 224, 224, 1)',
-            },
-
-            '& .MuiTableRow-root:nth-of-type(even)': {
-               backgroundColor: '#F5F5F5',
-            },
+         '& .MuiTableRow-root:nth-of-type(even)': {
+            backgroundColor: '#F5F5F5',
          },
       },
    },

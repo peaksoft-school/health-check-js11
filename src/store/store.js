@@ -1,22 +1,17 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import {
-   persistStore,
-   persistReducer,
-   FLUSH,
-   REHYDRATE,
-   PAUSE,
-   REGISTER,
-   PURGE,
-   PERSIST,
-} from 'redux-persist'
+import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { authSlice } from './slices/auth/authSlice'
 import { scheduleSlice } from './slices/schedule/scheduleSlice'
 import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
-import { applicationSlice } from './slices/application/aplicationSlice'
-import { appointmentsSlice } from './slices/online-appointments/appointmentsSlice'
+import { applicationsSlice } from './slices/applications/aplicationsSlice'
+import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
+import { doctorSlice } from './slices/doctors/doctorSlice'
+import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
+import { specialistsSlice } from './slices/specialistsSlice/specialistsSlice'
+import { addNoteSlice } from './slices/addNote/AddNoteSlice'
 
 const rootReducer = combineReducers({
    [authSlice.name]: authSlice.reducer,
@@ -24,14 +19,18 @@ const rootReducer = combineReducers({
    [scheduleSlice.name]: scheduleSlice.reducer,
    [patientsSlice.name]: patientsSlice.reducer,
    [patientSlice.name]: patientSlice.reducer,
-   [applicationSlice.name]: applicationSlice.reducer,
+   [applicationsSlice.name]: applicationsSlice.reducer,
    [profileSlice.name]: profileSlice.reducer,
+   [doctorSlice.name]: doctorSlice.reducer,
+   [onlineAppointmentsSlice.name]: onlineAppointmentsSlice.reducer,
+   [specialistsSlice.name]: specialistsSlice.reducer,
+   [addNoteSlice.name]: addNoteSlice.reducer,
 })
 
 const persistConfig = {
    key: 'HEALTH_CHECK',
    storage,
-   whitelist: ['auth', 'appointments', 'applications', 'profile'],
+   whitelist: ['auth', 'onlineAppointments', 'applications', 'profile'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -40,9 +39,7 @@ export const store = configureStore({
    reducer: persistedReducer,
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
-         serializableCheck: {
-            ignoreActions: [FLUSH, REGISTER, REHYDRATE, PAUSE, PERSIST, PURGE],
-         },
+         serializableCheck: false,
       }),
 })
 

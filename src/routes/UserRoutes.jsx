@@ -1,57 +1,103 @@
-import ChangePassword from '../pages/change-password/ChangePassword'
-import Home from '../pages/home/Home'
-import AboutClinic from '../pages/user/about-clinic/AboutClinic'
-import Contacts from '../pages/user/contacts/Contacts'
-import Doctors from '../pages/user/doctors/Doctors'
-import Prices from '../pages/user/prices/Prices'
-import Profile from '../pages/user/profile/Profile'
-import Records from '../pages/user/records/Records'
-import Services from '../pages/user/services/Services'
+import { lazy } from 'react'
 import { ROUTES } from './routes'
+import DoctorInnerPage from '../pages/user/doctors/DoctorInnerPage'
+import Suspense from './Suspense'
+
+const ChangePassword = lazy(
+   () => import('../pages/change-password/ChangePassword')
+)
+const Home = lazy(() => import('../pages/home/Home'))
+const AboutClinic = lazy(() => import('../pages/user/about-clinic/AboutClinic'))
+const Contacts = lazy(() => import('../pages/user/contacts/Contacts'))
+const Doctors = lazy(() => import('../pages/user/doctors/Doctors'))
+const Prices = lazy(() => import('../pages/user/prices/Prices'))
+const Profile = lazy(() => import('../pages/user/profile/Profile'))
+const Records = lazy(() => import('../pages/user/records/Records'))
+const Services = lazy(() => import('../pages/user/services/Services'))
 
 export const USER_ROUTES = [
    {
       path: ROUTES.USER.INDEX,
-      element: <Home />,
+      element: (
+         <Suspense>
+            <Home />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.ABOUT_CLINICK}`,
-      element: <AboutClinic />,
+      element: (
+         <Suspense>
+            <AboutClinic />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.PROFILE}`,
-      element: <Profile />,
+      element: (
+         <Suspense>
+            <Profile />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`,
-      element: <Services />,
+      element: (
+         <Suspense>
+            <Services />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.DOCTORS}`,
-      element: <Doctors />,
+      element: (
+         <Suspense>
+            <Doctors />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.CONTACTS}`,
-      element: <Contacts />,
+      element: (
+         <Suspense>
+            <Contacts />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.PRICES}`,
-      element: <Prices />,
+      element: (
+         <Suspense>
+            <Prices />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.CHANGE_PASSWORD}`,
-      element: <ChangePassword />,
+      element: (
+         <Suspense>
+            <ChangePassword />
+         </Suspense>
+      ),
    },
 
    {
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.RECORDS}`,
-      element: <Records />,
+      element: (
+         <Suspense>
+            <Records />
+         </Suspense>
+      ),
+   },
+   {
+      path: `${ROUTES.USER.DOCTOR_INNER}`,
+      element: <DoctorInnerPage />,
    },
 ]

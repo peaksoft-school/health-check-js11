@@ -28,14 +28,6 @@ const VALIDATION_SIGN_UP = Yup.object().shape({
       .required('Подтвердите пароль!'),
 })
 
-const VALIDATION_SIGN_IN = Yup.object().shape({
-   email: Yup.string()
-      .email()
-      .matches(emailRegex, 'email должен быть в формате ...@gmail.com!')
-      .required('Почта обязятельное!'),
-   password: Yup.string().required('Введите пароль!'),
-})
-
 const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
    newPassword: Yup.string()
       .required('Введите новый пароль!')
@@ -46,6 +38,26 @@ const VALIDATION_FORGOT_PASSWORD = Yup.object().shape({
       .required('Подтвердите пароль!'),
 })
 
+const VALIDATION_CHANGE_PASSWORD = Yup.object().shape({
+   oldPassword: Yup.string().required('Введите старый пароль!'),
+
+   newPassword: Yup.string()
+      .required('Введите новый пароль!')
+      .min(8, 'Минимальная длина пароля 8 символов!')
+      .matches(passwordRegex, 'Не вылидный пароль!'),
+   confirmPassword: Yup.string()
+      .oneOf([Yup.ref('newPassword'), null], 'Пароли не совпадают!')
+      .required('Подтвердите пароль!'),
+})
+
+const VALIDATION_SIGN_IN = Yup.object().shape({
+   email: Yup.string()
+      .email()
+      .matches(emailRegex, 'email должен быть в формате ...@gmail.com!')
+      .required('Почта обязятельное!'),
+   password: Yup.string().required('Введите пароль!'),
+})
+
 const VALIDATION_RESULT = Yup.object().shape({
    date: Yup.date().required('Выберите дату начала!'),
    service: Yup.string().required('Выберите Услугу!'),
@@ -53,6 +65,17 @@ const VALIDATION_RESULT = Yup.object().shape({
    file: Yup.mixed().test('file', 'Загрузите файл!', (value) => {
       return value instanceof File
    }),
+})
+
+const VALIDATION_APPOINTMENTS_FORM = Yup.object().shape({
+   fullName: Yup.string().required('заполните все поля!'),
+
+   phoneNumber: Yup.string()
+      .matches(phoneNumberRegex, 'Неверный формат номера телефона!')
+      .required('Номер телефона обязательное!'),
+   email: Yup.string()
+      .email('Некорректный адрес электронной почты!')
+      .required('заполните все поля'),
 })
 
 const VALIDATION_SCHEDULE = Yup.object().shape({
@@ -76,8 +99,10 @@ const VALIDATION_SCHEDULE = Yup.object().shape({
 
 export {
    VALIDATION_SIGN_IN,
-   VALIDATION_FORGOT_PASSWORD,
    VALIDATION_SIGN_UP,
    VALIDATION_SCHEDULE,
    VALIDATION_RESULT,
+   VALIDATION_FORGOT_PASSWORD,
+   VALIDATION_APPOINTMENTS_FORM,
+   VALIDATION_CHANGE_PASSWORD,
 }

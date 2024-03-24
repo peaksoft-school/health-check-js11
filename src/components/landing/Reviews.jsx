@@ -1,4 +1,4 @@
-import { styled, Rating, Typography, Box } from '@mui/material'
+import { styled, Rating, Typography, Box, Avatar } from '@mui/material'
 import Slider from 'react-slick'
 import { REVIEWS } from '../../utils/constants'
 import { Pagination, NextReview, PreviousReview } from '../../assets/icons'
@@ -38,7 +38,7 @@ const Reviews = () => {
                {REVIEWS.map(({ img, id, name, rating, review }) => (
                   <StyledSlide key={id}>
                      <Box className="info">
-                        <img src={img} alt="пользователь" />
+                        <Avatar src={img} alt="пользователь" />
 
                         <Box className="wrapper">
                            <Typography variant="p">{name}</Typography>

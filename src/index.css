@@ -20,3 +20,23 @@
    }
 }
 
+p {
+   text-transform: none;
+}
+
+.select-placeholder-text {
+   color: #222222;
+
+   a {
+      text-decoration: none;
+      color: black;
+   }
+}
+
+.custom-breadcrumbs ol li:nth-of-type(even) .custom-link {
+   font-size: 0.875rem;
+   font-weight: 400;
+   padding-bottom: 2rem;
+   color: #048741;
+   cursor: pointer;
+}

@@ -11,6 +11,7 @@ import {
    UrologiyaIcon,
 } from '../../assets/icons/servicesIcons'
 
+import { ROUTES } from '../../routes/routes'
 import {
    FooterInstagramIcon,
    FooterTelegramIcon,
@@ -31,7 +32,6 @@ import {
    SecondBestDoctorImage,
    ThirdBestDoctorImage,
 } from '../../assets/images'
-import { ROUTES } from '../../routes/routes'
 
 const NAVIGATIONS = [
    {
@@ -280,7 +280,11 @@ const FAKE_DATA = [
 ]
 
 const ADMIN_NAVIGATIONS = [
-   { id: 1, to: ROUTES.ADMIN.INDEX, label: 'Онлайн-запись' },
+   {
+      id: 1,
+      to: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ONLINE_APPOINTMENTS}`,
+      label: 'Онлайн-запись',
+   },
 
    {
       id: 2,
@@ -383,14 +387,14 @@ const DEPARTMENTS = [
 
    {
       id: 9,
-      label: 'Офтальмология',
-      value: 'офтальмология',
+      label: 'Гинекология',
+      value: 'Гинекология',
    },
 
    {
       id: 10,
-      label: 'Гинекология',
-      value: 'гинекология',
+      label: 'Офтальмология',
+      value: 'Офтальмология',
    },
 
    {
@@ -457,30 +461,24 @@ const DEPARTMENTS = [
 const INTERVAL_TIME = [
    {
       id: 1,
-      label: '15 мин',
-      time: 'FIFTEEN',
-   },
-
-   {
-      id: 2,
       label: '30 минут',
       time: 'THIRTY',
    },
 
    {
-      id: 3,
+      id: 2,
       label: '45 минут',
       time: 'FOURTYFIVE',
    },
 
    {
-      id: 4,
+      id: 3,
       label: ' 1 час',
       time: 'SIXTY',
    },
 
    {
-      id: 5,
+      id: 4,
       label: '1,5 часа',
       time: 'NINETY',
    },
@@ -497,16 +495,16 @@ const RUSSIAN_DAYS = [
 ]
 
 const DAYS_OF_WEEK = {
-   Su: 'Пн',
-   Mo: 'Вт',
-   Tu: 'Ср',
-   We: 'Чт',
-   Th: 'Пт',
-   Fr: 'Сб',
-   Sa: 'Вс',
+   Mo: 'Пн',
+   Tu: 'Вт',
+   We: 'Ср',
+   Th: 'Чт',
+   Fr: 'Пт',
+   Sa: 'Сб',
+   Su: 'Вс',
 }
 
-const RUSSIAN_MONTH_NAME = [
+const RUSSIAN_MONTHS_NAMES = [
    'Январь',
    'Февраль',
    'Март',
@@ -520,12 +518,24 @@ const RUSSIAN_MONTH_NAME = [
    'Ноябрь',
    'Декабрь',
 ]
+
+const PART_TITLES = {
+   main: 'Онлайн Запись',
+   specialist: 'Выбрать специалиста',
+   date: 'Выбрать дату и время',
+   form: 'Запись',
+   result: 'Онлайн Запись',
+}
+
+const CHECKED =
+   "\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\""
+
 const MAP =
    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d365.48247976201736!2d74.62719552257737!3d42.875802431657775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb78fc81678db%3A0x8f6025b536a29455!2sPeaksoft%20house!5e0!3m2!1sru!2skg!4v1710599618852!5m2!1sru!2skg'
 
 export {
    HEADER_SOCIALS,
-   RUSSIAN_MONTH_NAME,
+   RUSSIAN_MONTHS_NAMES,
    REVIEWS,
    NAVIGATIONS,
    FOOTER_SOCIALS,
@@ -541,5 +551,7 @@ export {
    INTERVAL_TIME,
    RUSSIAN_DAYS,
    DAYS_OF_WEEK,
+   PART_TITLES,
    MAP,
+   CHECKED,
 }

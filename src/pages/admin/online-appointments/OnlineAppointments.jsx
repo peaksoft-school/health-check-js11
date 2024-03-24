@@ -1,19 +1,19 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useCallback, useEffect, useState } from 'react'
-import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
-import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
-import { NoDataImage } from '../../../assets/images'
-import { PlusIcon } from '../../../assets/icons'
-import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
-import Loading from '../../../components/Loading'
-import Schedule from '../schedule/Schedule'
-import AddSchedule from '../../../components/schedule/AddSchedule'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Loading from '../../../components/Loading'
+import { PlusIcon } from '../../../assets/icons'
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
+import Schedule from '../schedule/Schedule'
+import AddSchedule from '../../../components/admin/schedule/AddSchedule'
+import Table from '../../../components/UI/Table'
+import { useToggleModal } from '../../../utils/helpers'
 
 const getDefaultTabValue = () => {
    const storedValue = localStorage.getItem('selectedTab')
@@ -25,17 +25,16 @@ const OnlineAppointments = () => {
    const [value, setValue] = useState(getDefaultTabValue)
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
-   const [openModal, setOpenModal] = useState(false)
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const { schedules } = useSelector((state) => state.schedule)
 
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.appointments
+      (state) => state.onlineAppointments
    )
-
-   const toggleModal = () => setOpenModal((prev) => !prev)
+   const memoizedAppointments = useMemo(() => appointments, [appointments])
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -44,7 +43,7 @@ const OnlineAppointments = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            APPOINTMENTS_THUNK.searchAppointment({
+            ONLINE_APPOINTMENTS_THUNK.searchAppointment({
                searchName: debouncedSearchText,
             })
          )
@@ -52,7 +51,7 @@ const OnlineAppointments = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(APPOINTMENTS_THUNK.getAppointments())
+      dispatch(ONLINE_APPOINTMENTS_THUNK.getAppointments())
    }, [])
 
    const tabsChange = (_, newValue) => {
@@ -106,11 +105,9 @@ const OnlineAppointments = () => {
             rowData.push(date.dayOfWeek)
 
             const startTime = date.startTimeOfConsultation.join(', ')
-            if (startTime.length > 20) {
+            if (startTime.length > 20)
                rowData.push(`${startTime.substring(0, 20)}...`)
-            } else {
-               rowData.push(startTime)
-            }
+            else rowData.push(startTime)
          })
 
          worksheet.addRow(rowData)
@@ -147,81 +144,65 @@ const OnlineAppointments = () => {
 
    return (
       <StyledContainer>
-         <Box className="box">
-            <Box className="button-container">
-               <Typography className="title">Онлайн-запись</Typography>
+         <Box className="button-container">
+            <Typography className="title">Онлайн-запись</Typography>
 
-               {showAddButton && (
-                  <Button className="add-button" onClick={toggleModal}>
+            {isLoading && <Loading />}
+
+            {!showAddButton && (
+               <Box className="buttons-container">
+                  <Button className="add-button" onClick={onOpenModal}>
                      <PlusIcon className="plus-icon" />
                      Добавить запись
                   </Button>
-               )}
 
-               {isLoading && <Loading />}
+                  <Button
+                     variant="secondary"
+                     className="export-btn"
+                     onClick={generateExcel}
+                  >
+                     EXPORT TO EXCEL
+                  </Button>
+               </Box>
+            )}
+         </Box>
 
-               {!showAddButton && (
-                  <Box>
-                     <Button
-                        variant="secondary"
-                        className="export-btn"
-                        onClick={generateExcel}
-                     >
-                        EXPORT TO EXCEL
-                     </Button>
+         <AddSchedule open={isOpen} onClose={onCloseModal} />
+
+         <Box>
+            <TabContext value={value}>
+               <Box className="tabs-container">
+                  <TabList
+                     onChange={tabsChange}
+                     aria-label="lab API tabs example"
+                  >
+                     <Tab label="Онлайн-запись" value="1" className="route" />
+
+                     <Tab label="Расписание" value="2" className="route" />
+                  </TabList>
+               </Box>
+
+               <TabPanel value="1" className="tables">
+                  <Box className="input-container">
+                     <StyledInput
+                        placeholder="Поиск"
+                        value={searchName}
+                        onChange={handleSearchChange}
+                     />
                   </Box>
-               )}
-            </Box>
 
-            <AddSchedule open={openModal} onClose={toggleModal} />
-
-            <Box>
-               <TabContext value={value}>
-                  <Box className="tabs-container">
-                     <TabList
-                        onChange={tabsChange}
-                        aria-label="lab API tabs example"
-                     >
-                        <Tab
-                           label="Онлайн-запись"
-                           value="1"
-                           className="route"
-                        />
-
-                        <Tab label="Расписание" value="2" className="route" />
-                     </TabList>
+                  <Box className="table-container">
+                     <Table
+                        columns={ONLINE_APPOINTMENTS_COLUMN}
+                        data={memoizedAppointments}
+                     />
                   </Box>
+               </TabPanel>
 
-                  <TabPanel value="1" className="tables">
-                     <Box className="input-container">
-                        <StyledInput
-                           placeholder="Поиск"
-                           value={searchName}
-                           onChange={handleSearchChange}
-                        />
-                     </Box>
-
-                     <Box className="table-container">
-                        {appointments.length === 0 ? (
-                           <img
-                              src={NoDataImage}
-                              alt="No Data"
-                              className="no-data-image"
-                           />
-                        ) : (
-                           <Table
-                              columns={ONLINE_APPOINTMENTS_COLUMN}
-                              data={appointments}
-                           />
-                        )}
-                     </Box>
-                  </TabPanel>
-
-                  <TabPanel value="2" className="tables">
-                     <Schedule />
-                  </TabPanel>
-               </TabContext>
-            </Box>
+               <TabPanel value="2" className="tables">
+                  <Schedule />
+               </TabPanel>
+            </TabContext>
          </Box>
       </StyledContainer>
    )
@@ -230,39 +211,37 @@ const OnlineAppointments = () => {
 export default OnlineAppointments
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   padding: '1.87rem 4.37rem 0',
-   backgroundColor: '#F5F5F5',
+   display: 'flex',
+   flexDirection: 'column',
+   maxWidth: '1600px',
+   margin: '0 auto',
 
-   '& > .box': {
+   '& .button-container': {
       display: 'flex',
-      flexDirection: 'column',
-      maxWidth: '1600px',
-      margin: '0 auto',
-      paddingBottom: '30px',
+      justifyContent: 'space-between',
 
-      '& .button-container': {
+      '& .title': {
+         fontSize: '1.375rem',
+         fontWeight: '400',
+         lineHeight: 'normal',
+         marginBottom: '1.87rem',
+      },
+
+      '& > .buttons-container': {
          display: 'flex',
-         justifyContent: 'space-between',
-
-         '& .title': {
-            fontSize: '1.375rem',
-            fontWeight: '400',
-            lineHeight: 'normal',
-            marginBottom: '1.87rem',
-         },
+         gap: '10px',
 
          '& > .add-button': {
+            borderRadius: '4px',
             fontFamily: 'Manrope',
             fontSize: '0.875rem',
-            fontStyle: 'normal',
             fontWeight: '600',
             lineHeight: 'normal',
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
-            height: '2.75rem',
+            height: '2.5rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
             width: '13.0625rem !important',
-            flexShrink: '0',
 
             '& > div': {
                display: 'flex',
@@ -279,64 +258,56 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             },
          },
 
-         '& .export-btn': {
+         '& > .export-btn': {
             borderRadius: '4px',
+            height: '2.5rem',
             padding: '8px 20px 9px 20px',
-            height: '40px',
-         },
-
-         '& .save-btn': {
-            background: 'rgb(4, 135, 65)',
-            padding: '8px 20px 9px 20px',
-            borderRadius: '4px',
-            height: '40px',
-            marginLeft: '14px',
          },
       },
 
-      '& .MuiTabs-scroller > .MuiTabs-indicator': {
-         backgroundColor: '#048741 !important',
+      '& .save-btn': {
+         background: 'rgb(4, 135, 65)',
+         padding: '8px 20px 9px 20px',
+         borderRadius: '4px',
+         height: '40px',
+         marginLeft: '14px',
       },
+   },
 
-      '& .route': {
-         fontSize: '0.75rem',
-         lineHeight: 'normal',
-         marginRight: '1.87rem',
-         padding: '0rem',
-         transition: '0.3s',
-         fontWeight: '500',
-         color: theme.palette.secondary.LightGrey,
-      },
+   '& .MuiTabs-scroller > .MuiTabs-indicator': {
+      backgroundColor: '#048741 !important',
+   },
 
-      '& .Mui-selected': {
-         transition: '1s',
-         color: '#048741 !important',
-      },
+   '& .route': {
+      fontSize: '0.75rem',
+      lineHeight: 'normal',
+      marginRight: '1.87rem',
+      padding: '0rem',
+      transition: '0.3s',
+      fontWeight: '500',
+      color: theme.palette.secondary.LightGrey,
+   },
 
-      '& .tables': {
-         padding: '0rem',
-      },
+   '& .Mui-selected': {
+      transition: '1s',
+      color: '#048741 !important',
+   },
 
-      '& .input-container': {
-         width: '37.5rem',
-         marginTop: '2.12rem',
-      },
+   '& .tables': {
+      padding: '0rem',
+   },
 
-      '& .table-container': {
-         width: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: 'white',
-         marginTop: '1.25rem',
-         display: 'flex',
-         alignItems: 'center',
-         justifyContent: 'center',
+   '& .input-container': {
+      width: '37.5rem',
+      marginTop: '2.12rem',
+   },
 
-         '& .no-data-image': {
-            width: '50%',
-            height: '30%',
-         },
-      },
+   '& .table-container': {
+      width: '100%',
+      borderRadius: '0.375rem',
+      bordeRradius: ' 0.375rem',
+      background: 'white',
+      marginTop: '1.25rem',
    },
 }))
 

@@ -4,11 +4,11 @@ import {
    Select as MuiSelect,
    Typography,
    styled,
-   Box,
    MenuItem,
 } from '@mui/material'
-import Selector from 'react-select'
+import Selector, { components } from 'react-select'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { ChooseServiceIcon } from '../../assets/icons'
 
 const menuProps = {
    PaperProps: {
@@ -17,11 +17,19 @@ const menuProps = {
          maxHeight: '292',
          boxShadow: '0px 5px 44px 0px rgba(0, 0, 0, 0.06)',
          marginTop: '13.2rem',
-
          borderRadius: '16px 8px 8px 16px ',
       },
    },
 }
+
+const { Control } = components
+
+const CustomControl = ({ children, ...props }) => (
+   <Control {...props}>
+      <StyledIcon />
+      {children}
+   </Control>
+)
 
 const customStyles = {
    control: (provided, state) => {
@@ -38,13 +46,14 @@ const customStyles = {
          border: `1px solid ${borderColor}`,
          borderRadius: '10px',
          boxShadow: 'none',
+         cursor: 'pointer',
 
          '& span': {
             width: '0px',
          },
 
          '&:hover': {
-            borderColor: state.isFocused ? 'none' : '#c1b5b5',
+            borderColor: state.isFocused ? '#c1b5b5' : '#c1b5b5',
             width: '100%',
          },
       }
@@ -53,69 +62,145 @@ const customStyles = {
    menu: (provided) => ({
       ...provided,
       width: '220px',
+      zIndex: 10000,
+   }),
+
+   menuList: (base) => ({
+      ...base,
+
+      '::-webkit-scrollbar': {
+         width: '5px',
+         height: '0px',
+      },
+      '::-webkit-scrollbar-track': {
+         background: '#f1f1f1',
+      },
+      '::-webkit-scrollbar-thumb': {
+         background: '#888',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+         background: '#555',
+      },
+   }),
+}
+
+const customStylesAppointments = {
+   control: (provided) => {
+      return {
+         ...provided,
+         height: '60px',
+         paddingLeft: '25px',
+         width: '100%',
+         border: 'none',
+         borderRadius: '10px',
+         boxShadow: 'none',
+
+         '& span': {
+            width: '0px',
+         },
+      }
+   },
+
+   menu: (provided) => ({
+      ...provided,
+      width: '365px',
+   }),
+
+   menuList: (base) => ({
+      ...base,
+
+      '::-webkit-scrollbar': {
+         width: '5px',
+         height: '0px',
+      },
+      '::-webkit-scrollbar-track': {
+         background: '#f1f1f1',
+      },
+      '::-webkit-scrollbar-thumb': {
+         background: '#888',
+      },
+      '::-webkit-scrollbar-thumb:hover': {
+         background: '#555',
+      },
    }),
 }
 
 const Select = forwardRef(
    (
-      { options, value, onChange, placeholder, error, variant, icon, ...rest },
+      {
+         options,
+         value,
+         onChange,
+         placeholder,
+         error,
+         variant,
+         icon,
+         styles,
+         ...rest
+      },
       ref
    ) => {
-      const [selectVal, setSelectVal] = useState('')
+      const [selectValue, setSelectValue] = useState('')
       const [isVisible, setIsVisible] = useState(false)
 
-      const changeHandler = (e) => {
+      const changeSelectHandler = (e) => {
          onChange(e.target.value)
-         setSelectVal(e.target.value)
+         setSelectValue(e.target.value)
       }
 
       const toggleSelectHandler = () => setIsVisible((prev) => !prev)
 
-      return (
-         <Box>
-            {variant === 'schedule' ? (
-               <Selector
-                  options={options}
-                  onChange={onChange}
-                  isSearchable={false}
-                  styles={{ ...customStyles }}
-                  placeholder={placeholder}
-                  error={error}
-                  ref={ref}
-                  {...rest}
-               />
-            ) : (
-               <StyledFormControl fullWidth isopen={isVisible.toString()}>
-                  <Icon variant="span">{icon}</Icon>
+      return variant === 'schedule' ? (
+         <Selector
+            options={options}
+            onChange={onChange}
+            isSearchable={false}
+            styles={{ ...customStyles, ...styles }}
+            placeholder={placeholder}
+            error={error}
+            ref={ref}
+            {...rest}
+         />
+      ) : variant === 'appointments' ? (
+         <Selector
+            options={options}
+            onChange={onChange}
+            isSearchable={false}
+            styles={{ ...customStylesAppointments }}
+            placeholder={
+               <p className="select-placeholder-text">{placeholder}</p>
+            }
+            error={error}
+            ref={ref}
+            components={{ Control: CustomControl }}
+            {...rest}
+         />
+      ) : (
+         <StyledFormControl fullWidth isopen={isVisible.toString()}>
+            <StyledMuiSelect
+               open={isVisible}
+               value={selectValue}
+               onChange={changeSelectHandler}
+               IconComponent={KeyboardArrowDownIcon}
+               inputProps={{ 'aria-label': 'Without label' }}
+               MenuProps={menuProps}
+               className="select"
+               displayEmpty
+               ref={ref}
+               error={error}
+               onClick={toggleSelectHandler}
+               {...rest}
+            >
+               <StyledLabel value={placeholder}>{placeholder}</StyledLabel>
 
-                  <StyledMuiSelect
-                     open={isVisible}
-                     value={selectVal}
-                     onChange={changeHandler}
-                     IconComponent={KeyboardArrowDownIcon}
-                     inputProps={{ 'aria-label': 'Without label' }}
-                     MenuProps={menuProps}
-                     className="select"
-                     displayEmpty
-                     ref={ref}
-                     error={error}
-                     onClick={toggleSelectHandler}
-                     {...rest}
-                  >
-                     <StyledLabel value="">{placeholder}</StyledLabel>
-
-                     {/* <div className="ALISHER"> */}
-                     {options &&
-                        options.map(({ id, label }) => (
-                           <MenuItemStyle key={id} value={label}>
-                              {label}
-                           </MenuItemStyle>
-                        ))}
-                     {/* </div> */}
-                  </StyledMuiSelect>
-               </StyledFormControl>
-            )}
-         </Box>
+               {options &&
+                  options?.map(({ id, label }) => (
+                     <StyledMenuItem key={id} value={label}>
+                        {label}
+                     </StyledMenuItem>
+                  ))}
+            </StyledMuiSelect>
+         </StyledFormControl>
       )
    }
 )
@@ -132,16 +217,19 @@ const StyledLabel = styled(FormControl)(() => ({
    display: 'none',
 }))
 
-const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
-   maxWidth: '100%',
+const StyledIcon = styled(ChooseServiceIcon)(() => ({
+   marginRight: '11px',
+}))
 
+const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    border: error
       ? `1px solid #d32f2f`
       : `1px solid  ${theme.palette.secondary.main}`,
 
+   maxWidth: '100%',
    borderRadius: '10px',
    fontFamily: 'Manrope',
-   fontWeight: 400,
+   fontWeight: '400',
    fontSize: '16px',
    lineHeight: '21.86px',
    color: '#4D4E51',
@@ -174,19 +262,11 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    },
 }))
 
-const Icon = styled(Typography)(() => ({
-   position: 'absolute',
-   top: 25,
-   left: 15,
-   zIndex: '100',
-}))
-
-const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
    color: theme.palette.primary.lightBlack,
    fontFamily: 'Manrope',
    height: '3rem',
    marginLeft: '0.6rem',
-   // height: '3rem',
 
    '&:hover': {
       background: theme.palette.tertiary.main,
