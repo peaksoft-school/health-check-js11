@@ -8,6 +8,7 @@ import { patientSlice } from './slices/patient/patientSlice'
 import { applicationsSlice } from './slices/applications/aplicationsSlice'
 import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppointmentsSlice'
 import { profileSlice } from './slices/profie/profileSlice'
+import { doctorSlice } from './slices/doctors/doctorSlice'
 import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
 import { specialistsSlice } from './slices/specialistsSlice/specialistsSlice'
 import { addNoteSlice } from './slices/addNote/AddNoteSlice'
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
    [patientSlice.name]: patientSlice.reducer,
    [applicationsSlice.name]: applicationsSlice.reducer,
    [profileSlice.name]: profileSlice.reducer,
+   [doctorSlice.name]: doctorSlice.reducer,
    [onlineAppointmentsSlice.name]: onlineAppointmentsSlice.reducer,
    [specialistsSlice.name]: specialistsSlice.reducer,
    [addNoteSlice.name]: addNoteSlice.reducer,
