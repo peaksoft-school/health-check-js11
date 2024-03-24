@@ -90,7 +90,7 @@ const DoctorInnerPage = () => {
             <Typography className="description">
                {values.description}
             </Typography>
-            <NavLink to="/doctors">
+            <NavLink to="/doctors" style={{ textDecoration: 'none' }}>
                <Typography className="arrow">
                   <ArrowLeftIcon /> Список Сотрудников
                </Typography>
