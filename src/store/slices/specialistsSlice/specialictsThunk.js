@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const getSpecialists = createAsyncThunk(
    'specialists/getSpecialists',
@@ -18,7 +19,7 @@ const getSpecialistById = createAsyncThunk(
    'specialists/getSpecialistsById',
    async (id, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`/api/doctor?id=${id}`)
+         const response = await axiosInstance.get(`/api/doctor/${id}`)
 
          return response.data
       } catch (error) {
@@ -29,11 +30,15 @@ const getSpecialistById = createAsyncThunk(
 
 const deleteSpecialists = createAsyncThunk(
    'specialists/deleteSpecialists',
-   async ({ id, handleClose }, { dispatch, rejectWithValue }) => {
+   async (id, { dispatch, rejectWithValue }) => {
       try {
          await axiosInstance.delete(`/api/doctor/${id}`)
          dispatch(getSpecialists())
-         handleClose()
+
+         showToast({
+            message: 'успешно удалено',
+         })
+
          return id
       } catch (error) {
          return rejectWithValue(error)
@@ -100,7 +105,7 @@ const updateButton = createAsyncThunk(
          dispatch(getSpecialistById())
          return data
       } catch (error) {
-         return rejectWithValue(error.response.data)
+         return rejectWithValue(error)
       }
    }
 )

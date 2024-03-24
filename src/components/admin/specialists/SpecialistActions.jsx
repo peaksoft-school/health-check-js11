@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Box, styled } from '@mui/material'
-import SpecialistDelete from './SpecialistDelete'
-import { EditIcon } from '../../assets/icons'
+import { EditIcon } from '../../../assets/icons'
+import Delete from '../../UI/admin/Delete'
+import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 
 const SpecialistActions = ({ id, lastName, firstName }) => (
    <StyledContainer>
@@ -9,7 +10,13 @@ const SpecialistActions = ({ id, lastName, firstName }) => (
          <EditIcon />
       </Link>
 
-      <SpecialistDelete lastName={lastName} firstName={firstName} />
+      <Delete
+         name={`${firstName} ${lastName}`}
+         deleteFn={SPECIALISTS_THUNK.deleteSpecialists}
+         id={id}
+         variant="patients"
+         text="специалиста"
+      />
    </StyledContainer>
 )
 

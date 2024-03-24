@@ -1,26 +1,26 @@
 import { Box, Typography } from '@mui/material'
 import { format } from 'date-fns'
-import { ro, ru } from 'date-fns/locale'
-import SelectSeparately from '../../components/online-appointments/SelectSeparately'
+import { ru } from 'date-fns/locale'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
-import SelectAll from '../../components/online-appointments/SelectAll'
 import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 import LocalDate from '../../components/UI/admin/LocalDate'
 import Delete from '../../components/UI/admin/Delete'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
-import { APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/appointmentThunk'
-import { APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/appointmentsSlice'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
+import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
+import SelectAll from '../../components/UI/admin/SelectAll'
+import { APPLICATION_THUNK } from '../../store/slices/applications/applicationsThunk'
 import { formatPhoneNumberWithSpaces } from '../helpers'
 import {
    handleIsChecked,
    handleIsCheckedItem,
    handleRemoveChecked,
-} from '../../store/slices/application/aplicationSlice'
-import SpecialistSwicher from '../../components/specialists/SpecialistSwicher'
-import { APPLICATION_THUNK } from '../../store/slices/application/applicationThunk'
-import SpecialistInfo from '../../components/specialists/SpecialistInfo'
-import SpecialistActions from '../../components/specialists/SpecialistActions'
+} from '../../store/slices/applications/aplicationsSlice'
+import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
+import SpecialistInfo from '../../components/admin/specialists/SpecialistInfo'
+import SpecialistActions from '../../components/admin/specialists/SpecialistActions'
 import Navigate from '../../components/UI/admin/Navigate'
+import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 
 const SCHEDULE_COLUMN = [
    {
@@ -43,7 +43,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Header: (
          <SelectAll
             variant="appointments"
-            selectFn={APPOINTMENTS_ACTIONS.handleIsChecked}
+            selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsChecked}
          />
       ),
       accessor: 'checkbox',
@@ -55,7 +55,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => (
          <SelectSeparately
-            selectFn={APPOINTMENTS_ACTIONS.handleIsCheckedItem}
+            selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsCheckedItem}
             variant="appointments"
             id={row.original.appointmentId}
             isSelected={row.original.isSelected}
@@ -67,8 +67,8 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Header: (
          <DeleteSelected
             variant="appointments"
-            clearFn={APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
-            deleteFn={APPOINTMENTS_THUNK.deleteAllAppointments}
+            clearFn={ONLINE_APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
+            deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAllAppointments}
          />
       ),
 
@@ -94,7 +94,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => row.index + 1,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.index + 1}
+         </Typography>
+      ),
    },
 
    {
@@ -110,6 +118,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.fullName}
+         </Typography>
+      ),
    },
 
    {
@@ -128,7 +146,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       Cell: ({ row }) => {
          const { phoneNumber } = row.original
-         return <Box>{formatPhoneNumberWithSpaces(phoneNumber)}</Box>
+         return (
+            <Box
+               style={{
+                  color: row.original.processed ? 'black' : '#707070',
+               }}
+            >
+               {formatPhoneNumberWithSpaces(phoneNumber)}
+            </Box>
+         )
       },
    },
 
@@ -145,6 +171,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.email}
+         </Typography>
+      ),
    },
 
    {
@@ -160,6 +196,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.facility}
+         </Typography>
+      ),
    },
 
    {
@@ -175,6 +221,16 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.specialist}
+         </Typography>
+      ),
    },
 
    {
@@ -192,7 +248,15 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          fontSize: '5px',
       },
 
-      Cell: ({ row }) => <LocalDate row={row} />,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            <LocalDate row={row} />
+         </Typography>
+      ),
    },
 
    {
@@ -217,7 +281,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
             <ProcessedCheckbox
                checked={row.original.processed}
                id={row.original.appointmentId}
-               updateFn={APPOINTMENTS_THUNK.updateAppointment}
+               updateFn={ONLINE_APPOINTMENTS_THUNK.updateAppointment}
                variant="appointments"
             />
          )
@@ -242,9 +306,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       Cell: ({ row }) => {
          return (
             <Delete
+               text="запись"
                name={row.original.fullName}
                disabled={row.original.processed}
-               deleteFn={APPOINTMENTS_THUNK.deleteAppoinment}
+               deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAppoinment}
                id={row.original.appointmentId}
             />
          )
@@ -264,6 +329,7 @@ const PATIENTS_COLUMN = [
       },
 
       tdStyle: {
+         fontWeight: '500',
          color: 'black !important',
       },
 
@@ -374,40 +440,10 @@ const PATIENTS_COLUMN = [
                id={row.original.id}
                deleteFn={PATIENTS_THUNKS.deletePatients}
                variant="patients"
+               text="пациента"
             />
          )
       },
-   },
-]
-
-const COLUMNS = [
-   {
-      Header: 'Id',
-      accessor: 'id',
-   },
-   {
-      Header: 'Имя',
-      accessor: 'first_name',
-   },
-   {
-      Header: 'Фамилия',
-      accessor: 'last_name',
-   },
-   {
-      Header: 'День рождения',
-      accessor: 'date_of_birth',
-   },
-   {
-      Header: 'Страна',
-      accessor: 'country',
-   },
-   {
-      Header: 'Телефон',
-      accessor: 'phone',
-   },
-   {
-      Header: 'Действия',
-      accessor: 'totalDiscount',
    },
 ]
 
@@ -455,7 +491,15 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => row.index + 1,
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.index + 1}
+         </Typography>
+      ),
    },
    {
       Header: 'Имя',
@@ -468,6 +512,16 @@ const APPLICATIONS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
       },
+
+      Cell: ({ row }) => (
+         <Typography
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {row.original.name}
+         </Typography>
+      ),
    },
    {
       Header: 'Дата',
@@ -481,7 +535,13 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '500',
       },
       Cell: ({ row }) => (
-         <Box>{format(new Date(row.original.date), 'dd.MM.yy')} </Box>
+         <Box
+            style={{
+               color: row.original.processed ? 'black' : '#707070',
+            }}
+         >
+            {format(new Date(row.original.date), 'dd.MM.yy')}{' '}
+         </Box>
       ),
    },
    {
@@ -499,7 +559,15 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => {
          const { number } = row.original
-         return <Box>{formatPhoneNumberWithSpaces(number)}</Box>
+         return (
+            <Box
+               style={{
+                  color: row.original.processed ? 'black' : '#707070',
+               }}
+            >
+               {formatPhoneNumberWithSpaces(number)}
+            </Box>
+         )
       },
    },
    {
@@ -541,6 +609,7 @@ const APPLICATIONS_COLUMN = [
             id={row.original.id}
             name={row.original.name}
             disabled={row.original.processed}
+            text="заявку"
          />
       ),
    },
@@ -667,7 +736,6 @@ export {
    ONLINE_APPOINTMENTS_COLUMN,
    SCHEDULE_COLUMN,
    PATIENTS_COLUMN,
-   COLUMNS,
    APPLICATIONS_COLUMN,
    SPECIALISTS_COLUMN,
 }

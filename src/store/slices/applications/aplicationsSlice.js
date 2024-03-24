@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { APPLICATION_THUNK } from './applicationThunk'
+import { APPLICATION_THUNK } from './applicationsThunk'
 import { showToast } from '../../../utils/helpers/notification'
 
-export const applicationSlice = createSlice({
+export const applicationsSlice = createSlice({
    name: 'applications',
    initialState: {
       items: [],
@@ -14,7 +14,7 @@ export const applicationSlice = createSlice({
    },
 
    reducers: {
-      handleIsChecked: (state, action) => {
+      handleIsChecked: (state) => {
          state.isSelectAllApplications = !state.isSelectAllApplications
 
          state.items = state.items.map((item) => ({
@@ -158,6 +158,5 @@ export const applicationSlice = createSlice({
    },
 })
 
-export const applicationActions = applicationSlice.actions
 export const { handleIsCheckedItem, handleIsChecked, handleRemoveChecked } =
-   applicationSlice.actions
+   applicationsSlice.actions

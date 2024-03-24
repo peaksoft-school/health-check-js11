@@ -1,19 +1,19 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useCallback, useEffect, useState } from 'react'
-import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
-import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
-import { NoDataImage } from '../../../assets/images'
-import { PlusIcon } from '../../../assets/icons'
-import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
-import Loading from '../../../components/Loading'
-import Schedule from '../schedule/Schedule'
-import AddSchedule from '../../../components/schedule/AddSchedule'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Loading from '../../../components/Loading'
+import { PlusIcon } from '../../../assets/icons'
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
+import Schedule from '../schedule/Schedule'
+import AddSchedule from '../../../components/admin/schedule/AddSchedule'
+import Table from '../../../components/UI/Table'
+import { useToggleModal } from '../../../utils/helpers'
 
 const getDefaultTabValue = () => {
    const storedValue = localStorage.getItem('selectedTab')
@@ -25,17 +25,16 @@ const OnlineAppointments = () => {
    const [value, setValue] = useState(getDefaultTabValue)
    const [searchName, setSearchName] = useState('')
    const [showAddButton, setShowAddButton] = useState(true)
-   const [openModal, setOpenModal] = useState(false)
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const { schedules } = useSelector((state) => state.schedule)
 
    const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
-      (state) => state.appointments
+      (state) => state.onlineAppointments
    )
-
-   const toggleModal = () => setOpenModal((prev) => !prev)
+   const memoizedAppointments = useMemo(() => appointments, [appointments])
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -44,7 +43,7 @@ const OnlineAppointments = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            APPOINTMENTS_THUNK.searchAppointment({
+            ONLINE_APPOINTMENTS_THUNK.searchAppointment({
                searchName: debouncedSearchText,
             })
          )
@@ -52,7 +51,7 @@ const OnlineAppointments = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(APPOINTMENTS_THUNK.getAppointments())
+      dispatch(ONLINE_APPOINTMENTS_THUNK.getAppointments())
    }, [])
 
    const tabsChange = (_, newValue) => {
@@ -106,11 +105,9 @@ const OnlineAppointments = () => {
             rowData.push(date.dayOfWeek)
 
             const startTime = date.startTimeOfConsultation.join(', ')
-            if (startTime.length > 20) {
+            if (startTime.length > 20)
                rowData.push(`${startTime.substring(0, 20)}...`)
-            } else {
-               rowData.push(startTime)
-            }
+            else rowData.push(startTime)
          })
 
          worksheet.addRow(rowData)
@@ -150,17 +147,15 @@ const OnlineAppointments = () => {
          <Box className="button-container">
             <Typography className="title">Онлайн-запись</Typography>
 
-            {showAddButton && (
-               <Button className="add-button" onClick={toggleModal}>
-                  <PlusIcon className="plus-icon" />
-                  Добавить запись
-               </Button>
-            )}
-
             {isLoading && <Loading />}
 
             {!showAddButton && (
-               <Box>
+               <Box className="buttons-container">
+                  <Button className="add-button" onClick={onOpenModal}>
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
+                  </Button>
+
                   <Button
                      variant="secondary"
                      className="export-btn"
@@ -172,7 +167,7 @@ const OnlineAppointments = () => {
             )}
          </Box>
 
-         <AddSchedule open={openModal} onClose={toggleModal} />
+         <AddSchedule open={isOpen} onClose={onCloseModal} />
 
          <Box>
             <TabContext value={value}>
@@ -199,7 +194,7 @@ const OnlineAppointments = () => {
                   <Box className="table-container">
                      <Table
                         columns={ONLINE_APPOINTMENTS_COLUMN}
-                        data={appointments}
+                        data={memoizedAppointments}
                      />
                   </Box>
                </TabPanel>
@@ -232,38 +227,42 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginBottom: '1.87rem',
       },
 
-      '& > .add-button': {
-         fontFamily: 'Manrope',
-         fontSize: '0.875rem',
-         fontStyle: 'normal',
-         fontWeight: '600',
-         lineHeight: 'normal',
-         letterSpacing: '0.02625rem',
-         textTransform: 'uppercase',
-         height: '2.75rem',
-         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-         width: '13.0625rem !important',
-         flexShrink: '0',
+      '& > .buttons-container': {
+         display: 'flex',
+         gap: '10px',
 
-         '& > div': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            gap: '4px',
+         '& > .add-button': {
+            borderRadius: '4px',
+            fontFamily: 'Manrope',
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            lineHeight: 'normal',
+            letterSpacing: '0.02625rem',
+            textTransform: 'uppercase',
+            height: '2.5rem',
+            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+            width: '13.0625rem !important',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'space-between',
+               width: '100%',
+               gap: '4px',
+            },
+
+            '& > .plus-icon': {
+               width: '1.125rem',
+               padding: '0.625rem',
+               height: '1.125rem',
+            },
          },
 
-         '& > .plus-icon': {
-            width: '1.125rem',
-            padding: '0.625rem',
-            height: '1.125rem',
+         '& > .export-btn': {
+            borderRadius: '4px',
+            height: '2.5rem',
+            padding: '8px 20px 9px 20px',
          },
-      },
-
-      '& .export-btn': {
-         borderRadius: '4px',
-         padding: '8px 20px 9px 20px',
-         height: '40px',
       },
 
       '& .save-btn': {

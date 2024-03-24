@@ -4,8 +4,8 @@ import { Box, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 import { SCHEDULE_COLUMN } from '../../../utils/constants/columns'
-import TableSchedule from '../../../components/schedule/ScheduleTable'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
+import ScheduleTable from '../../../components/admin/schedule/ScheduleTable'
 
 const Schedule = () => {
    const { schedules } = useSelector((state) => state.schedule)
@@ -46,7 +46,7 @@ const Schedule = () => {
          </StyledInputContainer>
 
          <div ref={tableRef}>
-            <TableSchedule columns={SCHEDULE_COLUMN} rows={schedules} />
+            <ScheduleTable columns={SCHEDULE_COLUMN} rows={schedules} />
          </div>
       </>
    )

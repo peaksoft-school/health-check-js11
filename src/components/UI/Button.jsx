@@ -53,7 +53,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             backgroundColor: theme.palette.primary.linearGradient,
          },
 
-         '&:disabled': {
+         '&.Mui-disabled': {
             border: 'none',
             backgroundColor: theme.palette.secondary.lightGrey,
             color: theme.palette.primary.main,
@@ -83,7 +83,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             },
 
-            '&:disabled': {
+            '&.Mui-disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.backgroundAdmin,
                color: theme.palette.tertiary.main,
@@ -113,7 +113,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                border: `1px solid ${theme.palette.primary.backgroundAdmin}`,
             },
 
-            '&:disabled': {
+            '&.Mui-disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.main,
                color: theme.palette.secondary.input,

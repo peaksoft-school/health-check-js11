@@ -11,6 +11,7 @@ const getAppointments = createAsyncThunk(
          return response.data
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
+
          return rejectWithValue(error)
       }
    }
@@ -31,7 +32,6 @@ const updateAppointment = createAsyncThunk(
          dispatch(getAppointments())
 
          setIsChecked((prev) => !prev)
-         showToast({ message: response.data.message })
          return response.data
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
@@ -90,7 +90,7 @@ const deleteAllAppointments = createAsyncThunk(
    }
 )
 
-export const APPOINTMENTS_THUNK = {
+export const ONLINE_APPOINTMENTS_THUNK = {
    getAppointments,
    updateAppointment,
    searchAppointment,

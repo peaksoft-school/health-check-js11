@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react'
 import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import dayjs from 'dayjs'
-import { generateDateRange, generateFreeTimes } from '../../utils/helpers/index'
-import Loading from '../Loading'
-import { SCHEDULE_THUNK } from '../../store/slices/schedule/scheduleThunk'
+import {
+   generateDateRange,
+   generateFreeTimes,
+} from '../../../utils/helpers/index'
+import Loading from '../../Loading'
+import { SCHEDULE_THUNK } from '../../../store/slices/schedule/scheduleThunk'
 import ChangeDay from './ChangeDay'
-import DatePicker from '../UI/DatePicker'
-import { ProfileIcon } from '../../assets/icons'
+import DatePicker from '../../UI/DatePicker'
+import { ProfileIcon } from '../../../assets/icons'
 
 const ScheduleTable = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
@@ -225,16 +228,11 @@ const ScheduleTable = () => {
 
             <Box className="date-picker-box">
                <DatePicker
-                  variant="custom"
-                  value={startDate}
                   onChange={(e) => handleDateChange(e, 'start')}
                   minDate={dateToday}
                />
                -
                <DatePicker
-                  type="date"
-                  placeholder="До"
-                  value={endDate}
                   minDate={dateEnd}
                   onChange={(e) => handleDateChange(e, 'end')}
                />
@@ -345,8 +343,8 @@ const ScheduleTable = () => {
 
 export default ScheduleTable
 
-const StyledContainer = styled(Box)(() => ({
-   backgroundColor: 'white',
+const StyledContainer = styled(Box)(({ theme }) => ({
+   backgroundColor: theme.palette.primary.main,
    borderRadius: '6px',
    paddingBottom: '50px',
    maxWidth: '1379px',
@@ -410,7 +408,7 @@ const StyledContainer = styled(Box)(() => ({
    },
 
    '& .table': {
-      border: '2px solid #D9D9D9',
+      border: `2px solid ${theme.palette.secondary.main}`,
       borderCollapse: 'collapse',
       maxWidth: '86.188rem',
       width: '1379px',
@@ -429,7 +427,7 @@ const StyledContainer = styled(Box)(() => ({
       },
 
       '& .th': {
-         border: '2px solid #D9D9D9',
+         border: `2px solid ${theme.palette.secondary.main}`,
          textAlign: 'start',
          paddingLeft: '11.78px',
          width: '6.625rem !important',
@@ -444,7 +442,7 @@ const StyledContainer = styled(Box)(() => ({
       },
 
       '& tbody > tr': {
-         border: '2px solid #D9D9D9',
+         border: `2px solid ${theme.palette.secondary.main}`,
       },
 
       '& .specialist': {
@@ -473,17 +471,17 @@ const StyledContainer = styled(Box)(() => ({
             fontWeight: '500',
             fontSize: '12px',
             lineHeight: '16.39px',
-            color: '#959595',
+            color: theme.palette.secondary.lightGrey,
          },
       },
 
       '& .schedule-cell': {
-         border: '2px solid #D9D9D9',
+         border: `2px solid ${theme.palette.secondary.main}`,
          minWidth: '6.625rem',
          cursor: 'pointer',
 
          '& .free-time-container': {
-            backgroundColor: '#DBEBFF',
+            backgroundColor: theme.palette.tertiary.main,
             borderRadius: '5px',
             display: 'flex',
             flexDirection: 'column',

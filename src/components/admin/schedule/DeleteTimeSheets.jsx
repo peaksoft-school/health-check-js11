@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { CloseIcon } from '../../assets/icons/index'
-import { handleKeyPress } from '../../utils/helpers'
+import { CloseIconSchedule } from '../../../assets/icons/index'
+import { handleKeyPress } from '../../../utils/helpers'
 
 const DeleteTimeSheets = ({
    selectedDate,
@@ -37,7 +37,7 @@ const DeleteTimeSheets = ({
                               >
                                  {startTime.slice(0, '5')}
 
-                                 <CloseIcon
+                                 <CloseIconSchedule
                                     className="delete-icon"
                                     onClick={() =>
                                        deleteTimeSheet(startTime.slice(0, '5'))
@@ -127,7 +127,7 @@ const DeleteTimeSheets = ({
                                     </Box>
 
                                     {index !== 0 && (
-                                       <CloseIcon
+                                       <CloseIconSchedule
                                           className="remove-interval"
                                           onClick={() =>
                                              removeInterval(interval.id)

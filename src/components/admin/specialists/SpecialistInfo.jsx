@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography, styled } from '@mui/material'
-import Navigate from '../UI/admin/Navigate'
-import { containsTheHTTPS } from '../../utils/helpers'
-import { NotUserImage } from '../../assets/images'
+import { NotUserImage } from '../../../assets/images'
+import Navigate from '../../UI/admin/Navigate'
+import { containsTheHTTPS } from '../../../utils/helpers'
 
 const SpecialistInfo = ({
    id,
@@ -15,7 +15,7 @@ const SpecialistInfo = ({
 
    return (
       <StyledContainer isactive={isActive.toString()}>
-         <Avatar src={doctorImage} alt="doctor" />
+         <Avatar className="image" src={doctorImage} alt="doctor" />
 
          <Box>
             <Typography variant="span">
@@ -36,7 +36,7 @@ const StyledContainer = styled(Box)(({ isactive }) => ({
    alignItems: 'center',
    gap: '13px',
 
-   '& img': {
+   '& .image': {
       filter: isactive !== 'true' && 'brightness(0.7)',
       transition: 'filter 1s ease',
    },

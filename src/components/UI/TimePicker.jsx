@@ -12,7 +12,7 @@ const TimePicker = ({
    error,
    ...rest
 }) => {
-   const [internalValue, setInternalValue] = useState(value || '00:00')
+   const [internalValue, setInternalValue] = useState(value)
 
    const handleChange = (time) => {
       setInternalValue(time)
@@ -40,7 +40,7 @@ const StyledTimePicker = styled(MuiTimePicker)(({ error }) => ({
    fontFamily: 'Manropo',
    fontWeight: '400',
    fontSize: '14px',
-   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
+   border: error ? '1px solid red' : '1px solid #D4D4D4',
 
    input: {
       width: '3.7rem',

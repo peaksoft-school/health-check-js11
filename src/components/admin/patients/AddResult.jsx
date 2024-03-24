@@ -7,20 +7,19 @@ import { PDFDocument } from 'pdf-lib'
 import dayjs from 'dayjs'
 import { format } from 'date-fns'
 import { useFormik } from 'formik'
-import { PATIENT_THUNKS } from '../../store/slices/patient/patientThunk'
-import { VALIDATION_RESULT } from '../../utils/helpers/validate'
-import { DEPARTMENTS } from '../../utils/constants'
-import DatePicker from '../UI/DatePicker'
-import { FileIcon, GetPdfFileIcon } from '../../assets/icons'
-import { showResultError } from '../../utils/helpers'
-import { showToast } from '../../utils/helpers/notification'
-import Modal from '../UI/Modal'
-import Select from '../UI/Select'
-import Button from '../UI/Button'
+import { PATIENT_THUNKS } from '../../../store/slices/patient/patientThunk'
+import { VALIDATION_RESULT } from '../../../utils/helpers/validate'
+import { DEPARTMENTS } from '../../../utils/constants'
+import DatePicker from '../../UI/DatePicker'
+import { FileIcon, GetPdfFileIcon } from '../../../assets/icons'
+import { showResultError } from '../../../utils/helpers'
+import { showToast } from '../../../utils/helpers/notification'
+import Modal from '../../UI/Modal'
+import Select from '../../UI/Select'
+import Button from '../../UI/Button'
 
 const AddResult = ({ open, onClose }) => {
    const { data, isLoading } = useSelector((state) => state.patient)
-   const [pageSize, setPageSize] = useState(null)
 
    const closeHandler = () => onClose()
 
@@ -39,6 +38,7 @@ const AddResult = ({ open, onClose }) => {
             userId: data.id,
             url: formData,
 
+            id: data.id,
             resetForm,
             closeHandler,
          })
@@ -65,16 +65,15 @@ const AddResult = ({ open, onClose }) => {
             const pdfDoc = await PDFDocument.load(arrayBuffer)
             const firstPage = pdfDoc.getPage(0)
             const { width, height } = firstPage.getSize()
-            setPageSize({ width, height })
 
             if (width > 450 && height > 600) setFieldValue('file', file)
             else
                showToast({
                   message: 'не допустимый размер файла',
+                  status: 'error',
                })
          } catch (error) {
             console.error('Error reading PDF: ', error)
-            setPageSize(null)
          }
       }
    }
@@ -87,14 +86,14 @@ const AddResult = ({ open, onClose }) => {
    const handleChangeFile = (e) => {
       const file = e.target.files[0]
 
-      if (file.type === 'application/pdf') {
-         setFieldValue('file', file)
-      }
+      if (file.type === 'application/pdf') setFieldValue('file', file)
    }
 
    const stopPropagationHandler = (e) => e.stopPropagation()
 
-   const changeSelectHandler = (service) => setFieldValue('service', service)
+   const changeSelectHandler = (service) => {
+      setFieldValue('service', service)
+   }
 
    const changeDateHandler = (date) => setFieldValue('date', date)
 
@@ -108,10 +107,10 @@ const AddResult = ({ open, onClose }) => {
             <Box className="content-box">
                <Box className="select">
                   <Box className="select-box">
-                     <label htmlFor="department">Услуги</label>
+                     <label htmlFor="service">Услуги</label>
 
                      <StyledSelect
-                        id="department"
+                        id="service"
                         placeholder="Выберите услугу"
                         error={!!errors.service}
                         options={DEPARTMENTS}
