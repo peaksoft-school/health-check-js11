@@ -24,6 +24,7 @@ const Records = () => {
 
    const sendResultNumber = (e) => {
       e.preventDefault()
+      setShowButton((prev) => prev)
 
       dispatch(RESULTS_THUNKS.getResults(resultNumber))
    }
@@ -87,9 +88,7 @@ const Records = () => {
                      )}
                   </div>
                </HeaderContainer>
-               <ul
-               // ref={pdfRef}
-               >
+               <ul>
                   <li>
                      Просмотреть свои результаты анализов онлайн Вы можете,
                      введя в поле слева индивидуальный <br /> цифровой код,
