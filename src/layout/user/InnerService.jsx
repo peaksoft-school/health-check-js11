@@ -76,7 +76,7 @@ const InnerService = () => {
 
                   <ul className="causes">
                      {selectedService.whenToConsult.cases.map((cause) => (
-                        <li>{cause}</li>
+                        <li key={cause}>{cause}</li>
                      ))}
                   </ul>
                </Box>
@@ -93,7 +93,7 @@ const InnerService = () => {
                   <ul className="causes">
                      {selectedService.diseasesTreated.diseases.map(
                         (disease) => (
-                           <li>{disease}</li>
+                           <li key={disease}>{disease}</li>
                         )
                      )}
                   </ul>

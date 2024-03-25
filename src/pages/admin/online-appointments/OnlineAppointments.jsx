@@ -137,16 +137,18 @@ const OnlineAppointments = () => {
 
    return (
       <StyledContainer>
-         <Box className="button-container">
+         <Box className="buttons-container">
             <Typography className="title">Онлайн-запись</Typography>
 
             {tab === 'online-appointments' ? (
-               <Button className="add-button" onClick={toggleModal}>
-                  <PlusIcon className="plus-icon" />
-                  Добавить запись
-               </Button>
+               ''
             ) : (
-               <Box>
+               <Box className="buttons-box">
+                  <Button className="add-button" onClick={toggleModal}>
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
+                  </Button>
+
                   <Button
                      variant="secondary"
                      className="export-btn"
@@ -222,7 +224,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    maxWidth: '1600px',
    margin: '0 auto',
 
-   '& .button-container': {
+   '& .buttons-container': {
       display: 'flex',
       justifyContent: 'space-between',
 
@@ -233,46 +235,50 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginBottom: '1.87rem',
       },
 
-      '& > .add-button': {
-         fontFamily: 'Manrope',
-         fontSize: '0.875rem',
-         fontStyle: 'normal',
-         fontWeight: '600',
-         lineHeight: 'normal',
-         letterSpacing: '0.02625rem',
-         textTransform: 'uppercase',
-         height: '2.75rem',
-         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-         width: '13.0625rem !important',
-         flexShrink: '0',
+      '& .buttons-box': {
+         display: 'flex',
+         gap: '30px',
+         alignItems: 'center',
 
-         '& > div': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            gap: '4px',
+         '& .export-btn': {
+            borderRadius: '4px',
+            padding: '8px 20px 9px 20px',
+            width: '168px',
+            height: '43px',
+
+            '&:hover': {
+               width: '168px',
+               padding: '8px 20px 9px 20px',
+            },
          },
 
-         '& > .plus-icon': {
-            width: '1.125rem',
-            padding: '0.625rem',
-            height: '1.125rem',
+         '& .add-button': {
+            fontFamily: 'Manrope',
+            fontSize: '0.875rem',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: 'normal',
+            letterSpacing: '0.02625rem',
+            textTransform: 'uppercase',
+            height: '2.75rem',
+            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+            width: '13.0625rem !important',
+            flexShrink: '0',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'space-between',
+               width: '100%',
+               gap: '4px',
+            },
+
+            '& > .plus-icon': {
+               width: '1.125rem',
+               padding: '0.625rem',
+               height: '1.125rem',
+            },
          },
-      },
-
-      '& .export-btn': {
-         borderRadius: '4px',
-         padding: '8px 20px 9px 20px',
-         height: '40px',
-      },
-
-      '& .save-btn': {
-         background: 'rgb(4, 135, 65)',
-         padding: '8px 20px 9px 20px',
-         borderRadius: '4px',
-         height: '40px',
-         marginLeft: '14px',
       },
    },
 
@@ -310,6 +316,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       bordeRradius: ' 0.375rem',
       background: 'white',
       marginTop: '1.25rem',
+
+      '& .no-data-image': {
+         width: '1300px',
+      },
    },
 }))
 

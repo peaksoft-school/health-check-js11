@@ -12,6 +12,7 @@ const initialState = {
 export const appointmentsSlice = createSlice({
    name: 'onlineAppointments',
    initialState,
+
    reducers: {
       handleIsChecked: (state) => {
          state.selectAll = !state.selectAll

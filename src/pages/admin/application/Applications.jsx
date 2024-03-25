@@ -2,19 +2,18 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Table from '../../../components/UI/Table'
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
 import { APPLICATIONS_THUNKS } from '../../../store/slices/application/applicationThunk'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Table from '../../../components/UI/Table'
+import { NoDataImage } from '../../../assets/images'
 
 const Applications = () => {
    const dispatch = useDispatch()
 
    const [searchText, setSearchText] = useState('')
 
-   const { selectAllApplications, items } = useSelector(
-      (state) => state.applications
-   )
+   const { applications } = useSelector((state) => state.applications)
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
@@ -32,29 +31,9 @@ const Applications = () => {
       setSearchText(e.target.value)
    }
 
-   const handleUpdate = async ({ id, isActive }) =>
-      dispatch(APPLICATIONS_THUNKS.updateApplication({ id, isActive }))
-
-   const handleDelete = async ({ id }) =>
-      dispatch(APPLICATIONS_THUNKS.deleteApplication({ id }))
-
    useEffect(() => {
       dispatch(APPLICATIONS_THUNKS.getApplicationData())
    }, [])
-
-   const preperadeArray = items.map((item, index) => {
-      return {
-         ...item,
-         index,
-         date: item.dateOfApplicationCreation,
-         number: item.phoneNumber,
-         processed: item.processed,
-         name: item.username,
-         update: (id, isActive) => handleUpdate({ id, isActive }),
-         delete: (id) => handleDelete(id),
-         isSelected: selectAllApplications.includes(item.id),
-      }
-   })
 
    return (
       <StyledContainer>
@@ -71,16 +50,14 @@ const Applications = () => {
          </Box>
 
          <Box className="table-container">
-            {preperadeArray.length > 0 ? (
+            {applications.length > 0 ? (
                <Table
                   columns={APPLICATIONS_COLUMN}
-                  data={preperadeArray}
+                  data={applications}
                   className="table"
                />
             ) : (
-               <Typography className="not-application" variant="h5">
-                  No Applications
-               </Typography>
+               <img src={NoDataImage} alt="no-data" className="no-data" />
             )}
          </Box>
       </StyledContainer>
@@ -90,12 +67,16 @@ const Applications = () => {
 export default Applications
 
 const StyledSearchInput = styled(SearchInput)(() => ({
+   height: '2.5rem',
+   padding: '0rem 0.3rem',
+   display: 'inline-flex',
+   justifyContent: 'center',
    width: '100%',
 }))
 
 const StyledContainer = styled(Box)(() => ({
    '& > .input-container': {
-      width: '42.2rem',
+      width: '37.5rem',
       marginTop: '2.15rem',
    },
 
@@ -106,6 +87,8 @@ const StyledContainer = styled(Box)(() => ({
       background: '#FFF',
       height: '100%',
       marginTop: '1.25rem',
+
+      '& .no-data': { width: '1300px' },
 
       '& .MuiTable-root': {
          '& .MuiTableCell-root': {

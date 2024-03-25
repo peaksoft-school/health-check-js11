@@ -5,89 +5,94 @@ import { showToast } from '../../../utils/helpers/notification'
 export const applicationSlice = createSlice({
    name: 'applications',
    initialState: {
-      items: [],
-      searchItems: [],
-      status: 'idle',
+      applications: [],
+      isLoading: false,
+      selectAllApp: false,
       error: null,
       selectAllApplications: [],
-      isSelectAllApplications: false,
    },
 
    reducers: {
-      handleIsChecked: (state, action) => {
-         state.isSelectAllApplications = !state.isSelectAllApplications
+      handleIsChecked: (state) => {
+         state.selectAllApp = !state.selectAllApp
 
-         state.items = state.items.map((item) => ({
-            ...item,
-            isSelected: state.isSelectAllApplications,
+         state.applications = state.applications?.map((application) => ({
+            ...application,
+            isSelected: application.processed
+               ? state.selectAllApp
+               : application.isSelected,
          }))
 
-         state.selectAllApplications = state.items
-            .filter((item) => item.isSelected)
-            .map((item) => item.id)
+         state.selectAllApplications = state.applications
+            .filter((application) => application.isSelected)
+            .map((application) => application.id)
       },
 
       handleIsCheckedItem: (state, { payload }) => {
-         state.items = state.items.map((item) => {
-            if (item.id === payload.id) {
+         state.applications = state.applications?.map((application) => {
+            if (application.id === payload.id) {
                return {
-                  ...item,
-                  isSelected: !item.isSelected,
+                  ...application,
+                  isSelected: application.processed
+                     ? !application.isSelected
+                     : application.isSelected,
                }
             }
-            return item
+            return application
          })
 
-         state.selectAllApplications = state.items
-            .filter((item) => item.isSelected)
-            .map((item) => item.id)
+         state.selectAllApplications = state.applications
+            .filter(
+               (application) => application.isSelected && application.processed
+            )
+            .map((application) => application.id)
 
-         if (state.selectAllApplications.length === state.items.length) {
+         if (
+            state.selectAllApplications.length ===
+            state.applications.filter((application) => application.processed)
+               .length
+         ) {
             state.selectAllApp = true
          } else {
             state.selectAllApp = false
          }
-
-         localStorage.setItem(
-            'selectAllApplications',
-            JSON.stringify(state.selectAllApplications)
-         )
-      },
-
-      handleRemoveChecked: (state) => {
-         state.selectAllApplications = []
-         localStorage.removeItem('selectAllApplications')
       },
    },
 
    extraReducers: (builder) => {
       builder
-
          .addCase(APPLICATIONS_THUNKS.getApplicationData.pending, (state) => {
-            state.status = 'loading'
+            state.isLoading = true
          })
 
          .addCase(
             APPLICATIONS_THUNKS.getApplicationData.fulfilled,
             (state, action) => {
-               state.status = 'succeeded'
-               state.items = action.payload
+               const updatedApplications = action.payload.map(
+                  (application) => ({
+                     ...application,
+                     isSelected: false,
+                  })
+               )
+               state.applications = updatedApplications
+               state.isLoading = false
             }
          )
 
          .addCase(
             APPLICATIONS_THUNKS.getApplicationData.rejected,
             (state, action) => {
-               state.status = 'failed'
+               state.isLoading = false
                state.error = action.error.message
             }
          )
 
          .addCase(APPLICATIONS_THUNKS.deleteApplication.pending, (state) => {
-            state.status = 'loading'
+            state.isLoading = true
          })
 
-         .addCase(APPLICATIONS_THUNKS.deleteApplication.fulfilled, () => {
+         .addCase(APPLICATIONS_THUNKS.deleteApplication.fulfilled, (state) => {
+            state.isLoading = false
             showToast({
                message: 'запись удалена',
             })
@@ -96,29 +101,36 @@ export const applicationSlice = createSlice({
          .addCase(
             APPLICATIONS_THUNKS.deleteApplication.rejected,
             (state, action) => {
-               state.status = 'failed'
+               state.isLoading = false
                state.error = action.error.message
             }
          )
 
          .addCase(APPLICATIONS_THUNKS.updateApplication.pending, (state) => {
-            state.status = 'loading'
+            state.isLoading = true
          })
 
-         .addCase(APPLICATIONS_THUNKS.updateApplication.fulfilled, (state) => {
-            state.error = false
-         })
+         .addCase(
+            APPLICATIONS_THUNKS.updateApplication.fulfilled,
+            (state, { payload }) => {
+               state.selectAllApplications = state.selectAllApplications.filter(
+                  (id) => id !== payload.id
+               )
+
+               state.isLoading = false
+            }
+         )
 
          .addCase(
             APPLICATIONS_THUNKS.updateApplication.rejected,
             (state, action) => {
-               state.status = 'failed'
+               state.isLoading = false
                state.error = action.error.message
             }
          )
 
          .addCase(APPLICATIONS_THUNKS.searchApplications.pending, (state) => {
-            state.status = 'loading'
+            state.isLoading = true
          })
 
          .addCase(
@@ -134,30 +146,33 @@ export const applicationSlice = createSlice({
 
                   updatedApplications.sort((a, b) => a.id - b.id)
 
-                  state.items = updatedApplications
+                  state.applications = updatedApplications
                }
 
-               state.status = 'succeeded'
-               state.searchItems = action.payload
+               state.isLoading = false
             }
          )
 
          .addCase(
             APPLICATIONS_THUNKS.searchApplications.rejected,
             (state, action) => {
-               state.status = 'failed'
+               state.isLoading = false
                state.error = action.error.message
             }
          )
 
-         .addCase(APPLICATIONS_THUNKS.deleteAllApplication.fulfilled, () => {
-            showToast({
-               message: 'Успешно удалено ',
-            })
-         })
+         .addCase(
+            APPLICATIONS_THUNKS.deleteAllApplication.fulfilled,
+            (state) => {
+               state.selectAllApplications = []
+               state.isLoading = false
+               showToast({
+                  message: 'Успешно удалено ',
+               })
+            }
+         )
    },
 })
 
 export const applicationActions = applicationSlice.actions
-export const { handleIsCheckedItem, handleIsChecked, handleRemoveChecked } =
-   applicationSlice.actions
+export const { handleIsCheckedItem, handleIsChecked } = applicationSlice.actions

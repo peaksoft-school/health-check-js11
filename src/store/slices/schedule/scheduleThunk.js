@@ -76,10 +76,13 @@ const savePatternTimeSheet = createAsyncThunk(
          )
 
          dispatch(getSchedules())
-         showToast({ message: response.data.message })
+         showToast({ message: response.data.messageCode })
          return response.data
       } catch (error) {
-         showToast({ message: error.response.data.message, status: 'error' })
+         showToast({
+            message: error.response.data.messageCode,
+            status: 'error',
+         })
          return rejectWithValue(error)
       }
    }
@@ -101,11 +104,14 @@ const updateTimeSheetDoctor = createAsyncThunk(
             formattedTimeRanges
          )
 
-         showToast({ message: response.data.message })
+         showToast({ message: response.data.messageCode })
          dispatch(getSchedules())
          return response.data
       } catch (error) {
-         showToast({ message: error.response.data.message, status: 'error' })
+         showToast({
+            message: error.response.data.messageCode,
+            status: 'error',
+         })
          return rejectWithValue(error)
       }
    }

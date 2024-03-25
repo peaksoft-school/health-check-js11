@@ -94,7 +94,7 @@ const ScheduleTable = () => {
       setIntervals(updatedIntervals)
    }
 
-   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+   const daysOfWeek = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
 
    const dateToday = dayjs()
    const dateEnd = dayjs()
