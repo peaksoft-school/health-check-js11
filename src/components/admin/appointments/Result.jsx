@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { PlusIcon, RegisteredIcon } from '../../../assets/icons'
 import Button from '../../UI/Button'
 import DeleteAppointmentModal from './DeleteAppointmentModal'
-import { NotSpecialistImage } from '../../../assets/images'
+import { NotFoundSpecialistImage } from '../../../assets/images'
 import { containsTheHTTPS } from '../../../utils/helpers'
 
 const Result = ({ goBack, goBackAndClear }) => {
@@ -48,7 +48,7 @@ const Result = ({ goBack, goBackAndClear }) => {
                ) : (
                   <Avatar
                      className="image"
-                     src={NotSpecialistImage}
+                     src={NotFoundSpecialistImage}
                      alt="doctor"
                   />
                )}

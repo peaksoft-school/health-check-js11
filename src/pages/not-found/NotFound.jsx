@@ -1,10 +1,10 @@
 import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { NotFoundImage } from '../../assets/images'
+import { NotFoundPageImage } from '../../assets/images'
 
 const NotFound = () => (
    <StyledContainer>
-      <img src={NotFoundImage} alt="404 not found" />
+      <img src={NotFoundPageImage} alt="404 not found" />
 
       <Typography className="title" variant="h3">
          Cтраница не найдена

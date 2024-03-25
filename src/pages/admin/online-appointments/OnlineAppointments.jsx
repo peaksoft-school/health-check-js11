@@ -149,15 +149,13 @@ const OnlineAppointments = () => {
 
             {isLoading && <Loading />}
 
-            {showAddButton && (
-               <Button className="add-button" onClick={onOpenModal}>
-                  <PlusIcon className="plus-icon" />
-                  Добавить запись
-               </Button>
-            )}
-
             {!showAddButton && (
-               <Box>
+               <Box className="buttons-container">
+                  <Button className="add-button" onClick={onOpenModal}>
+                     <PlusIcon className="plus-icon" />
+                     Добавить запись
+                  </Button>
+
                   <Button
                      variant="secondary"
                      className="export-btn"
@@ -229,38 +227,42 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginBottom: '1.87rem',
       },
 
-      '& > .add-button': {
-         fontFamily: 'Manrope',
-         fontSize: '0.875rem',
-         fontStyle: 'normal',
-         fontWeight: '600',
-         lineHeight: 'normal',
-         letterSpacing: '0.02625rem',
-         textTransform: 'uppercase',
-         height: '2.75rem',
-         padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-         width: '13.0625rem !important',
-         flexShrink: '0',
+      '& > .buttons-container': {
+         display: 'flex',
+         gap: '10px',
 
-         '& > div': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            gap: '4px',
+         '& > .add-button': {
+            borderRadius: '4px',
+            fontFamily: 'Manrope',
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            lineHeight: 'normal',
+            letterSpacing: '0.02625rem',
+            textTransform: 'uppercase',
+            height: '2.5rem',
+            padding: '0.625rem 1.5rem 0.625rem 1rem !important',
+            width: '13.0625rem !important',
+
+            '& > div': {
+               display: 'flex',
+               alignItems: 'center',
+               justifyContent: 'space-between',
+               width: '100%',
+               gap: '4px',
+            },
+
+            '& > .plus-icon': {
+               width: '1.125rem',
+               padding: '0.625rem',
+               height: '1.125rem',
+            },
          },
 
-         '& > .plus-icon': {
-            width: '1.125rem',
-            padding: '0.625rem',
-            height: '1.125rem',
+         '& > .export-btn': {
+            borderRadius: '4px',
+            height: '2.5rem',
+            padding: '8px 20px 9px 20px',
          },
-      },
-
-      '& .export-btn': {
-         borderRadius: '4px',
-         padding: '8px 20px 9px 20px',
-         height: '40px',
       },
 
       '& .save-btn': {

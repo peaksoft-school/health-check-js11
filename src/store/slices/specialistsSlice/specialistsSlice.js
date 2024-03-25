@@ -51,6 +51,7 @@ export const specialistsSlice = createSlice({
                state.isLoading = false
             }
          )
+
          .addCase(SPECIALISTS_THUNK.getSpecialistById.pending, (state) => {
             state.isLoading = true
          })
@@ -114,7 +115,7 @@ export const specialistsSlice = createSlice({
 
          .addCase(SPECIALISTS_THUNK.updateButton.fulfilled, (state, action) => {
             state.isLoading = false
-            state.successMessage = 'Doctor successfully updated'
+            state.successMessage = 'Доктор успешно обновлен'
             state.updatedFirstName = action.payload.firstName
          })
 

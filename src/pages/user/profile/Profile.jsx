@@ -12,6 +12,8 @@ import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
 const Profile = () => {
+   window.scrollTo({ top: 0 })
+
    const [value, setValue] = useState('1')
 
    const { accessToken } = useSelector((state) => state.auth)

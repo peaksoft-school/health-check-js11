@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { ROUTES } from './routes'
+import DoctorInnerPage from '../pages/user/doctors/DoctorInnerPage'
 import Suspense from './Suspense'
 
 const ChangePassword = lazy(
@@ -94,5 +95,9 @@ export const USER_ROUTES = [
             <Records />
          </Suspense>
       ),
+   },
+   {
+      path: `${ROUTES.USER.DOCTOR_INNER}`,
+      element: <DoctorInnerPage />,
    },
 ]

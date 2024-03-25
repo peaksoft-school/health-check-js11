@@ -15,6 +15,7 @@ const ROUTES = {
       PRICES: 'prices',
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
+      DOCTOR_INNER: '/doctors/:doctorId',
    },
 
    ADMIN: {

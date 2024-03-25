@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography, styled } from '@mui/material'
-import { NotSpecialistImage } from '../../../assets/images'
+import { NotFoundSpecialistImage } from '../../../assets/images'
 import Navigate from '../../UI/admin/Navigate'
 import { containsTheHTTPS } from '../../../utils/helpers'
 
@@ -11,7 +11,7 @@ const SpecialistInfo = ({
    position,
    isActive,
 }) => {
-   const doctorImage = containsTheHTTPS(image) ? image : NotSpecialistImage
+   const doctorImage = containsTheHTTPS(image) ? image : NotFoundSpecialistImage
 
    return (
       <StyledContainer isactive={isActive.toString()}>

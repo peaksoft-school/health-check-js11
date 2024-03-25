@@ -1,6 +1,6 @@
 import { styled, Typography, Box, Rating, Avatar } from '@mui/material'
 import Button from '../../UI/Button'
-import { NotSpecialistImage } from '../../../assets/images'
+import { NotFoundSpecialistImage } from '../../../assets/images'
 import { containsTheHTTPS } from '../../../utils/helpers'
 
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => {
@@ -21,7 +21,7 @@ const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => {
             ) : (
                <Avatar
                   className="image"
-                  src={NotSpecialistImage}
+                  src={NotFoundSpecialistImage}
                   alt="doctor"
                />
             )}

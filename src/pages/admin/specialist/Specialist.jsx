@@ -9,7 +9,10 @@ import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import Loading from '../../../components/Loading'
 import TextEditor from '../../../components/UI/TextEditor'
-import { NotFoundDoctorImage, NotSpecialistImage } from '../../../assets/images'
+import {
+   NotFoundDoctorImage,
+   NotFoundSpecialistImage,
+} from '../../../assets/images'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import { ROUTES } from '../../../routes/routes'
 import { DEPARTMENTS } from '../../../utils/constants'
@@ -156,7 +159,7 @@ const Specialist = () => {
 
    const doctorImage = containsTheHTTPS(values.image)
       ? values.image
-      : NotSpecialistImage
+      : NotFoundSpecialistImage
 
    if (!specialist.firstName) {
       return (
