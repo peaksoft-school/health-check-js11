@@ -147,10 +147,12 @@ const StyledCloseButton = styled(Button)(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-root ': {
       height: '2.625rem',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       height: '0.4375em',
       borderRadius: '0.5rem',
    },

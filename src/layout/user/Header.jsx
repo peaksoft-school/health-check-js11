@@ -85,9 +85,22 @@ const Header = () => {
       handleProfileMenuClose()
    }
 
-   const navigateToMyRecords = () => {
-      navigate('records')
-      handleProfileMenuClose()
+   // const navigateToMyRecords = () => {
+   //    // if (isAuth) {
+   //    navigate('records')
+   //    // handleProfileMenuClose()
+   //    // } else {
+   //    // toggleSignUpModal()
+   //    // }
+   // }
+
+   const resultsPageHandler = () => {
+      if (isAuth) {
+         navigate('records')
+         handleProfileMenuClose()
+      } else {
+         toggleSignInModal()
+      }
    }
 
    return (
@@ -121,7 +134,7 @@ const Header = () => {
                <Box className="search-input-container">
                   <SearchInput
                      variant="secondary"
-                     placeholder="Поиск по фото"
+                     placeholder="Поиск по сайту"
                   />
                </Box>
 
@@ -201,7 +214,9 @@ const Header = () => {
                               'aria-labelledby': 'basic-button',
                            }}
                         >
-                           <StyledMenuItem onClick={navigateToMyRecords}>
+                           <StyledMenuItem
+                           // onClick={navigateToMyRecords}
+                           >
                               Мои записи
                            </StyledMenuItem>
                            <StyledMenuItem onClick={navigateToPprofile}>
@@ -255,11 +270,13 @@ const Header = () => {
                </nav>
 
                <Box className="buttons">
-                  <NavLink to="/records">
-                     <StyledButton className="button" variant="secondary">
-                        ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
-                     </StyledButton>
-                  </NavLink>
+                  <StyledButton
+                     onClick={resultsPageHandler}
+                     className="button"
+                     variant="secondary"
+                  >
+                     ПОЛУЧИТЬ РЕЗУЛЬТАТЫ
+                  </StyledButton>
 
                   <StyledButton
                      className="button"

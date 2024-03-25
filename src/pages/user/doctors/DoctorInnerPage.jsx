@@ -1,17 +1,16 @@
-import styled from '@emotion/styled'
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
-import { NavLink } from 'react-router-dom'
+import { Box, Typography, styled } from '@mui/material'
+import { NavLink, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import Button from '../../../components/UI/Button'
-import { ArrowLeftIcon } from '../../../assets/icons'
 import Reviews from '../../../components/landing/Reviews'
+import { ArrowLeftIcon } from '../../../assets/icons'
 
 const DoctorInnerPage = () => {
+   window.scrollTo({ top: 0 })
+
    const { doctor } = useSelector((state) => state.doctors)
 
    const { doctorId } = useParams()
@@ -22,7 +21,7 @@ const DoctorInnerPage = () => {
       dispatch(DOCTOR_THUNK.getDoctorsById({ doctorId }))
    }, [doctorId])
 
-   const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
+   const { values, setValues } = useFormik({
       initialValues: {
          fullName: doctor.fullName || '',
          file: null,
@@ -45,56 +44,70 @@ const DoctorInnerPage = () => {
                   <NavLinkStyle to="/">
                      <span>Главная</span> {' > '}
                   </NavLinkStyle>
+
                   <NavLink style={{ textDecoration: 'none' }} to="/doctors">
                      <span>Врачи</span>
                   </NavLink>
                   {' > '}
+
                   <NavLink style={{ textDecoration: 'none' }}>
                      <span>Хирургия</span>
                   </NavLink>
+
                   {' > '}
+
                   <span className="colors">{values.fullName}</span>
                </Typography>
             </StyledSpecialistRow>
+
             <Typography className="name">{values.fullName}</Typography>
+
             <Typography className="text">
                Попасть в команду медицинской клиники «Medical Clinic» могут{' '}
                <br />
                только лучшие специалисты с многолетней практикой и доказанным
                опытом.
             </Typography>
+
             <Typography className="text">
                Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
                ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе
                к совершенству.
             </Typography>
+
             <StyledBoxContainer>
                <img alt="img" src={values.image} className="img" />
+
                <Box className="flex">
                   <Typography className="doctor-name">
                      {values.fullName}
                   </Typography>
+
                   <Typography className="label">
-                     Отделение :{' '}
+                     Отделение :
                      <span className="mark">{values.department}</span>
                   </Typography>
+
                   <Typography className="label">
-                     Должность :{' '}
-                     <span className="mark"> {values.position}</span>{' '}
+                     Должность :<span className="mark"> {values.position}</span>
                   </Typography>
+
                   <Button variant="secondary" className="btn">
                      <span className="btn-text">Записаться на приём</span>
                   </Button>
                </Box>
             </StyledBoxContainer>
+
             <Typography className="description">
                {values.description}
             </Typography>
+
             <NavLink to="/doctors" className="line">
                <Typography className="arrow">
                   <ArrowLeftIcon /> Список Сотрудников
                </Typography>
             </NavLink>
+
             <Reviews />
          </Box>
       </StyledContainer>
@@ -102,16 +115,21 @@ const DoctorInnerPage = () => {
 }
 
 export default DoctorInnerPage
+
 const StyledContainer = styled(Box)(() => ({
+   marginBottom: '90px',
+
    '& .line': {
       textDecoration: 'none',
    },
+
    '& .name': {
       fontSize: '36px',
       fontWeight: '600',
       fontFamily: 'Manrope',
       marginLeft: '6.25rem',
    },
+
    '& .text': {
       fontSize: '18px',
       padding: '3.125rem 0 0 6.5rem',
@@ -119,11 +137,14 @@ const StyledContainer = styled(Box)(() => ({
       fontFamily: 'Manrope',
       marginTop: '-1rem',
    },
+
    '& .description': {
       padding: '1rem 0 2rem 6.5rem',
-      fontSize: '16px',
-      fontWeight: '600',
+      fontSize: '18px',
+      fontFamily: 'Manrope',
+      fontWeight: '500',
    },
+
    '& .arrow': {
       padding: '0 0 2rem 6.5rem',
       color: '#048741',
@@ -135,7 +156,7 @@ const StyledSpecialistRow = styled(Typography)(() => ({
    fontWeight: '400',
    padding: '3.125rem 0 2rem 6.5rem',
 
-   span: {
+   '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
@@ -148,7 +169,8 @@ const StyledSpecialistRow = styled(Typography)(() => ({
 const NavLinkStyle = styled(NavLink)(({ theme }) => ({
    textDecoration: 'none',
    color: theme.palette.secondary.lightGrey,
-   span: {
+
+   '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
@@ -166,7 +188,7 @@ const StyledBoxContainer = styled(Box)(() => ({
    },
 
    '& .flex': {
-      marginRight: '49rem',
+      marginRight: '40rem',
       marginTop: '5rem',
 
       '& .doctor-name': {

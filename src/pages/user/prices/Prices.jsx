@@ -1,7 +1,7 @@
 import { Typography, styled, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
 import { PRICES } from '../../../utils/constants/prices'
 import CustomizedAccordions from '../../../components/UI/CustomizedAccordions'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const Proces = () => (
    <>
@@ -9,17 +9,13 @@ const Proces = () => (
 
       <StyledContainer>
          <StyledSpecialistRow>
-            <Typography variant="span">
-               <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-
-               <span>Прайс</span>
-            </Typography>
+            <BreadCrumbs to="/" text="цены" before="Главная" />
          </StyledSpecialistRow>
 
          <Typography className="title" variant="h3">
             Наш<span> </span>
             <Typography className="mark-title" variant="span">
-               прайс
+               цены
             </Typography>
          </Typography>
 
@@ -94,17 +90,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 const StyledSpecialistRow = styled(Typography)(() => ({
    fontSize: '0.875rem',
    fontWeight: '400',
-   padding: '3.125rem 0 2rem 6.5rem',
+   margin: '3.125rem 0 2rem 6.5rem',
 
    '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
-}))
-
-const NavLinkStyle = styled(NavLink)(({ theme }) => ({
-   textDecoration: 'none',
-   color: theme.palette.secondary.lightGrey,
 }))
 
 const StyledLine = styled(Box)(() => ({

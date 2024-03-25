@@ -77,10 +77,6 @@ const ChangePassword = () => {
             </Typography>
 
             <form onSubmit={handleSubmit} autoComplete="off">
-               <Typography className="text">
-                  Вам будет отправлена ссылка для сброса пароля
-               </Typography>
-
                <StyledInput
                   type={showNewPassword ? 'text' : 'password'}
                   value={values.newPassword}
@@ -185,11 +181,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-input': {
+      width: '414px',
       height: '0.5rem',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-root ': {
+      width: '414px',
       height: '2.625rem',
       borderRadius: '0.5rem',
    },

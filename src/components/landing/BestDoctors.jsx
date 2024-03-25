@@ -1,6 +1,7 @@
 import { Box, Typography, styled } from '@mui/material'
-import Button from '../UI/Button'
+import { NavLink } from 'react-router-dom'
 import { BEST_DOCTORS } from '../../utils/constants'
+import Button from '../UI/Button'
 
 const BestDoctors = () => (
    <StyledContainer>
@@ -30,7 +31,9 @@ const BestDoctors = () => (
             ))}
          </Box>
 
-         <StyledButton variant="secondary">Все врачи клиники</StyledButton>
+         <NavLink to="/doctors">
+            <StyledButton variant="secondary">Все врачи клиники</StyledButton>
+         </NavLink>
       </Box>
    </StyledContainer>
 )
@@ -93,6 +96,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             },
          },
       },
+   },
+   '& a': {
+      textDecoration: 'none',
    },
 }))
 

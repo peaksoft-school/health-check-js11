@@ -6,14 +6,12 @@ import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
 import {
    CloseIcon,
+   CloseIconSchedule,
    HealthCheckIcon,
-   PrintIcon,
-   SaveIcon,
 } from '../../../assets/icons'
 import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 
 const Records = () => {
-   const [showButton, setShowButton] = useState(false)
    const [resultNumber, setResultNumber] = useState('')
 
    const { result } = useSelector((state) => state.result)
@@ -24,7 +22,6 @@ const Records = () => {
 
    const sendResultNumber = (e) => {
       e.preventDefault()
-      setShowButton((prev) => prev)
 
       dispatch(RESULTS_THUNKS.getResults(resultNumber))
    }
@@ -32,7 +29,7 @@ const Records = () => {
    return (
       <StyledContainer>
          <StyledForm>
-            <Box className="FormLogo">
+            <Box className="logo">
                <HealthCheckIcon />
 
                <Typography variant="h1">
@@ -44,7 +41,7 @@ const Records = () => {
                <StyledInput
                   value={resultNumber}
                   onChange={changeInputValuesHandler}
-                  placeholder="Введите номер заказа..."
+                  placeholder="Введите код..."
                />
 
                <StyledButton type="submit">Найти</StyledButton>
@@ -54,46 +51,26 @@ const Records = () => {
          <hr />
 
          <Box>
-            <div className="file">
-               <HeaderContainer>
-                  <div>
-                     <h4>Выдача результатов</h4>
-                     <span>Вы можете:</span>
-                  </div>
-                  <div className="buttonsBox">
-                     {showButton && (
-                        <Button
-                           className="closeBtn"
-                           //  onClick={handleClose}
-                        >
-                           <CloseIcon />
-                           ЗАКРЫТЬ РЕЗУЛЬТАТЫ
-                        </Button>
-                     )}
-                     {showButton && (
-                        <Button
-                        // onClick={handleSavePDF}
-                        >
-                           <SaveIcon />
-                           PDF
-                        </Button>
-                     )}
-                     {showButton && (
-                        <Button
-                        // onClick={handlePrint}
-                        >
-                           <PrintIcon />
-                           РАСПЕЧАТАТЬ
-                        </Button>
-                     )}
-                  </div>
-               </HeaderContainer>
+            <Box className="file">
+               <StyledFormContainer>
+                  <Box>
+                     <Typography variant="h4">Выдача результатов</Typography>
+
+                     <Typography variant="span">Вы можете:</Typography>
+                  </Box>
+
+                  <Button className="close">
+                     <CloseIconSchedule />
+                     ЗАКРЫТЬ РЕЗУЛЬТАТЫ
+                  </Button>
+               </StyledFormContainer>
+
                <ul>
                   <li>
                      Просмотреть свои результаты анализов онлайн Вы можете,
                      введя в поле слева индивидуальный <br /> цифровой код,
                      который указан в верхней части Вашей квитанции под
-                     штрих-кодом;
+                     штрих-кодом или отправлен вам на почту;
                   </li>
 
                   <li>
@@ -101,27 +78,29 @@ const Records = () => {
                      или сохранить в PDF формате <br /> с помощью кнопок,
                      расположенной в верхней части сайта;
                   </li>
-                  <li className="liRed">
+
+                  <li className="red-text">
                      При возникновении проблем с отображением результатов, Вы
                      можете оставить заявку <br /> на получение результатов по
                      электронной почте, позвонив в Службу поддержки клиентов
                      <br /> по номеру 909 090
                   </li>
                </ul>
-            </div>
-            <div className="resultpaper">
-               {/* {showButton && ( */}
+            </Box>
+
+            <Box>
                <object
                   data={result}
                   title="submit"
                   type="application/pdf"
                   width="900px"
-                  height="460px"
+                  height="380px"
                >
-                  <p>Ваш браузер не поддерживает просмотр PDF.</p>
+                  <Typography>
+                     Ваш браузер не поддерживает просмотр PDF.
+                  </Typography>
                </object>
-               {/* )} */}
-            </div>
+            </Box>
          </Box>
       </StyledContainer>
    )
@@ -153,14 +132,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       fontSize: '0.8rem',
       color: '#346EFB',
 
-      '& li': {
+      '& > li': {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
          fontSize: '15px',
          fontWeight: '400',
       },
 
-      '& .liRed': {
+      '& .red-text': {
          color: '#F91515',
       },
    },
@@ -189,25 +168,39 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const HeaderContainer = styled('div')(() => ({
+const StyledFormContainer = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'row',
    justifyContent: 'space-between',
-   margin: '0rem 2rem rem',
+   margin: '0rem 2rem 0 0 ',
    paddingLeft: '1rem',
    paddingTop: '1rem',
 
-   '& .buttonsBox': {
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '1rem',
+   '& .MuiButtonBase-root': {
+      marginTop: '1rem',
+      fontSize: '0.875rem',
+      padding: '5px 10px',
+      background: 'red',
 
-      '& button': {
-         background: ' #3977C0',
-         gap: '1rem',
+      '& > div': {
+         display: 'flex',
+         alignItems: 'center',
+      },
 
-         '&.closeBtn': {
-            background: 'red',
+      '&:active': {
+         background: 'red',
+         borderRadius: '0.625rem',
+      },
+
+      '&:hover': {
+         background: 'red',
+      },
+
+      '& svg': {
+         '& #close': {
+            '& #Vector': {
+               fill: '#fff',
+            },
          },
       },
    },
@@ -225,18 +218,11 @@ const StyledForm = styled(Box)(() => ({
    borderRadius: '10px',
    zIndex: 10,
 
-   '.FormLogo': {
+   '& > .logo': {
       display: 'flex',
       alignItems: 'center',
       gap: '1rem',
       padding: '1rem 0',
-   },
-
-   '.FormInput': {
-      div: {
-         display: 'flex',
-         gap: '0.5rem',
-      },
    },
 }))
 

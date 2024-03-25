@@ -153,7 +153,7 @@ const OnlineAppointments = () => {
                <Box className="buttons-container">
                   <Button className="add-button" onClick={onOpenModal}>
                      <PlusIcon className="plus-icon" />
-                     Добавить запись
+                     Добавить pасписание
                   </Button>
 
                   <Button
@@ -241,7 +241,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             textTransform: 'uppercase',
             height: '2.5rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            width: '13.0625rem !important',
+            width: '15.5rem !important',
 
             '& > div': {
                display: 'flex',

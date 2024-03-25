@@ -5,6 +5,7 @@ const BreadCrumbs = ({ text, to, before, additionalText }) => {
    const breadcrumbItems = [
       { label: before, href: to },
       { label: text },
+
       additionalText && { label: additionalText, href: '' },
    ].filter(Boolean)
 
@@ -13,7 +14,7 @@ const BreadCrumbs = ({ text, to, before, additionalText }) => {
          {breadcrumbItems.map(({ label, href }, index) => (
             <StyledLink
                key={label}
-               isLast={index === breadcrumbItems.length - 1}
+               islast={index === breadcrumbItems.length - 1}
                href={href}
             >
                {label}
@@ -25,11 +26,12 @@ const BreadCrumbs = ({ text, to, before, additionalText }) => {
 
 export default BreadCrumbs
 
-const StyledLink = styled(Link)(({ isLast }) => ({
-   fontSize: '0.875rem',
+const StyledLink = styled(Link)(({ islast }) => ({
+   fontSize: '1rem',
    fontWeight: '400',
    paddingBottom: '2rem',
-   color: isLast ? '#048741' : 'inherit',
-   cursor: 'pointer',
+   fontFamily: 'Manrope',
+   color: islast ? '#048741' : 'inherit',
+   cursor: islast ? '' : 'pointer',
    textDecoration: 'none',
 }))

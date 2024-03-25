@@ -14,28 +14,29 @@ const DataDoctors = ({ doctor }) => {
          <Box className="global-container">
             {doctor.doctors.map((doctor) => (
                <Box className="map-container">
-                  <Box className="image-container">
-                     <img
-                        src={doctor.image}
-                        alt="img"
-                        className="surgeon-image"
-                     />
-                  </Box>
+                  <NavLink to={`/doctors/${doctor.id}`}>
+                     <Box className="image-container">
+                        <img
+                           src={doctor.image}
+                           alt="img"
+                           className="surgeon-image"
+                        />
+                     </Box>
+                  </NavLink>
+
                   <Box className="main-container">
                      <Box className="name-container">
                         <Typography variant="span" className="name">
                            {doctor.fullName}
                         </Typography>
+
                         <Typography className="position-doctor">
                            {doctor.position}
                         </Typography>
-                        <NavLink to={`/doctors/${doctor.id}`}>
-                           <Button variant="secondary" className="btn">
-                              <span className="btn-text">
-                                 Записаться на приём
-                              </span>
-                           </Button>
-                        </NavLink>
+
+                        <Button variant="secondary" className="btn">
+                           <span className="btn-text">Записаться на приём</span>
+                        </Button>
                      </Box>
                   </Box>
                </Box>
