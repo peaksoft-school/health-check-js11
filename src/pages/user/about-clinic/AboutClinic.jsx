@@ -1,7 +1,4 @@
 import { Typography, styled, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
-import { AboutClinicImage } from '../../../assets/images'
-// eslint-disable-next-line import/no-cycle
 import AboutUs from '../../../components/landing/AboutUs'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
@@ -18,10 +15,6 @@ const AboutClinic = () => {
                ценное в жизни
             </Typography>
          </Typography>
-
-         <Box className="image-box">
-            {/* <img src={AboutClinicImage} alt="clinic-info" /> */}
-         </Box>
 
          <AboutUs variant="component" />
       </StyledContainer>
@@ -58,9 +51,4 @@ const NavigatePathTitle = styled(Box)(() => ({
       color: '#048741',
       cursor: 'pointer',
    },
-}))
-
-const NavLinkStyle = styled(NavLink)(() => ({
-   textDecoration: 'none',
-   color: '#959595',
 }))

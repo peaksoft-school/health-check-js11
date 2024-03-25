@@ -49,18 +49,14 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
 
    const signInWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider)
-            .then((data) => {
-               dispatch(
-                  authWithGoogle({
-                     tokenId: data.user.accessToken,
-                  })
-               )
-               onClose()
-            })
-            .catch((error) => {
-               console.log('Caught error Popup closed')
-            })
+         await signInWithPopup(auth, provider).then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            onClose()
+         })
       } catch (error) {
          throw new Error(error)
       }

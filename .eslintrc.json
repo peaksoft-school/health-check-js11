@@ -22,7 +22,6 @@
    "plugins": ["react"],
 
    "rules": {
-      "no-unused-vars": "off",
       "no-nested-ternary": "off",
       "no-plusplus": "warn",
       "no-param-reassign": "off",

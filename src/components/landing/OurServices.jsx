@@ -106,7 +106,7 @@ const StyledServiceIcon = styled(Box)(({ theme }) => ({
    border: '1px solid #DEDEDE',
    width: '6.275rem',
    height: '6.625rem',
-   transition: '0.5s',
+   transition: 'all 0.5s easy',
    cursor: 'pointer',
 
    '&:hover': {

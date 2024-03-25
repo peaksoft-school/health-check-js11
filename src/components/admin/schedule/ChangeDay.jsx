@@ -289,7 +289,7 @@ const StyledContainer = styled(Box)(() => ({
       fontWeight: '400',
       fontSize: '14px',
       borderRadius: '4px',
-      transition: '0.2s',
+      transition: 'all 0.2s easy',
    },
 }))
 

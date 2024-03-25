@@ -8,7 +8,7 @@ import {
 import Select from '../../UI/Select'
 import Button from '../../UI/Button'
 import { containsTheHTTPS, formatDates } from '../../../utils/helpers'
-import { NotUserImage } from '../../../assets/images'
+import { NotSpecialistImage } from '../../../assets/images'
 
 const Appointments = ({
    toggleSpecialist,
@@ -62,7 +62,7 @@ const Appointments = ({
                   ) : (
                      <Avatar
                         className="image"
-                        src={NotUserImage}
+                        src={NotSpecialistImage}
                         alt="doctor"
                      />
                   )}

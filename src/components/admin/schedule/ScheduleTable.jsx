@@ -370,7 +370,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontWeight: '400',
          fontSize: '14px',
          borderRadius: '4px',
-         transition: '0.2s',
+         transition: 'all 0.2s easy',
       },
 
       '& .button-disabled': {
@@ -381,7 +381,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontWeight: '400',
          fontSize: '14px',
          borderRadius: '4px',
-         transition: '0.2s',
+         transition: 'all 0.2s easy',
       },
 
       '& .date-picker-box': {
@@ -513,7 +513,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& .highlighted': {
-         transition: '0.2s',
+         transition: 'all 0.2s easy',
          width: '100%',
          height: '9.875rem',
          boxShadow: '0px 0px 5px 1px',
@@ -522,7 +522,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
          '& .free-time-container': {
             paddingLeft: '12px',
-            transition: '0.2s',
+            transition: 'all 0.2s easy',
          },
 
          '&::-webkit-scrollbar': {
@@ -537,13 +537,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '& .un-highlighted': {
          height: '9.875rem',
-         transition: '0.2s',
+         transition: 'all 0.2s easy',
          width: '100%',
          overflow: 'hidden',
          padding: '6px',
 
          '& .free-time-container': {
-            transition: '0.2s',
+            transition: 'all 0.2s easy',
          },
       },
    },

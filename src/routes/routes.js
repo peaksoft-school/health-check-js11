@@ -24,7 +24,6 @@ const ROUTES = {
       ID: 'id',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
-      ADD_NOTE: 'add-note',
    },
 }
 

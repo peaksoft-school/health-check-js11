@@ -13,12 +13,12 @@ import {
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
 import NumberInput from '../../components/UI/inputs/NumberInput'
+import SignIn from '../sign-in/SignIn'
 import Button from '../../components/UI/Button'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons'
 import { VALIDATION_SIGN_UP } from '../../utils/helpers/validate'
 import { signUpError } from '../../utils/helpers/index'
 import { authWithGoogle, signUp } from '../../store/slices/auth/authThunk'
-import SignIn from '../sign-in/SignIn'
 import { auth, provider } from '../../configs/firebase'
 
 const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
@@ -56,18 +56,14 @@ const SignUp = ({ onClose, open, closeSignUp, closeMenu }) => {
 
    const signUpWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider)
-            .then((data) => {
-               dispatch(
-                  authWithGoogle({
-                     tokenId: data.user.accessToken,
-                  })
-               )
-               onClose()
-            })
-            .catch((error) => {
-               console.log('Caught error Popup closed')
-            })
+         await signInWithPopup(auth, provider).then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            onClose()
+         })
       } catch (error) {
          throw new Error(error)
       }

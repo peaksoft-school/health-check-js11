@@ -3,17 +3,16 @@ import { Navigate } from 'react-router-dom'
 import { ROUTES } from './routes'
 import Suspense from './Suspense'
 
-const Applications = lazy(
-   () => import('../pages/admin/application/Applications')
-)
 const OnlineAppointments = lazy(
    () => import('../pages/admin/online-appointments/OnlineAppointments')
 )
-const Patients = lazy(() => import('../pages/admin/patients/Patients'))
-const Patient = lazy(() => import('../pages/admin/patient/Patient'))
+const Applications = lazy(
+   () => import('../pages/admin/application/Applications')
+)
 const Specialists = lazy(() => import('../pages/admin/specialists/Specialists'))
 const Specialist = lazy(() => import('../pages/admin/specialist/Specialist'))
-const AddNote = lazy(() => import('../pages/admin/specialists/AddNote'))
+const Patients = lazy(() => import('../pages/admin/patients/Patients'))
+const Patient = lazy(() => import('../pages/admin/patient/Patient'))
 
 export const ADMIN_ROUTES = [
    {
@@ -75,15 +74,6 @@ export const ADMIN_ROUTES = [
       element: (
          <Suspense>
             <Specialist />
-         </Suspense>
-      ),
-   },
-
-   {
-      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`,
-      element: (
-         <Suspense>
-            <AddNote />
          </Suspense>
       ),
    },
