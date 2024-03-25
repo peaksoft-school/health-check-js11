@@ -1,7 +1,5 @@
 import { Typography, styled, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
 import { AboutClinicImage, SignatureImage } from '../../../assets/images'
-// eslint-disable-next-line import/no-cycle
 import AboutUs from '../../../components/landing/AboutUs'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
@@ -154,24 +152,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          padding: '0 0 0 6rem',
       },
    },
-}))
-
-const StyledSpecialistRow = styled(Box)(() => ({
-   fontSize: '0.875rem',
-   fontWeight: '400',
-   marginLeft: '9.375rem',
-   padding: '3.125rem 0 2rem 2rem',
-   alignSelf: 'start',
-
-   span: {
-      color: '#048741',
-      cursor: 'pointer',
-   },
-}))
-
-const NavLinkStyle = styled(NavLink)(() => ({
-   textDecoration: 'none',
-   color: '#959595',
 }))
 
 const StyledLine = styled(Box)(() => ({

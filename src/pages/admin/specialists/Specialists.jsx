@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import { Box, Typography, Tab, styled } from '@mui/material'
+import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
@@ -9,7 +8,6 @@ import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import { SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
-import { ROUTES } from '../../../routes/routes'
 import { PlusIcon } from '../../../assets/icons'
 
 const Specialists = () => {
@@ -44,12 +42,10 @@ const Specialists = () => {
          <Box className="button-container">
             <Typography className="title">Специалисты</Typography>
 
-            <NavLink to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.ADD_NOTE}`}>
-               <Button className="add-button">
-                  <PlusIcon className="plus-icon" />
-                  ДОБАВИТЬ СПЕЦИАЛИСТА
-               </Button>
-            </NavLink>
+            <Button className="add-button">
+               <PlusIcon className="plus-icon" />
+               ДОБАВИТЬ СПЕЦИАЛИСТА
+            </Button>
          </Box>
 
          <Box className="input-container">

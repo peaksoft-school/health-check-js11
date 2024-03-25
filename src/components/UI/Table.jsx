@@ -10,13 +10,13 @@ import {
    styled,
    Box,
 } from '@mui/material'
-import { NoDataImage } from '../../assets/images'
+import { NotFoundDataImage } from '../../assets/images'
 
 const Table = ({ columns: headers, data }) => {
    if (!data || data.length === 0) {
       return (
          <StyledAbsence>
-            <img src={NoDataImage} alt="no-data" />
+            <img src={NotFoundDataImage} alt="no-data" />
          </StyledAbsence>
       )
    }

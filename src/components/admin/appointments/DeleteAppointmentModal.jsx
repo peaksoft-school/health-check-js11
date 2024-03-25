@@ -5,7 +5,7 @@ import Button from '../../UI/Button'
 import { APPOINTMENTS_THUNKS } from '../../../store/slices/appointments/appointmentsThunk'
 import { CloseAndDeleteIcon } from '../../../assets/icons'
 
-const DeleteAppointmentModal = ({ handleClose, goBack, goBackAndClear }) => {
+const DeleteAppointmentModal = ({ handleClose, goBack }) => {
    const { appointmentId } = useSelector((state) => state.appointments)
 
    const [deleteSuccess, setDeleteSuccess] = useState(false)
@@ -104,7 +104,7 @@ const StyledModalContent = styled(Box)(({ theme }) => ({
 
       '& svg': {
          cursor: 'pointer',
-         transition: 'transform 0.3s',
+         transition: 'transform 0.3s easy',
 
          '&:hover': {
             '& path': {

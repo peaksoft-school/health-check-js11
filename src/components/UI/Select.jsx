@@ -2,7 +2,6 @@ import { forwardRef, useState } from 'react'
 import {
    FormControl,
    Select as MuiSelect,
-   Typography,
    styled,
    MenuItem,
 } from '@mui/material'

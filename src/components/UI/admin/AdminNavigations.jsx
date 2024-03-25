@@ -4,20 +4,17 @@ import styled from '@emotion/styled'
 const AdminNavigations = ({ links }) => {
    const { pathname } = useLocation()
 
-   return (
-      <>
-         {links.map(({ id, to, label }) => (
-            <StyledNavLink
-               className={({ isActive }) => isActive && 'active'}
-               key={id}
-               to={to}
-            >
-               {label}
-               <div className={`line ${pathname === to && 'tab'}`} />
-            </StyledNavLink>
-         ))}
-      </>
-   )
+   return links?.map(({ id, to, label }) => (
+      <StyledNavLink
+         className={({ isActive }) => isActive && 'active'}
+         key={id}
+         to={to}
+      >
+         {label}
+
+         <div className={`line ${pathname === to && 'tab'}`} />
+      </StyledNavLink>
+   ))
 }
 
 export default AdminNavigations

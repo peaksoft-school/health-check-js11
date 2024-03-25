@@ -25,7 +25,7 @@ const ChangeUserPassword = () => {
    const [showNewPassword, setShowNewPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-   const { userData, isLoading } = useSelector((state) => state.profile)
+   const { isLoading } = useSelector((state) => state.profile)
 
    const dispatch = useDispatch()
 
@@ -281,7 +281,7 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledButtonContainer = styled(Box)(({ theme }) => ({
+const StyledButtonContainer = styled(Box)(() => ({
    display: 'flex',
    marginTop: '2.5rem',
    gap: '1rem',

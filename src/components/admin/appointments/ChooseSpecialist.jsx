@@ -92,7 +92,7 @@ const ChooseSpecialist = ({ goBack, setDoctorName, setTime }) => {
                </StyledButton>
 
                <Box className="doctors">
-                  {updatedDoctorsTimesheet?.map((doctor, i) => (
+                  {updatedDoctorsTimesheet?.map((doctor) => (
                      <SpecialistCard
                         key={doctor.costomId}
                         doctor={doctor}

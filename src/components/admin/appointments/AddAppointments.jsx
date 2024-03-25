@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { styled, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { GoBackIcon, CloseIcon } from '../../../assets/icons'

@@ -1,6 +1,6 @@
 import { styled, Typography, Box, Rating, Avatar } from '@mui/material'
 import Button from '../../UI/Button'
-import { NotUserImage } from '../../../assets/images'
+import { NotFoundSpecialistImage } from '../../../assets/images'
 import { containsTheHTTPS } from '../../../utils/helpers'
 
 const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => {
@@ -19,7 +19,11 @@ const SpecialistCard = ({ doctor, getDoctorName, formatDates }) => {
             {containsTheHTTPS(imageDoctor) ? (
                <Avatar className="image" src={imageDoctor} alt="doctor" />
             ) : (
-               <Avatar className="image" src={NotUserImage} alt="doctor" />
+               <Avatar
+                  className="image"
+                  src={NotFoundSpecialistImage}
+                  alt="doctor"
+               />
             )}
 
             <Box>
