@@ -1,8 +1,7 @@
-import { styled, Link } from '@mui/material'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
+import { styled, Link, Breadcrumbs } from '@mui/material'
 
 const BreadCrumbs = ({ text, to, before, additionalText }) => {
-   const breadcrumbItems = [
+   const breadcrumbsItems = [
       { label: before, href: to },
       { label: text },
 
@@ -10,28 +9,29 @@ const BreadCrumbs = ({ text, to, before, additionalText }) => {
    ].filter(Boolean)
 
    return (
-      <Breadcrumbs separator="›" aria-label="breadcrumb">
-         {breadcrumbItems.map(({ label, href }, index) => (
+      <StyledBreadCrumbs separator="›" aria-label="breadcrumbs">
+         {breadcrumbsItems?.map(({ label, href }, i) => (
             <StyledLink
                key={label}
-               islast={index === breadcrumbItems.length - 1}
+               islast={String(i === breadcrumbsItems.length - 1)}
                href={href}
             >
                {label}
             </StyledLink>
          ))}
-      </Breadcrumbs>
+      </StyledBreadCrumbs>
    )
 }
 
 export default BreadCrumbs
 
+const StyledBreadCrumbs = styled(Breadcrumbs)(() => ({
+   marginBottom: '30px',
+}))
+
 const StyledLink = styled(Link)(({ islast }) => ({
-   fontSize: '1rem',
-   fontWeight: '400',
-   paddingBottom: '2rem',
-   fontFamily: 'Manrope',
-   color: islast ? '#048741' : 'inherit',
-   cursor: islast ? '' : 'pointer',
+   fontSize: '14px',
+   color: islast === 'true' ? '#048741' : 'inherit',
+   cursor: islast !== 'true' && 'pointer',
    textDecoration: 'none',
 }))

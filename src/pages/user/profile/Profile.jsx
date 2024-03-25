@@ -84,13 +84,13 @@ const Profile = () => {
                         >
                            <Tab
                               label="ЛИЧНЫЕ ДАННЫЕ"
-                              value="1"
+                              value="profle"
                               className="route"
                            />
 
                            <Tab
                               label="СМЕНИТЬ ПАРОЛЬ"
-                              value="2"
+                              value="change-password"
                               className="route"
                            />
                         </TabList>
@@ -244,9 +244,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontSize: '0.75rem',
          marginRight: '1.87rem',
          padding: '0rem',
-         transition: '0.3s',
+         transition: 'all 0.3s easy',
          fontWeight: '500',
          color: theme.palette.secondary.LightGrey,
+      },
+
+      '& .Mui-selected': {
+         transition: 'all 1s easy',
+         color: '#048741 !important',
       },
 
       '& .tables': {
@@ -264,10 +269,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& .Mui-selected': {
-         transition: '1s',
-         color: '#048741 !important',
-      },
+      // '& .Mui-selected': {
+      //    transition: '1s',
+      //    color: '#048741 !important',
+      // },
    },
 }))
 

@@ -1,7 +1,6 @@
 /* eslint-disable react/no-this-in-sfc */
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PDFDocument } from 'pdf-lib'
 import dayjs from 'dayjs'

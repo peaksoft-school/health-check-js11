@@ -90,7 +90,7 @@ const AccordionSummary = styled((props) => (
       marginLeft: theme.spacing(1),
    },
 
-   transition: 'background-color 0.3s',
+   transition: 'background-color 0.3s easy',
 
    '&.Mui-expanded': {
       backgroundColor: '#048741 ',

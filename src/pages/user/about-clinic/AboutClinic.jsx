@@ -1,8 +1,8 @@
 import { Typography, styled, Box } from '@mui/material'
 import { AboutClinicImage, SignatureImage } from '../../../assets/images'
 import AboutUs from '../../../components/landing/AboutUs'
-import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import { ABOUT_CLINICK_TEXT } from '../../../utils/constants'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const AboutClinic = () => {
    window.scrollTo({ top: 0 })

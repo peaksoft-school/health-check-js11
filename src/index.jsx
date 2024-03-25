@@ -8,6 +8,7 @@ import { ru } from 'date-fns/locale'
 import App from './App'
 import Notification from './components/Notification'
 import Themes from './components/Themes'
+import Loading from './components/Loading'
 import { store, persistor } from './store/store'
 import { injectStore } from './configs/axiosInstance'
 import { fileInjectStore } from './configs/axiosInstaseFile'
@@ -21,7 +22,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
    <StrictMode>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
-         <PersistGate loading="loading.." persistor={persistor}>
+         <PersistGate loading={<Loading />} persistor={persistor}>
             <Provider store={store}>
                <Themes>
                   <Notification />

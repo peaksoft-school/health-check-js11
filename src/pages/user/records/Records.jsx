@@ -4,11 +4,7 @@ import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
-import {
-   CloseIcon,
-   CloseIconSchedule,
-   HealthCheckIcon,
-} from '../../../assets/icons'
+import { CloseIconSchedule, HealthCheckIcon } from '../../../assets/icons'
 import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 
 const Records = () => {

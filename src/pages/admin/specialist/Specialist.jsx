@@ -1,17 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { Typography, Box, styled, Avatar, InputLabel } from '@mui/material'
-import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
-import { NotUserImage } from '../../../assets/images'
+import Loading from '../../../components/Loading'
+import TextEditor from '../../../components/UI/TextEditor'
+import {
+   NotFoundDoctorImage,
+   NotFoundSpecialistImage,
+} from '../../../assets/images'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import { ROUTES } from '../../../routes/routes'
 import { DEPARTMENTS } from '../../../utils/constants'
 import { containsTheHTTPS } from '../../../utils/helpers'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const selectStyles = {
    control: (provided, state) => {
@@ -54,22 +59,44 @@ const selectStyles = {
 }
 
 const Specialist = () => {
-   const { specialist } = useSelector((state) => state.specialists)
+   const { specialist, isLoading } = useSelector((state) => state.specialists)
+
+   const [status, setStatus] = useState('personal')
+
+   const [searchParams, setSearchParams] = useSearchParams()
 
    const { id } = useParams()
+
+   const navigate = useNavigate()
 
    const dispatch = useDispatch()
 
    useEffect(() => {
       dispatch(SPECIALISTS_THUNK.getSpecialistById(id))
+
+      const currentStatus = searchParams.get('status') || 'personal'
+
+      setStatus(currentStatus)
    }, [id])
 
    const onSubmit = (values) => {
-      const formData = new FormData()
+      if (status === 'personal') {
+         searchParams.set('status', 'edit')
 
-      formData.append('file', values.file)
+         setSearchParams(searchParams)
+         setStatus(searchParams.get('status'))
+      } else {
+         const formData = new FormData()
 
-      dispatch(SPECIALISTS_THUNK.updateButton({ id, values }))
+         formData.append('file', values.file)
+
+         dispatch(SPECIALISTS_THUNK.updateButton({ id, values }))
+
+         searchParams.set('status', 'personal')
+
+         setSearchParams(searchParams)
+         setStatus(searchParams.get('status'))
+      }
    }
 
    const { values, handleChange, handleSubmit, setValues } = useFormik({
@@ -107,21 +134,50 @@ const Specialist = () => {
       handleChange('department')(selectedOption.label)
    }
 
+   const changeTextEditorHandler = (value) => {
+      handleChange('description')(value)
+   }
+
+   const navigateHandler = () => {
+      if (status === 'personal') {
+         navigate(`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`)
+      } else {
+         searchParams.set('status', 'personal')
+
+         setSearchParams(searchParams)
+         setStatus(searchParams.get('status'))
+      }
+   }
+
    const selectOptions = DEPARTMENTS.find(
       (option) => option.value === values.departmentName
    )
 
+   const isOpen = status === 'personal' ? false : undefined
+
+   const isReadOnly = status === 'personal'
+
    const doctorImage = containsTheHTTPS(values.image)
       ? values.image
-      : NotUserImage
+      : NotFoundSpecialistImage
+
+   if (!specialist.firstName) {
+      return (
+         <StyledNotFoundDoctor>
+            <img src={NotFoundDoctorImage} alt="not-found-doctor" />
+         </StyledNotFoundDoctor>
+      )
+   }
 
    return (
       <StyledContainer>
          <BreadCrumbs
-            to="/admin/specialists"
+            to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`}
             before="Специалисты"
             text={`${specialist.firstName} ${specialist.lastName}`}
          />
+
+         {isLoading && <Loading />}
 
          <Typography className="title">
             {specialist.firstName} {specialist.lastName}
@@ -135,7 +191,9 @@ const Specialist = () => {
                   alt="Фото специалиста"
                />
 
-               <label htmlFor="file">Сменить фото</label>
+               {status === 'personal' || (
+                  <label htmlFor="file">Сменить фото</label>
+               )}
 
                <input
                   id="file"
@@ -155,8 +213,8 @@ const Specialist = () => {
 
                         <StyledInput
                            value={values.firstName}
-                           onChange={handleChange('firstName')}
-                           readOnly
+                           onChange={handleChange}
+                           readOnly={isReadOnly}
                         />
                      </Box>
 
@@ -167,10 +225,10 @@ const Specialist = () => {
                            options={DEPARTMENTS}
                            onChange={changeSelectHandler}
                            placeholder={values.department}
-                           variant="schedule"
                            value={selectOptions}
                            styles={selectStyles}
-                           menuIsOpen={false}
+                           menuIsOpen={isOpen}
+                           variant="schedule"
                         />
                      </Box>
                   </Box>
@@ -181,8 +239,8 @@ const Specialist = () => {
 
                         <StyledInput
                            value={values.lastName}
-                           onChange={handleChange('lastName')}
-                           readOnly
+                           onChange={handleChange}
+                           readOnly={isReadOnly}
                         />
                      </Box>
 
@@ -191,8 +249,8 @@ const Specialist = () => {
 
                         <StyledInput
                            value={values.position}
-                           onChange={handleChange('position')}
-                           readOnly
+                           onChange={handleChange}
+                           readOnly={isReadOnly}
                         />
                      </Box>
                   </Box>
@@ -200,23 +258,29 @@ const Specialist = () => {
 
                <Box className="description">
                   <InputLabel>Описание</InputLabel>
-
-                  <StyledTextarea
-                     onChange={handleChange('description')}
-                     value={values.description}
-                     rows={values.description?.length > 1 && 20}
-                     readOnly
-                  />
+                  {status === 'personal' ? (
+                     <StyledTextarea
+                        value={values.description}
+                        rows={values.description?.length > 1 ? 20 : 1}
+                        readOnly
+                     />
+                  ) : (
+                     <TextEditor onChange={changeTextEditorHandler} />
+                  )}
                </Box>
 
                <Box className="buttons-box">
-                  <Link to={`${ROUTES.ADMIN}/${ROUTES.ADMIN.SPECIALISTS}`}>
-                     <Button type="button" variant="grey">
-                        НАЗАД
-                     </Button>
-                  </Link>
+                  <StyledButton
+                     type="button"
+                     variant="secondary"
+                     onClick={navigateHandler}
+                  >
+                     {status === 'personal' ? 'НАЗАД' : 'ОТМЕНИТЬ'}
+                  </StyledButton>
 
-                  <Button type="submit">РЕДАКТИРОВАТЬ</Button>
+                  <StyledButton type="submit">
+                     {status === 'personal' ? 'РЕДАКТИРОВАТЬ' : 'СОХРАНИТЬ'}
+                  </StyledButton>
                </Box>
             </Box>
          </form>
@@ -315,6 +379,13 @@ const StyledContainer = styled(Box)(() => ({
                color: '#464444',
             },
          },
+
+         '& > .buttons-box': {
+            display: 'flex',
+            justifyContent: 'end',
+            gap: '16px',
+            marginTop: '48px',
+         },
       },
    },
 }))
@@ -367,5 +438,22 @@ const StyledTextarea = styled('textarea')(({ theme }) => ({
       borderRadius: '10px',
       width: '7px',
       backgroundColor: '#f5f5f5',
+   },
+}))
+
+const StyledButton = styled(Button)(() => ({
+   height: '39px',
+   width: '243px',
+}))
+
+const StyledNotFoundDoctor = styled(Box)(() => ({
+   margin: '0 auto',
+   maxWidth: '1600px',
+   display: 'flex',
+   justifyContent: 'center',
+
+   '& > img': {
+      width: '40%',
+      height: '40%',
    },
 }))

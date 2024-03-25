@@ -8,7 +8,6 @@ const DatePicker = ({
    value,
    onChange,
    onBlur,
-   format = 'YYYY/MM/DD',
    maxDate,
    minDate,
    variant,

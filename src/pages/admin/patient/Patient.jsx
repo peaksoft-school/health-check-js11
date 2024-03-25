@@ -214,6 +214,29 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          '& > div': {
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
+
+            '& a > .insert-file': {
+               cursor: 'pointer',
+               boxSizing: 'content-box',
+               width: '2rem',
+               transition: 'all 1s easy',
+               height: '5vh',
+               padding: '0.5rem',
+               borderRadius: '6px',
+               backgroundColor: theme.palette.primary.main,
+               marginTop: '5px',
+
+               '&:hover': {
+                  backgroundColor: theme.palette.tertiary.lightBlue,
+
+                  '& > path': {
+                     fill: theme.palette.primary.main,
+                     width: '2rem',
+                     height: '5vh',
+                  },
+               },
+            },
          },
       },
 
