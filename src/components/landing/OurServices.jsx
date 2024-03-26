@@ -1,39 +1,60 @@
+import { useNavigate } from 'react-router-dom'
 import { styled, Box, Typography } from '@mui/material'
+import { ROUTES } from '../../routes/routes'
+import { SERVICES } from '../../utils/constants/services'
 import Button from '../UI/Button'
-import { SERVICES } from '../../utils/constants/index'
 
-const OurServices = () => (
-   <StyledContainer>
-      <Box className="box">
-         <Typography className="title" variant="h2">
-            Наши &nbsp;
-            <Typography variant="span" className="services">
-               услуги
+const OurServices = () => {
+   const navigate = useNavigate()
+
+   const navigateHandler = () => {
+      navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICES}`)
+   }
+
+   const innerNavigateHandler = (id) => () => {
+      navigate(`${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/${id}`)
+   }
+
+   return (
+      <StyledContainer>
+         <Box className="box">
+            <Typography className="title" variant="h2">
+               Наши &nbsp;
+               <Typography variant="span" className="services">
+                  услуги
+               </Typography>
             </Typography>
-         </Typography>
 
-         <Typography className="description">
-            За все время работы клиника приняла более 1 млн. пациентов.
-         </Typography>
+            <Typography className="description">
+               За все время работы клиника приняла более 1 млн. пациентов.
+            </Typography>
 
-         <Box className="services-box">
-            {SERVICES.map(({ id, name, icon }) => (
-               <Box className="service" key={id}>
-                  <StyledServiceIcon>{icon}</StyledServiceIcon>
+            <Box className="services-box">
+               {SERVICES.slice(0, 9).map(({ id, name, icon }) => (
+                  <Box
+                     className="service"
+                     key={id}
+                     onClick={innerNavigateHandler(id)}
+                  >
+                     <StyledServiceIcon>{icon}</StyledServiceIcon>
+                     <Typography className="name">{name}</Typography>
+                  </Box>
+               ))}
+            </Box>
 
-                  <Typography className="name">{name}</Typography>
-               </Box>
-            ))}
+            <Box className="button-box">
+               <Button
+                  className="button"
+                  variant="secondary"
+                  onClick={navigateHandler}
+               >
+                  Смотреть все
+               </Button>
+            </Box>
          </Box>
-
-         <Box className="button-box">
-            <Button className="button" variant="secondary">
-               Смотреть все
-            </Button>
-         </Box>
-      </Box>
-   </StyledContainer>
-)
+      </StyledContainer>
+   )
+}
 
 export default OurServices
 
@@ -43,7 +64,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .box': {
       margin: '0 auto',
       maxWidth: '1600px',
-      padding: '120px 0',
 
       '& > .title': {
          fontSize: '2.25rem',
@@ -94,6 +114,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
          '& .button': {
             height: '42px !important',
+
+            '&:hover': {
+               border: 'none',
+            },
          },
       },
    },
@@ -106,7 +130,7 @@ const StyledServiceIcon = styled(Box)(({ theme }) => ({
    border: '1px solid #DEDEDE',
    width: '6.275rem',
    height: '6.625rem',
-   transition: 'all 0.5s easy',
+   transition: 'all 0.3s linear',
    cursor: 'pointer',
 
    '&:hover': {

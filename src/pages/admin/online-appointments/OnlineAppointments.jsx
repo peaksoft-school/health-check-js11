@@ -1,39 +1,37 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Workbook } from 'exceljs'
-import { useDebounce } from 'use-debounce'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import Button from '../../../components/UI/Button'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
-import Loading from '../../../components/Loading'
+import { Workbook } from 'exceljs'
+import { useDebounce } from 'use-debounce'
+import { useToggleModal } from '../../../utils/helpers'
+import { NoDataImage } from '../../../assets/images'
 import { PlusIcon } from '../../../assets/icons'
 import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
+import Button from '../../../components/UI/Button'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
+import Loading from '../../../components/Loading'
 import Schedule from '../schedule/Schedule'
 import AddSchedule from '../../../components/admin/schedule/AddSchedule'
 import Table from '../../../components/UI/Table'
-import { useToggleModal } from '../../../utils/helpers'
-
-const getDefaultTabValue = () => {
-   const storedValue = localStorage.getItem('selectedTab')
-
-   return storedValue || '1'
-}
 
 const OnlineAppointments = () => {
-   const [value, setValue] = useState(getDefaultTabValue)
+   const [tab, setTab] = useState('online-appointments')
    const [searchName, setSearchName] = useState('')
-   const [showAddButton, setShowAddButton] = useState(true)
-   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const { schedules } = useSelector((state) => state.schedule)
-
-   const dispatch = useDispatch()
 
    const { isLoading, appointments } = useSelector(
       (state) => state.onlineAppointments
    )
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
+
+   const [searchParams, setSearchParams] = useSearchParams()
+
+   const dispatch = useDispatch()
+
    const memoizedAppointments = useMemo(() => appointments, [appointments])
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
@@ -55,27 +53,21 @@ const OnlineAppointments = () => {
    }, [])
 
    const tabsChange = (_, newValue) => {
-      setValue(newValue)
+      setTab(newValue)
 
-      const newShowAddButton = newValue === '1'
-
-      setShowAddButton(newShowAddButton)
-
-      localStorage.setItem('selectedTab', newValue)
-      localStorage.setItem('showAddButton', newShowAddButton)
+      searchParams.set('tab', newValue)
+      setSearchParams(searchParams)
    }
 
    useEffect(() => {
-      const storedValue = localStorage.getItem('selectedTab')
+      const tabFormUrl = searchParams.get('tab')
 
-      if (storedValue) {
-         setValue(storedValue)
-
-         const newShowAddButton = storedValue === '1'
-
-         setShowAddButton(newShowAddButton)
-
-         localStorage.setItem('showAddButton', newShowAddButton)
+      if (tabFormUrl) {
+         setTab(tabFormUrl)
+      } else {
+         setTab('online-appointments')
+         searchParams.set('tab', 'online-appointments')
+         setSearchParams(searchParams)
       }
    }, [])
 
@@ -144,17 +136,18 @@ const OnlineAppointments = () => {
 
    return (
       <StyledContainer>
-         <Box className="button-container">
+         <Box className="buttons-container">
             <Typography className="title">Онлайн-запись</Typography>
 
-            {isLoading && <Loading />}
-
-            {!showAddButton && (
-               <Box className="buttons-container">
+            {tab === 'online-appointments' ? (
+               ''
+            ) : (
+               <Box className="buttons-box">
                   <Button className="add-button" onClick={onOpenModal}>
-                     <PlusIcon className="plus-icon" />
-                     Добавить запись
+                     <PlusIcon /> Добавить запись
                   </Button>
+
+                  {isLoading && <Loading />}
 
                   <Button
                      variant="secondary"
@@ -167,22 +160,29 @@ const OnlineAppointments = () => {
             )}
          </Box>
 
+         {isLoading && <Loading />}
+
          <AddSchedule open={isOpen} onClose={onCloseModal} />
 
          <Box>
-            <TabContext value={value}>
+            <TabContext value={tab}>
                <Box className="tabs-container">
-                  <TabList
-                     onChange={tabsChange}
-                     aria-label="lab API tabs example"
-                  >
-                     <Tab label="Онлайн-запись" value="1" className="route" />
+                  <TabList onChange={tabsChange}>
+                     <Tab
+                        label="Онлайн-запись"
+                        value="online-appointments"
+                        className="route"
+                     />
 
-                     <Tab label="Расписание" value="2" className="route" />
+                     <Tab
+                        label="Расписание"
+                        value="schedules"
+                        className="route"
+                     />
                   </TabList>
                </Box>
 
-               <TabPanel value="1" className="tables">
+               <TabPanel value="online-appointments" className="tables">
                   <Box className="input-container">
                      <StyledInput
                         placeholder="Поиск"
@@ -192,14 +192,22 @@ const OnlineAppointments = () => {
                   </Box>
 
                   <Box className="table-container">
-                     <Table
-                        columns={ONLINE_APPOINTMENTS_COLUMN}
-                        data={memoizedAppointments}
-                     />
+                     {memoizedAppointments.length === 0 ? (
+                        <img
+                           src={NoDataImage}
+                           alt="No Data"
+                           className="no-data-image"
+                        />
+                     ) : (
+                        <Table
+                           columns={ONLINE_APPOINTMENTS_COLUMN}
+                           data={memoizedAppointments}
+                        />
+                     )}
                   </Box>
                </TabPanel>
 
-               <TabPanel value="2" className="tables">
+               <TabPanel value="schedules" className="tables">
                   <Schedule />
                </TabPanel>
             </TabContext>
@@ -215,8 +223,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    flexDirection: 'column',
    maxWidth: '1600px',
    margin: '0 auto',
+   minHeight: '100vh',
 
-   '& .button-container': {
+   '& .buttons-container': {
       display: 'flex',
       justifyContent: 'space-between',
 
@@ -227,21 +236,36 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          marginBottom: '1.87rem',
       },
 
-      '& > .buttons-container': {
+      '& .buttons-box': {
          display: 'flex',
-         gap: '10px',
+         gap: '30px',
+         alignItems: 'center',
 
-         '& > .add-button': {
+         '& .export-btn': {
             borderRadius: '4px',
+            padding: '8px 20px 9px 20px',
+            width: '168px',
+            height: '43px',
+
+            '&:hover': {
+               width: '168px',
+               padding: '8px 20px 9px 20px',
+               border: 'none',
+            },
+         },
+
+         '& .add-button': {
             fontFamily: 'Manrope',
             fontSize: '0.875rem',
+            fontStyle: 'normal',
             fontWeight: '600',
             lineHeight: 'normal',
             letterSpacing: '0.02625rem',
             textTransform: 'uppercase',
-            height: '2.5rem',
+            height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
             width: '13.0625rem !important',
+            flexShrink: '0',
 
             '& > div': {
                display: 'flex',
@@ -257,20 +281,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                height: '1.125rem',
             },
          },
-
-         '& > .export-btn': {
-            borderRadius: '4px',
-            height: '2.5rem',
-            padding: '8px 20px 9px 20px',
-         },
-      },
-
-      '& .save-btn': {
-         background: 'rgb(4, 135, 65)',
-         padding: '8px 20px 9px 20px',
-         borderRadius: '4px',
-         height: '40px',
-         marginLeft: '14px',
       },
    },
 
@@ -283,13 +293,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       lineHeight: 'normal',
       marginRight: '1.87rem',
       padding: '0rem',
-      transition: 'all 0.3s easy',
+      transition: 'all 0.3s linear',
       fontWeight: '500',
       color: theme.palette.secondary.LightGrey,
    },
 
    '& .Mui-selected': {
-      transition: 'all 1s easy',
+      transition: 'all 1s linear',
       color: '#048741 !important',
    },
 
@@ -308,6 +318,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       bordeRradius: ' 0.375rem',
       background: 'white',
       marginTop: '1.25rem',
+
+      '& .no-data-image': {
+         width: '1300px',
+      },
    },
 }))
 

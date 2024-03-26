@@ -38,7 +38,7 @@ const StyledContainer = styled(Box)(({ isactive }) => ({
 
    '& .image': {
       filter: isactive !== 'true' && 'brightness(0.7)',
-      transition: 'filter 1s ease',
+      transition: 'filter 1s linear',
    },
 
    '& > div > span:first-of-type': {

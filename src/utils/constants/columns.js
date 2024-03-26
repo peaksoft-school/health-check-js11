@@ -1,26 +1,27 @@
 import { Box, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
+import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
+import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
+import { formatPhoneNumberWithSpaces } from '../helpers'
+import { APPLICATIONS_THUNKS } from '../../store/slices/applications/applicationsThunk'
 import DeleteSelected from '../../components/UI/admin/DeleteSelected'
 import ProcessedCheckbox from '../../components/UI/admin/ProcessedCheckbox'
 import LocalDate from '../../components/UI/admin/LocalDate'
 import Delete from '../../components/UI/admin/Delete'
-import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
-import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
-import { ONLINE_APPOINTMENTS_ACTIONS } from '../../store/slices/online-appointments/onlineAppointmentsSlice'
 import SelectAll from '../../components/UI/admin/SelectAll'
-import { APPLICATION_THUNK } from '../../store/slices/applications/applicationsThunk'
-import { formatPhoneNumberWithSpaces } from '../helpers'
+import SelectSeparately from '../../components/UI/admin/SelectSeparately'
+import Navigate from '../../components/UI/admin/Navigate'
+import Email from '../../components/online-appointments/Email'
 import {
    handleIsChecked,
    handleIsCheckedItem,
-   handleRemoveChecked,
 } from '../../store/slices/applications/aplicationsSlice'
-import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
+
 import SpecialistInfo from '../../components/admin/specialists/SpecialistInfo'
+import SpecialistSwicher from '../../components/admin/specialists/SpecialistSwicher'
 import SpecialistActions from '../../components/admin/specialists/SpecialistActions'
-import Navigate from '../../components/UI/admin/Navigate'
-import SelectSeparately from '../../components/UI/admin/SelectSeparately'
 
 const SCHEDULE_COLUMN = [
    {
@@ -42,7 +43,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
    {
       Header: (
          <SelectAll
-            variant="appointments"
+            variant="online-appointments"
             selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsChecked}
          />
       ),
@@ -53,12 +54,17 @@ const ONLINE_APPOINTMENTS_COLUMN = [
          flex: 0.06,
       },
 
+      tdStyle: {
+         maxWidth: '64px',
+      },
+
       Cell: ({ row }) => (
          <SelectSeparately
             selectFn={ONLINE_APPOINTMENTS_ACTIONS.handleIsCheckedItem}
-            variant="appointments"
+            variant="online-appointments"
             id={row.original.appointmentId}
             isSelected={row.original.isSelected}
+            isDisabled={!row.original.processed}
          />
       ),
    },
@@ -66,8 +72,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
    {
       Header: (
          <DeleteSelected
-            variant="appointments"
-            clearFn={ONLINE_APPOINTMENTS_ACTIONS.clearDeletedAppointmentsIds}
+            variant="online-appointments"
             deleteFn={ONLINE_APPOINTMENTS_THUNK.deleteAllAppointments}
          />
       ),
@@ -77,6 +82,10 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       style: {
          padding: '17px 0 20px',
          flex: 0.06,
+      },
+
+      tdStyle: {
+         maxWidth: '47px',
       },
    },
 
@@ -92,6 +101,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         maxWidth: '63px',
       },
 
       Cell: ({ row }) => (
@@ -117,6 +127,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         maxWidth: '158px',
       },
 
       Cell: ({ row }) => (
@@ -142,6 +153,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         maxWidth: '159px',
       },
 
       Cell: ({ row }) => {
@@ -163,24 +175,21 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       accessor: 'email',
 
       style: {
-         padding: '19px 0 20px',
+         padding: '19px 0px 20px',
          fontWeight: '700',
          flex: 0.25,
+         maxWidth: '210px',
+         minWidth: '210px',
       },
 
       tdStyle: {
+         maxWidth: '210px',
+         minWidth: '210px',
+         overflow: 'hidden',
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => (
-         <Typography
-            style={{
-               color: row.original.processed ? 'black' : '#707070',
-            }}
-         >
-            {row.original.email}
-         </Typography>
-      ),
+      Cell: ({ row }) => <Email row={row} />,
    },
 
    {
@@ -195,6 +204,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
 
       tdStyle: {
          fontWeight: '500',
+         maxWidth: '159px',
       },
 
       Cell: ({ row }) => (
@@ -219,6 +229,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       },
 
       tdStyle: {
+         maxWidth: '175px',
          fontWeight: '500',
       },
 
@@ -246,6 +257,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          fontWeight: '500',
          fontSize: '5px',
+         maxWidth: '127px',
       },
 
       Cell: ({ row }) => (
@@ -274,6 +286,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          display: 'flex',
          alignItems: 'start',
+         maxWidth: '127px',
       },
 
       Cell: ({ row }) => {
@@ -301,6 +314,7 @@ const ONLINE_APPOINTMENTS_COLUMN = [
       tdStyle: {
          display: 'flex',
          justifyContent: 'center',
+         maxWidth: '99px',
       },
 
       Cell: ({ row }) => {
@@ -458,20 +472,22 @@ const APPLICATIONS_COLUMN = [
 
       Cell: ({ row }) => (
          <SelectSeparately
-            {...row.original}
+            isSelected={row.original.isSelected}
             selectFn={handleIsCheckedItem}
             variant="applications"
+            isDisabled={!row.original.processed}
+            id={row.original.id}
          />
       ),
    },
    {
       Header: (
          <DeleteSelected
-            deleteFn={APPLICATION_THUNK.deleteAllApplication}
-            clearFn={handleRemoveChecked}
+            deleteFn={APPLICATIONS_THUNKS.deleteAllApplication}
             variant="applications"
          />
       ),
+
       accessor: 'action',
       style: {
          padding: '17px 0 20px',
@@ -487,7 +503,9 @@ const APPLICATIONS_COLUMN = [
          fontWeight: '700',
          flex: 0.1,
       },
+
       tdStyle: {
+         paddingRight: '5px',
          fontWeight: '500',
       },
 
@@ -503,13 +521,16 @@ const APPLICATIONS_COLUMN = [
    },
    {
       Header: 'Имя',
-      accessor: 'name',
+      accessor: 'username',
+
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.4,
       },
+
       tdStyle: {
+         paddingRight: '9px',
          fontWeight: '500',
       },
 
@@ -519,53 +540,61 @@ const APPLICATIONS_COLUMN = [
                color: row.original.processed ? 'black' : '#707070',
             }}
          >
-            {row.original.name}
+            {row.original.username}
          </Typography>
       ),
    },
    {
       Header: 'Дата',
-      accessor: 'original.date',
+      accessor: 'dateOfApplicationCreation',
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
          flex: 0.4,
       },
+
       tdStyle: {
+         paddingRight: '10px',
          fontWeight: '500',
       },
+
       Cell: ({ row }) => (
          <Box
             style={{
                color: row.original.processed ? 'black' : '#707070',
             }}
          >
-            {format(new Date(row.original.date), 'dd.MM.yy')}{' '}
+            {format(
+               new Date(row.original.dateOfApplicationCreation),
+               'dd.MM.yy'
+            )}
          </Box>
       ),
    },
    {
       Header: 'Номер телефона',
-      accessor: 'number',
+      accessor: 'phoneNumber',
+
       style: {
          padding: '19px 0 20px',
          fontWeight: '600',
-         flex: 0.8,
+         flex: 0.7,
          justifyContent: 'center',
       },
+
       tdStyle: {
          fontWeight: '500',
       },
 
       Cell: ({ row }) => {
-         const { number } = row.original
+         const { phoneNumber } = row.original
          return (
             <Box
                style={{
                   color: row.original.processed ? 'black' : '#707070',
                }}
             >
-               {formatPhoneNumberWithSpaces(number)}
+               {formatPhoneNumberWithSpaces(phoneNumber)}
             </Box>
          )
       },
@@ -575,17 +604,19 @@ const APPLICATIONS_COLUMN = [
       accessor: 'processed',
       style: {
          padding: '19px 10px 20px',
-         flex: 0.1,
+         flex: 0.2,
          fontWeight: '700',
       },
+
       tdStyle: {
          display: 'flex',
          justifyContent: 'center',
       },
+
       Cell: ({ row }) => (
          <ProcessedCheckbox
             variant="applications"
-            updateFn={APPLICATION_THUNK.updateApplication}
+            updateFn={APPLICATIONS_THUNKS.updateApplication}
             checked={row.original.processed}
             id={row.original.id}
          />
@@ -594,20 +625,24 @@ const APPLICATIONS_COLUMN = [
    {
       Header: 'Действия',
       accessor: 'totalDiscount',
+
       style: {
          padding: '19px 10px 20px',
          fontWeight: '700',
          flex: 0.1,
       },
+
       tdStyle: {
          display: 'flex',
          justifyContent: 'end',
+         paddingLeft: '40px',
       },
+
       Cell: ({ row }) => (
          <Delete
-            deleteFn={APPLICATION_THUNK.deleteApplication}
+            deleteFn={APPLICATIONS_THUNKS.deleteApplication}
             id={row.original.id}
-            name={row.original.name}
+            name={row.original.username}
             disabled={row.original.processed}
             text="заявку"
          />

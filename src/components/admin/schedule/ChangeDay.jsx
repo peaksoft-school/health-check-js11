@@ -61,16 +61,30 @@ const ChangeDay = ({
    useEffect(() => {
       const isSaveDisabledd = timeRanges.some(
          (range) =>
-            range.startHour < 1 ||
-            range.startMinute < 1 ||
-            range.endHour < 1 ||
-            range.endMinute < 1
+            range.startHour === '' ||
+            range.startMinute === '' ||
+            range.endHour === '' ||
+            range.endMinute === ''
       )
+
       setIsSaveDisabled(isSaveDisabledd)
    }, [timeRanges])
 
+   useEffect(() => {
+      const saveDis = timeRanges.some(
+         (range) =>
+            range.endMinute - range.startMinute <= 14 ||
+            range.startMinute > 59 ||
+            range.endMinute > 59 ||
+            range.startHour > 23 ||
+            range.endHour > 23
+      )
+
+      setIsSaveDisabled(saveDis)
+   }, [timeRanges])
+
    const isButtonDisabled = lastClicked.id === null || lastClicked.date === null
-   const buttonClassName = isButtonDisabled ? 'disabled-button' : ''
+   const buttonClassName = isButtonDisabled && 'disabled-button'
 
    return (
       <StyledContainer>
@@ -88,10 +102,10 @@ const ChangeDay = ({
                   Изменить шаблон
                </Typography>
 
-               <Box component="form" className="datas-container">
+               <form className="datas-container">
                   <Box className="datas">
                      <Box className="data department">
-                        <Typography className="data-title department">
+                        <Typography className="data-title">
                            Отделение:
                         </Typography>
 
@@ -111,9 +125,7 @@ const ChangeDay = ({
                      </Box>
 
                      <Box className="data">
-                        <Typography className="data-title date">
-                           Дата:
-                        </Typography>
+                        <Typography className="data-title">Дата:</Typography>
 
                         <Typography className="data-value">
                            {clickedDateObject
@@ -244,13 +256,13 @@ const ChangeDay = ({
                                  }
                                  onClick={addInterval}
                               >
-                                 - Добавить интервал
+                                 + Добавить интервал
                               </Typography>
                            </>
                         )}
                      </Box>
                   </Box>
-               </Box>
+               </form>
 
                <Box className="modal-buttons-conainer">
                   <Button
@@ -289,7 +301,6 @@ const StyledContainer = styled(Box)(() => ({
       fontWeight: '400',
       fontSize: '14px',
       borderRadius: '4px',
-      transition: 'all 0.2s easy',
    },
 }))
 
@@ -302,6 +313,7 @@ const StyledButton = styled(ButtonBase)(() => ({
    borderRadius: '4px',
    marginRight: '10px',
    height: '100%',
+   transition: '0.3s linear',
 }))
 
 const StyledModalContainer = styled(Box)(() => ({
@@ -335,21 +347,22 @@ const StyledModalContainer = styled(Box)(() => ({
       },
    },
 
-   '& .datas-container': {
+   '& > .datas-container': {
       display: 'flex',
       justifyContent: 'flex-start',
       flexDirection: 'column',
       width: '100%',
 
-      '& .datas': {
+      '& > .datas': {
          display: 'flex',
          flexDirection: 'column',
-         width: '16.1rem',
+         width: '100%',
 
-         '& .data': {
+         '& > .data': {
             display: 'flex',
             flexDirection: 'row',
             marginBottom: '17px',
+            justifyContent: 'flex-end',
 
             '& .data-title': {
                letterSpacing: '0%',
@@ -363,25 +376,14 @@ const StyledModalContainer = styled(Box)(() => ({
                letterSpacing: '0%',
                fontWeight: '400',
                color: 'rgb(98, 99, 102)',
+               width: '396px',
             },
-
-            '& .department': {
-               marginLeft: '7px',
-            },
-
-            '& .date': {
-               marginLeft: '49px',
-            },
-         },
-
-         '& .department': {
-            marginRight: '34px',
          },
       },
 
       '& .time-picker-container': {
          display: 'flex',
-         alignItems: 'center',
+         alignItems: 'flex-start',
 
          '& .line': {
             margin: '0px 6px !important',
@@ -409,7 +411,7 @@ const StyledModalContainer = styled(Box)(() => ({
             fontSize: '14px',
             fontWeight: '500',
             color: 'rgb(34, 34, 34)',
-            margin: '0 24px 27px 33px',
+            margin: '4px 24px 0 33px',
          },
 
          '& .time-picker-box': {
