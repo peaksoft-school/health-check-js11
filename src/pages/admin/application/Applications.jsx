@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Typography, styled } from '@mui/material'
 import { useDebounce } from 'use-debounce'
 import { APPLICATIONS_COLUMN } from '../../../utils/constants/columns'
-import { APPLICATIONS_THUNKS } from '../../../store/slices/application/applicationThunk'
+import { NoDataImage } from '../../../assets/images'
+import { APPLICATIONS_THUNKS } from '../../../store/slices/applications/applicationsThunk'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Table from '../../../components/UI/Table'
-import { NoDataImage } from '../../../assets/images'
+import Loading from '../../../components/Loading'
 
 const Applications = () => {
    const dispatch = useDispatch()
 
    const [searchText, setSearchText] = useState('')
 
-   const { applications } = useSelector((state) => state.applications)
+   const { applications, isLoading } = useSelector(
+      (state) => state.applications
+   )
 
    const [debouncedSearchText] = useDebounce(searchText, 1000)
 
@@ -35,30 +38,37 @@ const Applications = () => {
       dispatch(APPLICATIONS_THUNKS.getApplicationData())
    }, [])
 
+   const memoizedApplications = useMemo(() => applications, [applications])
+
    return (
       <StyledContainer>
-         <StyledMainText>
-            <Typography className="title">Заявки</Typography>
-         </StyledMainText>
+         <Box className="box">
+            <Box className="button-container">
+               <Typography variant="h3">Заявки</Typography>
+            </Box>
 
-         <Box className="input-container">
-            <StyledSearchInput
-               value={searchText}
-               onChange={handleSearch}
-               placeholder="Поиск"
-            />
-         </Box>
+            <Box>
+               <Box className="input-container">
+                  <StyledSearchInput
+                     value={searchText}
+                     onChange={handleSearch}
+                     placeholder="Поиск"
+                  />
+               </Box>
 
-         <Box className="table-container">
-            {applications.length > 0 ? (
-               <Table
-                  columns={APPLICATIONS_COLUMN}
-                  data={applications}
-                  className="table"
-               />
-            ) : (
-               <img src={NoDataImage} alt="no-data" className="no-data" />
-            )}
+               <Box className="table-container">
+                  {memoizedApplications.length > 0 ? (
+                     <Table
+                        columns={APPLICATIONS_COLUMN}
+                        data={memoizedApplications}
+                        className="table"
+                     />
+                  ) : (
+                     <img src={NoDataImage} alt="no-data" className="no-data" />
+                  )}
+                  {isLoading && <Loading />}
+               </Box>
+            </Box>
          </Box>
       </StyledContainer>
    )
@@ -74,53 +84,53 @@ const StyledSearchInput = styled(SearchInput)(() => ({
    width: '100%',
 }))
 
-const StyledContainer = styled(Box)(() => ({
-   '& > .input-container': {
+const StyledContainer = styled(Box)(({ theme }) => ({
+   '& .input-container': {
       width: '37.5rem',
       marginTop: '2.15rem',
    },
 
-   '& > .table-container': {
-      width: '100%',
-      borderRadius: '0.375rem',
-      bordeRradius: ' 0.375rem',
-      background: '#FFF',
-      height: '100%',
-      marginTop: '1.25rem',
+   '& > .box': {
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: '1600px',
+      margin: '0 auto',
+      paddingBottom: '30px',
+
+      '& h3': {
+         marginTop: '15px',
+         marginBottom: '15px',
+         fontSize: '24px',
+         fontWeight: '500',
+      },
+
+      '&  .tables': {
+         padding: '0rem',
+      },
 
       '& .no-data': { width: '1300px' },
+   },
+
+   '&  .table-container': {
+      width: '100%',
+      height: '100%',
+      borderRadius: '0.375rem',
+      bordeRradius: ' 0.375rem',
+      background: theme.palette.primary.main,
+      marginTop: '1.25rem',
 
       '& .MuiTable-root': {
          '& .MuiTableCell-root': {
             borderBottom: 'none',
          },
 
-         '& .MuiTableCell-head': {
-            borderBottom: '1px solid rgba(224, 224, 224, 1)',
+         '& .MuiTableRow-root': {
+            borderBottom: 'none',
          },
 
          '& .MuiTableRow-root:nth-of-type(even)': {
-            backgroundColor: '#F5F5F5',
+            backgroundColor: theme.palette.primary.backgroundAdmin,
          },
       },
-   },
-
-   '& > .not-application': {
-      textAlign: 'center',
-      color: 'green',
-      fontWeight: '10rem',
-   },
-}))
-
-const StyledMainText = styled('h3')(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
-   marginBottom: '1.87rem',
-   width: '100%',
-
-   '& > .title': {
-      fontWeight: '400',
-      lineHeight: 'normal',
-      fontSize: '1.375rem',
    },
 }))

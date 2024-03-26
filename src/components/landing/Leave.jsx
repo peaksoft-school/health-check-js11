@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { Box, InputBase, Paper, Typography, styled } from '@mui/material'
 import { ActivePhoneIcon, LeaveArrowIcon, UserIcon } from '../../assets/icons'
 import { DoctorLeaveImage } from '../../assets/images'
-import { APPLICATIONS_THUNKS } from '../../store/slices/application/applicationThunk'
+import { APPLICATIONS_THUNKS } from '../../store/slices/applications/applicationsThunk'
 import Button from '../UI/Button'
 import NumberInput from '../UI/inputs/NumberInput'
 

@@ -3,7 +3,18 @@ import { TextField, styled } from '@mui/material'
 
 const Input = forwardRef(
    (
-      { type, label, placeholder, onChange, error, onClick, value, ...rest },
+      {
+         type,
+         label,
+         placeholder,
+         onChange,
+         error,
+         onClick,
+         value,
+         disabled,
+         readOnly,
+         ...rest
+      },
       ref
    ) => {
       const hasError = !!error
@@ -16,7 +27,9 @@ const Input = forwardRef(
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            disabled={disabled}
             ref={ref}
+            inputProps={{ readOnly }}
             {...rest}
          />
       )
@@ -24,7 +37,6 @@ const Input = forwardRef(
 )
 
 const StyledInput = styled(TextField)(({ theme }) => ({
-   width: '414px',
    height: '42px',
    borderRadius: '8px solid',
    caretColor: theme.palette.primary.darkGreen,
@@ -44,12 +56,12 @@ const StyledInput = styled(TextField)(({ theme }) => ({
       },
 
       '&.Mui-focused fieldset': {
+         borderWidth: '1px',
          borderColor: theme.palette.primary.darkGreen,
       },
 
       '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
          borderColor: theme.palette.tertiary.red,
-         color: theme.palette.tertiary.red,
       },
    },
 }))

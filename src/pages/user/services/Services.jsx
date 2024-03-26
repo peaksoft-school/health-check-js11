@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
    Accordion,
    AccordionDetails,
@@ -72,7 +71,7 @@ const Services = () => {
                   </AccordionSummary>
 
                   <AccordionDetails className="answer">
-                     <Prosedura />
+                     <Prosedura variant="Как проходит процедура?" />
                   </AccordionDetails>
                </StyledDropdown>
 
@@ -86,7 +85,7 @@ const Services = () => {
                   </AccordionSummary>
 
                   <AccordionDetails className="answer">
-                     <Prosedura />
+                     <Prosedura variant="Показания" />
                   </AccordionDetails>
                </StyledSecondDropDown>
 
@@ -100,7 +99,7 @@ const Services = () => {
                   </AccordionSummary>
 
                   <AccordionDetails className="answer">
-                     <Prosedura />
+                     <Prosedura variant="Противопоказания" />
                   </AccordionDetails>
                </StyledSecondDropDown>
 
@@ -114,7 +113,7 @@ const Services = () => {
                   </AccordionSummary>
 
                   <AccordionDetails className="answer">
-                     <Prosedura />
+                     <Prosedura variant="Насколько безопасно отбеливание Zoom 4?" />
                   </AccordionDetails>
                </StyledSecondDropDown>
 
@@ -128,7 +127,7 @@ const Services = () => {
                   </AccordionSummary>
 
                   <AccordionDetails className="answer">
-                     <Prosedura />
+                     <Prosedura variant="Сколько держится результат?" />
                   </AccordionDetails>
                </StyledSecondDropDown>
             </Box>
@@ -231,7 +230,7 @@ const StyledService = styled(Box)(({ theme }) => ({
    borderRadius: '4px',
    padding: '12px 22px',
    gap: '24px',
-   transition: '0.3s',
+   transition: '0.3s linear',
 
    '&:hover': {
       color: 'white',
@@ -276,7 +275,7 @@ const StyledDropdown = styled(Accordion)(() => ({
    '& .answer': {
       backgroundColor: 'white',
 
-      '& > div > ul': {
+      '& > div > div > ul': {
          marginLeft: '15px',
          display: 'flex',
          gap: '5px',

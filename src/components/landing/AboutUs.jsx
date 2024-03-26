@@ -1,4 +1,5 @@
 import { Typography, styled, Box } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import {
    StudyImage,
    DoctorsImage,
@@ -26,9 +27,11 @@ const AboutUs = ({ variant }) => (
                      Записаться на консультацию
                   </Button>
                ) : (
-                  <Typography className="read-more">
-                     Читать подробнее о клинике <ArrowRightIcon />
-                  </Typography>
+                  <NavLink to="/about-clinic" className="navlink">
+                     <Typography className="read-more">
+                        Читать подробнее о клинике <ArrowRightIcon />
+                     </Typography>
+                  </NavLink>
                )}
             </Box>
 
@@ -101,13 +104,18 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                   fontSize: '0.8rem',
                },
             },
-
-            '& > .read-more': {
-               width: '250px',
+            '& .navlink': {
                color: '#009344',
-               fontWeight: '500',
-               cursor: 'pointer',
-               marginTop: '30px',
+               textDecoration: 'none',
+
+               '& > .read-more': {
+                  width: '250px',
+                  color: '#009344',
+
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  marginTop: '30px',
+               },
             },
          },
 

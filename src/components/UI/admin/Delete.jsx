@@ -5,7 +5,7 @@ import { DeleteIcon } from '../../../assets/icons'
 import Modal from '../Modal'
 import Button from '../Button'
 
-const Delete = ({ name, id, deleteFn, disabled, variant }) => {
+const Delete = ({ name, id, deleteFn, disabled, variant, text }) => {
    const [open, setOpen] = useState(false)
    const [isButtonDisabled, setIsButtonDisabled] = useState(!disabled)
 
@@ -39,7 +39,7 @@ const Delete = ({ name, id, deleteFn, disabled, variant }) => {
          <Modal handleClose={toggleModal} open={open} isCloseIcon={false}>
             <StyledModalContent>
                <Typography className="description">
-                  Вы уверены, что хотите удалить запись
+                  Вы уверены, что хотите удалить {text}
                </Typography>
 
                <Typography className="name">{name}?</Typography>
@@ -68,7 +68,7 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',
    width: '26px',
    height: '22px',
-   transition: '0.3s ease-in-out',
+   transition: '0.3s linear',
 
    '&:disabled': {
       cursor: 'not-allowed',

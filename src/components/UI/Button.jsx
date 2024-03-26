@@ -41,7 +41,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          borderRadius: '10px',
          background: 'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
          color: theme.palette.primary.main,
-         transition: 'all 0.5s',
+         transition: 'all 0.5s linear',
 
          '&:hover': {
             background:
@@ -53,7 +53,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             backgroundColor: theme.palette.primary.linearGradient,
          },
 
-         '&:disabled': {
+         '&.Mui-disabled': {
             border: 'none',
             backgroundColor: theme.palette.secondary.lightGrey,
             color: theme.palette.primary.main,
@@ -68,10 +68,11 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
             padding: '10px 26px',
             border: '1px solid #048741',
             color: theme.palette.primary.darkGreen,
-            transition: 'all 0.4s',
+            transition: 'all 0.4s easy',
 
             '&:hover': {
-               border: 'none',
+               border: '1px solid #048F50',
+               padding: '10px 26px',
                background:
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
                color: theme.palette.primary.main,
@@ -83,7 +84,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                   'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
             },
 
-            '&:disabled': {
+            '&.Mui-disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.backgroundAdmin,
                color: theme.palette.tertiary.main,
@@ -95,7 +96,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
    if (variant === 'grey') {
       return {
          '&.MuiButtonBase-root': {
-            transition: '0.2s',
+            transition: 'all 0.2s easy',
             borderRadius: '10px',
             padding: '10px 26px',
             border: '1px solid',
@@ -113,7 +114,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
                border: `1px solid ${theme.palette.primary.backgroundAdmin}`,
             },
 
-            '&:disabled': {
+            '&.Mui-disabled': {
                border: 'none',
                backgroundColor: theme.palette.primary.main,
                color: theme.palette.secondary.input,

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Typography, styled, Box, Menu, MenuItem } from '@mui/material'
 import { ADMIN_NAVIGATIONS } from '../../utils/constants/index'
 import { HealthCheckIcon, ArrowDownIcon, ArrowUpIcon } from '../../assets/icons'
-import AdminNavigations from '../../components/UI/AdminNavigations'
+import AdminNavigations from '../../components/UI/admin/AdminNavigations'
 import { logOut } from '../../store/slices/auth/authSlice'
 import Modal from '../../components/UI/Modal'
 import Button from '../../components/UI/Button'
@@ -102,6 +102,9 @@ export default AdminHeader
 
 const StyledContainer = styled('header')(({ theme }) => ({
    padding: '0 70px',
+   position: 'sticky',
+   top: '0px',
+   zIndex: '1000',
 
    '& > .box': {
       margin: '0 auto',
@@ -137,9 +140,10 @@ const StyledContainer = styled('header')(({ theme }) => ({
          display: 'flex',
          justifyContent: 'center',
          alignItems: 'center',
-         color: '#222',
+         color: theme.palette.primary.lightBlack,
          gap: '0.625rem',
          fontSize: '1.10rem',
+         cursor: 'pointer',
       },
 
       '& .cursor': {
@@ -150,7 +154,7 @@ const StyledContainer = styled('header')(({ theme }) => ({
 
 const StyledMenu = styled(Menu)(() => ({
    position: 'absolute',
-   zIndex: 1000,
+   zIndex: '1000',
    marginLeft: '20px',
 }))
 

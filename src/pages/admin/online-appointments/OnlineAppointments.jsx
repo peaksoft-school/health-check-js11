@@ -1,37 +1,38 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { Box, Typography, Tab, styled } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Workbook } from 'exceljs'
 import { useDebounce } from 'use-debounce'
-import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
-import { APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/appointmentThunk'
+import { useToggleModal } from '../../../utils/helpers'
 import { NoDataImage } from '../../../assets/images'
 import { PlusIcon } from '../../../assets/icons'
-import Table from '../../../components/UI/Table'
+import { ONLINE_APPOINTMENTS_COLUMN } from '../../../utils/constants/columns'
+import { ONLINE_APPOINTMENTS_THUNK } from '../../../store/slices/online-appointments/onlineAppointmentThunk'
 import Button from '../../../components/UI/Button'
+import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import Schedule from '../schedule/Schedule'
-import AddSchedule from '../../../components/schedule/AddSchedule'
-import SearchInput from '../../../components/UI/inputs/SearchInput'
+import AddSchedule from '../../../components/admin/schedule/AddSchedule'
+import Table from '../../../components/UI/Table'
 
 const OnlineAppointments = () => {
+   const [tab, setTab] = useState('online-appointments')
+   const [searchName, setSearchName] = useState('')
+
    const { schedules } = useSelector((state) => state.schedule)
 
    const { isLoading, appointments } = useSelector(
       (state) => state.onlineAppointments
    )
-
-   const [tab, setTab] = useState('online-appointments')
-   const [searchName, setSearchName] = useState('')
-   const [openModal, setOpenModal] = useState(false)
+   const { isOpen, onOpenModal, onCloseModal } = useToggleModal('modal')
 
    const [searchParams, setSearchParams] = useSearchParams()
 
    const dispatch = useDispatch()
 
-   const toggleModal = () => setOpenModal((prev) => !prev)
+   const memoizedAppointments = useMemo(() => appointments, [appointments])
 
    const handleSearchChange = (e) => setSearchName(e.target.value)
 
@@ -40,7 +41,7 @@ const OnlineAppointments = () => {
    useEffect(() => {
       if (debouncedSearchText !== undefined) {
          dispatch(
-            APPOINTMENTS_THUNK.searchAppointment({
+            ONLINE_APPOINTMENTS_THUNK.searchAppointment({
                searchName: debouncedSearchText,
             })
          )
@@ -48,7 +49,7 @@ const OnlineAppointments = () => {
    }, [debouncedSearchText])
 
    useEffect(() => {
-      dispatch(APPOINTMENTS_THUNK.getAppointments())
+      dispatch(ONLINE_APPOINTMENTS_THUNK.getAppointments())
    }, [])
 
    const tabsChange = (_, newValue) => {
@@ -96,11 +97,9 @@ const OnlineAppointments = () => {
             rowData.push(date.dayOfWeek)
 
             const startTime = date.startTimeOfConsultation.join(', ')
-            if (startTime.length > 20) {
+            if (startTime.length > 20)
                rowData.push(`${startTime.substring(0, 20)}...`)
-            } else {
-               rowData.push(startTime)
-            }
+            else rowData.push(startTime)
          })
 
          worksheet.addRow(rowData)
@@ -144,10 +143,11 @@ const OnlineAppointments = () => {
                ''
             ) : (
                <Box className="buttons-box">
-                  <Button className="add-button" onClick={toggleModal}>
-                     <PlusIcon className="plus-icon" />
-                     Добавить запись
+                  <Button className="add-button" onClick={onOpenModal}>
+                     <PlusIcon /> Добавить запись
                   </Button>
+
+                  {isLoading && <Loading />}
 
                   <Button
                      variant="secondary"
@@ -162,7 +162,7 @@ const OnlineAppointments = () => {
 
          {isLoading && <Loading />}
 
-         <AddSchedule open={openModal} onClose={toggleModal} />
+         <AddSchedule open={isOpen} onClose={onCloseModal} />
 
          <Box>
             <TabContext value={tab}>
@@ -192,7 +192,7 @@ const OnlineAppointments = () => {
                   </Box>
 
                   <Box className="table-container">
-                     {appointments.length === 0 ? (
+                     {memoizedAppointments.length === 0 ? (
                         <img
                            src={NoDataImage}
                            alt="No Data"
@@ -201,7 +201,7 @@ const OnlineAppointments = () => {
                      ) : (
                         <Table
                            columns={ONLINE_APPOINTMENTS_COLUMN}
-                           data={appointments}
+                           data={memoizedAppointments}
                         />
                      )}
                   </Box>
@@ -223,6 +223,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    flexDirection: 'column',
    maxWidth: '1600px',
    margin: '0 auto',
+   minHeight: '100vh',
 
    '& .buttons-container': {
       display: 'flex',
@@ -249,6 +250,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             '&:hover': {
                width: '168px',
                padding: '8px 20px 9px 20px',
+               border: 'none',
             },
          },
 
@@ -291,13 +293,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       lineHeight: 'normal',
       marginRight: '1.87rem',
       padding: '0rem',
-      transition: '0.3s',
+      transition: 'all 0.3s linear',
       fontWeight: '500',
       color: theme.palette.secondary.LightGrey,
    },
 
    '& .Mui-selected': {
-      transition: '1s',
+      transition: 'all 1s linear',
       color: '#048741 !important',
    },
 

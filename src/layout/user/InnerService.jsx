@@ -14,7 +14,7 @@ import {
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ArrowUpIcon } from '../../assets/icons'
 import { SERVICES } from '../../utils/constants/services'
-import { MedicImage } from '../../assets/images'
+import { MedicImage, NotFoundSpecialistImage } from '../../assets/images'
 import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 import Reviews from '../../components/landing/Reviews'
 import Button from '../../components/UI/Button'
@@ -207,7 +207,21 @@ const InnerService = () => {
                   getDoctorsByDepartment?.map(
                      ({ id, image, fullNameDoctor, position }) => (
                         <Box key={id} className="doctors-card">
-                           <img src={image} alt="img-доктора" />
+                           {!image?.startsWith('https://') ? (
+                              <Box className="not-photo-box">
+                                 <img
+                                    src={NotFoundSpecialistImage}
+                                    alt="doctor-img"
+                                    className="doctor-img"
+                                 />
+                              </Box>
+                           ) : (
+                              <img
+                                 src={image}
+                                 className="image"
+                                 alt="doctor-img"
+                              />
+                           )}
 
                            <Typography className="doctor-name">
                               {fullNameDoctor}
@@ -307,7 +321,23 @@ const StyledContainer = styled(Box)(() => ({
             width: '20rem',
             height: '29.5rem',
 
-            '& > img': {
+            '& .not-photo-box': {
+               borderRadius: '4px',
+               height: '21.875rem',
+               width: '20rem',
+               objectFit: 'cover',
+               marginBottom: '16px',
+               border: '2px solid #b3bec3',
+               display: 'flex',
+               justifyContent: 'center',
+               alignItems: 'center',
+
+               '& .doctor-img': {
+                  width: '250px',
+               },
+            },
+
+            '& > .image': {
                borderRadius: '4px',
                height: '21.875rem',
                width: '20rem',
@@ -340,6 +370,7 @@ const StyledContainer = styled(Box)(() => ({
                   width: '12.625rem',
                   padding: '10px, 20px !important',
                   height: '2.625rem',
+                  border: 'none',
                },
             },
          },

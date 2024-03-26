@@ -114,6 +114,10 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
          '& .button': {
             height: '42px !important',
+
+            '&:hover': {
+               border: 'none',
+            },
          },
       },
    },
@@ -126,7 +130,7 @@ const StyledServiceIcon = styled(Box)(({ theme }) => ({
    border: '1px solid #DEDEDE',
    width: '6.275rem',
    height: '6.625rem',
-   transition: '0.5s',
+   transition: 'all 0.3s linear',
    cursor: 'pointer',
 
    '&:hover': {

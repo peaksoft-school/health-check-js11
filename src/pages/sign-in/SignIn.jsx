@@ -14,7 +14,7 @@ import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
-import { auth, provider } from '../../utils/constants/authWithGoogle'
+import { auth, provider } from '../../configs/firebase'
 import Button from '../../components/UI/Button'
 import Modal from '../../components/UI/Modal'
 import Input from '../../components/UI/inputs/Input'
@@ -49,18 +49,14 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
 
    const signInWithGoogleHandler = async () => {
       try {
-         await signInWithPopup(auth, provider)
-            .then((data) => {
-               dispatch(
-                  authWithGoogle({
-                     tokenId: data.user.accessToken,
-                  })
-               )
-               onClose()
-            })
-            .catch((error) => {
-               console.log('Caught error Popup closed')
-            })
+         await signInWithPopup(auth, provider).then((data) => {
+            dispatch(
+               authWithGoogle({
+                  tokenId: data.user.accessToken,
+               })
+            )
+            onClose()
+         })
       } catch (error) {
          throw new Error(error)
       }
@@ -77,6 +73,16 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
       validationSchema: VALIDATION_SIGN_IN,
    })
 
+   const handleInputChange = (fieldName) => (event) => {
+      const newValue = event.target.value.trim()
+      handleChange({
+         target: {
+            name: fieldName,
+            value: newValue,
+         },
+      })
+   }
+
    return (
       <Modal open={open} handleClose={onClose}>
          <StyledForm onSubmit={handleSubmit} autoComplete="off">
@@ -87,7 +93,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                   placeholder="Логин"
                   value={values.email}
                   error={!!errors.email}
-                  onChange={handleChange('email')}
+                  onChange={handleInputChange('email')}
                />
 
                <StyledInput
@@ -95,7 +101,7 @@ const SignIn = ({ onClose, open, closeSignUp }) => {
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
                   error={!!errors.password}
-                  onChange={handleChange('password')}
+                  onChange={handleInputChange('password')}
                   InputProps={{
                      endAdornment: (
                         <InputAdornment position="end">
@@ -222,10 +228,12 @@ const StyledForm = styled('form')(({ theme }) => ({
 const StyledInput = styled(Input)(() => ({
    '& .MuiOutlinedInput-input': {
       height: '0.5rem',
+      width: '414px',
       borderRadius: '0.5rem',
    },
 
    '& .MuiOutlinedInput-root ': {
+      width: '414px',
       height: '2.625rem',
       borderRadius: '0.5rem',
    },
