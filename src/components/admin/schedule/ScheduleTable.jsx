@@ -16,20 +16,20 @@ const ScheduleTable = () => {
    const { schedules, isLoading } = useSelector((state) => state.schedule)
 
    const [startDate, setStartDate] = useState(dayjs())
-   const [endDate, setEndDate] = useState(dayjs().subtract(11, 'day'))
+   const [endDate, setEndDate] = useState(dayjs().add(11, 'day'))
 
    const [lastClicked, setLastClicked] = useState({ id: null, date: null })
 
    const [open, setOpen] = useState(false)
 
    const [timeRanges, setTimeRanges] = useState([
-      { startHour: 0, startMinute: 0, endHour: 0, endMinute: 0 },
+      { startHour: '', startMinute: '', endHour: '', endMinute: '' },
    ])
 
    const [selectedDoctorId, setSelectedDoctorId] = useState(null)
    const [clickedDate, setClickedDate] = useState(null)
    const [intervals, setIntervals] = useState([{ id: 1 }])
-   const [installDisabled, setInstallDisabled] = useState(false)
+   const [installDisabled, setInstallDisabled] = useState(true)
 
    const [isSaveDisabled, setIsSaveDisabled] = useState(true)
 
@@ -97,7 +97,7 @@ const ScheduleTable = () => {
       setIntervals(updatedIntervals)
    }
 
-   const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+   const daysOfWeek = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
 
    const dateToday = dayjs()
    const dateEnd = dayjs()
@@ -252,7 +252,7 @@ const ScheduleTable = () => {
                               key={(monthText, date)}
                            >
                               {dayOfWeek}
-                              <Box component="br" />
+                              <br />
                               {date} {monthText}
                            </th>
                         )
@@ -266,7 +266,7 @@ const ScheduleTable = () => {
                   {schedules.map(({ image, surname, position, dates, id }) => (
                      <tr key={id}>
                         <td className="specialist">
-                           {image === null || image === undefined ? (
+                           {!image?.startsWith('https://') ? (
                               <ProfileIcon className="image" alt="doctor-img" />
                            ) : (
                               <img
@@ -288,6 +288,7 @@ const ScheduleTable = () => {
                         {generateDateRange(startDate, endDate, daysOfWeek).map(
                            ({ dayOfWeek, date, monthNumber, year }, i) => {
                               const currentDate = `${year}-${monthNumber}-${date}`
+
                               return (
                                  <td
                                     key={`${id}-${dayOfWeek}-${date}-${monthNumber}`}
@@ -365,7 +366,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontWeight: '400',
          fontSize: '14px',
          borderRadius: '4px',
-         transition: 'all 0.2s easy',
+         transition: '0.3s',
       },
 
       '& .button-disabled': {
@@ -376,7 +377,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontWeight: '400',
          fontSize: '14px',
          borderRadius: '4px',
-         transition: 'all 0.2s easy',
+         transition: '0.3s',
       },
 
       '& .date-picker-box': {
@@ -398,12 +399,14 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       overflowX: 'auto',
 
       '&::-webkit-scrollbar': {
-         height: '15px',
+         height: '25px',
+         marginTop: '10px',
       },
 
       '&::-webkit-scrollbar-thumb': {
          backgroundColor: '#92919183',
-         borderRadius: '10px',
+         borderRadius: '13px',
+         border: '7px solid #ffffff',
       },
    },
 
@@ -411,7 +414,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       border: `2px solid ${theme.palette.secondary.main}`,
       borderCollapse: 'collapse',
       maxWidth: '86.188rem',
-      width: '1379px',
 
       '& .header-specialist': {
          display: 'flex',
@@ -508,7 +510,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& .highlighted': {
-         transition: 'all 0.2s easy',
+         transition: 'all 0.2s linear',
          width: '100%',
          height: '9.875rem',
          boxShadow: '0px 0px 5px 1px',
@@ -517,7 +519,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
          '& .free-time-container': {
             paddingLeft: '12px',
-            transition: 'all 0.2s easy',
+            transition: 'all 0.2s linear',
          },
 
          '&::-webkit-scrollbar': {
@@ -532,13 +534,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
       '& .un-highlighted': {
          height: '9.875rem',
-         transition: 'all 0.2s easy',
+         transition: 'all 0.2s linear',
          width: '100%',
          overflow: 'hidden',
          padding: '6px',
 
          '& .free-time-container': {
-            transition: 'all 0.2s easy',
+            transition: 'all 0.2s linear',
          },
       },
    },

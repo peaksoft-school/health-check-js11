@@ -110,6 +110,21 @@ const updateButton = createAsyncThunk(
    }
 )
 
+const getDoctorsByDepartment = createAsyncThunk(
+   'applications/getDoctorsByDepartment',
+   async (department, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(
+            `/api/doctor/byDepartment?facility=${department}`
+         )
+
+         return response.data
+      } catch (error) {
+         return rejectWithValue(error.response.data)
+      }
+   }
+)
+
 export const SPECIALISTS_THUNK = {
    getSpecialists,
    deleteSpecialists,
@@ -118,4 +133,5 @@ export const SPECIALISTS_THUNK = {
    searchSpecilaist,
    getDepartment,
    updateButton,
+   getDoctorsByDepartment,
 }

@@ -244,13 +244,13 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontSize: '0.75rem',
          marginRight: '1.87rem',
          padding: '0rem',
-         transition: 'all 0.3s easy',
+         transition: 'all 0.3s linear',
          fontWeight: '500',
          color: theme.palette.secondary.LightGrey,
       },
 
       '& .Mui-selected': {
-         transition: 'all 1s easy',
+         transition: 'all 1s linear',
          color: '#048741 !important',
       },
 

@@ -2,6 +2,7 @@ import { lazy } from 'react'
 import { ROUTES } from './routes'
 import DoctorInnerPage from '../pages/user/doctors/DoctorInnerPage'
 import Suspense from './Suspense'
+import InnerService from '../layout/user/InnerService'
 
 const ChangePassword = lazy(
    () => import('../pages/change-password/ChangePassword')
@@ -50,6 +51,11 @@ export const USER_ROUTES = [
             <Services />
          </Suspense>
       ),
+   },
+
+   {
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
+      element: <InnerService />,
    },
 
    {

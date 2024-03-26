@@ -19,7 +19,9 @@ export const onlineAppointmentsSlice = createSlice({
 
          state.appointments = state.appointments.map((appointment) => ({
             ...appointment,
-            isSelected: state.selectAll,
+            isSelected: appointment.processed
+               ? state.selectAll
+               : appointment.isSelected,
          }))
 
          state.deletedAppointmentsIds = state.appointments
@@ -32,28 +34,30 @@ export const onlineAppointmentsSlice = createSlice({
             if (appointment.appointmentId === payload.id) {
                return {
                   ...appointment,
-                  isSelected: !appointment.isSelected,
+                  isSelected: appointment.processed
+                     ? !appointment.isSelected
+                     : appointment.isSelected,
                }
             }
             return appointment
          })
 
          state.deletedAppointmentsIds = state.appointments
-            .filter((appointment) => appointment.isSelected)
+            .filter(
+               (appointment) => appointment.isSelected && appointment.processed
+            )
             .map((appointment) => appointment.appointmentId)
 
          if (
-            state.deletedAppointmentsIds.length === state.appointments.length
+            state.deletedAppointmentsIds.length ===
+            state.appointments.filter((appointment) => appointment.processed)
+               .length
          ) {
             state.selectAll = true
          } else {
             state.selectAll = false
          }
       },
-   },
-
-   clearDeletedAppointmentsIds: (state) => {
-      state.deletedAppointmentsIds = []
    },
 
    extraReducers: (builder) => {
@@ -110,8 +114,17 @@ export const onlineAppointmentsSlice = createSlice({
 
          .addCase(
             ONLINE_APPOINTMENTS_THUNK.updateAppointment.fulfilled,
-            (state) => {
+            (state, { payload }) => {
+               state.deletedAppointmentsIds =
+                  state.deletedAppointmentsIds.filter((id) => id !== payload.id)
                state.isLoading = false
+            }
+         )
+
+         .addCase(
+            ONLINE_APPOINTMENTS_THUNK.updateAppointment.pending,
+            (state) => {
+               state.isLoading = true
             }
          )
 

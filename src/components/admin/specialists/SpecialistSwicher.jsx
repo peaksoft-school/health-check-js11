@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
-import Switcher from '../../UI/Switcher'
 import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
+import Switcher from '../../UI/Switcher'
 
 const SpecialistSwicher = ({ id, isActive }) => {
    const dispatch = useDispatch()
