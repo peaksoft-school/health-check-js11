@@ -85,6 +85,8 @@ const StyledSearchInput = styled(SearchInput)(() => ({
 }))
 
 const StyledContainer = styled(Box)(({ theme }) => ({
+   minHeight: '100vh',
+
    '& .input-container': {
       width: '37.5rem',
       marginTop: '2.15rem',

@@ -96,7 +96,7 @@ const Profile = () => {
                         </TabList>
                      </Box>
 
-                     <TabPanel value="1" className="tables">
+                     <TabPanel value="profle" className="tables">
                         <form
                            onSubmit={handleSubmit}
                            className="table-container"

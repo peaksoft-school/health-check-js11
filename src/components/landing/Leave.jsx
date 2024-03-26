@@ -23,7 +23,7 @@ const Leave = () => {
    })
 
    return (
-      <StyledContainer>
+      <StyledContainer id="Leave">
          <Box className="box">
             <Typography className="title" variant="h1">
                Оставьте заявку

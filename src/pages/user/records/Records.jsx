@@ -82,7 +82,7 @@ const Records = () => {
                      При возникновении проблем с отображением результатов, Вы
                      можете оставить заявку <br /> на получение результатов по
                      электронной почте, позвонив в Службу поддержки клиентов
-                     <br /> по номеру 909 090
+                     <br /> по номеру +996 (223) 238 750
                   </li>
                </ul>
             </Box>
@@ -92,8 +92,8 @@ const Records = () => {
                   data={result}
                   title="submit"
                   type="application/pdf"
-                  width="750px"
-                  height="180px"
+                  width="850px"
+                  height="412px"
                />
             </Box>
          </Box>
@@ -124,13 +124,12 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       paddingLeft: '3.2rem',
       paddingBottom: '1rem',
       fontFamily: 'Manrope',
-      fontSize: '0.8rem',
       color: '#346EFB',
 
       '& > li': {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
-         fontSize: '15px',
+         fontSize: '12px',
          fontWeight: '400',
       },
 
@@ -173,12 +172,12 @@ const StyledFormContainer = styled(Box)(() => ({
 
    '& .MuiTypography-h4': {
       color: '#3977C0',
-      fontSize: '18px',
+      fontSize: '15px',
    },
 
    '& .MuiTypography-span': {
       color: '#3977C0',
-      fontSize: '18px',
+      fontSize: '15px',
    },
 }))
 
@@ -233,12 +232,14 @@ const StyledCloseButton = styled('button')(() => ({
    border: 'none',
    color: 'white',
    borderRadius: '0.625rem',
-   padding: '5px 26px 5px 10px',
+   padding: '0 15px 0 5px',
    background: 'red',
-   fontSize: '0.875rem',
+   fontSize: '0.75rem',
    fontWeight: '600',
 
    '& svg': {
+      width: '25px',
+
       '& #close': {
          '& #Vector': {
             fill: '#fff',

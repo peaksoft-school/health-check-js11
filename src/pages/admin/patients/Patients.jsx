@@ -61,12 +61,13 @@ const Patients = () => {
 }
 export default Patients
 
-const StyledContainer = styled(Box)(() => ({
+const StyledContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
    flexDirection: 'column',
    maxWidth: '1600px',
    margin: '0 auto',
    paddingBottom: '30px',
+   minHeight: '100vh',
 
    '& h3': {
       marginTop: '15px',
@@ -97,12 +98,12 @@ const StyledContainer = styled(Box)(() => ({
             borderBottom: 'none',
          },
 
-         '& .MuiTableCell-head': {
-            borderBottom: '1px solid rgba(224, 224, 224, 1)',
+         '& .MuiTableRow-root': {
+            borderBottom: 'none',
          },
 
          '& .MuiTableRow-root:nth-of-type(even)': {
-            backgroundColor: '#F5F5F5',
+            backgroundColor: theme.palette.primary.backgroundAdmin,
          },
       },
    },

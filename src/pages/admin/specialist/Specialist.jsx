@@ -297,6 +297,7 @@ const StyledContainer = styled(Box)(() => ({
    margin: '0 auto',
    paddingBottom: '30px',
    height: '100vh',
+   minHeight: '100vh',
 
    '& > .title': {
       fontSize: '22px',

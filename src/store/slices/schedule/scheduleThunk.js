@@ -87,7 +87,7 @@ const savePatternTimeSheet = createAsyncThunk(
          return response.data
       } catch (error) {
          showToast({
-            message: error.response.data.messageCode,
+            message: error.response.data.message,
             status: 'error',
          })
          return rejectWithValue(error)

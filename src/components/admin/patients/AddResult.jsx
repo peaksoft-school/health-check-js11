@@ -1,4 +1,3 @@
-/* eslint-disable react/no-this-in-sfc */
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
@@ -28,7 +27,7 @@ const AddResult = ({ open, onClose }) => {
       const formData = new FormData()
       formData.append('file', values.file)
 
-      const date = format(new Date(values.date), 'yyyy-MM-dd')
+      const date = format(values.date, 'yyyy-MM-dd')
 
       dispatch(
          PATIENT_THUNKS.addPatientResult({
