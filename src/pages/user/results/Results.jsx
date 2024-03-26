@@ -8,7 +8,7 @@ import Button from '../../../components/UI/Button'
 import { CloseIconSchedule, HealthCheckIcon } from '../../../assets/icons'
 import { RESULTS_THUNKS } from '../../../store/slices/result/resultsThunk'
 
-const Records = () => {
+const Results = () => {
    const [resultNumber, setResultNumber] = useState('')
 
    const { result } = useSelector((state) => state.result)
@@ -22,7 +22,9 @@ const Records = () => {
    const sendResultNumber = (e) => {
       e.preventDefault()
 
-      dispatch(RESULTS_THUNKS.getResults(resultNumber))
+      const cleanedResultNumber = resultNumber.replace(/\s/g, '')
+
+      dispatch(RESULTS_THUNKS.getResults(cleanedResultNumber))
    }
 
    return (
@@ -38,6 +40,7 @@ const Records = () => {
 
             <form onSubmit={sendResultNumber} className="form-container">
                <StyledInput
+                  autocomplete="off"
                   value={resultNumber}
                   onChange={changeInputValuesHandler}
                   placeholder="Введите код..."
@@ -82,7 +85,7 @@ const Records = () => {
                      При возникновении проблем с отображением результатов, Вы
                      можете оставить заявку <br /> на получение результатов по
                      электронной почте, позвонив в Службу поддержки клиентов
-                     <br /> по номеру +996 (223) 238 750
+                     <br /> по номеру +996 (223) 234 765
                   </li>
                </ul>
             </Box>
@@ -101,7 +104,7 @@ const Records = () => {
    )
 }
 
-export default Records
+export default Results
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    background: `url(${ResultsBackgroundImage})`,
@@ -113,7 +116,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    display: 'flex',
 
    '& .file': {
-      width: '62vw',
+      width: '65.5vw',
       background: 'rgba(254, 251, 251, 0.50)',
       backdropFilter: 'blur(156px)',
       color: '#346EFB',
@@ -129,7 +132,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& > li': {
          paddingTop: '0.5rem',
          paddingRight: '0.5rem',
-         fontSize: '12px',
+         fontSize: '14px',
          fontWeight: '400',
       },
 

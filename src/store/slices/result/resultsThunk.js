@@ -15,7 +15,7 @@ const getResults = createAsyncThunk(
       } catch (error) {
          showToast({
             message: 'Не верный номер',
-            status: error,
+            status: 'error',
          })
 
          return rejectWithValue(error)
