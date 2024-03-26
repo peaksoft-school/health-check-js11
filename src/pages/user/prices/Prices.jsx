@@ -24,30 +24,35 @@ const Proces = () => (
 
          <AccordionContainer>
             <StyledAccordions>
-               {PRICES.map((el) => (
-                  <CustomizedAccordions key={el.id} title={el.title}>
-                     <StyledPrice>
-                        <Box className="prices-data">
-                           <Typography variant="h2">{el.data}</Typography>{' '}
-                           <Typography variant="h2">{el.price} com</Typography>
-                        </Box>
+               {PRICES.map(
+                  ({ id, title, price, data, description, prices }) => (
+                     <CustomizedAccordions key={id} title={title}>
+                        <StyledPrice>
+                           <Box className="prices-data">
+                              <Typography variant="h2">{data}</Typography>
 
-                        <Typography className="description">
-                           {el.description}
-                        </Typography>
-                        {el.prices.map((item) => (
-                           <Box className="prices">
-                              <Typography className="data-text">
-                                 {item.data}
-                              </Typography>
-                              <Typography variant="h2" className="price">
-                                 {item.price} com
-                              </Typography>
+                              <Typography variant="h2">{price} com</Typography>
                            </Box>
-                        ))}
-                     </StyledPrice>
-                  </CustomizedAccordions>
-               ))}
+
+                           <Typography className="description">
+                              {description}
+                           </Typography>
+
+                           {prices.map(({ data, price }) => (
+                              <Box key={data} className="prices">
+                                 <Typography className="data-text">
+                                    {data}
+                                 </Typography>
+
+                                 <Typography variant="h2" className="price">
+                                    {price} com
+                                 </Typography>
+                              </Box>
+                           ))}
+                        </StyledPrice>
+                     </CustomizedAccordions>
+                  )
+               )}
             </StyledAccordions>
          </AccordionContainer>
       </StyledContainer>
@@ -80,7 +85,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const StyledSpecialistRow = styled(Typography)(() => ({
+const StyledSpecialistRow = styled(Box)(() => ({
    margin: '2rem 0 0rem 6.5rem',
 
    '& span': {
@@ -97,7 +102,7 @@ const StyledLine = styled(Box)(() => ({
    marginTop: '15px',
 }))
 
-const StyledAccordions = styled('div')(() => ({
+const StyledAccordions = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '20px',

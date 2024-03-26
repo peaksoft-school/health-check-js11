@@ -4,22 +4,23 @@ const BreadCrumbs = ({ text, to, before, additionalText }) => {
    const breadcrumbsItems = [
       { label: before, href: to },
       { label: text },
-
       additionalText && { label: additionalText, href: '' },
    ].filter(Boolean)
 
    return (
-      <StyledBreadCrumbs separator="›" aria-label="breadcrumbs">
-         {breadcrumbsItems?.map(({ label, href }, i) => (
-            <StyledLink
-               key={label}
-               islast={String(i === breadcrumbsItems.length - 1)}
-               href={href}
-            >
-               {label}
-            </StyledLink>
-         ))}
-      </StyledBreadCrumbs>
+      <div>
+         <StyledBreadCrumbs separator="›" aria-label="breadcrumbs">
+            {breadcrumbsItems?.map(({ label, href }, i) => (
+               <StyledLink
+                  key={label}
+                  islast={String(i === breadcrumbsItems.length - 1)}
+                  href={href}
+               >
+                  {label}
+               </StyledLink>
+            ))}
+         </StyledBreadCrumbs>
+      </div>
    )
 }
 

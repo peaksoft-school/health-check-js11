@@ -137,5 +137,5 @@ const StyledLine = styled(Box)(() => ({
 const NavigatePathTitle = styled(Box)(() => ({
    fontSize: '0.875rem',
    fontWeight: 400,
-   // padding: '3.125rem 0 2rem 6.5rem',
+   padding: '2rem 0 0rem 6.5rem',
 }))
