@@ -12,13 +12,6 @@ const Proces = () => (
             <BreadCrumbs to="/" text="цены" before="Главная" />
          </StyledSpecialistRow>
 
-         <Typography className="title" variant="h3">
-            Наш<span> </span>
-            <Typography className="mark-title" variant="span">
-               цены
-            </Typography>
-         </Typography>
-
          <Typography className="text">
             Цены на услуги формируются в соответствии с действующими
             Прейскурантами. <br />
@@ -76,7 +69,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& > .text': {
       fontSize: '18px',
-      padding: '3.125rem 0 2rem 6.5rem',
+      padding: '0rem 0 2rem 6.5rem',
       color: '#4D4E51',
       fontFamily: 'Manrope',
    },
@@ -88,11 +81,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 }))
 
 const StyledSpecialistRow = styled(Typography)(() => ({
-   fontSize: '0.875rem',
-   fontWeight: '400',
-   margin: '3.125rem 0 2rem 6.5rem',
+   margin: '2rem 0 0rem 6.5rem',
 
    '& span': {
+      fontWeight: '400',
+      fontSize: '0.875rem',
       color: '#048741',
       cursor: 'pointer',
    },

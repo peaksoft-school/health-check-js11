@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { styled, Box, Typography } from '@mui/material'
 import { ResultsBackgroundImage } from '../../../assets/images'
 import Input from '../../../components/UI/inputs/Input'
@@ -11,6 +12,8 @@ const Records = () => {
    const [resultNumber, setResultNumber] = useState('')
 
    const { result } = useSelector((state) => state.result)
+
+   const navigate = useNavigate()
 
    const changeInputValuesHandler = (e) => setResultNumber(e.target.value)
 
@@ -55,10 +58,10 @@ const Records = () => {
                      <Typography variant="span">Вы можете:</Typography>
                   </Box>
 
-                  <Button className="close">
+                  <StyledCloseButton onClick={() => navigate(-1)}>
                      <CloseIconSchedule />
                      ЗАКРЫТЬ РЕЗУЛЬТАТЫ
-                  </Button>
+                  </StyledCloseButton>
                </StyledFormContainer>
 
                <ul>
@@ -89,13 +92,9 @@ const Records = () => {
                   data={result}
                   title="submit"
                   type="application/pdf"
-                  width="900px"
-                  height="380px"
-               >
-                  <Typography>
-                     Ваш браузер не поддерживает просмотр PDF.
-                  </Typography>
-               </object>
+                  width="750px"
+                  height="180px"
+               />
             </Box>
          </Box>
       </StyledContainer>
@@ -172,33 +171,14 @@ const StyledFormContainer = styled(Box)(() => ({
    paddingLeft: '1rem',
    paddingTop: '1rem',
 
-   '& .MuiButtonBase-root': {
-      marginTop: '1rem',
-      fontSize: '0.875rem',
-      padding: '5px 10px',
-      background: 'red',
+   '& .MuiTypography-h4': {
+      color: '#3977C0',
+      fontSize: '18px',
+   },
 
-      '& > div': {
-         display: 'flex',
-         alignItems: 'center',
-      },
-
-      '&:active': {
-         background: 'red',
-         borderRadius: '0.625rem',
-      },
-
-      '&:hover': {
-         background: 'red',
-      },
-
-      '& svg': {
-         '& #close': {
-            '& #Vector': {
-               fill: '#fff',
-            },
-         },
-      },
+   '& .MuiTypography-span': {
+      color: '#3977C0',
+      fontSize: '18px',
    },
 }))
 
@@ -243,6 +223,26 @@ const StyledButton = styled(Button)(() => ({
 
       '&:active': {
          borderRadius: '0.625rem',
+      },
+   },
+}))
+
+const StyledCloseButton = styled('button')(() => ({
+   display: 'flex',
+   alignItems: 'center',
+   border: 'none',
+   color: 'white',
+   borderRadius: '0.625rem',
+   padding: '5px 26px 5px 10px',
+   background: 'red',
+   fontSize: '0.875rem',
+   fontWeight: '600',
+
+   '& svg': {
+      '& #close': {
+         '& #Vector': {
+            fill: '#fff',
+         },
       },
    },
 }))

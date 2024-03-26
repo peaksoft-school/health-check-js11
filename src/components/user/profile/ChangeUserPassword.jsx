@@ -11,12 +11,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { forgotPassword } from '../../../store/slices/auth/authThunk'
 import { CloseEyeIcon, OpenEyeIcon } from '../../../assets/icons'
-import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
 import { VALIDATION_CHANGE_PASSWORD } from '../../../utils/helpers/validate'
 import { resetPasswordError } from '../../../utils/helpers'
 import { showToast } from '../../../utils/helpers/notification'
 import Button from '../../UI/Button'
 import Input from '../../UI/inputs/Input'
+import { PROFILE_THUNKS } from '../../../store/slices/profile/profileThunk'
 
 const ChangeUserPassword = () => {
    window.scrollTo({ top: 0 })
@@ -26,6 +26,7 @@ const ChangeUserPassword = () => {
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
    const { isLoading } = useSelector((state) => state.profile)
+   const loading = useSelector((state) => state.auth.isLoading)
 
    const dispatch = useDispatch()
 
@@ -61,12 +62,12 @@ const ChangeUserPassword = () => {
       e.preventDefault()
       const { email } = values
 
-      if (!emailRegex.test(email)) {
+      if (!emailRegex.test(email))
          showToast({
             message: 'не валидный email',
             status: 'error',
          })
-      } else {
+      else
          dispatch(
             forgotPassword({
                email,
@@ -75,7 +76,6 @@ const ChangeUserPassword = () => {
                onClose: () => '',
             })
          )
-      }
    }
 
    const showOldPasswordHandle = () => setShowOldPassword((prev) => !prev)
@@ -195,9 +195,7 @@ const ChangeUserPassword = () => {
 
                <Box className="reset-password-box">
                   <h3 className="change-password">Cброс пароля</h3>
-
                   <label htmlFor="email">Введите email</label>
-
                   <StyledInput
                      value={values.email}
                      onChange={handleChange('email')}
@@ -205,7 +203,12 @@ const ChangeUserPassword = () => {
                      placeholder="Email"
                   />
 
-                  <Button className="email-button" onClick={sentEmai}>
+                  <Button
+                     isLoading={loading}
+                     className="email-button"
+                     colorLoading="secondary"
+                     onClick={sentEmai}
+                  >
                      ОТПРАВИТЬ
                   </Button>
                </Box>

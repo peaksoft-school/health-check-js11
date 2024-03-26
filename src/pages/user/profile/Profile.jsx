@@ -7,7 +7,7 @@ import { NavLink, useSearchParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
-import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
+import { PROFILE_THUNKS } from '../../../store/slices/profile/profileThunk'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
@@ -166,7 +166,7 @@ const Profile = () => {
                         </form>
                      </TabPanel>
 
-                     <TabPanel value="2" className="tables">
+                     <TabPanel value="change-password" className="tables">
                         <ChangeUserPassword />
                      </TabPanel>
                   </TabContext>

@@ -4,6 +4,8 @@ import { Typography, styled, Menu, MenuItem, Box } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
 import SignUp from '../../pages/sign-up/SignUp'
 import SignIn from '../../pages/sign-in/SignIn'
+import Modal from '../../components/UI/Modal'
+import AddAppointments from '../../components/admin/appointments/AddAppointments'
 import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/inputs/SearchInput'
 import Navigations from '../../components/UI/Navigations'
@@ -20,10 +22,8 @@ import {
    NAVIGATIONS,
 } from '../../utils/constants/index'
 import { logOut } from '../../store/slices/auth/authSlice'
-import Modal from '../../components/UI/Modal'
+import { PROFILE_THUNKS } from '../../store/slices/profile/profileThunk'
 import { APPOINTMENTS_THUNKS } from '../../store/slices/appointments/appointmentsThunk'
-import { PROFILE_THUNKS } from '../../store/slices/profie/profileThunk'
-import AddAppointments from '../../components/admin/appointments/AddAppointments'
 
 const Header = () => {
    const { role, isAuth, accessToken } = useSelector((state) => state.auth)
@@ -49,6 +49,11 @@ const Header = () => {
       setOpenSignUpModal((prev) => !prev)
    }
 
+   const toggleSignInModal = () => {
+      handleProfileMenuClose()
+      setOpenSignInModal((prev) => !prev)
+   }
+
    const handleProfileMenuOpen = (event) =>
       setProfileMenuAnchorEl(event.currentTarget)
 
@@ -57,16 +62,11 @@ const Header = () => {
          setToggleDrawerModal((prev) => !prev)
          dispatch(APPOINTMENTS_THUNKS.getAllFacility())
       } else {
-         toggleSignUpModal()
+         toggleSignInModal()
       }
    }
 
    const closeDrawerHandler = () => setToggleDrawerModal(false)
-
-   const toggleSignInModal = () => {
-      handleProfileMenuClose()
-      setOpenSignInModal((prev) => !prev)
-   }
 
    const closeLogOutHandler = () => setToggleLogOutModal(false)
 
