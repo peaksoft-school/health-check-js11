@@ -20,7 +20,6 @@ const ROUTES = {
 
    ID: {
       ID: 'id',
-      DOCTOR_INNER: '/doctors/:doctorId',
    },
 
    ADMIN: {

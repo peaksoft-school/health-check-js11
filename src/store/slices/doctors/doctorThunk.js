@@ -18,9 +18,9 @@ const getDoctors = createAsyncThunk(
 
 const getDoctorsById = createAsyncThunk(
    'doctors/getDoctorsById',
-   async ({ doctorId }, { rejectWithValue }) => {
+   async ({ id }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`api/doctor/${doctorId}`)
+         const response = await axiosInstance.get(`api/doctor/${id}`)
 
          return response.data
       } catch (error) {

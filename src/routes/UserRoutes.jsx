@@ -54,8 +54,12 @@ export const USER_ROUTES = [
    },
 
    {
-      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
-      element: <InnerService />,
+      path: `${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
+      element: (
+         <Suspense>
+            <InnerService />
+         </Suspense>
+      ),
    },
 
    {
@@ -103,7 +107,7 @@ export const USER_ROUTES = [
       ),
    },
    {
-      path: `${ROUTES.USER.DOCTOR_INNER}`,
+      path: `${ROUTES.USER.DOCTORS}/:${ROUTES.ID.ID}`,
       element: <DoctorInnerPage />,
    },
 ]

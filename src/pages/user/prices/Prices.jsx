@@ -31,7 +31,7 @@ const Proces = () => (
                            <Box className="prices-data">
                               <Typography variant="h2">{data}</Typography>
 
-                              <Typography variant="h2">{price} com</Typography>
+                              <Typography variant="h2">{price} сом</Typography>
                            </Box>
 
                            <Typography className="description">
@@ -45,7 +45,7 @@ const Proces = () => (
                                  </Typography>
 
                                  <Typography variant="h2" className="price">
-                                    {price} com
+                                    {price} сом
                                  </Typography>
                               </Box>
                            ))}

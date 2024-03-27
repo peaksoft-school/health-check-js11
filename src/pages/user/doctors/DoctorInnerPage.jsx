@@ -12,13 +12,13 @@ const DoctorInnerPage = () => {
 
    const { doctor } = useSelector((state) => state.doctors)
 
-   const { doctorId } = useParams()
+   const { id } = useParams()
 
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(DOCTORS_THUNK.getDoctorsById({ doctorId }))
-   }, [doctorId])
+      dispatch(DOCTORS_THUNK.getDoctorsById({ id }))
+   }, [id])
 
    return (
       <StyledContainer>
@@ -35,7 +35,6 @@ const DoctorInnerPage = () => {
                   <NavLink style={{ textDecoration: 'none' }}>
                      <span>Хирургия</span>
                   </NavLink>
-                  npgfgs
                   {' > '}
                   <span className="colors">{doctor.fullName}</span>
                </Typography>
@@ -65,12 +64,12 @@ const DoctorInnerPage = () => {
                   </Typography>
 
                   <Typography className="label">
-                     Отделение :
-                     <span className="mark">{doctor.department}</span>
+                     Отделение:
+                     <span className="mark"> {doctor.department}</span>
                   </Typography>
 
                   <Typography className="label">
-                     Должность :<span className="mark"> {doctor.position}</span>
+                     Должность: <span className="mark">{doctor.position}</span>
                   </Typography>
 
                   <Button variant="secondary" className="btn">
@@ -110,7 +109,8 @@ const StyledContainer = styled(Box)(() => ({
       fontSize: '36px',
       fontWeight: '600',
       fontFamily: 'Manrope',
-      marginLeft: '6rem',
+      marginLeft: '6.50rem',
+      marginTop: '2rem',
    },
 
    '& .text': {
@@ -171,7 +171,7 @@ const StyledBoxContainer = styled(Box)(() => ({
    },
 
    '& > .flex': {
-      marginRight: '40rem',
+      marginLeft: '6rem',
       marginTop: '5rem',
 
       '& > .doctor-name': {
@@ -202,7 +202,7 @@ const StyledBoxContainer = styled(Box)(() => ({
          width: '204px',
          height: '42px',
 
-         '& > .btn-text': {
+         '& .btn-text': {
             fontSize: '12px',
          },
       },

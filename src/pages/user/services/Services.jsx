@@ -25,7 +25,7 @@ const Services = () => {
       <StyledContainer>
          <Box className="box">
             <Box className="main-link-box">
-               <Link to="/" className="main-link">
+               <Link to="/" className="main-link" style={{ color: 'grey' }}>
                   Главная <ArrowUpIcon className="link-arrow" />
                </Link>
 
