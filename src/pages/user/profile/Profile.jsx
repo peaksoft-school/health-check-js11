@@ -14,7 +14,7 @@ import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassw
 const Profile = () => {
    window.scrollTo({ top: 0 })
 
-   const [value, setValue] = useState('profle')
+   const [value, setValue] = useState('profile')
 
    const { accessToken } = useSelector((state) => state.auth)
    const { userData, isLoading } = useSelector((state) => state.profile)
@@ -50,7 +50,7 @@ const Profile = () => {
          setValue(tabFormUrl)
       } else {
          setValue('profile')
-         searchParams.set('tab', 'profle')
+         searchParams.set('tab', 'profile')
          setSearchParams(searchParams)
       }
 
@@ -84,7 +84,7 @@ const Profile = () => {
                         >
                            <Tab
                               label="ЛИЧНЫЕ ДАННЫЕ"
-                              value="profle"
+                              value="profile"
                               className="route"
                            />
 
@@ -96,7 +96,7 @@ const Profile = () => {
                         </TabList>
                      </Box>
 
-                     <TabPanel value="profle" className="tables">
+                     <TabPanel value="profile" className="tables">
                         <form
                            onSubmit={handleSubmit}
                            className="table-container"
