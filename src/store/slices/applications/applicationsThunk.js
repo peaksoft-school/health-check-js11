@@ -88,6 +88,18 @@ const updateApplication = createAsyncThunk(
 
          return { isActive, id }
       } catch (error) {
+         if (error.response.status === 403) {
+            showToast({
+               message: 'произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
+
          return rejectWithValue(error)
       }
    }

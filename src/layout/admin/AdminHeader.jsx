@@ -102,6 +102,7 @@ export default AdminHeader
 
 const StyledContainer = styled('header')(({ theme }) => ({
    padding: '0 70px',
+   backgroundColor: 'white',
    position: 'sticky',
    top: '0px',
    zIndex: '1000',

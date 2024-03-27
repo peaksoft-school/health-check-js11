@@ -126,17 +126,7 @@ const customStylesAppointments = {
 
 const Select = forwardRef(
    (
-      {
-         options,
-         value,
-         onChange,
-         placeholder,
-         error,
-         variant,
-         icon,
-         styles,
-         ...rest
-      },
+      { options, onChange, placeholder, error, variant, icon, styles, ...rest },
       ref
    ) => {
       const [selectValue, setSelectValue] = useState('')
@@ -144,6 +134,7 @@ const Select = forwardRef(
 
       const changeSelectHandler = (e) => {
          onChange(e.target.value)
+
          setSelectValue(e.target.value)
       }
 
@@ -158,6 +149,7 @@ const Select = forwardRef(
             placeholder={placeholder}
             error={error}
             ref={ref}
+            value={selectValue}
             {...rest}
          />
       ) : variant === 'appointments' ? (
@@ -232,6 +224,7 @@ const StyledMuiSelect = styled(MuiSelect)(({ theme, error }) => ({
    fontSize: '16px',
    lineHeight: '21.86px',
    color: '#4D4E51',
+   cursor: 'pointer',
 
    '& > div': {
       '& > div': {

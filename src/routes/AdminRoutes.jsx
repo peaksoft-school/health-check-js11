@@ -11,6 +11,9 @@ const Applications = lazy(
 )
 const Specialists = lazy(() => import('../pages/admin/specialists/Specialists'))
 const Specialist = lazy(() => import('../pages/admin/specialist/Specialist'))
+const AddSpecialist = lazy(
+   () => import('../pages/admin/add-specialist/AddSpecialist')
+)
 const Patients = lazy(() => import('../pages/admin/patients/Patients'))
 const Patient = lazy(() => import('../pages/admin/patient/Patient'))
 
@@ -74,6 +77,15 @@ export const ADMIN_ROUTES = [
       element: (
          <Suspense>
             <Specialist />
+         </Suspense>
+      ),
+   },
+
+   {
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}/${ROUTES.ADMIN.ADD_SPECIALIST}`,
+      element: (
+         <Suspense>
+            <AddSpecialist />
          </Suspense>
       ),
    },

@@ -1,15 +1,12 @@
-import styled from '@emotion/styled'
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { Typography, styled, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { useFormik } from 'formik'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import Button from '../../../components/UI/Button'
-import { ArrowLeftIcon } from '../../../assets/icons'
 import Reviews from '../../../components/landing/Reviews'
+import { ArrowLeftIcon } from '../../../assets/icons'
 
 const DoctorInnerPage = () => {
    const { doctor } = useSelector((state) => state.doctors)
@@ -21,21 +18,6 @@ const DoctorInnerPage = () => {
    useEffect(() => {
       dispatch(DOCTOR_THUNK.getDoctorsById({ doctorId }))
    }, [doctorId])
-
-   const { values, setValues } = useFormik({
-      initialValues: {
-         fullName: doctor.fullName || '',
-         file: null,
-      },
-      validateOnChange: false,
-   })
-
-   useEffect(() => {
-      setValues((prevState) => ({
-         ...prevState,
-         ...doctor,
-      }))
-   }, [doctor])
 
    return (
       <StyledContainer>
@@ -53,43 +35,53 @@ const DoctorInnerPage = () => {
                      <span>Хирургия</span>
                   </NavLink>
                   {' > '}
-                  <span className="colors">{values.fullName}</span>
+                  <span className="colors">{doctor.fullName}</span>
                </Typography>
             </StyledSpecialistRow>
-            <Typography className="name">{values.fullName}</Typography>
+
+            <Typography className="name">{doctor.fullName}</Typography>
+
             <Typography className="text">
                Попасть в команду медицинской клиники «Medical Clinic» могут{' '}
                <br />
                только лучшие специалисты с многолетней практикой и доказанным
                опытом.
             </Typography>
+
             <Typography className="text">
                Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
                ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе
                к совершенству.
             </Typography>
+
             <StyledBoxContainer>
-               <img alt="img" src={values.image} className="img" />
+               <img alt="img" src={doctor.image} className="img" />
+
                <Box className="flex">
                   <Typography className="doctor-name">
-                     {values.fullName}
+                     {doctor.fullName}
                   </Typography>
+
                   <Typography className="label">
                      Отделение :{' '}
-                     <span className="mark">{values.department}</span>
+                     <span className="mark">{doctor.department}</span>
                   </Typography>
+
                   <Typography className="label">
                      Должность :{' '}
-                     <span className="mark"> {values.position}</span>{' '}
+                     <span className="mark"> {doctor.position}</span>{' '}
                   </Typography>
+
                   <Button variant="secondary" className="btn">
                      <span className="btn-text">Записаться на приём</span>
                   </Button>
                </Box>
             </StyledBoxContainer>
+
             <Typography className="description">
-               {values.description}
+               {doctor.description}
             </Typography>
+
             <NavLink to="/doctors" className="line">
                <Typography className="arrow">
                   <ArrowLeftIcon /> Список Сотрудников

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Box, styled } from '@mui/material'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -11,11 +12,11 @@ import {
    UnderlineIcon,
 } from '../../assets/icons'
 
-const Toolbar = ({ editor }) => {
+const Toolbar = ({ editor, ...rest }) => {
    if (!editor) return null
 
    return (
-      <StyledWrapper>
+      <StyledToolbar {...rest}>
          <button
             type="button"
             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -60,15 +61,26 @@ const Toolbar = ({ editor }) => {
          >
             <OrderedIcon />
          </button>
-      </StyledWrapper>
+      </StyledToolbar>
    )
 }
 
-const TextEditor = ({ onChange }) => {
-   const onUpdate = ({ editor }) => onChange(editor.getHTML())
+const TextEditor = ({
+   initialContent,
+   onChange,
+   error,
+   editorProps,
+   toolbarProps,
+}) => {
+   const [isHovered, setIsHovered] = useState(false)
+   const [isFocused, setIsFocused] = useState(false)
+
+   const onUpdate = ({ editor }) => {
+      onChange(editor.getHTML())
+   }
 
    const editor = useEditor({
-      content: ``,
+      content: initialContent,
       onUpdate,
       extensions: [
          StarterKit,
@@ -77,60 +89,102 @@ const TextEditor = ({ onChange }) => {
       ],
    })
 
-   return (
-      <>
-         <Toolbar editor={editor} />
+   const events = {
+      ishovered: isHovered.toString(),
+      isfocused: isFocused.toString(),
+      onMouseEnter: () => setIsHovered(true),
+      onMouseLeave: () => setIsHovered(false),
+      onFocus: () => setIsFocused(true),
+      onBlur: () => setIsFocused(false),
+   }
 
-         <StyledTexteria>
-            <EditorContent editor={editor} />
-         </StyledTexteria>
-      </>
+   return (
+      <Box>
+         <Toolbar
+            editor={editor}
+            error={error?.toString()}
+            {...events}
+            {...toolbarProps}
+         />
+
+         <StyledTextarea
+            editor={editor}
+            error={error?.toString()}
+            {...events}
+            {...editorProps}
+         />
+      </Box>
    )
 }
 export default TextEditor
 
-const StyledWrapper = styled(Box)(() => ({
-   width: '812px',
-   height: '68px',
+const StyledToolbar = styled(Box)(({ theme, error, ishovered, isfocused }) => ({
    display: 'flex',
-   justifyContent: 'flex-start',
    alignItems: 'center',
-   borderRadius: '4px',
-   paddingLeft: '50px',
-   border: '1px solid grey',
-   borderBottom: 'none',
+   gap: '87px',
+   borderRadius: '4px 4px 0 0',
+   padding: '24px 58px',
 
-   '.btn': {
-      width: '28px',
-      height: '28',
-      marginRight: '80px',
+   border: `1px solid ${
+      isfocused === 'true'
+         ? theme.palette.primary.darkGreen
+         : error === 'true'
+           ? theme.palette.tertiary.red
+           : ishovered === 'true'
+             ? theme.palette.secondary.lightGrey
+             : theme.palette.secondary.main
+   }`,
+
+   borderBottom: '0px',
+
+   '& > .btn': {
       border: 'none',
       background: 'none',
       cursor: 'pointer',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
    },
 
-   '.is-active': {
-      background: 'rgb(197 197 197)',
-      height: '30px',
-      width: '30px',
+   '& > .is-active > svg > path': {
+      fill: theme.palette.primary.darkGreen,
    },
 }))
 
-const StyledTexteria = styled(Box)(({ theme }) => ({
-   borderRadius: '4px',
-   borderColor: `1px solid ${theme.palette.secondary.main}`,
+const StyledTextarea = styled(EditorContent)(
+   ({ theme, error, ishovered, isfocused }) => ({
+      '& > .ProseMirror': {
+         borderRadius: '0 0 4px 4px',
+         minHeight: '300px',
+         padding: '20px',
 
-   '& > div > .ProseMirror': {
-      border: 'none',
-      minHeight: '300px',
-      padding: '20px',
+         border: `1px solid ${
+            error === 'true'
+               ? theme.palette.tertiary.red
+               : ishovered === 'true'
+                 ? theme.palette.secondary.lightGrey
+                 : theme.palette.secondary.main
+         }`,
 
-      '& > p.is-editor-empty:last-child::before': {
-         color: '#adb5bd',
-         content: 'attr(data-placeholder)',
-         float: 'left',
-         height: '0',
-         pointerEvents: 'none',
+         '&.ProseMirror-focused': {
+            border: `1px solid ${
+               isfocused === 'true' && theme.palette.primary.darkGreen
+            }`,
+
+            outline: 'none',
+         },
+
+         '& > p.is-editor-empty:last-child::before': {
+            color: '#adb5bd',
+            content: 'attr(data-placeholder)',
+            float: 'left',
+            height: '0',
+            pointerEvents: 'none',
+         },
+
+         '& > *': {
+            wordBreak: 'break-word',
+         },
       },
-   },
-}))
+   })
+)
