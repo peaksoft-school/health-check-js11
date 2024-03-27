@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
+import { showToast } from '../../../utils/helpers/notification'
 
 const createApplication = createAsyncThunk(
    'application/createApplication',
@@ -87,6 +88,18 @@ const updateApplication = createAsyncThunk(
 
          return { isActive, id }
       } catch (error) {
+         if (error.response.status === 403) {
+            showToast({
+               message: 'произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.response.data.message,
+               status: 'error',
+            })
+         }
+
          return rejectWithValue(error)
       }
    }
