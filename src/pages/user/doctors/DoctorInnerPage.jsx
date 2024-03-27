@@ -28,18 +28,15 @@ const DoctorInnerPage = () => {
                   <NavLinkStyle to="/">
                      <span>Главная</span> {' > '}
                   </NavLinkStyle>
-
                   <NavLink style={{ textDecoration: 'none' }} to="/doctors">
                      <span>Врачи</span>
                   </NavLink>
                   {' > '}
-
                   <NavLink style={{ textDecoration: 'none' }}>
                      <span>Хирургия</span>
                   </NavLink>
-
+                  npgfgs
                   {' > '}
-
                   <span className="colors">{doctor.fullName}</span>
                </Typography>
             </StyledSpecialistRow>

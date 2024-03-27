@@ -39,12 +39,12 @@ const AddAppointments = ({ open, onClose }) => {
 
    const specialistHandler = () => {
       if (facility) setCurrentPart('specialist')
-      else showToast({ message: 'Выберите специалиста!', status: 'error' })
+      else showToast({ message: 'Выберите услугу!', status: 'error' })
    }
 
    const datePageHandler = () => {
       if (doctorInfo) setCurrentPart('date')
-      else showToast({ message: 'Выберите доктора!', status: 'error' })
+      else showToast({ message: 'Выберите специалиста!', status: 'error' })
    }
 
    const formHandler = () => setCurrentPart('form')

@@ -423,7 +423,6 @@ const PATIENTS_COLUMN = [
       tdStyle: {
          color: 'black',
          fontWeight: '500',
-         textAlign: 'center',
       },
 
       Cell: ({ row }) => {

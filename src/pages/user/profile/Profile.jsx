@@ -14,7 +14,7 @@ import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassw
 const Profile = () => {
    window.scrollTo({ top: 0 })
 
-   const [value, setValue] = useState('1')
+   const [value, setValue] = useState('profle')
 
    const { accessToken } = useSelector((state) => state.auth)
    const { userData, isLoading } = useSelector((state) => state.profile)
@@ -50,7 +50,7 @@ const Profile = () => {
          setValue(tabFormUrl)
       } else {
          setValue('profile')
-         searchParams.set('tab', '1')
+         searchParams.set('tab', 'profle')
          setSearchParams(searchParams)
       }
 

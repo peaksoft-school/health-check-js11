@@ -58,6 +58,14 @@ const AddResult = ({ open, onClose }) => {
       const file = acceptedFiles[0]
 
       if (file) {
+         if (file.type !== 'application/pdf') {
+            showToast({
+               message: 'Файл должен быть в формате PDF',
+               status: 'error',
+            })
+            return
+         }
+
          try {
             const arrayBuffer = await file.arrayBuffer()
             const pdfDoc = await PDFDocument.load(arrayBuffer)
@@ -126,8 +134,6 @@ const AddResult = ({ open, onClose }) => {
                         error={!!errors.date}
                         onChange={changeDateHandler}
                         value={values.date}
-                        variant="custom"
-                        format="DD/MM/YYYY"
                         minDate={dateToday}
                      />
                   </Box>
