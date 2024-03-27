@@ -15,10 +15,10 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ArrowUpIcon } from '../../assets/icons'
 import { SERVICES } from '../../utils/constants/services'
 import { MedicImage, NotFoundSpecialistImage } from '../../assets/images'
-import { SPECIALISTS_THUNK } from '../../store/slices/specialistsSlice/specialictsThunk'
 import Reviews from '../../components/landing/Reviews'
 import Button from '../../components/UI/Button'
 import Leave from '../../components/landing/Leave'
+import { SPECIALISTS_THUNKS } from '../../store/slices/specialists/specialictsThunk'
 
 const InnerService = () => {
    const [initialAppointment, setInitialAppointment] = useState(false)
@@ -36,7 +36,7 @@ const InnerService = () => {
    const selectedService = SERVICES.find((service) => service.id === serid)
 
    useEffect(() => {
-      dispatch(SPECIALISTS_THUNK.getDoctorsByDepartment(selectedService.name))
+      dispatch(SPECIALISTS_THUNKS.getDoctorsByDepartment(selectedService.name))
    }, [dispatch])
 
    const { getDoctorsByDepartment } = useSelector((state) => state.specialists)

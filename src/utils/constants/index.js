@@ -509,6 +509,25 @@ const CHECKED =
 const MAP =
    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d365.48247976201736!2d74.62719552257737!3d42.875802431657775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb78fc81678db%3A0x8f6025b536a29455!2sPeaksoft%20house!5e0!3m2!1sru!2skg!4v1710599618852!5m2!1sru!2skg'
 
+const ABOUT_CLINICK_TEXT = (
+   <Typography className="text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor
+      <br />
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+      <br /> nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat.
+      <br />
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+      dolore eu
+      <br />
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+      sunt in
+      <br />
+      culpa qui officia deserunt mollit anim id est laborum
+   </Typography>
+)
+
 export {
    HEADER_SOCIALS,
    RUSSIAN_MONTHS_NAMES,
@@ -529,4 +548,5 @@ export {
    PART_TITLES,
    MAP,
    CHECKED,
+   ABOUT_CLINICK_TEXT,
 }
