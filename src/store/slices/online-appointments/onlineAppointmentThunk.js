@@ -24,7 +24,7 @@ const updateAppointment = createAsyncThunk(
       { dispatch, rejectWithValue }
    ) => {
       try {
-         const response = await axiosInstance.put(`/api/appointment/update`, {
+         await axiosInstance.put(`/api/appointment/update`, {
             active,
             id,
          })
@@ -32,7 +32,8 @@ const updateAppointment = createAsyncThunk(
          dispatch(getAppointments())
 
          setIsChecked((prev) => !prev)
-         return response.data
+
+         return { id }
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
@@ -63,12 +64,18 @@ const deleteAppoinment = createAsyncThunk(
    'appointments/deleteById',
    async (appointmentId, { dispatch, rejectWithValue }) => {
       try {
-         await axiosInstance.delete(`/api/appointment/${appointmentId}`)
+         const response = await axiosInstance.delete(
+            `/api/appointment/${appointmentId}`
+         )
+
          dispatch(getAppointments())
+
+         showToast({ message: response.data.messageCode })
 
          return appointmentId
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
+
          return rejectWithValue(error)
       }
    }
@@ -78,11 +85,16 @@ const deleteAllAppointments = createAsyncThunk(
    'appointments/deleteAll',
    async (appointmentsIds, { dispatch }) => {
       try {
-         await axiosInstance.delete('/api/appointment/deleteAll', {
-            data: appointmentsIds,
-         })
+         const response = await axiosInstance.delete(
+            '/api/appointment/deleteAll',
+            {
+               data: appointmentsIds,
+            }
+         )
 
          dispatch(getAppointments())
+         showToast({ message: response.data.messageCode })
+         return response.data
       } catch (error) {
          showToast({ message: error.response.data.message, status: 'error' })
          throw new Error('Error deleting all appointments', error)

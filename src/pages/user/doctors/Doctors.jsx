@@ -2,7 +2,6 @@ import { Typography, styled, Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import Button from '../../../components/UI/Button'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import DataDoctors from './DataDoctors'
 

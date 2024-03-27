@@ -10,15 +10,15 @@ import {
    InputAdornment,
    Box,
 } from '@mui/material'
-import Input from '../../components/UI/inputs/Input'
-import Button from '../../components/UI/Button'
-import Modal from '../../components/UI/Modal'
 import { CloseEyeIcon, GoogleIcon, OpenEyeIcon } from '../../assets/icons/index'
 import { VALIDATION_SIGN_IN } from '../../utils/helpers/validate'
 import { signInError } from '../../utils/helpers/index'
-import ForgotPassword from '../forgot-password/ForgotPassword'
 import { authWithGoogle, signIn } from '../../store/slices/auth/authThunk'
 import { auth, provider } from '../../configs/firebase'
+import Button from '../../components/UI/Button'
+import Modal from '../../components/UI/Modal'
+import Input from '../../components/UI/inputs/Input'
+import ForgotPassword from '../forgot-password/ForgotPassword'
 
 const SignIn = ({ onClose, open, closeSignUp }) => {
    const { isLoading } = useSelector((state) => state.auth)

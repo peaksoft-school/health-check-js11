@@ -270,7 +270,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
                cursor: 'pointer',
                boxSizing: 'content-box',
                width: '2rem',
-               transition: 'all 1s easy',
+               transition: 'all 1s linear',
                height: '5vh',
                padding: '0.5rem',
                borderRadius: '6px',

@@ -41,7 +41,7 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          borderRadius: '10px',
          background: 'linear-gradient(181deg, #08DF7D 0.45%, #048F50 82.76%)',
          color: theme.palette.primary.main,
-         transition: 'all 0.5s easy',
+         transition: 'all 0.5s linear',
 
          '&:hover': {
             background:

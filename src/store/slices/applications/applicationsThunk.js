@@ -1,6 +1,33 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
 
+const createApplication = createAsyncThunk(
+   'application/createApplication',
+   async ({ values, resetForm }, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.post(
+            '/api/application/createApplication',
+            values
+         )
+
+         showToast({
+            message: response.data.message,
+         })
+
+         resetForm()
+         showToast({ message: response.data.messageCode })
+         return response.data
+      } catch (error) {
+         showToast({
+            message: error.response.data.message,
+            status: 'error',
+         })
+
+         return rejectWithValue(error.response.data)
+      }
+   }
+)
+
 const getApplicationData = createAsyncThunk(
    'applications/getApplications',
 
@@ -79,10 +106,12 @@ const deleteAllApplication = createAsyncThunk(
       }
    }
 )
-export const APPLICATION_THUNK = {
+
+export const APPLICATIONS_THUNKS = {
    getApplicationData,
    searchApplications,
    deleteApplication,
    updateApplication,
    deleteAllApplication,
+   createApplication,
 }

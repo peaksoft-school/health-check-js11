@@ -68,7 +68,7 @@ const StyledDeleteButton = styled(ButtonBase)(() => ({
    cursor: 'pointer',
    width: '26px',
    height: '22px',
-   transition: '0.3s ease-in-out',
+   transition: '0.3s linear',
 
    '&:disabled': {
       cursor: 'not-allowed',

@@ -15,6 +15,11 @@ const ROUTES = {
       PRICES: 'prices',
       CHANGE_PASSWORD: 'change-password',
       RECORDS: 'records',
+      SERVICE: 'service',
+   },
+
+   ID: {
+      ID: 'id',
       DOCTOR_INNER: '/doctors/:doctorId',
    },
 
@@ -22,7 +27,6 @@ const ROUTES = {
       INDEX: '/admin',
       ONLINE_APPOINTMENTS: 'online-appointments',
       PATIENTS: 'patients',
-      ID: 'id',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
       ADD_SPECIALIST: 'add-specialist',

@@ -72,7 +72,7 @@ const StyledContainer = styled(Box)(() => ({
    justifyContent: 'center',
    alignItems: 'center',
    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-   transition: 'background-color 0.3s ease',
+   transition: 'background-color 0.3s linear',
    padding: '0 2rem',
 }))
 
@@ -104,7 +104,7 @@ const StyledModalContent = styled(Box)(({ theme }) => ({
 
       '& svg': {
          cursor: 'pointer',
-         transition: 'transform 0.3s easy',
+         transition: 'transform 0.3s linear',
 
          '&:hover': {
             '& path': {

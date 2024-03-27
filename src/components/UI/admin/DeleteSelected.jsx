@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { Box, ButtonBase, Typography, styled } from '@mui/material'
 import { DeleteIcon } from '../../../assets/icons'
 import Modal from '../Modal'
 import Button from '../Button'
@@ -17,7 +17,7 @@ const DeleteSelected = ({ disabled, deleteFn, clearFn, variant }) => {
    const dispatch = useDispatch()
 
    const getIds = () => {
-      if (variant === 'appointments') return deletedAppointmentsIds
+      if (variant === 'online-appointments') return deletedAppointmentsIds
 
       if (variant === 'applications') return selectAllApplications
 
@@ -88,7 +88,7 @@ export default DeleteSelected
 const StyledDeleteButton = styled(ButtonBase)(() => ({
    width: '26px',
    height: '22px',
-   transition: '0.3s ease-in-out',
+   transition: '0.3s linear',
 
    '&:disabled': {
       opacity: 0.2,
