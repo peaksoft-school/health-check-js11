@@ -1,14 +1,12 @@
-import styled from '@emotion/styled'
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { Typography, styled, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import Button from '../../../components/UI/Button'
-import { ArrowLeftIcon } from '../../../assets/icons'
 import Reviews from '../../../components/landing/Reviews'
+import { ArrowLeftIcon } from '../../../assets/icons'
 
 const DoctorInnerPage = () => {
    const { doctor } = useSelector((state) => state.doctors)
