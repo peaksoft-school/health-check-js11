@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
 import { showToast } from '../../../utils/helpers/notification'
-import { axiosInstanceFile } from '../../../configs/axiosInstaseFile'
+import { FILE_THUNKS } from '../file/fileThunk'
 
 const getPatient = createAsyncThunk(
    'patients/getPatient',
@@ -15,16 +15,6 @@ const getPatient = createAsyncThunk(
       }
    }
 )
-
-const postFile = createAsyncThunk('patients/postFile', async (data) => {
-   try {
-      const response = await axiosInstanceFile.post('/api/static', data)
-
-      return response.data
-   } catch (error) {
-      return error
-   }
-})
 
 const getPatientResult = createAsyncThunk(
    'patients/getPatientResult',
@@ -43,7 +33,7 @@ const addPatientResult = createAsyncThunk(
    'patientsResult/addResult',
    async (result, { rejectWithValue, dispatch }) => {
       try {
-         const getFile = await dispatch(postFile(result.url))
+         const getFile = await dispatch(FILE_THUNKS.addFile(result.url))
 
          const response = await axiosInstance.post('/api/result/save', {
             ...result,

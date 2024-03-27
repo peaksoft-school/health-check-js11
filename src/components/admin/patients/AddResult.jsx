@@ -1,4 +1,3 @@
-/* eslint-disable react/no-this-in-sfc */
 import { styled, Box, Typography } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'

@@ -10,10 +10,11 @@ import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppo
 import { profileSlice } from './slices/profie/profileSlice'
 import { doctorSlice } from './slices/doctors/doctorSlice'
 import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
-import { specialistsSlice } from './slices/specialistsSlice/specialistsSlice'
-import { addNoteSlice } from './slices/addNote/AddNoteSlice'
+import { specialistsSlice } from './slices/specialists/specialistsSlice'
+import { fileSlice } from './slices/file/fileSlice'
 
 const rootReducer = combineReducers({
+   [fileSlice.name]: fileSlice.reducer,
    [authSlice.name]: authSlice.reducer,
    [appointmentsSlice.name]: appointmentsSlice.reducer,
    [scheduleSlice.name]: scheduleSlice.reducer,
@@ -24,7 +25,6 @@ const rootReducer = combineReducers({
    [doctorSlice.name]: doctorSlice.reducer,
    [onlineAppointmentsSlice.name]: onlineAppointmentsSlice.reducer,
    [specialistsSlice.name]: specialistsSlice.reducer,
-   [addNoteSlice.name]: addNoteSlice.reducer,
 })
 
 const persistConfig = {

@@ -13,6 +13,14 @@ import {
 import { NotFoundDataImage } from '../../assets/images'
 
 const Table = ({ columns: headers, data }) => {
+   const columns = useMemo(() => headers, [headers])
+
+   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+      useTable({
+         columns,
+         data,
+      })
+
    if (!data || data.length === 0) {
       return (
          <StyledAbsence>
@@ -20,14 +28,6 @@ const Table = ({ columns: headers, data }) => {
          </StyledAbsence>
       )
    }
-
-   const columns = useMemo(() => headers, [])
-
-   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-      useTable({
-         columns,
-         data,
-      })
 
    return (
       <StyledTableContainer>
@@ -67,7 +67,7 @@ const Table = ({ columns: headers, data }) => {
                               display: 'flex',
                            },
                         })}
-                        key={row.id}
+                        key={row.id.toString()}
                         index={row.index}
                      >
                         {row.cells.map((cell) => (
@@ -78,7 +78,7 @@ const Table = ({ columns: headers, data }) => {
                                     ...cell.column.tdStyle,
                                  },
                               })}
-                              key={cell.column.id}
+                              key={cell.column.id.toString()}
                            >
                               {cell.render('Cell')}
                            </TableCell>

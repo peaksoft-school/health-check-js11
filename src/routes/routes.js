@@ -25,6 +25,7 @@ const ROUTES = {
       ID: 'id',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
+      ADD_SPECIALIST: 'add-specialist',
    },
 }
 

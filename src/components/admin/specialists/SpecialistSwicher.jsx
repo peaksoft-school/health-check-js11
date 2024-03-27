@@ -1,16 +1,31 @@
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { styled } from '@mui/material'
 import Switcher from '../../UI/Switcher'
-import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
+import { SPECIALISTS_THUNKS } from '../../../store/slices/specialists/specialictsThunk'
 
 const SpecialistSwicher = ({ id, isActive }) => {
+   const [isChecked, setChecked] = useState(isActive)
+
    const dispatch = useDispatch()
 
-   const changeCheckboxHandler = (checked) => {
-      dispatch(SPECIALISTS_THUNK.updateDoctorStatus({ id, checked }))
+   useEffect(() => {
+      setChecked(isActive)
+   }, [])
+
+   const changeCheckboxHandler = (e) => {
+      dispatch(
+         SPECIALISTS_THUNKS.updateDoctorStatus({
+            id,
+            checked: e.target.checked,
+            setChecked,
+         })
+      )
    }
 
-   return <StyledSwitcher checked={isActive} onChange={changeCheckboxHandler} />
+   return (
+      <StyledSwitcher checked={isChecked} onChange={changeCheckboxHandler} />
+   )
 }
 
 export default SpecialistSwicher

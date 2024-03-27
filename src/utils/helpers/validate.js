@@ -97,6 +97,21 @@ const VALIDATION_SCHEDULE = Yup.object().shape({
    ),
 })
 
+const VALIDATION_SPECIALIST = Yup.object().shape({
+   firstName: Yup.string().required('Имя обязятельное!'),
+   lastName: Yup.string().required('Фамилия обязятельное!'),
+   position: Yup.string().required('Должность обязятельное!'),
+   description: Yup.string().required('Описание обязятельное!'),
+})
+
+const VALIDATION_ADD_SPECIALIST = Yup.object().shape({
+   firstName: Yup.string().required('Имя обязятельное!'),
+   lastName: Yup.string().required('Фамилия обязятельное!'),
+   image: Yup.string().required('Фото обязятельное!'),
+   position: Yup.string().required('Должность обязятельное!'),
+   description: Yup.string().required('Описание обязятельное!'),
+})
+
 export {
    VALIDATION_SIGN_IN,
    VALIDATION_SIGN_UP,
@@ -105,4 +120,6 @@ export {
    VALIDATION_FORGOT_PASSWORD,
    VALIDATION_APPOINTMENTS_FORM,
    VALIDATION_CHANGE_PASSWORD,
+   VALIDATION_SPECIALIST,
+   VALIDATION_ADD_SPECIALIST,
 }
