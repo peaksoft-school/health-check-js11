@@ -22,7 +22,7 @@ const DoctorInnerPage = () => {
       dispatch(DOCTOR_THUNK.getDoctorsById({ doctorId }))
    }, [doctorId])
 
-   const { values, handleChange, handleSubmit, dirty, setValues } = useFormik({
+   const { values, setValues } = useFormik({
       initialValues: {
          fullName: doctor.fullName || '',
          file: null,
