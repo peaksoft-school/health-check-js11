@@ -9,7 +9,7 @@ const Proces = () => (
 
       <StyledContainer>
          <StyledSpecialistRow>
-            <BreadCrumbs to="/" text="цены" before="Главная" />
+            <BreadCrumbs to="/" text=" Цены" before="Главная" />
          </StyledSpecialistRow>
 
          <Typography className="text">

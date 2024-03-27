@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
+import { Typography, styled, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Typography, styled } from '@mui/material'
-import { NavLink, useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
+import { NavLink } from 'react-router-dom'
+import { DOCTORS_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import Button from '../../../components/UI/Button'
 import Reviews from '../../../components/landing/Reviews'
 import { ArrowLeftIcon } from '../../../assets/icons'
-import { DOCTORS_THUNK } from '../../../store/slices/doctors/doctorThunk'
 
 const DoctorInnerPage = () => {
    window.scrollTo({ top: 0 })
@@ -39,9 +40,7 @@ const DoctorInnerPage = () => {
                   <span className="colors">{doctor.fullName}</span>
                </Typography>
             </StyledSpecialistRow>
-
             <Typography className="name">{doctor.fullName}</Typography>
-
             <Typography className="text">
                Попасть в команду медицинской клиники «Medical Clinic» могут{' '}
                <br />
@@ -56,20 +55,20 @@ const DoctorInnerPage = () => {
             </Typography>
 
             <StyledBoxContainer>
-               <img alt="img" src={doctor.image} />
-
+               <img alt="img" src={doctor.image} className="img" />
                <Box className="flex">
                   <Typography className="doctor-name">
                      {doctor.fullName}
                   </Typography>
 
                   <Typography className="label">
-                     Отделение:
-                     <span className="mark"> {doctor.department}</span>
+                     Отделение :{' '}
+                     <span className="mark">{doctor.department}</span>
                   </Typography>
 
                   <Typography className="label">
-                     Должность: <span className="mark">{doctor.position}</span>
+                     Должность :{' '}
+                     <span className="mark"> {doctor.position}</span>{' '}
                   </Typography>
 
                   <Button variant="secondary" className="btn">

@@ -246,7 +246,28 @@ const formatDates = (dateString) => {
    return capitalizedWeekday
 }
 
+const containsOnlyText = (text) => {
+   const textOnly = text.replace(/<[^>]+>/g, '')
+
+   return /\S/.test(textOnly.trim())
+}
+
+const isEqualObjects = (firstObject, secondObject) => {
+   const firstKeys = Object.keys(firstObject)
+   const secondKeys = Object.keys(secondObject)
+
+   if (firstKeys.length !== secondKeys.length) return false
+
+   for (const key of firstKeys) {
+      if (firstObject[key] !== secondObject[key]) return false
+   }
+
+   return true
+}
+
 export {
+   isEqualObjects,
+   containsOnlyText,
    containsTheHTTPS,
    getRussianMonthName,
    signInError,

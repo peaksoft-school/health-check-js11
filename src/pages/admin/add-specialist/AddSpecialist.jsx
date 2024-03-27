@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import {
    Typography,
@@ -14,23 +14,15 @@ import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import Select from '../../../components/UI/Select'
 import Input from '../../../components/UI/inputs/Input'
 import Button from '../../../components/UI/Button'
-import Loading from '../../../components/Loading'
 import TextEditor from '../../../components/UI/TextEditor'
-import {
-   NotFoundDoctorImage,
-   NotFoundSpecialistImage,
-} from '../../../assets/images'
-import { SPECIALISTS_THUNKS } from '../../../store/slices/specialists/specialictsThunk'
+import { AddPhotoImage } from '../../../assets/images'
 import { FILE_THUNKS } from '../../../store/slices/file/fileThunk'
 import { ROUTES } from '../../../routes/routes'
 import { DEPARTMENTS } from '../../../utils/constants'
-import { VALIDATION_SPECIALIST } from '../../../utils/helpers/validate'
-import {
-   containsOnlyText,
-   containsTheHTTPS,
-   isEqualObjects,
-} from '../../../utils/helpers'
 import { showToast } from '../../../utils/helpers/notification'
+import { VALIDATION_ADD_SPECIALIST } from '../../../utils/helpers/validate'
+import { containsOnlyText } from '../../../utils/helpers'
+import { SPECIALISTS_THUNKS } from '../../../store/slices/specialists/specialictsThunk'
 
 const selectStyles = {
    control: (provided, state) => {
@@ -73,101 +65,52 @@ const selectStyles = {
    }),
 }
 
-const Specialist = () => {
-   const { specialist, isLoading } = useSelector((state) => state.specialists)
+const ID = 'add-specialist'
+
+const AddSpecialist = () => {
+   const { isLoading } = useSelector((state) => state.specialists)
 
    const link = useSelector((state) => state.file)
 
-   const [status, setStatus] = useState('personal')
-   const [isSaveDisabled, setSaveDisabled] = useState(false)
-
-   const [searchParams, setSearchParams] = useSearchParams()
-
-   const { id } = useParams()
+   const [isDisabled, setIsDisabled] = useState(false)
 
    const navigate = useNavigate()
 
    const dispatch = useDispatch()
 
-   const isReadOnly = status === 'personal'
-
-   useEffect(() => {
-      dispatch(SPECIALISTS_THUNKS.getSpecialist(id))
-
-      const currentStatus = searchParams.get('status') || 'personal'
-
-      setStatus(currentStatus)
-   }, [id])
-
    const onSubmit = (values) => {
-      searchParams.set('status', 'edit')
-
-      setSearchParams(searchParams)
-      setStatus(searchParams.get('status'))
-
-      if (status === 'edit') {
-         dispatch(
-            SPECIALISTS_THUNKS.updateSpecialist({
-               id: specialist.id,
-               facility: values.department,
-
-               data: {
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  position: values.position,
-                  image: link[specialist?.id] || specialist?.image,
-                  description: values.description,
-               },
-
-               searchParams,
-               setSearchParams,
-               setStatus,
-            })
-         )
-      }
+      dispatch(SPECIALISTS_THUNKS.addSpecialist({ navigate, values }))
    }
 
-   const {
-      values,
-      errors,
-      handleChange,
-      handleSubmit,
-      setValues,
-      setFieldValue,
-   } = useFormik({
-      initialValues: {
-         id: 0,
-         image: '',
-         fullName: '',
-         firstName: '',
-         lastName: '',
-         department: '',
-         position: '',
-         description: '',
-      },
+   const { values, errors, handleChange, handleSubmit, setFieldValue } =
+      useFormik({
+         initialValues: {
+            department: 'Анестезиология',
+            firstName: '',
+            lastName: '',
+            position: '',
+            image: '',
+            description: '',
+         },
 
-      validationSchema: VALIDATION_SPECIALIST,
-      onSubmit,
-   })
+         validationSchema: VALIDATION_ADD_SPECIALIST,
+         validateOnChange: false,
+         onSubmit,
+      })
+
    useEffect(() => {
-      setSaveDisabled(
+      setFieldValue('image', link[ID] || '')
+   }, [link])
+
+   useEffect(() => {
+      setIsDisabled(
          !values.firstName.trim() ||
+            !values.image.trim() ||
             !values.lastName.trim() ||
             !values.position.trim() ||
             !containsOnlyText(values.description)
       )
    }, [values])
-
-   useEffect(() => {
-      setValues((prev) => ({
-         ...prev,
-         ...specialist,
-      }))
-   }, [specialist])
-
-   useEffect(() => {
-      setFieldValue('image', link[id])
-   }, [link])
 
    const clickAvatarHandler = () => document.getElementById('file').click()
 
@@ -177,7 +120,7 @@ const Specialist = () => {
       const fileSizeInKB = file.size / 1024
 
       if (fileSizeInKB <= 1000) {
-         dispatch(FILE_THUNKS.addFile({ id, file }))
+         dispatch(FILE_THUNKS.addFile({ id: ID, file }))
       } else {
          showToast({
             message: 'Нельзя загружать файлы с размером больше 1000 байтов!',
@@ -193,62 +136,20 @@ const Specialist = () => {
    const changeTextEditorHandler = (value) => handleChange('description')(value)
 
    const navigateHandler = () => {
-      if (isReadOnly) {
-         navigate(`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`)
-      } else {
-         searchParams.set('status', 'personal')
-
-         setFieldValue('department', specialist?.department)
-         setSearchParams(searchParams)
-         setStatus(searchParams.get('status'))
-      }
+      navigate(`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`)
    }
 
-   const isOpen = isReadOnly ? false : undefined
-
-   const isDisabled = isEqualObjects(values, specialist) || isSaveDisabled
-
-   const doctorImage = () => {
-      if (isReadOnly) {
-         if (containsTheHTTPS(specialist?.image)) {
-            return specialist?.image
-         }
-
-         return NotFoundSpecialistImage
-      }
-
-      if (link[specialist?.id]?.length > 0) {
-         return link[specialist?.id]
-      }
-
-      if (containsTheHTTPS(specialist?.image)) {
-         return specialist?.image
-      }
-
-      return NotFoundSpecialistImage
-   }
-
-   if (!specialist.firstName) {
-      return (
-         <StyledNotFoundDoctor>
-            <img src={NotFoundDoctorImage} alt="not-found-doctor" />
-         </StyledNotFoundDoctor>
-      )
-   }
+   const avatar = values.image ? values.image : AddPhotoImage
 
    return (
       <StyledContainer>
          <BreadCrumbs
             to={`${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}`}
             before="Специалисты"
-            text={`${specialist.firstName} ${specialist.lastName}`}
+            text="Добавление специалиста"
          />
 
-         {isLoading && <Loading />}
-
-         <Typography className="title">
-            {specialist.firstName} {specialist.lastName}
-         </Typography>
+         <Typography className="title">Добавление специалиста</Typography>
 
          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="image-box">
@@ -259,13 +160,15 @@ const Specialist = () => {
                ) : (
                   <>
                      <Avatar
-                        onClick={clickAvatarHandler}
-                        src={doctorImage()}
                         className="image"
                         alt="Фото специалиста"
+                        src={avatar}
+                        onClick={clickAvatarHandler}
                      />
 
-                     {isReadOnly || <label htmlFor="file">Сменить фото</label>}
+                     <label htmlFor="file">
+                        Нажмите для добавления фотографии
+                     </label>
                   </>
                )}
 
@@ -278,27 +181,17 @@ const Specialist = () => {
             </div>
 
             <div className="personal-box">
-               <Typography className="personal-title">
-                  {isReadOnly ? 'Личные данные' : 'Редактирование данных'}
-               </Typography>
-
                <Box className="inputs-box">
                   <Box className="first-column">
                      <Box>
                         <InputLabel>Имя</InputLabel>
 
                         <StyledInput
-                           value={
-                              isReadOnly
-                                 ? specialist?.firstName
-                                 : values.firstName
-                           }
-                           onChange={(e) =>
-                              handleChange('firstName')(e.target.value.trim())
-                           }
-                           readOnly={isReadOnly}
+                           value={values.firstName}
+                           onChange={handleChange}
                            error={errors.firstName}
                            placeholder="Имя"
+                           name="firstName"
                         />
                      </Box>
 
@@ -308,9 +201,8 @@ const Specialist = () => {
                         <Select
                            options={DEPARTMENTS}
                            onChange={changeSelectHandler}
-                           placeholder={values.department}
                            styles={selectStyles}
-                           menuIsOpen={isOpen}
+                           placeholder={values.department}
                            error={errors.department}
                            variant="schedule"
                         />
@@ -322,17 +214,11 @@ const Specialist = () => {
                         <InputLabel>Фамилия</InputLabel>
 
                         <StyledInput
-                           value={
-                              isReadOnly
-                                 ? specialist?.lastName
-                                 : values.lastName
-                           }
-                           onChange={(e) =>
-                              handleChange('lastName')(e.target.value.trim())
-                           }
-                           readOnly={isReadOnly}
+                           value={values.lastName}
+                           onChange={handleChange}
                            error={errors.lastName}
                            placeholder="Фамилия"
+                           name="lastName"
                         />
                      </Box>
 
@@ -340,18 +226,11 @@ const Specialist = () => {
                         <InputLabel>Должность</InputLabel>
 
                         <StyledInput
-                           value={
-                              isReadOnly
-                                 ? specialist?.position
-                                 : values.position
-                           }
-                           onChange={(e) =>
-                              handleChange('position')(e.target.value.trim())
-                           }
-                           readOnly={isReadOnly}
+                           value={values.position}
+                           onChange={handleChange}
                            error={errors.position}
-                           name="position"
                            placeholder="Должность"
+                           name="position"
                         />
                      </Box>
                   </Box>
@@ -360,19 +239,7 @@ const Specialist = () => {
                <Box className="description">
                   <InputLabel>Описание</InputLabel>
 
-                  {isReadOnly ? (
-                     <StyledTextarea
-                        dangerouslySetInnerHTML={{
-                           __html: specialist?.description,
-                        }}
-                     />
-                  ) : (
-                     <TextEditor
-                        onChange={changeTextEditorHandler}
-                        initialContent={specialist?.description}
-                        error={!containsOnlyText(values.description)}
-                     />
-                  )}
+                  <TextEditor onChange={changeTextEditorHandler} />
                </Box>
 
                <Box className="buttons-box">
@@ -381,15 +248,15 @@ const Specialist = () => {
                      variant="secondary"
                      onClick={navigateHandler}
                   >
-                     {isReadOnly ? 'НАЗАД' : 'ОТМЕНИТЬ'}
+                     ОТМЕНИТЬ
                   </StyledButton>
 
                   <StyledButton
                      isLoading={isLoading}
-                     disabled={isReadOnly ? false : Boolean(isDisabled)}
+                     disabled={isDisabled}
                      type="submit"
                   >
-                     {isReadOnly ? 'РЕДАКТИРОВАТЬ' : 'СОХРАНИТЬ'}
+                     ДОБАВИТЬ
                   </StyledButton>
                </Box>
             </div>
@@ -398,7 +265,7 @@ const Specialist = () => {
    )
 }
 
-export default Specialist
+export default AddSpecialist
 
 const StyledContainer = styled(Box)(() => ({
    display: 'flex',
@@ -429,7 +296,7 @@ const StyledContainer = styled(Box)(() => ({
          gap: '6px',
 
          '& > div': {
-            width: '135px',
+            width: '169px',
             display: 'flex',
             justifyContent: 'center',
          },
@@ -441,7 +308,8 @@ const StyledContainer = styled(Box)(() => ({
          },
 
          '& > label': {
-            color: '#346EFB',
+            textAlign: 'center',
+            color: '#909CB5',
             fontSize: '12px',
             cursor: 'pointer',
          },
@@ -462,11 +330,6 @@ const StyledContainer = styled(Box)(() => ({
          display: 'flex',
          flexDirection: 'column',
          gap: '20px',
-
-         '& > .personal-title': {
-            fontSize: '18px',
-            fontWeight: '600',
-         },
 
          '& > .inputs-box': {
             display: 'flex',
@@ -526,33 +389,7 @@ const StyledInput = styled(Input)(() => ({
    },
 }))
 
-const StyledTextarea = styled(Box)(({ theme }) => ({
-   padding: '20px',
-   borderRadius: '4px',
-   border: `1px solid ${theme.palette.secondary.main}`,
-
-   '&:hover': {
-      borderColor: theme.palette.secondary.lightGrey,
-   },
-
-   '&:active': {
-      borderColor: theme.palette.primary.darkGreen,
-   },
-}))
-
 const StyledButton = styled(Button)(() => ({
    height: '39px',
    width: '243px',
-}))
-
-const StyledNotFoundDoctor = styled(Box)(() => ({
-   margin: '0 auto',
-   maxWidth: '1600px',
-   display: 'flex',
-   justifyContent: 'center',
-
-   '& > img': {
-      width: '40%',
-      height: '40%',
-   },
 }))

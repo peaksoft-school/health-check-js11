@@ -5,7 +5,7 @@ export const showToast = ({
    pending,
    message = 'Успешно',
    status = 'success',
-   duration = 1000,
+   duration = 3000,
 }) => {
    let borderColor
 

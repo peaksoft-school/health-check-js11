@@ -23,3 +23,4 @@ export { default as ResultsBackgroundImage } from './pngs/results-background.png
 export { default as NotFoundDataImage } from './pngs/no-data.png'
 export { default as NotFoundSpecialistImage } from './pngs/not-specialist.png'
 export { default as NotFoundDoctorImage } from './pngs/doctor-not-found.png'
+export { default as AddPhotoImage } from './pngs/add-photo.png'
