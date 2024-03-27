@@ -29,6 +29,7 @@ const ROUTES = {
       PATIENTS: 'patients',
       APPLICATIONS: 'applications',
       SPECIALISTS: 'specialists',
+      ADD_SPECIALIST: 'add-specialist',
    },
 }
 

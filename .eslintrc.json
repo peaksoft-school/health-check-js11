@@ -22,6 +22,7 @@
    "plugins": ["react"],
 
    "rules": {
+      "no-restricted-syntax": "off",
       "no-nested-ternary": "off",
       "no-plusplus": "warn",
       "no-param-reassign": "off",

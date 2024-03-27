@@ -50,12 +50,12 @@ const StyledButton = styled(MuiButton)(({ theme, variant }) => {
          },
 
          '&:active': {
-            backgroundColor: theme.palette.primary.linearGradient,
+            background: theme.palette.primary.linearGradient,
          },
 
          '&.Mui-disabled': {
             border: 'none',
-            backgroundColor: theme.palette.secondary.lightGrey,
+            background: theme.palette.secondary.lightGrey,
             color: theme.palette.primary.main,
          },
       },

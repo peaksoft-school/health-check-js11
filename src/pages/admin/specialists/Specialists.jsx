@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, Typography, styled } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
+import { Box, Typography, styled } from '@mui/material'
 import Table from '../../../components/UI/Table'
 import Button from '../../../components/UI/Button'
 import SearchInput from '../../../components/UI/inputs/SearchInput'
 import Loading from '../../../components/Loading'
 import { SPECIALISTS_COLUMN } from '../../../utils/constants/columns'
-import { SPECIALISTS_THUNK } from '../../../store/slices/specialistsSlice/specialictsThunk'
 import { PlusIcon } from '../../../assets/icons'
+import { SPECIALISTS_THUNKS } from '../../../store/slices/specialists/specialictsThunk'
+import { ROUTES } from '../../../routes/routes'
 
 const Specialists = () => {
    const { isLoading, specialists } = useSelector((state) => state.specialists)
@@ -17,32 +19,36 @@ const Specialists = () => {
 
    const dispatch = useDispatch()
 
+   const navigate = useNavigate()
+
    const [debouncedSearch] = useDebounce(search, 1000)
 
    const memoizedSpecialists = useMemo(() => specialists, [specialists])
 
    useEffect(() => {
-      dispatch(SPECIALISTS_THUNK.getSpecialists())
+      dispatch(SPECIALISTS_THUNKS.getSpecialists())
    }, [])
 
    useEffect(() => {
       if (debouncedSearch !== undefined) {
-         dispatch(
-            SPECIALISTS_THUNK.searchSpecilaist({
-               searchName: debouncedSearch,
-            })
-         )
+         dispatch(SPECIALISTS_THUNKS.searchSpecialist(debouncedSearch))
       }
    }, [debouncedSearch])
 
    const changeSearchHandler = (e) => setSearch(e.target.value)
+
+   const navigateHandler = () => {
+      navigate(
+         `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.SPECIALISTS}/${ROUTES.ADMIN.ADD_SPECIALIST}`
+      )
+   }
 
    return (
       <StyledContainer>
          <Box className="button-container">
             <Typography className="title">Специалисты</Typography>
 
-            <Button className="add-button">
+            <Button className="add-button" onClick={navigateHandler}>
                <PlusIcon className="plus-icon" />
                ДОБАВИТЬ СПЕЦИАЛИСТА
             </Button>
@@ -84,7 +90,7 @@ const StyledContainer = styled(Box)(() => ({
          marginBottom: '1.87rem',
       },
 
-      '& > a > .add-button': {
+      '& > .add-button': {
          fontFamily: 'Manrope',
          fontSize: '0.875rem',
          fontStyle: 'normal',
