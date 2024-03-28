@@ -2,6 +2,7 @@ import { Outlet, useLocation, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Header from './Header'
 import Footer from './Footer'
+import ChatBot from '../../components/ChatBot'
 
 const UserLayout = () => {
    const location = useLocation()
@@ -20,6 +21,8 @@ const UserLayout = () => {
          {!isChangePassword && location.pathname !== '/results' && <Header />}
 
          <Outlet />
+
+         <ChatBot />
 
          {!isChangePassword && location.pathname !== '/results' && <Footer />}
       </>

@@ -12,6 +12,7 @@ import { doctorSlice } from './slices/doctors/doctorSlice'
 import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
 import { specialistsSlice } from './slices/specialists/specialistsSlice'
 import { fileSlice } from './slices/file/fileSlice'
+import { chatBotSlice } from './slices/chat-bot/chatBotSlice'
 
 const rootReducer = combineReducers({
    [fileSlice.name]: fileSlice.reducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
    [doctorSlice.name]: doctorSlice.reducer,
    [onlineAppointmentsSlice.name]: onlineAppointmentsSlice.reducer,
    [specialistsSlice.name]: specialistsSlice.reducer,
+   [chatBotSlice.name]: chatBotSlice.reducer,
 })
 
 const persistConfig = {
