@@ -1,14 +1,15 @@
 import { Typography, styled, Box } from '@mui/material'
 import { AboutClinicImage, SignatureImage } from '../../../assets/images'
 import AboutUs from '../../../components/landing/AboutUs'
-import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import { ABOUT_CLINICK_TEXT } from '../../../utils/constants'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const AboutClinic = () => {
    window.scrollTo({ top: 0 })
    return (
       <>
          <StyledLine> </StyledLine>
+
          <StyledContainer>
             <Box>
                <NavigatePathTitle>
@@ -79,18 +80,22 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontSize: '16px',
          fontFamily: 'Manrope',
       },
+
       '& .photo-container': {
          display: 'flex',
          justifyContent: 'end',
+
          '& .image': {
             width: '496px',
             overflow: 'hidden',
             height: '358px',
          },
       },
+
       '& .signature-container': {
          display: 'flex',
          justifyContent: 'ceneter',
+
          '& .signature': {
             width: '112px',
             height: '89px',
@@ -106,6 +111,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          fontSize: '18px',
          fontFamily: 'Manrope',
       },
+
       '& .name': {
          fontSize: '18px',
          fontFamily: 'Manrope',

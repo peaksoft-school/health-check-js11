@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { axiosInstance } from '../../../configs/axiosInstance'
-import { showToast } from '../../../utils/helpers/notification'
 
 const getDoctors = createAsyncThunk(
    'doctors/getDoctors',
@@ -12,7 +11,6 @@ const getDoctors = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({ message: error.response.data.message, status: 'error' })
          return rejectWithValue(error)
       }
    }
@@ -20,9 +18,9 @@ const getDoctors = createAsyncThunk(
 
 const getDoctorsById = createAsyncThunk(
    'doctors/getDoctorsById',
-   async ({ doctorId }, { rejectWithValue }) => {
+   async ({ id }, { rejectWithValue }) => {
       try {
-         const response = await axiosInstance.get(`api/doctor/${doctorId}`)
+         const response = await axiosInstance.get(`api/doctor/${id}`)
 
          return response.data
       } catch (error) {
@@ -31,4 +29,4 @@ const getDoctorsById = createAsyncThunk(
    }
 )
 
-export const DOCTOR_THUNK = { getDoctors, getDoctorsById }
+export const DOCTORS_THUNK = { getDoctors, getDoctorsById }

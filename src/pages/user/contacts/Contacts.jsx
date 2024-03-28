@@ -77,9 +77,9 @@ const Contacts = () => {
 export default Contacts
 
 const StyledContainer = styled(Box)(({ theme }) => ({
-   '& .box': {
+   '& > .box': {
       margin: '0 auto',
-      paddingBottom: '30px',
+      marginTop: '10px',
 
       '& > .title': {
          marginLeft: '6.25rem',
@@ -97,7 +97,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          justifyContent: 'center',
       },
 
-      '& .text': {
+      '& > .text': {
          fontSize: '18px',
          padding: '3.125rem 0 2rem 6.5rem',
          color: '#4D4E51',
@@ -105,13 +105,16 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
 
       '& > .text-container': {
-         '& .label': {
+         // marginTop: '6rem',
+         marginBottom: '7rem',
+
+         '& > .label': {
             fontFamily: 'Manrope',
             padding: '1rem 0 0 6.5rem',
             fontSize: '18px',
          },
 
-         '& .contact-content': {
+         '& > .contact-content': {
             padding: '0.2rem 0 0 6.5rem',
             color: '#048741',
             fontFamily: 'Manrope',
@@ -122,7 +125,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
 
    '& > .map': {
       border: 'none',
-      marginTop: '6rem',
    },
 }))
 
@@ -135,5 +137,5 @@ const StyledLine = styled(Box)(() => ({
 const NavigatePathTitle = styled(Box)(() => ({
    fontSize: '0.875rem',
    fontWeight: 400,
-   padding: '3.125rem 0 2rem 6.5rem',
+   padding: '2rem 0 0rem 6.5rem',
 }))

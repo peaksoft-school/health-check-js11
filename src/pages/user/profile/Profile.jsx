@@ -7,14 +7,14 @@ import { NavLink, useSearchParams } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/inputs/Input'
 import NumberInput from '../../../components/UI/inputs/NumberInput'
-import { PROFILE_THUNKS } from '../../../store/slices/profie/profileThunk'
+import { PROFILE_THUNKS } from '../../../store/slices/profile/profileThunk'
 import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 import ChangeUserPassword from '../../../components/user/profile/ChangeUserPassword'
 
 const Profile = () => {
    window.scrollTo({ top: 0 })
 
-   const [value, setValue] = useState('1')
+   const [value, setValue] = useState('profile')
 
    const { accessToken } = useSelector((state) => state.auth)
    const { userData, isLoading } = useSelector((state) => state.profile)
@@ -50,7 +50,7 @@ const Profile = () => {
          setValue(tabFormUrl)
       } else {
          setValue('profile')
-         searchParams.set('tab', '1')
+         searchParams.set('tab', 'profile')
          setSearchParams(searchParams)
       }
 
@@ -77,50 +77,44 @@ const Profile = () => {
 
                <Box>
                   <TabContext value={value}>
-                     <Box className="tabs-container">
+                     <Box>
                         <TabList
                            onChange={tabsChange}
                            aria-label="lab API tabs example"
                         >
                            <Tab
                               label="ЛИЧНЫЕ ДАННЫЕ"
-                              value="1"
+                              value="profile"
                               className="route"
                            />
 
                            <Tab
                               label="СМЕНИТЬ ПАРОЛЬ"
-                              value="2"
+                              value="change-password"
                               className="route"
                            />
                         </TabList>
                      </Box>
 
-                     <TabPanel value="1" className="tables">
+                     <TabPanel value="profile" className="tables">
                         <form
                            onSubmit={handleSubmit}
                            className="table-container"
                         >
                            <Box className="table-container">
                               <div className="first-box">
-                                 <label className="label" htmlFor="firstName">
-                                    Имя
-                                 </label>
+                                 <label htmlFor="firstName">Имя</label>
 
                                  <StyledInput
                                     id="firstName"
-                                    className="input"
                                     value={values.firstName}
                                     onChange={handleChange('firstName')}
                                  />
 
-                                 <label className="label" htmlFor="email">
-                                    E-mail
-                                 </label>
+                                 <label htmlFor="email">E-mail</label>
 
                                  <StyledInput
                                     id="email"
-                                    className="input"
                                     onChange={handleChange('email')}
                                     value={values.email}
                                  />
@@ -132,13 +126,10 @@ const Profile = () => {
                                  <StyledInput
                                     id="lastName"
                                     onChange={handleChange('lastName')}
-                                    className="input"
                                     value={values.lastName}
                                  />
 
-                                 <label className="label" htmlFor="numberPhone">
-                                    Телефон
-                                 </label>
+                                 <label htmlFor="numberPhone">Телефон</label>
 
                                  <NumberInput
                                     id="numberPhone"
@@ -175,7 +166,7 @@ const Profile = () => {
                         </form>
                      </TabPanel>
 
-                     <TabPanel value="2" className="tables">
+                     <TabPanel value="change-password" className="tables">
                         <ChangeUserPassword />
                      </TabPanel>
                   </TabContext>
@@ -201,9 +192,15 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& .first-box': {
          display: 'flex',
          flexDirection: 'column',
+
+         '& > label': {
+            fontFamily: 'Manrope',
+            fontSize: '14px',
+            color: theme.palette.secondary.lightGrey,
+         },
       },
 
-      '& .title-container': {
+      '& > .title-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
@@ -238,12 +235,6 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          },
       },
 
-      '& label': {
-         fontFamily: 'Manrope',
-         fontSize: '14px',
-         color: theme.palette.secondary.lightGrey,
-      },
-
       '& .MuiTabs-scroller > .MuiTabs-indicator': {
          margin: '0 auto',
          backgroundColor: '#048741 !important',
@@ -266,17 +257,22 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       '& .tables': {
          padding: '0rem',
          margin: '0px',
+
+         '& .table-container': {
+            display: 'flex',
+            gap: '1rem',
+            width: '100%',
+            borderRadius: '0.375rem',
+            bordeRradius: ' 0.375rem',
+            background: 'white',
+            marginTop: '1.25rem',
+         },
       },
 
-      '& .table-container': {
-         display: 'flex',
-         gap: '1rem',
-         width: '100%',
-         borderRadius: '0.375rem',
-         bordeRradius: ' 0.375rem',
-         background: 'white',
-         marginTop: '1.25rem',
-      },
+      // '& .Mui-selected': {
+      //    transition: '1s',
+      //    color: '#048741 !important',
+      // },
    },
 }))
 

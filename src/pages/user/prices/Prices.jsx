@@ -1,27 +1,16 @@
 import { Typography, styled, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
-import { prices } from '../../../utils/constants/prices'
+import { PRICES } from '../../../utils/constants/prices'
 import CustomizedAccordions from '../../../components/UI/CustomizedAccordions'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
-const Contacts = () => (
+const Proces = () => (
    <>
       <StyledLine> </StyledLine>
 
       <StyledContainer>
          <StyledSpecialistRow>
-            <Typography variant="span">
-               <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-
-               <span>Прайс</span>
-            </Typography>
+            <BreadCrumbs to="/" text=" Цены" before="Главная" />
          </StyledSpecialistRow>
-
-         <Typography className="title" variant="h3">
-            Наш<span> </span>
-            <Typography className="mark-title" variant="span">
-               прайс
-            </Typography>
-         </Typography>
 
          <Typography className="text">
             Цены на услуги формируются в соответствии с действующими
@@ -35,37 +24,42 @@ const Contacts = () => (
 
          <AccordionContainer>
             <StyledAccordions>
-               {prices.map((el) => (
-                  <CustomizedAccordions key={el.id} title={el.title}>
-                     <StyledPrice>
-                        <Box className="prices-data">
-                           <Typography variant="h2">{el.data}</Typography>{' '}
-                           <Typography variant="h2">{el.price} com</Typography>
-                        </Box>
+               {PRICES.map(
+                  ({ id, title, price, data, description, prices }) => (
+                     <CustomizedAccordions key={id} title={title}>
+                        <StyledPrice>
+                           <Box className="prices-data">
+                              <Typography variant="h2">{data}</Typography>
 
-                        <Typography className="description">
-                           {el.description}
-                        </Typography>
-                        {el.prices.map((item) => (
-                           <Box className="prices">
-                              <Typography className="data-text">
-                                 {item.data}
-                              </Typography>
-                              <Typography variant="h2" className="price">
-                                 {item.price} com
-                              </Typography>
+                              <Typography variant="h2">{price} сом</Typography>
                            </Box>
-                        ))}
-                     </StyledPrice>
-                  </CustomizedAccordions>
-               ))}
+
+                           <Typography className="description">
+                              {description}
+                           </Typography>
+
+                           {prices.map(({ data, price }) => (
+                              <Box key={data} className="prices">
+                                 <Typography className="data-text">
+                                    {data}
+                                 </Typography>
+
+                                 <Typography variant="h2" className="price">
+                                    {price} сом
+                                 </Typography>
+                              </Box>
+                           ))}
+                        </StyledPrice>
+                     </CustomizedAccordions>
+                  )
+               )}
             </StyledAccordions>
          </AccordionContainer>
       </StyledContainer>
    </>
 )
 
-export default Contacts
+export default Proces
 
 const StyledContainer = styled(Box)(({ theme }) => ({
    '& > .title': {
@@ -78,15 +72,9 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
    },
 
-   '& .image-box': {
-      padding: '3.125rem 0 0 11.25rem',
-      display: 'flex',
-      justifyContent: 'center',
-   },
-
-   '& .text': {
+   '& > .text': {
       fontSize: '18px',
-      padding: '3.125rem 0 2rem 6.5rem',
+      padding: '0rem 0 2rem 6.5rem',
       color: '#4D4E51',
       fontFamily: 'Manrope',
    },
@@ -97,20 +85,15 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const StyledSpecialistRow = styled(Typography)(() => ({
-   fontSize: '0.875rem',
-   fontWeight: '400',
-   padding: '3.125rem 0 2rem 6.5rem',
+const StyledSpecialistRow = styled(Box)(() => ({
+   margin: '2rem 0 0rem 6.5rem',
 
-   span: {
+   '& span': {
+      fontWeight: '400',
+      fontSize: '0.875rem',
       color: '#048741',
       cursor: 'pointer',
    },
-}))
-
-const NavLinkStyle = styled(NavLink)(({ theme }) => ({
-   textDecoration: 'none',
-   color: theme.palette.secondary.lightGrey,
 }))
 
 const StyledLine = styled(Box)(() => ({
@@ -119,7 +102,7 @@ const StyledLine = styled(Box)(() => ({
    marginTop: '15px',
 }))
 
-const StyledAccordions = styled('div')(() => ({
+const StyledAccordions = styled(Box)(() => ({
    display: 'flex',
    flexDirection: 'column',
    gap: '20px',
@@ -127,12 +110,6 @@ const StyledAccordions = styled('div')(() => ({
    '& .MuiTypography-root ': {
       fontFamily: 'Manrope',
       fontSize: '20px',
-   },
-
-   '& .description': {
-      fontSize: '18px',
-      marginTop: '1rem',
-      marginBottom: '1rem',
    },
 
    '& .data-text': {
@@ -144,11 +121,21 @@ const StyledAccordions = styled('div')(() => ({
       fontWeight: '500',
       fontSize: '20px',
    },
+}))
 
-   '& .prices-data': {
+const StyledPrice = styled(Box)(() => ({
+   textAlign: 'left',
+
+   '& > .prices-data': {
       display: 'flex',
       justifyContent: 'space-between',
       marginTop: '20px',
+   },
+
+   '& > .description': {
+      fontSize: '18px',
+      marginTop: '1rem',
+      marginBottom: '1rem',
    },
 
    '& .prices': {
@@ -157,10 +144,6 @@ const StyledAccordions = styled('div')(() => ({
       padding: '20px 0px',
       borderTop: '1px solid #e0e2e7',
    },
-}))
-
-const StyledPrice = styled(Box)(() => ({
-   textAlign: 'left',
 }))
 
 const AccordionContainer = styled(Box)(() => ({

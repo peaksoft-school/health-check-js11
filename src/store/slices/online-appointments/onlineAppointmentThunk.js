@@ -10,8 +10,6 @@ const getAppointments = createAsyncThunk(
 
          return response.data
       } catch (error) {
-         showToast({ message: error.response.data.message, status: 'error' })
-
          return rejectWithValue(error)
       }
    }

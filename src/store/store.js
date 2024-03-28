@@ -7,10 +7,11 @@ import { patientsSlice } from './slices/patients/patientsSlice'
 import { patientSlice } from './slices/patient/patientSlice'
 import { applicationsSlice } from './slices/applications/aplicationsSlice'
 import { onlineAppointmentsSlice } from './slices/online-appointments/onlineAppointmentsSlice'
-import { profileSlice } from './slices/profie/profileSlice'
+import { profileSlice } from './slices/profile/profileSlice'
 import { doctorSlice } from './slices/doctors/doctorSlice'
 import { appointmentsSlice } from './slices/appointments/appointmentsSlice'
 import { specialistsSlice } from './slices/specialists/specialistsSlice'
+import { resultSlice } from './slices/result/resultsSlice'
 import { fileSlice } from './slices/file/fileSlice'
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
    [doctorSlice.name]: doctorSlice.reducer,
    [onlineAppointmentsSlice.name]: onlineAppointmentsSlice.reducer,
    [specialistsSlice.name]: specialistsSlice.reducer,
+   [resultSlice.name]: resultSlice.reducer,
 })
 
 const persistConfig = {

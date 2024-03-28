@@ -3,25 +3,27 @@ import { Typography, styled, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
+import { DOCTORS_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import Button from '../../../components/UI/Button'
 import Reviews from '../../../components/landing/Reviews'
 import { ArrowLeftIcon } from '../../../assets/icons'
 
 const DoctorInnerPage = () => {
+   window.scrollTo({ top: 0 })
+
    const { doctor } = useSelector((state) => state.doctors)
 
-   const { doctorId } = useParams()
+   const { id } = useParams()
 
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(DOCTOR_THUNK.getDoctorsById({ doctorId }))
-   }, [doctorId])
+      dispatch(DOCTORS_THUNK.getDoctorsById({ id }))
+   }, [id])
 
    return (
       <StyledContainer>
-         <Box className="box">
+         <Box>
             <StyledSpecialistRow>
                <Typography variant="span">
                   <NavLinkStyle to="/">
@@ -45,38 +47,48 @@ const DoctorInnerPage = () => {
                только лучшие специалисты с многолетней практикой и доказанным
                опытом.
             </Typography>
+
             <Typography className="text">
                Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
                ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе
                к совершенству.
             </Typography>
+
             <StyledBoxContainer>
                <img alt="img" src={doctor.image} className="img" />
                <Box className="flex">
                   <Typography className="doctor-name">
                      {doctor.fullName}
                   </Typography>
+
                   <Typography className="label">
                      Отделение :{' '}
                      <span className="mark">{doctor.department}</span>
                   </Typography>
+
                   <Typography className="label">
                      Должность :{' '}
                      <span className="mark"> {doctor.position}</span>{' '}
                   </Typography>
+
                   <Button variant="secondary" className="btn">
-                     <span className="btn-text">Записаться на приём</span>
+                     <Typography variant="span" className="btn-text">
+                        Записаться на приём
+                     </Typography>
                   </Button>
                </Box>
             </StyledBoxContainer>
+
             <Typography className="description">
                {doctor.description}
             </Typography>
+
             <NavLink to="/doctors" className="line">
                <Typography className="arrow">
                   <ArrowLeftIcon /> Список Сотрудников
                </Typography>
             </NavLink>
+
             <Reviews />
          </Box>
       </StyledContainer>
@@ -84,16 +96,22 @@ const DoctorInnerPage = () => {
 }
 
 export default DoctorInnerPage
+
 const StyledContainer = styled(Box)(() => ({
+   marginBottom: '90px',
+
    '& .line': {
       textDecoration: 'none',
    },
+
    '& .name': {
       fontSize: '36px',
       fontWeight: '600',
       fontFamily: 'Manrope',
-      marginLeft: '6.25rem',
+      marginLeft: '6.50rem',
+      marginTop: '2rem',
    },
+
    '& .text': {
       fontSize: '18px',
       padding: '3.125rem 0 0 6.5rem',
@@ -101,23 +119,27 @@ const StyledContainer = styled(Box)(() => ({
       fontFamily: 'Manrope',
       marginTop: '-1rem',
    },
+
    '& .description': {
       padding: '1rem 0 2rem 6.5rem',
-      fontSize: '16px',
-      fontWeight: '600',
+      fontSize: '18px',
+      fontFamily: 'Manrope',
+      fontWeight: '500',
    },
+
    '& .arrow': {
       padding: '0 0 2rem 6.5rem',
       color: '#048741',
       fontSize: '16px',
    },
 }))
-const StyledSpecialistRow = styled(Typography)(() => ({
+
+const StyledSpecialistRow = styled(Box)(() => ({
    fontSize: '0.875rem',
    fontWeight: '400',
-   padding: '3.125rem 0 2rem 6.5rem',
+   padding: '2rem 0 0rem 6.5rem',
 
-   span: {
+   '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
@@ -130,7 +152,8 @@ const StyledSpecialistRow = styled(Typography)(() => ({
 const NavLinkStyle = styled(NavLink)(({ theme }) => ({
    textDecoration: 'none',
    color: theme.palette.secondary.lightGrey,
-   span: {
+
+   '& span': {
       color: '#048741',
       cursor: 'pointer',
    },
@@ -139,19 +162,18 @@ const NavLinkStyle = styled(NavLink)(({ theme }) => ({
 const StyledBoxContainer = styled(Box)(() => ({
    padding: '3.125rem 0 2rem 6.5rem',
    display: 'flex',
-   justifyContent: 'space-between',
 
-   '& .img': {
+   '& > img': {
       width: '319px',
       height: '349px',
       borderRadius: '4px',
    },
 
-   '& .flex': {
-      marginRight: '49rem',
+   '& > .flex': {
+      marginLeft: '6rem',
       marginTop: '5rem',
 
-      '& .doctor-name': {
+      '& > .doctor-name': {
          fontSize: '24px',
          color: ' #009344',
          fontFamily: 'Manrope',
@@ -159,13 +181,13 @@ const StyledBoxContainer = styled(Box)(() => ({
          marginBottom: '1rem',
       },
 
-      '& .label': {
+      '& > .label': {
          fontSize: '18px',
          color: '#58595B',
          fontFamily: 'Manrope',
          fontWeight: '400',
 
-         '& .mark': {
+         '& > .mark': {
             fontSize: '18px',
             color: '#222222',
             fontFamily: 'Manrope',
@@ -173,7 +195,7 @@ const StyledBoxContainer = styled(Box)(() => ({
          },
       },
 
-      '& .btn': {
+      '& > .btn': {
          marginTop: '1rem',
          borderRadius: '0.5rem',
          width: '204px',

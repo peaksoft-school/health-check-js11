@@ -63,7 +63,7 @@ const addAppointment = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'произошла ошибка',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {
@@ -100,13 +100,24 @@ const deleteAppoinment = createAsyncThunk(
    async ({ appointmentId, setDeleteSuccess }, { rejectWithValue }) => {
       try {
          await axiosInstance.delete(
-            `/appointment?appointmentId=${appointmentId}`
+            `api/appointment?appointmentId=${appointmentId}`
          )
 
          setDeleteSuccess(true)
 
          return appointmentId
       } catch (error) {
+         if (error.response.status === 403) {
+            showToast({
+               message: 'Произошла ошибка',
+               status: 'error',
+            })
+         } else {
+            showToast({
+               message: error.data.message,
+               status: 'error',
+            })
+         }
          return rejectWithValue(error)
       }
    }

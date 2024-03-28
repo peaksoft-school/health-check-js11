@@ -38,14 +38,14 @@ const postNewSchedule = createAsyncThunk(
          onClose()
 
          showToast({
-            message: 'запись успешно добавлена ',
+            message: 'Запись успешно добавлена ',
          })
 
          return response.data
       } catch (error) {
          if (error.response.status === 403) {
             showToast({
-               message: 'произошла ошибка',
+               message: 'Произошла ошибка',
                status: 'error',
             })
          } else {
@@ -87,7 +87,7 @@ const savePatternTimeSheet = createAsyncThunk(
          return response.data
       } catch (error) {
          showToast({
-            message: error.response.data.messageCode,
+            message: error.response.data.message,
             status: 'error',
          })
          return rejectWithValue(error)

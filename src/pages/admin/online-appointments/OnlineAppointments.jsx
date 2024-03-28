@@ -144,7 +144,7 @@ const OnlineAppointments = () => {
             ) : (
                <Box className="buttons-box">
                   <Button className="add-button" onClick={onOpenModal}>
-                     <PlusIcon /> Добавить запись
+                     <PlusIcon /> Добавить расписание
                   </Button>
 
                   {isLoading && <Loading />}
@@ -244,17 +244,23 @@ const StyledContainer = styled(Box)(({ theme }) => ({
          '& .export-btn': {
             borderRadius: '4px',
             padding: '8px 20px 9px 20px',
-            width: '168px',
             height: '43px',
 
             '&:hover': {
-               width: '168px',
                padding: '8px 20px 9px 20px',
                border: 'none',
             },
          },
 
          '& .add-button': {
+            borderRadius: '4px',
+
+            '&:hover': {
+               width: '168px',
+               borderRadius: '4px',
+               border: 'none',
+            },
+
             fontFamily: 'Manrope',
             fontSize: '0.875rem',
             fontStyle: 'normal',
@@ -264,7 +270,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
             textTransform: 'uppercase',
             height: '2.75rem',
             padding: '0.625rem 1.5rem 0.625rem 1rem !important',
-            width: '13.0625rem !important',
+            width: '16rem !important',
             flexShrink: '0',
 
             '& > div': {

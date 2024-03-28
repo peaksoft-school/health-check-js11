@@ -13,7 +13,7 @@ const Contacts = lazy(() => import('../pages/user/contacts/Contacts'))
 const Doctors = lazy(() => import('../pages/user/doctors/Doctors'))
 const Prices = lazy(() => import('../pages/user/prices/Prices'))
 const Profile = lazy(() => import('../pages/user/profile/Profile'))
-const Records = lazy(() => import('../pages/user/records/Records'))
+const Results = lazy(() => import('../pages/user/results/Results'))
 const Services = lazy(() => import('../pages/user/services/Services'))
 
 export const USER_ROUTES = [
@@ -54,8 +54,12 @@ export const USER_ROUTES = [
    },
 
    {
-      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
-      element: <InnerService />,
+      path: `${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
+      element: (
+         <Suspense>
+            <InnerService />
+         </Suspense>
+      ),
    },
 
    {
@@ -98,12 +102,12 @@ export const USER_ROUTES = [
       path: `${ROUTES.USER.INDEX}${ROUTES.USER.RECORDS}`,
       element: (
          <Suspense>
-            <Records />
+            <Results />
          </Suspense>
       ),
    },
    {
-      path: `${ROUTES.USER.DOCTOR_INNER}`,
+      path: `${ROUTES.USER.DOCTORS}/:${ROUTES.ID.ID}`,
       element: <DoctorInnerPage />,
    },
 ]

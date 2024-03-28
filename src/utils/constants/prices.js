@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material'
 
-export const prices = [
+export const PRICES = [
    {
       id: 1,
-      title: 'Консультаия и диагностика',
+      title: 'Консультация и диагностика',
       data: 'Консультация врача-рентгенолога по внешним исследованиям',
       price: '2 300',
       description: (
@@ -111,7 +111,6 @@ export const prices = [
       title: 'Гастроэнтерология',
       data: 'Прием (осмотр, консультация) врача-гастроэнтеролога к.м.н., первичный',
       price: '2 850',
-      // description:
       description: (
          <Typography>
             - изучающий печень, желчный пузырь, желчные пути, их строение и
@@ -136,7 +135,6 @@ export const prices = [
       title: 'Гинекология',
       data: 'Консультация акушера-гинеколога, к.м.н., заслуженный врач KG',
       price: '3 000',
-      // description:
       description: (
          <Typography>
             Врач-гинеколог занимается наблюдением состояния женских половых

@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { format } from 'date-fns'
+import { format, isValid } from 'date-fns'
 import { ru } from 'date-fns/locale'
 import { PATIENTS_THUNKS } from '../../store/slices/patients/patientsThunk'
 import { ONLINE_APPOINTMENTS_THUNK } from '../../store/slices/online-appointments/onlineAppointmentThunk'
@@ -425,9 +425,17 @@ const PATIENTS_COLUMN = [
          fontWeight: '500',
       },
 
-      Cell: ({ row }) => (
-         <Box>{format(new Date(row.original.resultDate), 'dd.MM.yyyy')}</Box>
-      ),
+      Cell: ({ row }) => {
+         return (
+            <Box>
+               {isValid(row.original.resultDate) ? (
+                  <Box>{format(row.original.resultDate, 'dd.MM.yyyy')}</Box>
+               ) : (
+                  <Box>{row.original.resultDate}</Box>
+               )}
+            </Box>
+         )
+      },
    },
 
    {

@@ -1,35 +1,32 @@
 import { Typography, styled, Box } from '@mui/material'
-import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { DOCTOR_THUNK } from '../../../store/slices/doctors/doctorThunk'
+import { DOCTORS_THUNK } from '../../../store/slices/doctors/doctorThunk'
 import DataDoctors from './DataDoctors'
+import BreadCrumbs from '../../../components/UI/BreadCrumbs'
 
 const Doctors = () => {
    const [showAllDoctors, setShowAllDoctors] = useState(false)
 
    const { doctors } = useSelector((state) => state.doctors)
+
    const dispatch = useDispatch()
 
    useEffect(() => {
-      dispatch(DOCTOR_THUNK.getDoctors())
+      dispatch(DOCTORS_THUNK.getDoctors())
    }, [])
 
    const visibleDoctors = showAllDoctors ? doctors : doctors.slice(0, 10)
-   const handleShowMore = () => {
-      setShowAllDoctors(true)
-   }
+
+   const handleShowMore = () => setShowAllDoctors(true)
+
    return (
       <>
          <StyledLine> </StyledLine>
 
          <StyledContainer>
             <StyledSpecialistRow>
-               <Typography variant="span">
-                  <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
-
-                  <span>Врачи</span>
-               </Typography>
+               <BreadCrumbs to="/" text="Врачи" before="Главная" />
             </StyledSpecialistRow>
 
             <Typography className="title" variant="h3">
@@ -45,6 +42,7 @@ const Doctors = () => {
                только лучшие специалисты с многолетней практикой и доказанным
                опытом.
             </Typography>
+
             <Typography className="text">
                Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
                ведущих университетах <br /> Европы, чтобы еще на шаг стать ближе
@@ -57,17 +55,19 @@ const Doctors = () => {
 
             {!showAllDoctors && doctors.length > 10 && (
                <StyledSpecialist>
-                  <Typography variant="span">
-                     В нашей клинике работают более :{' '}
-                     <span className="marker">30 специалистов </span>
-                     <Typography
-                        component="span"
-                        onClick={handleShowMore}
-                        style={{ cursor: 'pointer' }}
-                     >
-                        <span className="click"> Показать больше</span>
+                  <Box>
+                     В нашей клинике работают более :
+                     <Typography variant="span" className="marker">
+                        30 специалистов
                      </Typography>
-                  </Typography>
+                     <Typography
+                        className="click"
+                        variant="span"
+                        onClick={handleShowMore}
+                     >
+                        Показать больше
+                     </Typography>
+                  </Box>
                </StyledSpecialist>
             )}
 
@@ -96,13 +96,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
       },
    },
 
-   '& .image-box': {
-      padding: '3.125rem 0 0 11.25rem',
-      display: 'flex',
-      justifyContent: 'center',
-   },
-
-   '& .text': {
+   '& > .text': {
       fontSize: '18px',
       padding: '3.125rem 0 0 6.5rem',
       color: '#4D4E51',
@@ -111,7 +105,7 @@ const StyledContainer = styled(Box)(({ theme }) => ({
    },
 }))
 
-const StyledSpecialist = styled(Typography)(() => ({
+const StyledSpecialist = styled(Box)(() => ({
    fontSize: '1rem',
    fontWeight: '400',
    display: 'flex',
@@ -120,18 +114,17 @@ const StyledSpecialist = styled(Typography)(() => ({
    padding: '3rem 0 0 ',
    marginBottom: '6rem',
 
-   span: {
+   '& .marker': {
+      fontWeight: '500',
+   },
+
+   '& .click': {
+      color: '#048741',
+      fontSize: '16px',
+      fontWeight: '500',
       cursor: 'pointer',
-      '& .marker': {
-         fontWeight: '500',
-      },
-      '& .click': {
-         color: '#048741',
-         fontSize: '16px',
-         fontWeight: '500',
-         marginLeft: '1rem',
-         textDecoration: 'line',
-      },
+      marginLeft: '1rem',
+      textDecoration: 'underline',
    },
 }))
 
@@ -141,18 +134,8 @@ const StyledLine = styled(Box)(() => ({
    marginTop: '15px',
 }))
 
-const StyledSpecialistRow = styled(Typography)(() => ({
+const StyledSpecialistRow = styled(Box)(() => ({
    fontSize: '1rem',
    fontWeight: '400',
-   padding: '3.125rem 0 2.50rem 6.25rem',
-
-   span: {
-      color: '#048741',
-      cursor: 'pointer',
-   },
-}))
-
-const NavLinkStyle = styled(NavLink)(({ theme }) => ({
-   textDecoration: 'none',
-   color: theme.palette.secondary.lightGrey,
+   padding: '2rem 0 0rem 6.25rem',
 }))

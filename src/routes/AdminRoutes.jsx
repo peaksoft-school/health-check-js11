@@ -46,7 +46,7 @@ export const ADMIN_ROUTES = [
    },
 
    {
-      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}/:${ROUTES.ADMIN.ID}`,
+      path: `${ROUTES.ADMIN.INDEX}/${ROUTES.ADMIN.PATIENTS}/:${ROUTES.ID.ID}`,
       element: (
          <Suspense>
             <Patient />

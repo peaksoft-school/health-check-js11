@@ -1,75 +1,71 @@
 import { Box, Typography, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
+import { containsTheHTTPS } from '../../../utils/helpers'
 
-const DataDoctors = ({ doctor }) => {
-   return (
-      <StyledDataContainer>
-         <NavLink style={{ textDecoration: 'none' }} to="/doctors/doctor">
-            <Typography variant="h4" className="department">
-               {doctor.department}
-            </Typography>
-         </NavLink>
+const DataDoctors = ({ doctor }) => (
+   <StyledDataContainer key={doctor.id}>
+      <NavLink style={{ textDecoration: 'none' }} to="/doctors/doctor">
+         <Typography variant="h4" className="department">
+            {doctor.department}
+         </Typography>
+      </NavLink>
 
-         <Box className="global-container">
-            {doctor.doctors.map((doctor) => (
-               <Box className="map-container">
+      <Box className="global-container">
+         {doctor.doctors.map(({ id, image, fullName, position }) => (
+            <Box key={id} className="map-container">
+               <NavLink to={`/doctors/${id}`}>
                   <Box className="image-container">
-                     <img
-                        src={doctor.image}
-                        alt="img"
-                        className="surgeon-image"
-                     />
+                     {containsTheHTTPS(image) && (
+                        <img
+                           className="surgeon-image"
+                           src={image}
+                           alt="doctor"
+                        />
+                     )}
                   </Box>
-                  <Box className="main-container">
-                     <Box className="name-container">
-                        <Typography variant="span" className="name">
-                           {doctor.fullName}
+               </NavLink>
+
+               <Box className="main-container">
+                  <Box className="name-container">
+                     <Typography variant="span" className="name">
+                        {fullName}
+                     </Typography>
+
+                     <Typography className="position-doctor">
+                        {position}
+                     </Typography>
+
+                     <Button variant="secondary" className="btn">
+                        <Typography variant="span" className="btn-text">
+                           Записаться на приём
                         </Typography>
-                        <Typography className="position-doctor">
-                           {doctor.position}
-                        </Typography>
-                        <NavLink to={`/doctors/${doctor.id}`}>
-                           <Button variant="secondary" className="btn">
-                              <span className="btn-text">
-                                 Записаться на приём
-                              </span>
-                           </Button>
-                        </NavLink>
-                     </Box>
+                     </Button>
                   </Box>
                </Box>
-            ))}
-         </Box>
-      </StyledDataContainer>
-   )
-}
+            </Box>
+         ))}
+      </Box>
+   </StyledDataContainer>
+)
 
 export default DataDoctors
 
 const StyledDataContainer = styled(Box)(() => ({
-   '& .global-container': {
+   '& > .global-container': {
       width: '1017px',
       display: 'flex',
       flexWrap: 'wrap',
       padding: '3.125rem 0 0 6.50rem',
       gap: '2rem',
 
-      '& > .map-container': {
-         '& .text-container': {
-            '& .label': {
-               fontFamily: 'Manrope',
-               fontSize: '24px',
-               fontWeight: '600',
-            },
-         },
-      },
-
       '& > .image-container': {
          display: 'flex',
          justifyContent: 'space-between',
 
-         '& .surgeon-image': {
+         '& img': {
+            width: '319px',
+            height: '348px',
             backgroundColor: '#E4E7EE',
             borderRadius: '4px',
          },
@@ -80,21 +76,21 @@ const StyledDataContainer = styled(Box)(() => ({
          justifyContent: 'flex-start',
          gap: '1.50rem',
 
-         '& .name-container': {
+         '& > .name-container': {
             padding: '1rem 0 0 0.10rem',
 
-            '& .name': {
+            '& > .name': {
                fontSize: '18px',
                fontFamily: 'Manrope',
                fontWeight: '500',
             },
 
-            '& .position-doctor': {
+            '& > .position-doctor': {
                fontSize: '15px',
                color: '#969393',
             },
 
-            '& .btn': {
+            '& > .btn': {
                marginTop: '1rem',
                borderRadius: '0.5rem',
                width: '204px',

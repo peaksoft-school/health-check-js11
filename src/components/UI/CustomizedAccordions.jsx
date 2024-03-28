@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { styled, Typography } from '@mui/material'
+import { styled, Box } from '@mui/material'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
@@ -18,11 +18,11 @@ const CustomizedAccordions = ({ title, children }) => {
          onChange={handleChange('panel1')}
       >
          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>{title}</Typography>
+            <Box>{title}</Box>
          </AccordionSummary>
 
          <MuiAccordionDetails>
-            <Typography>{children}</Typography>
+            <Box>{children}</Box>
          </MuiAccordionDetails>
       </Accordion>
    )

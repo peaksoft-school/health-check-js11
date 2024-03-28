@@ -49,7 +49,7 @@ const addPatientResult = createAsyncThunk(
       } catch (error) {
          if (error.response.status === 403)
             showToast({
-               message: 'ошибка на стороне сервера',
+               message: 'Ошибка на стороне сервера',
                status: 'error',
             })
          else

@@ -19,6 +19,7 @@ const initialState = {
 export const authSlice = createSlice({
    name: 'auth',
    initialState,
+
    reducers: {
       logOut: (state, { payload }) => {
          state.isLoading = false
@@ -68,7 +69,10 @@ export const authSlice = createSlice({
 
          .addCase(forgotPassword.fulfilled, (state, { payload }) => {
             state.isLoading = false
-            localStorage.setItem('changePasswordToken', payload.data.message)
+            localStorage.setItem(
+               'changePasswordToken',
+               payload.data.messageCode
+            )
          })
 
          .addCase(forgotPassword.pending, (state) => {

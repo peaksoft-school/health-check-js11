@@ -44,5 +44,13 @@ export const patientsSlice = createSlice({
                state.isLoading = false
             }
          )
+
+         .addCase(PATIENTS_THUNKS.searchPatients.pending, (state) => {
+            state.isLoading = true
+         })
+
+         .addCase(PATIENTS_THUNKS.searchPatients.rejected, (state) => {
+            state.isLoading = false
+         })
    },
 })

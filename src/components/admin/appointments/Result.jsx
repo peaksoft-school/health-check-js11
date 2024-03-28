@@ -20,9 +20,7 @@ const Result = ({ goBack, goBackAndClear }) => {
       return capitalizedWeekday
    }
 
-   const closeModal = () => {
-      setToggleModal((prev) => !prev)
-   }
+   const closeModal = () => setToggleModal((prev) => !prev)
 
    const startTime = doctorData ? doctorData.startTime.slice(0, 5) : ''
    const endTime = doctorData ? doctorData.endTime.slice(0, 5) : ''
@@ -39,10 +37,10 @@ const Result = ({ goBack, goBackAndClear }) => {
 
          <Box className="doctor">
             <Box className="image-box">
-               {containsTheHTTPS(doctorData.imageDoctor) ? (
+               {containsTheHTTPS(doctorData.doctorImage) ? (
                   <Avatar
                      className="image"
-                     src={doctorData.imageDoctor}
+                     src={doctorData.doctorImage}
                      alt="doctor"
                   />
                ) : (
