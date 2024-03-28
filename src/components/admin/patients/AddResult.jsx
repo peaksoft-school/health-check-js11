@@ -122,6 +122,7 @@ const AddResult = ({ open, onClose }) => {
                         options={DEPARTMENTS}
                         value={values.service}
                         onChange={changeSelectHandler}
+                        variant="schedule"
                      />
                   </Box>
 

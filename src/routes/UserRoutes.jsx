@@ -54,12 +54,8 @@ export const USER_ROUTES = [
    },
 
    {
-      path: `${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
-      element: (
-         <Suspense>
-            <InnerService />
-         </Suspense>
-      ),
+      path: `${ROUTES.USER.INDEX}${ROUTES.USER.SERVICE}/:${ROUTES.ID.ID}`,
+      element: <InnerService />,
    },
 
    {
